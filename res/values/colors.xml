@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">@color/purple</color>
+    <color name="colorPrimaryDark">@color/purpledark</color>
+    <color name="colorAccent">@color/purplelight</color>
+
+    <color name="purple">#6563A4</color>
+    <color name="purplelight">#9036D3</color>
+    <color name="purpledark">#2F2F55</color>
+
+    <color name="white">#ffffff</color>
+    <color name="greytext">#BDC1C0</color>
+</resources>
