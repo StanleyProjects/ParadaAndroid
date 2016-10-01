@@ -7,13 +7,12 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 
 import ru.parada.app.R;
+import ru.parada.app.contracts.GeneralContract;
 import ru.parada.app.modules.main.MainFragment;
-import ru.parada.app.mvp.presenters.GeneralPresenter;
-import ru.parada.app.mvp.views.GeneralView;
 
 public class GeneralActivity
         extends AppCompatActivity
-    implements GeneralView
+    implements GeneralContract.View
 {
     private final MenuFragment menuFragment = new MenuFragment();
     private final MainFragment mainFragment = MainFragment.newInstanse(new MainFragment.MainFragmentListener()
@@ -27,7 +26,7 @@ public class GeneralActivity
 
     private DrawerLayout main_drawer;
 
-    private GeneralPresenter presenter;
+    private GeneralContract.Presenter presenter;
 
     @Override
     public void onCreate(Bundle bundle)
@@ -43,12 +42,7 @@ public class GeneralActivity
     }
     private void init()
     {
-        presenter = new Presenter(this);
-    }
-
-    @Override
-    public void onCreate()
-    {
+        presenter = new GeneralPresenter(this);
         getSupportFragmentManager().beginTransaction().add(R.id.main_frame, mainFragment).commit();
         getSupportFragmentManager().beginTransaction().add(R.id.menu_frame, menuFragment).commit();
     }

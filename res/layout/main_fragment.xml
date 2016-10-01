@@ -28,9 +28,10 @@
                 android:layout_margin="8dp"
                 android:layout_height="wrap_content"/>
             <ImageView
-                android:src="@drawable/icon_menu"
+                android:id="@+id/phone"
+                android:src="@drawable/btn_phone"
                 android:scaleType="fitCenter"
-                android:padding="16dp"
+                android:padding="6dp"
                 android:layout_width="56dp"
                 android:layout_height="56dp"/>
         </LinearLayout>

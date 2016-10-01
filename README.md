@@ -8,8 +8,8 @@ App for paradaplastika.ru
 	applicationId "ru.parada.app"
 	minSdkVersion 15
 	targetSdkVersion 24
-	versionCode 1609291411
-	versionName "0.01bgnprjct"
+	versionCode 1610010343
+	versionName "0.04cnnctn"
 ## dependencies
 	com.android.support:appcompat-v7:24.2.1
 ## gradle
