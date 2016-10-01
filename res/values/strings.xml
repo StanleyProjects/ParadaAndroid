@@ -3,4 +3,6 @@
     <string name="services">Услуги</string>
     <string name="subscribe">Запись на приём</string>
     <string name="prices">Цены</string>
+    <string name="main">Главная</string>
+    <string name="service">Услуги</string>
 </resources>

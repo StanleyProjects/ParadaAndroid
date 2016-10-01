@@ -14,7 +14,7 @@
             android:layout_height="wrap_content">
             <ImageView
                 android:id="@+id/menu"
-                android:src="@drawable/icon_menu"
+                android:src="@mipmap/icon_menu"
                 android:scaleType="fitCenter"
                 android:padding="16dp"
                 android:layout_width="56dp"

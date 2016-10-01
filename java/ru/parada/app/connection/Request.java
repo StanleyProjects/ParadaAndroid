@@ -4,16 +4,11 @@ import java.util.ArrayList;
 
 public class Request
 {
-    static public Request newRequest(String baseUrl, String method)
-    {
-        return new Request(baseUrl, method);
-    }
-
     private String baseUrl;
     private String method;
     public ArrayList<Field> fields;
 
-    private Request(String u, String m)
+    public Request(String u, String m)
     {
         this.baseUrl = u;
         this.method = m;

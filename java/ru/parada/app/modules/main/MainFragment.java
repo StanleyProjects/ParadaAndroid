@@ -1,75 +1,77 @@
 package ru.parada.app.modules.main;
 
 import android.graphics.drawable.Drawable;
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import ru.parada.app.R;
 import ru.parada.app.contracts.MainContract;
+import ru.parada.app.units.MVPFragment;
 
 public class MainFragment
-        extends Fragment
+        extends MVPFragment<MainPresenter, MainFragmentListener>
     implements MainContract.View
 {
     static public MainFragment newInstanse(MainFragmentListener l)
     {
         MainFragment fragment = new MainFragment();
-        fragment.listener = l;
+        fragment.setListener(l);
         return fragment;
     }
 
     private ImageView phone;
 
-    private MainContract.Presenter presenter;
-    private MainFragmentListener listener;
     private Drawable btn_phone;
     private Drawable btn_phone_close;
-    private View.OnClickListener clickListener = new View.OnClickListener()
-    {
-        @Override
-        public void onClick(View v)
-        {
-            switch(v.getId())
-            {
-                case R.id.phone:
-                    presenter.phoneSwitch();
-                    break;
-            }
-        }
-    };
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    protected int setContentView()
     {
-        View v = inflater.inflate(R.layout.main_fragment, container, false);
-        initViews(v);
-        init();
-        return v;
+        return R.layout.main_fragment;
     }
-    private void initViews(View v)
+
+    @Override
+    protected void initViews(View v)
     {
-        v.findViewById(R.id.menu).setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view)
-            {
-                listener.openMenu();
-            }
-        });
+        setClickListener(v.findViewById(R.id.menu));
         phone = (ImageView)v.findViewById(R.id.phone);
     }
-    private void init()
+
+    @Override
+    protected MainPresenter setPresenter()
     {
-        presenter = new MainPresenter(this);
-        phone.setOnClickListener(clickListener);
+        return new MainPresenter(this);
+    }
+
+    @Override
+    protected View.OnClickListener setClickListener()
+    {
+        return new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                switch(v.getId())
+                {
+                    case R.id.menu:
+                        getListener().openMenu();
+                        break;
+                    case R.id.phone:
+                        getPresenter().phoneSwitch();
+                        break;
+                }
+            }
+        };
+    }
+
+    @Override
+    protected void init()
+    {
+        setClickListener(phone);
         btn_phone = getActivity().getResources().getDrawable(R.drawable.btn_phone);
         btn_phone_close = getActivity().getResources().getDrawable(R.drawable.btn_phone_close);
         phoneOpen();
-        presenter.loadNews();
+        getPresenter().loadNews();
     }
 
     @Override
@@ -82,10 +84,5 @@ public class MainFragment
     public void phoneClose()
     {
         phone.setImageDrawable(btn_phone_close);
-    }
-
-    public interface MainFragmentListener
-    {
-        void openMenu();
     }
 }

@@ -2,9 +2,12 @@ package ru.parada.app.modules.main;
 
 import android.util.Log;
 
+import java.util.ArrayList;
+
 import ru.parada.app.connection.ParadaService;
 import ru.parada.app.connection.Request;
 import ru.parada.app.contracts.MainContract;
+import ru.parada.app.json.JSONParser;
 
 public class MainPresenter
     implements MainContract.Presenter
@@ -36,18 +39,28 @@ public class MainPresenter
     @Override
     public void loadNews()
     {
-        Request.newRequest(ParadaService.BASE_URL, ParadaService.GET_NEWS).execute(new Request.RequestListener()
-        {
-            @Override
-            public void answer(String answer)
-            {
-                Log.e(this.getClass().getCanonicalName(), "load news: " + answer);
-            }
-            @Override
-            public void error(Exception error)
-            {
-                Log.e(this.getClass().getCanonicalName(), "load news error: " + error);
-            }
-        });
+//        new Request(ParadaService.BASE_URL, ParadaService.GET_NEWS).execute(new Request.RequestListener()
+//        {
+//            @Override
+//            public void answer(String answer)
+//            {
+//                ArrayList news;
+//                try
+//                {
+//                    news = (ArrayList)JSONParser.newParser().parse(answer);
+//                }
+//                catch(Exception e)
+//                {
+//                    Log.e(this.getClass().getCanonicalName(), "parse json: " + answer);
+//                    return;
+//                }
+//                Log.e(this.getClass().getCanonicalName(), "load news: " + answer);
+//            }
+//            @Override
+//            public void error(Exception error)
+//            {
+//                Log.e(this.getClass().getCanonicalName(), "load news error: " + error);
+//            }
+//        });
     }
 }
