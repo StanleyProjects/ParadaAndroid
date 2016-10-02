@@ -19,8 +19,14 @@ public class MenuPresenter
     }
 
     @Override
-    public void openService()
+    public void openServices()
     {
-        view.setService();
+        view.setServices();
+    }
+
+    @Override
+    public void openDoctors()
+    {
+        view.setDoctors();
     }
 }

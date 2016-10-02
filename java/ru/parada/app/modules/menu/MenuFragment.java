@@ -1,77 +1,84 @@
 package ru.parada.app.modules.menu;
 
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import ru.parada.app.R;
 import ru.parada.app.contracts.MenuContract;
+import ru.parada.app.units.MVPFragment;
 
 public class MenuFragment
-        extends Fragment
-    implements MenuContract.View
+        extends MVPFragment<MenuContract.Presenter, MenuFragmentListener>
+        implements MenuContract.View
 {
     static public MenuFragment newInstanse(MenuFragmentListener l)
     {
         MenuFragment fragment = new MenuFragment();
-        fragment.listener = l;
+        fragment.setListener(l);
         return fragment;
     }
 
-    private MenuFragmentListener listener;
-    private MenuContract.Presenter presenter;
-    private View.OnClickListener clickListener = new View.OnClickListener()
+    @Override
+    protected int setContentView()
     {
-        @Override
-        public void onClick(View v)
-        {
-            switch(v.getId())
-            {
-                case R.id.main:
-                    presenter.openMain();
-                    break;
-                case R.id.service:
-                    presenter.openService();
-                    break;
-            }
-        }
-    };
+        return R.layout.menu_fragment;
+    }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    protected void initViews(View v)
     {
-        View v = inflater.inflate(R.layout.menu_fragment, container, false);
-        initViews(v);
-        init();
-        return v;
+        setClickListener(v.findViewById(R.id.main), v.findViewById(R.id.service), v.findViewById(R.id.doctors));
     }
-    private void initViews(View v)
+
+    @Override
+    protected MenuContract.Presenter setPresenter()
     {
-        v.findViewById(R.id.main).setOnClickListener(clickListener);
-        v.findViewById(R.id.service).setOnClickListener(clickListener);
+        return new MenuPresenter(this);
     }
-    private void init()
+
+    @Override
+    protected View.OnClickListener setClickListener()
     {
-        presenter = new MenuPresenter(this);
+        return new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                switch(v.getId())
+                {
+                    case R.id.main:
+                        getPresenter().openMain();
+                        break;
+                    case R.id.service:
+                        getPresenter().openServices();
+                        break;
+                    case R.id.doctors:
+                        getPresenter().openDoctors();
+                        break;
+                }
+            }
+        };
+    }
+
+    @Override
+    protected void init()
+    {
     }
 
     @Override
     public void setMain()
     {
-        listener.openMain();
+        getListener().openMain();
     }
 
     @Override
-    public void setService()
+    public void setServices()
     {
-        listener.openService();
+        getListener().openServices();
     }
 
-    public interface MenuFragmentListener
+    @Override
+    public void setDoctors()
     {
-        void openMain();
-        void openService();
+        getListener().openDoctors();
     }
 }

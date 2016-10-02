@@ -4,13 +4,18 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.provider.BaseColumns;
 
 import java.util.HashMap;
+
+import ru.parada.app.contracts.DoctorsContract;
+import ru.parada.app.modules.doctors.DoctorsCursorListModel;
+import ru.parada.app.units.ListModel;
 
 public class SQliteApi
 {
     static private final String DB_NAME = "parada";
-    static private final int DB_VERSION = 1610011556;
+    static private final int DB_VERSION = 1610020401;
     static private volatile SQliteApi instanse;
 
     static public SQliteApi getInstanse()
@@ -48,7 +53,7 @@ public class SQliteApi
         @Override
         public Cursor getAll()
         {
-            return null;
+            return sdb.query(TABLE_NAME, null, null, null, null, null, null);
         }
 
         @Override
@@ -60,7 +65,56 @@ public class SQliteApi
         @Override
         public long insertOne(HashMap item)
         {
-            return 0;
+            return sdb.insertWithOnConflict(TABLE_NAME, null, ContentDriver.getServiceContentValues(item), SQLiteDatabase.CONFLICT_REPLACE);
+        }
+    };
+    private final Tables.Doctors doctors = new Tables.Doctors()
+    {
+        @Override
+        public ListModel<DoctorsContract.ListItemModel> getAll()
+        {
+            return new DoctorsCursorListModel(sdb.query(TABLE_NAME, null, null, null, null, null, null));
+        }
+
+        @Override
+        public DoctorsContract.ListItemModel getOneFromId(final int id)
+        {
+            Cursor cursor = sdb.rawQuery("SELECT * "
+                    + "FROM " + TABLE_NAME + " "
+                    + "WHERE " + BaseColumns._ID + "=" + id, new String[]{});
+            if(!cursor.moveToFirst())
+            {
+                cursor.close();
+                return null;
+            }
+            final String last_name = cursor.getString(cursor.getColumnIndex(Columns.last_name));
+            cursor.close();
+            return new DoctorsContract.ListItemModel()
+            {
+                @Override
+                public int getId()
+                {
+                    return id;
+                }
+                @Override
+                public String getLastName()
+                {
+                    return last_name;
+                }
+            };
+        }
+
+        @Override
+        public long insertOne(DoctorsContract.ListItemModel item)
+        {
+            return sdb.insertWithOnConflict(TABLE_NAME, null, ContentDriver.getDoctorContentValues(item), SQLiteDatabase.CONFLICT_REPLACE);
+        }
+
+        @Override
+        public void clearTable()
+        {
+            sdb.execSQL("drop table if exists " + Tables.Doctors.TABLE_NAME);
+            sdb.execSQL(Tables.Doctors.CREATE_TABLE);
         }
     };
 
@@ -71,20 +125,18 @@ public class SQliteApi
 
     public void createDB(Context context)
     {
-        new SQLiteOpenHelper(context, DB_NAME, null, DB_VERSION)
+        sdb = new SQLiteOpenHelper(context, DB_NAME, null, DB_VERSION)
         {
             @Override
             public void onCreate(SQLiteDatabase db)
             {
-                sdb = db;
-                createTables();
+                createTables(db);
             }
             @Override
             public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion)
             {
-                sdb = db;
-                clearTables();
-                createTables();
+                clearTables(db);
+                onCreate(db);
             }
         }.getWritableDatabase();
     }
@@ -108,15 +160,21 @@ public class SQliteApi
     {
         return services;
     }
-
-    private void clearTables()
+    public Tables.Doctors getDoctors()
     {
-        sdb.execSQL("drop table if exists " + Tables.News.TABLE_NAME);
-        sdb.execSQL("drop table if exists " + Tables.Services.TABLE_NAME);
+        return doctors;
     }
-    private void createTables()
+
+    private void clearTables(SQLiteDatabase db)
     {
-        sdb.execSQL(Tables.News.CREATE_TABLE);
-        sdb.execSQL(Tables.Services.CREATE_TABLE);
+        db.execSQL("drop table if exists " + Tables.News.TABLE_NAME);
+        db.execSQL("drop table if exists " + Tables.Services.TABLE_NAME);
+        db.execSQL("drop table if exists " + Tables.Doctors.TABLE_NAME);
+    }
+    private void createTables(SQLiteDatabase db)
+    {
+        db.execSQL(Tables.News.CREATE_TABLE);
+        db.execSQL(Tables.Services.CREATE_TABLE);
+        db.execSQL(Tables.Doctors.CREATE_TABLE);
     }
 }

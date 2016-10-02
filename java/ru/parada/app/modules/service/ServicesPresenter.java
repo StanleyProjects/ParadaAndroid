@@ -2,14 +2,14 @@ package ru.parada.app.modules.service;
 
 import ru.parada.app.connection.ParadaService;
 import ru.parada.app.connection.Request;
-import ru.parada.app.contracts.ServiceContract;
+import ru.parada.app.contracts.ServicesContract;
 
-public class ServicePresenter
-    implements ServiceContract.Presenter
+public class ServicesPresenter
+    implements ServicesContract.Presenter
 {
-    private ServiceContract.View view;
+    private ServicesContract.View view;
 
-    public ServicePresenter(ServiceContract.View v)
+    public ServicesPresenter(ServicesContract.View v)
     {
         this.view = v;
     }

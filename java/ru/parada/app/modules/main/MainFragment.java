@@ -9,8 +9,8 @@ import ru.parada.app.contracts.MainContract;
 import ru.parada.app.units.MVPFragment;
 
 public class MainFragment
-        extends MVPFragment<MainPresenter, MainFragmentListener>
-    implements MainContract.View
+        extends MVPFragment<MainContract.Presenter, MainFragmentListener>
+        implements MainContract.View
 {
     static public MainFragment newInstanse(MainFragmentListener l)
     {
@@ -33,12 +33,12 @@ public class MainFragment
     @Override
     protected void initViews(View v)
     {
-        setClickListener(v.findViewById(R.id.menu));
+        setClickListener(v.findViewById(R.id.menu), v.findViewById(R.id.services));
         phone = (ImageView)v.findViewById(R.id.phone);
     }
 
     @Override
-    protected MainPresenter setPresenter()
+    protected MainContract.Presenter setPresenter()
     {
         return new MainPresenter(this);
     }
@@ -59,6 +59,9 @@ public class MainFragment
                     case R.id.phone:
                         getPresenter().phoneSwitch();
                         break;
+                    case R.id.services:
+                        getListener().openService();
+                        break;
                 }
             }
         };
@@ -68,8 +71,10 @@ public class MainFragment
     protected void init()
     {
         setClickListener(phone);
-        btn_phone = getActivity().getResources().getDrawable(R.drawable.btn_phone);
-        btn_phone_close = getActivity().getResources().getDrawable(R.drawable.btn_phone_close);
+        btn_phone = getActivity().getResources()
+                                 .getDrawable(R.drawable.btn_phone);
+        btn_phone_close = getActivity().getResources()
+                                       .getDrawable(R.drawable.btn_phone_close);
         phoneOpen();
         getPresenter().loadNews();
     }

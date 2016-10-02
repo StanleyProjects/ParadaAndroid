@@ -25,12 +25,22 @@ public class GeneralPresenter
     }
 
     @Override
-    public void setServiceScreen()
+    public void setServicesScreen()
     {
-        if(currentScreen != Screens.SERVICE_SCREEN)
+        if(currentScreen != Screens.SERVICES_SCREEN)
         {
-            currentScreen = Screens.SERVICE_SCREEN;
-            view.showServiceScreen();
+            currentScreen = Screens.SERVICES_SCREEN;
+            view.showServicesScreen();
+        }
+    }
+
+    @Override
+    public void setDoctorsScreen()
+    {
+        if(currentScreen != Screens.DOCTORS_SCREEN)
+        {
+            currentScreen = Screens.DOCTORS_SCREEN;
+            view.showDoctorsScreen();
         }
     }
 }

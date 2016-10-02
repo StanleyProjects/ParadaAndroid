@@ -5,12 +5,14 @@ public interface GeneralContract
     interface View
     {
         void showMainScreen();
-        void showServiceScreen();
+        void showServicesScreen();
+        void showDoctorsScreen();
     }
 
     interface Presenter
     {
         void setMainScreen();
-        void setServiceScreen();
+        void setServicesScreen();
+        void setDoctorsScreen();
     }
 }

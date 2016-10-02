@@ -5,12 +5,14 @@ public interface MenuContract
     interface View
     {
         void setMain();
-        void setService();
+        void setServices();
+        void setDoctors();
     }
 
     interface Presenter
     {
         void openMain();
-        void openService();
+        void openServices();
+        void openDoctors();
     }
 }

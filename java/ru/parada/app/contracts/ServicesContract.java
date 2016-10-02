@@ -1,6 +1,6 @@
 package ru.parada.app.contracts;
 
-public interface ServiceContract
+public interface ServicesContract
 {
     interface View
     {

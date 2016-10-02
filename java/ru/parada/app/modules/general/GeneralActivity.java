@@ -8,26 +8,37 @@ import android.support.v7.app.AppCompatActivity;
 
 import ru.parada.app.R;
 import ru.parada.app.contracts.GeneralContract;
+import ru.parada.app.modules.doctors.DoctorsFragment;
+import ru.parada.app.modules.doctors.DoctorsFragmentListener;
 import ru.parada.app.modules.main.MainFragment;
 import ru.parada.app.modules.main.MainFragmentListener;
 import ru.parada.app.modules.menu.MenuFragment;
-import ru.parada.app.modules.service.ServiceFragment;
+import ru.parada.app.modules.menu.MenuFragmentListener;
+import ru.parada.app.modules.service.ServicesFragment;
+import ru.parada.app.modules.service.ServicesFragmentListener;
 
 public class GeneralActivity
         extends AppCompatActivity
     implements GeneralContract.View
 {
-    private final MenuFragment menuFragment = MenuFragment.newInstanse(new MenuFragment.MenuFragmentListener()
+    private final MenuFragment menuFragment = MenuFragment.newInstanse(new MenuFragmentListener()
     {
         @Override
         public void openMain()
         {
             presenter.setMainScreen();
         }
+
         @Override
-        public void openService()
+        public void openServices()
         {
-            presenter.setServiceScreen();
+            presenter.setServicesScreen();
+        }
+
+        @Override
+        public void openDoctors()
+        {
+            presenter.setDoctorsScreen();
         }
     });
     private final MainFragment mainFragment = MainFragment.newInstanse(new MainFragmentListener()
@@ -37,8 +48,22 @@ public class GeneralActivity
         {
             GeneralActivity.this.openMenu();
         }
+
+        @Override
+        public void openService()
+        {
+            presenter.setServicesScreen();
+        }
     });
-    private final ServiceFragment serviceFragment = ServiceFragment.newInstanse(new ServiceFragment.ServiceFragmentListener()
+    private final ServicesFragment servicesFragment = ServicesFragment.newInstanse(new ServicesFragmentListener()
+    {
+        @Override
+        public void openMenu()
+        {
+            GeneralActivity.this.openMenu();
+        }
+    });
+    private final DoctorsFragment doctorsFragment = DoctorsFragment.newInstanse(new DoctorsFragmentListener()
     {
         @Override
         public void openMenu()
@@ -78,9 +103,16 @@ public class GeneralActivity
     }
 
     @Override
-    public void showServiceScreen()
+    public void showServicesScreen()
     {
-        replaceFragment(serviceFragment);
+        replaceFragment(servicesFragment);
+        closeMenu();
+    }
+
+    @Override
+    public void showDoctorsScreen()
+    {
+        replaceFragment(doctorsFragment);
         closeMenu();
     }
 

@@ -12,21 +12,31 @@ public abstract class MVPFragment<PRESENTER, LISTENER>
     private PRESENTER presenter;
     private LISTENER listener;
     private View.OnClickListener clickListener;
+    private View mainView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        View v = inflater.inflate(setContentView(), container, false);
-        this.clickListener = setClickListener();
-        this.presenter = setPresenter();
-        initViews(v);
-        init();
-        return v;
+        if(mainView == null)
+        {
+            mainView = inflater.inflate(setContentView(), container, false);
+            this.clickListener = setClickListener();
+            this.presenter = setPresenter();
+            initViews(mainView);
+            init();
+        }
+        return mainView;
     }
 
-    protected void setClickListener(View v)
+    protected void setClickListener(View... views)
     {
-        v.setOnClickListener(clickListener);
+        for(View v : views)
+        {
+            if(v != null)
+            {
+                v.setOnClickListener(clickListener);
+            }
+        }
     }
 
     public void setListener(LISTENER listener)
