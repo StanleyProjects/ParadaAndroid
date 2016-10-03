@@ -26,7 +26,8 @@ public class DoctorsPresenter
     @Override
     public void loadDoctors()
     {
-        view.showWaiter();
+//        updateDoctors();
+        view.updateDoctors(SQliteApi.getInstanse().getDoctors().getAll());
         new Request(ParadaService.BASE_URL, ParadaService.GET_DOCTORS).execute(new Request.RequestListener()
         {
             @Override
@@ -69,7 +70,6 @@ public class DoctorsPresenter
             @Override
             public void error(Exception error)
             {
-                updateDoctors();
             }
         });
     }
@@ -81,7 +81,6 @@ public class DoctorsPresenter
             @Override
             public void run()
             {
-                view.hideWaiter();
                 view.updateDoctors(SQliteApi.getInstanse().getDoctors().getAll());
             }
         });

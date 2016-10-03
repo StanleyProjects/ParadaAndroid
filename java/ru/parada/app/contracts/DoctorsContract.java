@@ -12,8 +12,6 @@ public interface DoctorsContract
 
     interface View
     {
-        void showWaiter();
-        void hideWaiter();
         void updateDoctors(ListModel<ListItemModel> data);
     }
 

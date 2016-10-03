@@ -25,6 +25,11 @@ public abstract class MVPFragment<PRESENTER, LISTENER>
             initViews(mainView);
             init();
         }
+//        mainView = inflater.inflate(setContentView(), container, false);
+//        this.clickListener = setClickListener();
+//        this.presenter = setPresenter();
+//        initViews(mainView);
+//        init();
         return mainView;
     }
 

@@ -1,10 +1,13 @@
 package ru.parada.app.modules.general;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.View;
 
 import ru.parada.app.R;
 import ru.parada.app.contracts.GeneralContract;
@@ -19,7 +22,7 @@ import ru.parada.app.modules.service.ServicesFragmentListener;
 
 public class GeneralActivity
         extends AppCompatActivity
-    implements GeneralContract.View
+        implements GeneralContract.View
 {
     private final MenuFragment menuFragment = MenuFragment.newInstanse(new MenuFragmentListener()
     {
@@ -72,7 +75,7 @@ public class GeneralActivity
         }
     });
 
-    private DrawerLayout main_drawer;
+    private View menu;
 
     private GeneralContract.Presenter presenter;
 
@@ -84,15 +87,27 @@ public class GeneralActivity
         initViews();
         init();
     }
+
     private void initViews()
     {
-        main_drawer = (DrawerLayout)findViewById(R.id.main_drawer);
+        menu = findViewById(R.id.menu);
+        findViewById(R.id.close_menu).setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                closeMenu();
+            }
+        });
     }
+
     private void init()
     {
         presenter = new GeneralPresenter(this);
-        getSupportFragmentManager().beginTransaction().add(R.id.main_frame, mainFragment).commit();
-        getSupportFragmentManager().beginTransaction().add(R.id.menu_frame, menuFragment).commit();
+        getSupportFragmentManager().beginTransaction()
+                                   .add(R.id.menu_frame, menuFragment)
+                                   .commit();
+        showMainScreen();
     }
 
     @Override
@@ -118,15 +133,20 @@ public class GeneralActivity
 
     private void openMenu()
     {
-        main_drawer.openDrawer(GravityCompat.START);
+        menu.setVisibility(View.VISIBLE);
     }
+
     private void closeMenu()
     {
-        main_drawer.closeDrawer(GravityCompat.START);
+        menu.setVisibility(View.GONE);
     }
 
     private void replaceFragment(Fragment fragment)
     {
-        getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, fragment).commit();
+        getSupportFragmentManager().beginTransaction()
+                                   .replace(R.id.main_frame, fragment)
+                                   .commit();
+        Log.e(this.getClass()
+                  .getCanonicalName(), "" + getSupportFragmentManager().getFragments());
     }
 }

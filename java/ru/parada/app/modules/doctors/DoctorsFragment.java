@@ -20,7 +20,6 @@ public class DoctorsFragment
         return fragment;
     }
 
-    private View waiter;
     private RecyclerView list;
 
     private DoctorsAdapter adapter;
@@ -35,7 +34,6 @@ public class DoctorsFragment
     protected void initViews(View v)
     {
         setClickListener(v.findViewById(R.id.menu));
-        waiter = v.findViewById(R.id.waiter);
         list = (RecyclerView)v.findViewById(R.id.list);
     }
 
@@ -71,20 +69,7 @@ public class DoctorsFragment
         });
         list.setLayoutManager(new LinearLayoutManager(getActivity()));
         list.setAdapter(adapter);
-        setClickListener(waiter);
         getPresenter().loadDoctors();
-    }
-
-    @Override
-    public void showWaiter()
-    {
-        waiter.setVisibility(View.VISIBLE);
-    }
-
-    @Override
-    public void hideWaiter()
-    {
-        waiter.setVisibility(View.GONE);
     }
 
     @Override

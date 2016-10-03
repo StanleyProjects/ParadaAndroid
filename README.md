@@ -9,9 +9,10 @@ App for paradaplastika.ru
 	minSdkVersion 15
 	targetSdkVersion 24
 	versionBase 1610020401
-	versionCode 1610020517
-	versionName "0.10dctrs"
+	versionCode 1610031427
+	versionName "0.12fxbgnvgtndrwr"
 ## dependencies
 	com.android.support:appcompat-v7:24.2.1
+	com.android.support:recyclerview-v7:24.2.1
 ## gradle
     2.2.0
