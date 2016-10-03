@@ -146,7 +146,5 @@ public class GeneralActivity
         getSupportFragmentManager().beginTransaction()
                                    .replace(R.id.main_frame, fragment)
                                    .commit();
-        Log.e(this.getClass()
-                  .getCanonicalName(), "" + getSupportFragmentManager().getFragments());
     }
 }

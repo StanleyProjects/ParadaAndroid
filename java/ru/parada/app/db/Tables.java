@@ -6,6 +6,7 @@ import android.provider.BaseColumns;
 import java.util.HashMap;
 
 import ru.parada.app.contracts.DoctorsContract;
+import ru.parada.app.contracts.ImagesContract;
 import ru.parada.app.units.ListModel;
 
 public interface Tables
@@ -78,7 +79,6 @@ public interface Tables
                 Columns.first_name + " text" + "," +
                 Columns.last_name + " text" + "," +
                 Columns.middle_name + " text" + "," +
-                Columns.photo_url + " text" + "," +
                 Columns.descr + " text" + "," +
                 Columns.first_position + " text" + "," +
                 Columns.second_position + " text" + "," +
@@ -93,7 +93,6 @@ public interface Tables
             String first_name = TABLE_NAME + "_" + "first_name";
             String last_name = TABLE_NAME + "_" + "last_name";
             String middle_name = TABLE_NAME + "_" + "middle_name";
-            String photo_url = TABLE_NAME + "_" + "photo_url";
             String first_position = TABLE_NAME + "_" + "first_position";
             String second_position = TABLE_NAME + "_" + "second_position";
             String third_position = TABLE_NAME + "_" + "third_position";
@@ -104,5 +103,28 @@ public interface Tables
         DoctorsContract.ListItemModel getOneFromId(int id);
         long insertOne(DoctorsContract.ListItemModel item);
         void clearTable();
+    }
+    interface Images
+    {
+        String TABLE_NAME = Images.class.getCanonicalName().toLowerCase().replace('.', '_') + "_table";
+        String CREATE_TABLE = "create table if not exists " + TABLE_NAME + " (" +
+                BaseColumns._ID + " integer primary key autoincrement, " +
+                Columns.image_path + " text" + "," +
+                Columns.image_url + " text" + "," +
+                Columns.entity_id + " integer" + "," +
+                Columns.type + " integer" + //"," +
+                ");";
+        interface Columns
+        {
+            String type = TABLE_NAME + "_" + "type";
+            String entity_id = TABLE_NAME + "_" + "entity_id";
+            String image_path = TABLE_NAME + "_" + "image_path";
+            String image_url = TABLE_NAME + "_" + "image_url";
+        }
+
+        ImagesContract.Model getOneFromTypeAndEntityId(int type, int id);
+        String getUrl(int type, int id);
+        long insertOne(ImagesContract.Model item);
+//        long removeOneFromTypeAndEntityId(int type, int id);
     }
 }

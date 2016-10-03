@@ -13,7 +13,9 @@
             android:layout_width="128dp"
             android:layout_height="match_parent">
             <ImageView
+                android:id="@+id/photo"
                 android:src="@drawable/photo_placeholder"
+                android:scaleType="centerCrop"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
             <ImageView

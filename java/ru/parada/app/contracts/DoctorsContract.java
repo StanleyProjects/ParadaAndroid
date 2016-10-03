@@ -7,6 +7,7 @@ public interface DoctorsContract
     interface ListItemModel
     {
         int getId();
+        String getPhotoPath();
         String getLastName();
         String getFirstName();
         String getMiddleName();

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.ViewGroup;
 
 import ru.parada.app.contracts.DoctorsContract;
+import ru.parada.app.managers.FoldersManager;
 import ru.parada.app.units.ListModel;
 import ru.parada.app.units.ModelAdapter;
 
@@ -26,6 +27,14 @@ public class DoctorsAdapter
     @Override
     protected void setData(DoctorHolder holder, DoctorsContract.ListItemModel item)
     {
+        if(item.getPhotoPath() != null)
+        {
+            holder.setPhoto(FoldersManager.getImagesDirectory() + "/" + item.getPhotoPath());
+        }
+        else
+        {
+            holder.setPhotoPlaceHolder();
+        }
         holder.setLastName(item.getLastName());
         holder.setFirstMiddleName(item.getFirstName(), item.getMiddleName());
         holder.setFirstPosition(item.getFirstPosition());

@@ -4,14 +4,21 @@ import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.UUID;
 
+import ru.parada.app.connection.Connection;
+import ru.parada.app.connection.DownloadFile;
 import ru.parada.app.connection.ParadaService;
 import ru.parada.app.connection.Request;
 import ru.parada.app.contracts.DoctorsContract;
+import ru.parada.app.contracts.ImagesContract;
 import ru.parada.app.db.SQliteApi;
 import ru.parada.app.json.JSONParser;
+import ru.parada.app.managers.FoldersManager;
 
 public class DoctorsPresenter
     implements DoctorsContract.Presenter
@@ -40,10 +47,8 @@ public class DoctorsPresenter
                 }
                 catch(Exception e)
                 {
-                    Log.e(this.getClass().getCanonicalName(), "parse json: " + answer);
                     return;
                 }
-                Log.e(this.getClass().getCanonicalName(), "load news: " + answer);
                 SQliteApi.getInstanse().getDoctors().clearTable();
                 SQliteApi.getInstanse().startTransaction();
                 for(Object doctor : doctors)
@@ -55,6 +60,7 @@ public class DoctorsPresenter
                     final String first_position = (String)((HashMap)doctor).get("first_position");
                     final String second_position = (String)((HashMap)doctor).get("second_position");
                     final String third_position = (String)((HashMap)doctor).get("third_position");
+                    checkImage(id, (String)((HashMap)doctor).get("photo_url"));
                     SQliteApi.getInstanse().getDoctors().insertOne(new DoctorsContract.ListItemModel()
                     {
                         @Override
@@ -62,6 +68,13 @@ public class DoctorsPresenter
                         {
                             return id;
                         }
+
+                        @Override
+                        public String getPhotoPath()
+                        {
+                            return null;
+                        }
+
                         @Override
                         public String getLastName()
                         {
@@ -105,8 +118,80 @@ public class DoctorsPresenter
             @Override
             public void error(Exception error)
             {
+                Log.e(this.getClass().getName(), "load doctors " + error.getMessage());
             }
         });
+    }
+
+    private void checkImage(final int id, final String photo_url)
+    {
+        final ImagesContract.Model oldModel = SQliteApi.getInstanse().getImages().getOneFromTypeAndEntityId(ImagesContract.Types.DOCTORS_TYPE, id);
+//        if(model == null)
+//        {
+//            Log.e(this.getClass().getCanonicalName(), "model null");
+//            return;
+//        }
+//        if(model.getImageUrl() == null)
+//        {
+//            Log.e(this.getClass().getCanonicalName(), "model ImageUrl null");
+//            return;
+//        }
+//        String imageUrl = model.getImageUrl();
+//        if(!imageUrl.equals(photo_url))
+//        {
+//            Log.e(this.getClass().getCanonicalName(), !model.getImageUrl().equals(photo_url) + "");
+//            return;
+//        }
+        if(oldModel == null || oldModel.getImageUrl() == null || !oldModel.getImageUrl().equals(photo_url))
+        {
+            final String relativePath = "doctor-" + UUID.randomUUID().toString() + ".jpg";
+            String fullPath = FoldersManager.getImagesDirectory() + "/" + relativePath;
+            new DownloadFile(fullPath, photo_url).download(new DownloadFile.DownloadFileListener()
+            {
+                @Override
+                public void answer(File file)
+                {
+                    SQliteApi.getInstanse().getImages().insertOne(new ImagesContract.Model()
+                    {
+                        @Override
+                        public int getId()
+                        {
+                            return 0;
+                        }
+                        @Override
+                        public int getType()
+                        {
+                            return ImagesContract.Types.DOCTORS_TYPE;
+                        }
+                        @Override
+                        public int getEntityId()
+                        {
+                            return id;
+                        }
+                        @Override
+                        public String getImagePath()
+                        {
+                            return relativePath;
+                        }
+                        @Override
+                        public String getImageUrl()
+                        {
+                            return photo_url;
+                        }
+                    });
+                    if(oldModel != null && oldModel.getImagePath() != null)
+                    {
+                        new File(oldModel.getImagePath()).delete();
+                    }
+                    updateDoctors();
+                }
+                @Override
+                public void error(Exception error)
+                {
+                    Log.e(this.getClass().getName(), "download photo " + error.getMessage());
+                }
+            });
+        }
     }
 
     private void updateDoctors()

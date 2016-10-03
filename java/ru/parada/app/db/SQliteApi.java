@@ -9,13 +9,14 @@ import android.provider.BaseColumns;
 import java.util.HashMap;
 
 import ru.parada.app.contracts.DoctorsContract;
+import ru.parada.app.contracts.ImagesContract;
 import ru.parada.app.modules.doctors.DoctorsCursorListModel;
 import ru.parada.app.units.ListModel;
 
 public class SQliteApi
 {
     static private final String DB_NAME = "parada";
-    static private final int DB_VERSION = 1610032313;
+    static private final int DB_VERSION = 1610040237;
     static private volatile SQliteApi instanse;
 
     static public SQliteApi getInstanse()
@@ -73,7 +74,14 @@ public class SQliteApi
         @Override
         public ListModel<DoctorsContract.ListItemModel> getAll()
         {
-            return new DoctorsCursorListModel(sdb.query(TABLE_NAME, null, null, null, null, null, null));
+//            return new DoctorsCursorListModel(sdb.query(TABLE_NAME, null, null, null, null, null, null));
+            Cursor cursor = sdb.rawQuery("SELECT * "
+                    + "FROM " + TABLE_NAME + " "
+                    + "LEFT JOIN " + Tables.Images.TABLE_NAME + " "
+                    + "ON " + Tables.Images.Columns.type + " = " + ImagesContract.Types.DOCTORS_TYPE + " "
+                    + "AND " + Tables.Doctors.TABLE_NAME + "." + BaseColumns._ID + " = " + Tables.Images.Columns.entity_id, new String[]{});
+            return new DoctorsCursorListModel(cursor);
+
         }
 
         @Override
@@ -81,7 +89,9 @@ public class SQliteApi
         {
             Cursor cursor = sdb.rawQuery("SELECT * "
                     + "FROM " + TABLE_NAME + " "
-                    + "WHERE " + BaseColumns._ID + "=" + id, new String[]{});
+                    + "WHERE " + BaseColumns._ID + "=" + id + " "
+                    + "LEFT JOIN " + Tables.Images.TABLE_NAME + " "
+                    + "ON " + Tables.Images.Columns.type + " = " + ImagesContract.Types.DOCTORS_TYPE, new String[]{});
             if(!cursor.moveToFirst())
             {
                 cursor.close();
@@ -93,6 +103,7 @@ public class SQliteApi
             final String first_position = cursor.getString(cursor.getColumnIndex(Columns.first_position));
             final String second_position = cursor.getString(cursor.getColumnIndex(Columns.second_position));
             final String third_position = cursor.getString(cursor.getColumnIndex(Columns.third_position));
+            final String photoPath = cursor.getString(cursor.getColumnIndex(Tables.Images.Columns.image_path));
             cursor.close();
             return new DoctorsContract.ListItemModel()
             {
@@ -101,6 +112,13 @@ public class SQliteApi
                 {
                     return id;
                 }
+
+                @Override
+                public String getPhotoPath()
+                {
+                    return photoPath;
+                }
+
                 @Override
                 public String getLastName()
                 {
@@ -152,6 +170,80 @@ public class SQliteApi
             sdb.execSQL(Tables.Doctors.CREATE_TABLE);
         }
     };
+    private final Tables.Images images = new Tables.Images()
+    {
+        @Override
+        public ImagesContract.Model getOneFromTypeAndEntityId(final int type, final int id)
+        {
+            Cursor cursor = sdb.rawQuery("SELECT * "
+                    + "FROM " + TABLE_NAME + " "
+                    + "WHERE " + Columns.type + "=" + type + " "
+                    + "AND " + Columns.entity_id + "=" + id, new String[]{});
+            if(!cursor.moveToFirst())
+            {
+                cursor.close();
+                return null;
+            }
+            final int entity_id = cursor.getInt(cursor.getColumnIndex(Columns.entity_id));
+            final String image_path = cursor.getString(cursor.getColumnIndex(Columns.image_path));
+            final String image_url = cursor.getString(cursor.getColumnIndex(Columns.image_url));
+            cursor.close();
+            return new ImagesContract.Model()
+            {
+                @Override
+                public int getId()
+                {
+                    return id;
+                }
+                @Override
+                public int getType()
+                {
+                    return type;
+                }
+                @Override
+                public int getEntityId()
+                {
+                    return entity_id;
+                }
+                @Override
+                public String getImagePath()
+                {
+                    return image_path;
+                }
+
+                @Override
+                public String getImageUrl()
+                {
+                    return image_url;
+                }
+            };
+        }
+
+        @Override
+        public String getUrl(int type, int id)
+        {
+            Cursor cursor = sdb.rawQuery("SELECT * "
+                    + "FROM " + TABLE_NAME + " "
+                    + "WHERE " + BaseColumns._ID + "=" + id + " "
+                    + "AND " + Columns.entity_id + "=" + type, new String[]{});
+            if(!cursor.moveToFirst())
+            {
+                cursor.close();
+                return null;
+            }
+            String image_url = cursor.getString(cursor.getColumnIndex(Columns.image_url));
+            cursor.close();
+            return image_url;
+        }
+
+        @Override
+        public long insertOne(ImagesContract.Model item)
+        {
+            sdb.delete(TABLE_NAME, Columns.entity_id + "=" + item.getEntityId() + " "
+                    + "AND " + Columns.type + "=" + item.getType(), new String[]{});
+            return sdb.insert(TABLE_NAME, null, ContentDriver.getImageContentValues(item));
+        }
+    };
 
     private SQliteApi()
     {
@@ -199,17 +291,23 @@ public class SQliteApi
     {
         return doctors;
     }
+    public Tables.Images getImages()
+    {
+        return images;
+    }
 
     private void clearTables(SQLiteDatabase db)
     {
         db.execSQL("drop table if exists " + Tables.News.TABLE_NAME);
         db.execSQL("drop table if exists " + Tables.Services.TABLE_NAME);
         db.execSQL("drop table if exists " + Tables.Doctors.TABLE_NAME);
+        db.execSQL("drop table if exists " + Tables.Images.TABLE_NAME);
     }
     private void createTables(SQLiteDatabase db)
     {
         db.execSQL(Tables.News.CREATE_TABLE);
         db.execSQL(Tables.Services.CREATE_TABLE);
         db.execSQL(Tables.Doctors.CREATE_TABLE);
+        db.execSQL(Tables.Images.CREATE_TABLE);
     }
 }

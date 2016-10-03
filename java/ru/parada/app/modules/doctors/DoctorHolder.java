@@ -1,8 +1,10 @@
 package ru.parada.app.modules.doctors;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import ru.parada.app.R;
@@ -11,24 +13,42 @@ import ru.parada.app.units.AdapterHolder;
 public class DoctorHolder
     extends AdapterHolder
 {
+    private ImageView photo;
     private TextView last_name;
     private TextView first_middle_name;
     private TextView first_position;
     private TextView second_position;
     private TextView third_position;
 
+    private Drawable photo_placeholder;
+
     public DoctorHolder(Context context, ViewGroup parent)
     {
         super(context, parent, R.layout.doctor_list_item);
+        photo = (ImageView) itemView.findViewById(R.id.photo);
         last_name = (TextView) itemView.findViewById(R.id.last_name);
         first_middle_name = (TextView) itemView.findViewById(R.id.first_middle_name);
         first_position = (TextView) itemView.findViewById(R.id.first_position);
         second_position = (TextView) itemView.findViewById(R.id.second_position);
         third_position = (TextView) itemView.findViewById(R.id.third_position);
-        second_position.setVisibility(View.GONE);
-        third_position.setVisibility(View.GONE);
+        photo_placeholder = context.getResources().getDrawable(R.drawable.photo_placeholder);
     }
 
+    public void setPhotoPlaceHolder()
+    {
+        photo.setImageDrawable(photo_placeholder);
+    }
+    public void setPhoto(String photoPath)
+    {
+        if(photoPath == null || photoPath.length() == 0)
+        {
+            photo.setImageDrawable(photo_placeholder);
+        }
+        else
+        {
+            photo.setImageDrawable(Drawable.createFromPath(photoPath));
+        }
+    }
     public void setLastName(String lastName)
     {
         last_name.setText(lastName);

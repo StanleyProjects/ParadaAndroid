@@ -6,6 +6,7 @@ import android.provider.BaseColumns;
 import java.util.HashMap;
 
 import ru.parada.app.contracts.DoctorsContract;
+import ru.parada.app.contracts.ImagesContract;
 
 public class ContentDriver
 {
@@ -28,6 +29,16 @@ public class ContentDriver
         content.put(Tables.Doctors.Columns.first_position, item.getFirstPosition());
         content.put(Tables.Doctors.Columns.second_position, item.getSecondPosition());
         content.put(Tables.Doctors.Columns.third_position, item.getThirdPosition());
+        return content;
+    }
+
+    static public ContentValues getImageContentValues(ImagesContract.Model item)
+    {
+        ContentValues content = new ContentValues();
+        content.put(Tables.Images.Columns.type, item.getType());
+        content.put(Tables.Images.Columns.entity_id, item.getEntityId());
+        content.put(Tables.Images.Columns.image_path, item.getImagePath());
+        content.put(Tables.Images.Columns.image_url, item.getImageUrl());
         return content;
     }
 }

@@ -35,6 +35,18 @@ public class DoctorsCursorListModel
             {
                 return data.getInt(data.getColumnIndex(BaseColumns._ID));
             }
+
+            @Override
+            public String getPhotoPath()
+            {
+                int photoPathColumnIndex = data.getColumnIndex(Tables.Images.Columns.image_path);
+                if(photoPathColumnIndex < 0)
+                {
+                    return null;
+                }
+                return data.getString(photoPathColumnIndex);
+            }
+
             @Override
             public String getLastName()
             {
