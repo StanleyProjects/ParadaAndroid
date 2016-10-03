@@ -27,6 +27,10 @@ public class DoctorsAdapter
     protected void setData(DoctorHolder holder, DoctorsContract.ListItemModel item)
     {
         holder.setLastName(item.getLastName());
+        holder.setFirstMiddleName(item.getFirstName(), item.getMiddleName());
+        holder.setFirstPosition(item.getFirstPosition());
+        holder.setSecondPosition(item.getSecondPosition());
+        holder.setThirdPosition(item.getThirdPosition());
     }
 
     @Override

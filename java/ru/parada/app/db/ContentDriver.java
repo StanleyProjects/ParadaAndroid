@@ -23,6 +23,11 @@ public class ContentDriver
         ContentValues content = new ContentValues();
         content.put(BaseColumns._ID, item.getId());
         content.put(Tables.Doctors.Columns.last_name, item.getLastName());
+        content.put(Tables.Doctors.Columns.first_name, item.getFirstName());
+        content.put(Tables.Doctors.Columns.middle_name, item.getMiddleName());
+        content.put(Tables.Doctors.Columns.first_position, item.getFirstPosition());
+        content.put(Tables.Doctors.Columns.second_position, item.getSecondPosition());
+        content.put(Tables.Doctors.Columns.third_position, item.getThirdPosition());
         return content;
     }
 }

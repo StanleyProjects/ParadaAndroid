@@ -1,17 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:background="@color/white"
               android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="56dp">
-    <TextView
-        android:id="@+id/last_name"
-        android:gravity="center"
-        android:textColor="@color/black"
+              android:layout_height="128dp">
+    <LinearLayout
         android:layout_weight="1"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"/>
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
+        <FrameLayout
+            android:padding="16dp"
+            android:layout_width="128dp"
+            android:layout_height="match_parent">
+            <ImageView
+                android:src="@drawable/photo_placeholder"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+            <ImageView
+                android:tint="@color/white"
+                android:src="@drawable/photo_mask"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+        </FrameLayout>
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:layout_marginTop="12dp"
+                android:id="@+id/last_name"
+                android:text="last_name"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:textSize="18dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:layout_marginBottom="12dp"
+                android:id="@+id/first_middle_name"
+                android:text="first_middle_name"
+                android:textColor="@color/black"
+                android:textSize="16dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/first_position"
+                android:text="first_position"
+                android:textSize="12dp"
+                android:textColor="@color/colorPrimary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/second_position"
+                android:text="second_position"
+                android:textColor="@color/colorPrimary"
+                android:textSize="12dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/third_position"
+                android:text="third_position"
+                android:textColor="@color/colorPrimary"
+                android:textSize="12dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+    </LinearLayout>
     <View
-        android:background="@color/colorPrimary"
+        android:background="@color/greytext"
         android:layout_width="match_parent"
         android:layout_height="1px"/>
 </LinearLayout>

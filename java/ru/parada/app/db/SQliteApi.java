@@ -15,7 +15,7 @@ import ru.parada.app.units.ListModel;
 public class SQliteApi
 {
     static private final String DB_NAME = "parada";
-    static private final int DB_VERSION = 1610020401;
+    static private final int DB_VERSION = 1610032313;
     static private volatile SQliteApi instanse;
 
     static public SQliteApi getInstanse()
@@ -88,6 +88,11 @@ public class SQliteApi
                 return null;
             }
             final String last_name = cursor.getString(cursor.getColumnIndex(Columns.last_name));
+            final String first_name = cursor.getString(cursor.getColumnIndex(Columns.first_name));
+            final String middle_name = cursor.getString(cursor.getColumnIndex(Columns.middle_name));
+            final String first_position = cursor.getString(cursor.getColumnIndex(Columns.first_position));
+            final String second_position = cursor.getString(cursor.getColumnIndex(Columns.second_position));
+            final String third_position = cursor.getString(cursor.getColumnIndex(Columns.third_position));
             cursor.close();
             return new DoctorsContract.ListItemModel()
             {
@@ -100,6 +105,36 @@ public class SQliteApi
                 public String getLastName()
                 {
                     return last_name;
+                }
+
+                @Override
+                public String getFirstName()
+                {
+                    return first_name;
+                }
+
+                @Override
+                public String getMiddleName()
+                {
+                    return middle_name;
+                }
+
+                @Override
+                public String getFirstPosition()
+                {
+                    return first_position;
+                }
+
+                @Override
+                public String getSecondPosition()
+                {
+                    return second_position;
+                }
+
+                @Override
+                public String getThirdPosition()
+                {
+                    return third_position;
                 }
             };
         }

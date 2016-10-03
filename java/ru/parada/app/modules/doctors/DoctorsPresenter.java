@@ -50,6 +50,11 @@ public class DoctorsPresenter
                 {
                     final int id = Integer.parseInt((String)((HashMap)doctor).get("id"));
                     final String last_name = (String)((HashMap)doctor).get("last_name");
+                    final String first_name = (String)((HashMap)doctor).get("first_name");
+                    final String middle_name = (String)((HashMap)doctor).get("middle_name");
+                    final String first_position = (String)((HashMap)doctor).get("first_position");
+                    final String second_position = (String)((HashMap)doctor).get("second_position");
+                    final String third_position = (String)((HashMap)doctor).get("third_position");
                     SQliteApi.getInstanse().getDoctors().insertOne(new DoctorsContract.ListItemModel()
                     {
                         @Override
@@ -61,6 +66,36 @@ public class DoctorsPresenter
                         public String getLastName()
                         {
                             return last_name;
+                        }
+
+                        @Override
+                        public String getFirstName()
+                        {
+                            return first_name;
+                        }
+
+                        @Override
+                        public String getMiddleName()
+                        {
+                            return middle_name;
+                        }
+
+                        @Override
+                        public String getFirstPosition()
+                        {
+                            return first_position;
+                        }
+
+                        @Override
+                        public String getSecondPosition()
+                        {
+                            return second_position;
+                        }
+
+                        @Override
+                        public String getThirdPosition()
+                        {
+                            return third_position;
                         }
                     });
                 }

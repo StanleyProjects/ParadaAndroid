@@ -40,6 +40,36 @@ public class DoctorsCursorListModel
             {
                 return data.getString(data.getColumnIndex(Tables.Doctors.Columns.last_name));
             }
+
+            @Override
+            public String getFirstName()
+            {
+                return data.getString(data.getColumnIndex(Tables.Doctors.Columns.first_name));
+            }
+
+            @Override
+            public String getMiddleName()
+            {
+                return data.getString(data.getColumnIndex(Tables.Doctors.Columns.middle_name));
+            }
+
+            @Override
+            public String getFirstPosition()
+            {
+                return data.getString(data.getColumnIndex(Tables.Doctors.Columns.first_position));
+            }
+
+            @Override
+            public String getSecondPosition()
+            {
+                return data.getString(data.getColumnIndex(Tables.Doctors.Columns.second_position));
+            }
+
+            @Override
+            public String getThirdPosition()
+            {
+                return data.getString(data.getColumnIndex(Tables.Doctors.Columns.third_position));
+            }
         };
     }
 

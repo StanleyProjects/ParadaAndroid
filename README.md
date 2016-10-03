@@ -1,16 +1,14 @@
+![compileSdkVersion 24](https://img.shields.io/badge/compileSdkVersion-24-yellow.svg?style=true) ![buildToolsVersion 24.0.1](https://img.shields.io/badge/buildToolsVersion-24.0.1-blue.svg?style=true) ![minSdkVersion 15](https://img.shields.io/badge/minSdkVersion-15-red.svg?style=true) ![targetSdkVersion 24](https://img.shields.io/badge/targetSdkVersion-24-green.svg?style=true)
+
 # ParadaDroid
-App for paradaplastika.ru
+App for [paradaplastika.ru](http://paradaplastika.ru/)
 
 # Build information
 ## defaultConfig
-    compileSdkVersion 24
-    buildToolsVersion "24.0.1"
 	applicationId "ru.parada.app"
-	minSdkVersion 15
-	targetSdkVersion 24
-	versionBase 1610020401
-	versionCode 1610031427
-	versionName "0.12fxbgnvgtndrwr"
+	versionBase 1610032313
+	versionCode 1610032357
+	versionName "0.16dtrdt"
 ## dependencies
 	com.android.support:appcompat-v7:24.2.1
 	com.android.support:recyclerview-v7:24.2.1

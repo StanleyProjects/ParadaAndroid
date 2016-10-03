@@ -6,4 +6,7 @@
     <string name="main">Главная</string>
     <string name="service">Услуги</string>
     <string name="doctors">Специалисты</string>
+
+    <string name="first_middle_name" formatted="false">%s %s</string>
+    <string name="doctor_position">• %s</string>
 </resources>

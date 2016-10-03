@@ -8,6 +8,11 @@ public interface DoctorsContract
     {
         int getId();
         String getLastName();
+        String getFirstName();
+        String getMiddleName();
+        String getFirstPosition();
+        String getSecondPosition();
+        String getThirdPosition();
     }
 
     interface View
