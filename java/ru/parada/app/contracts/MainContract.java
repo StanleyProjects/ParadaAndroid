@@ -13,4 +13,10 @@ public interface MainContract
         void phoneSwitch();
         void loadNews();
     }
+
+    interface Behaviour
+    {
+        void openMenu();
+        void openService();
+    }
 }

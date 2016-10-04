@@ -25,4 +25,9 @@ public interface DoctorsContract
     {
         void loadDoctors();
     }
+
+    interface Behaviour
+    {
+        void openMenu();
+    }
 }

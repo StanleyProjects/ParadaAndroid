@@ -6,11 +6,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public abstract class MVPFragment<PRESENTER, LISTENER>
+public abstract class MVPFragment<PRESENTER, BEHAVIOUR>
     extends Fragment
 {
+    static public <P, B> Fragment setMVPFragment(MVPFragment<P, B> fragment, P presenter, B behaviour)
+    {
+        fragment.setPresenter(presenter);
+        fragment.setBehaviour(behaviour);
+        return fragment;
+    }
+
     private PRESENTER presenter;
-    private LISTENER listener;
+    private BEHAVIOUR behaviour;
     private View.OnClickListener clickListener;
     private View mainView;
 
@@ -21,7 +28,6 @@ public abstract class MVPFragment<PRESENTER, LISTENER>
         {
             mainView = inflater.inflate(setContentView(), container, false);
             this.clickListener = setClickListener();
-            this.presenter = setPresenter();
             initViews(mainView);
             init();
         }
@@ -44,15 +50,19 @@ public abstract class MVPFragment<PRESENTER, LISTENER>
         }
     }
 
-    public void setListener(LISTENER listener)
+    private void setBehaviour(BEHAVIOUR b)
     {
-        this.listener = listener;
+        this.behaviour = b;
     }
-    protected LISTENER getListener()
+    protected BEHAVIOUR getBehaviour()
     {
-        return listener;
+        return behaviour;
     }
 
+    private void setPresenter(PRESENTER p)
+    {
+        this.presenter = p;
+    }
     protected PRESENTER getPresenter()
     {
         return presenter;
@@ -60,7 +70,6 @@ public abstract class MVPFragment<PRESENTER, LISTENER>
 
     abstract protected int setContentView();
     abstract protected void initViews(View v);
-    abstract protected PRESENTER setPresenter();
     abstract protected View.OnClickListener setClickListener();
     abstract protected void init();
 }

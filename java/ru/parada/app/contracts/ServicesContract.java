@@ -11,4 +11,9 @@ public interface ServicesContract
     {
         void loadServices();
     }
+
+    interface Behaviour
+    {
+        void openMenu();
+    }
 }

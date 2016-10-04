@@ -1,79 +1,34 @@
 package ru.parada.app.modules.general;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 
 import ru.parada.app.R;
+import ru.parada.app.contracts.DoctorsContract;
 import ru.parada.app.contracts.GeneralContract;
+import ru.parada.app.contracts.MainContract;
+import ru.parada.app.contracts.MenuContract;
+import ru.parada.app.contracts.ServicesContract;
 import ru.parada.app.modules.doctors.DoctorsFragment;
-import ru.parada.app.modules.doctors.DoctorsFragmentListener;
+import ru.parada.app.modules.doctors.DoctorsPresenter;
 import ru.parada.app.modules.main.MainFragment;
-import ru.parada.app.modules.main.MainFragmentListener;
+import ru.parada.app.modules.main.MainPresenter;
 import ru.parada.app.modules.menu.MenuFragment;
-import ru.parada.app.modules.menu.MenuFragmentListener;
+import ru.parada.app.modules.menu.MenuPresenter;
 import ru.parada.app.modules.service.ServicesFragment;
-import ru.parada.app.modules.service.ServicesFragmentListener;
+import ru.parada.app.modules.service.ServicesPresenter;
+import ru.parada.app.units.MVPFragment;
 
 public class GeneralActivity
         extends AppCompatActivity
         implements GeneralContract.View
 {
-    private final MenuFragment menuFragment = MenuFragment.newInstanse(new MenuFragmentListener()
-    {
-        @Override
-        public void openMain()
-        {
-            presenter.setMainScreen();
-        }
-
-        @Override
-        public void openServices()
-        {
-            presenter.setServicesScreen();
-        }
-
-        @Override
-        public void openDoctors()
-        {
-            presenter.setDoctorsScreen();
-        }
-    });
-    private final MainFragment mainFragment = MainFragment.newInstanse(new MainFragmentListener()
-    {
-        @Override
-        public void openMenu()
-        {
-            GeneralActivity.this.openMenu();
-        }
-
-        @Override
-        public void openService()
-        {
-            presenter.setServicesScreen();
-        }
-    });
-    private final ServicesFragment servicesFragment = ServicesFragment.newInstanse(new ServicesFragmentListener()
-    {
-        @Override
-        public void openMenu()
-        {
-            GeneralActivity.this.openMenu();
-        }
-    });
-    private final DoctorsFragment doctorsFragment = DoctorsFragment.newInstanse(new DoctorsFragmentListener()
-    {
-        @Override
-        public void openMenu()
-        {
-            GeneralActivity.this.openMenu();
-        }
-    });
+    private Fragment menuFragment;
+    private Fragment mainFragment;
+    private Fragment servicesFragment;
+    private Fragment doctorsFragment;
 
     private View menu;
 
@@ -103,11 +58,86 @@ public class GeneralActivity
 
     private void init()
     {
+        initFragments();
         presenter = new GeneralPresenter(this);
         getSupportFragmentManager().beginTransaction()
                                    .add(R.id.menu_frame, menuFragment)
                                    .commit();
         showMainScreen();
+    }
+
+    private void initFragments()
+    {
+        initMenuFragment();
+        initMainFragment();
+        initServicesFragment();
+        initDoctorsFragment();
+    }
+
+    private void initMenuFragment()
+    {
+        MenuFragment fragment = new MenuFragment();
+        menuFragment = MVPFragment.setMVPFragment(fragment, new MenuPresenter(fragment), new MenuContract.Behaviour()
+        {
+            @Override
+            public void openMain()
+            {
+                presenter.setMainScreen();
+            }
+
+            @Override
+            public void openServices()
+            {
+                presenter.setServicesScreen();
+            }
+
+            @Override
+            public void openDoctors()
+            {
+                presenter.setDoctorsScreen();
+            }
+        });
+    }
+    private void initMainFragment()
+    {
+        MainFragment fragment = new MainFragment();
+        mainFragment = MVPFragment.setMVPFragment(fragment, new MainPresenter(fragment), new MainContract.Behaviour()
+        {
+            @Override
+            public void openMenu()
+            {
+                GeneralActivity.this.openMenu();
+            }
+            @Override
+            public void openService()
+            {
+                presenter.setServicesScreen();
+            }
+        });
+    }
+    private void initServicesFragment()
+    {
+        ServicesFragment fragment = new ServicesFragment();
+        servicesFragment = MVPFragment.setMVPFragment(fragment, new ServicesPresenter(fragment), new ServicesContract.Behaviour()
+        {
+            @Override
+            public void openMenu()
+            {
+                GeneralActivity.this.openMenu();
+            }
+        });
+    }
+    private void initDoctorsFragment()
+    {
+        DoctorsFragment fragment = new DoctorsFragment();
+        doctorsFragment = MVPFragment.setMVPFragment(fragment, new DoctorsPresenter(fragment), new DoctorsContract.Behaviour()
+        {
+            @Override
+            public void openMenu()
+            {
+                GeneralActivity.this.openMenu();
+            }
+        });
     }
 
     @Override

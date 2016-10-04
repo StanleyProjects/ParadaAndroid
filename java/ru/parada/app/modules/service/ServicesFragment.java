@@ -7,16 +7,9 @@ import ru.parada.app.contracts.ServicesContract;
 import ru.parada.app.units.MVPFragment;
 
 public class ServicesFragment
-        extends MVPFragment<ServicesContract.Presenter, ServicesFragmentListener>
+        extends MVPFragment<ServicesContract.Presenter, ServicesContract.Behaviour>
         implements ServicesContract.View
 {
-    static public ServicesFragment newInstanse(ServicesFragmentListener l)
-    {
-        ServicesFragment fragment = new ServicesFragment();
-        fragment.setListener(l);
-        return fragment;
-    }
-
     @Override
     protected int setContentView()
     {
@@ -30,12 +23,6 @@ public class ServicesFragment
     }
 
     @Override
-    protected ServicesContract.Presenter setPresenter()
-    {
-        return new ServicesPresenter(this);
-    }
-
-    @Override
     protected View.OnClickListener setClickListener()
     {
         return new View.OnClickListener()
@@ -46,7 +33,7 @@ public class ServicesFragment
                 switch(v.getId())
                 {
                     case R.id.menu:
-                        getListener().openMenu();
+                        getBehaviour().openMenu();
                         break;
                 }
             }

@@ -10,7 +10,9 @@ import java.util.HashMap;
 
 import ru.parada.app.contracts.DoctorsContract;
 import ru.parada.app.contracts.ImagesContract;
+import ru.parada.app.modules.doctors.Doctor;
 import ru.parada.app.modules.doctors.DoctorsCursorListModel;
+import ru.parada.app.modules.images.ImageModel;
 import ru.parada.app.units.ListModel;
 
 public class SQliteApi
@@ -74,14 +76,11 @@ public class SQliteApi
         @Override
         public ListModel<DoctorsContract.ListItemModel> getAll()
         {
-//            return new DoctorsCursorListModel(sdb.query(TABLE_NAME, null, null, null, null, null, null));
-            Cursor cursor = sdb.rawQuery("SELECT * "
+            return new DoctorsCursorListModel(sdb.rawQuery("SELECT * "
                     + "FROM " + TABLE_NAME + " "
                     + "LEFT JOIN " + Tables.Images.TABLE_NAME + " "
                     + "ON " + Tables.Images.Columns.type + " = " + ImagesContract.Types.DOCTORS_TYPE + " "
-                    + "AND " + Tables.Doctors.TABLE_NAME + "." + BaseColumns._ID + " = " + Tables.Images.Columns.entity_id, new String[]{});
-            return new DoctorsCursorListModel(cursor);
-
+                    + "AND " + Tables.Doctors.TABLE_NAME + "." + BaseColumns._ID + " = " + Tables.Images.Columns.entity_id, new String[]{}));
         }
 
         @Override
@@ -97,64 +96,16 @@ public class SQliteApi
                 cursor.close();
                 return null;
             }
-            final String last_name = cursor.getString(cursor.getColumnIndex(Columns.last_name));
-            final String first_name = cursor.getString(cursor.getColumnIndex(Columns.first_name));
-            final String middle_name = cursor.getString(cursor.getColumnIndex(Columns.middle_name));
-            final String first_position = cursor.getString(cursor.getColumnIndex(Columns.first_position));
-            final String second_position = cursor.getString(cursor.getColumnIndex(Columns.second_position));
-            final String third_position = cursor.getString(cursor.getColumnIndex(Columns.third_position));
-            final String photoPath = cursor.getString(cursor.getColumnIndex(Tables.Images.Columns.image_path));
+            DoctorsContract.ListItemModel doctor = new Doctor(id,
+                    cursor.getString(cursor.getColumnIndex(Columns.last_name)),
+                    cursor.getString(cursor.getColumnIndex(Columns.first_name)),
+                    cursor.getString(cursor.getColumnIndex(Columns.middle_name)),
+                    cursor.getString(cursor.getColumnIndex(Columns.first_position)),
+                    cursor.getString(cursor.getColumnIndex(Columns.second_position)),
+                    cursor.getString(cursor.getColumnIndex(Columns.third_position)),
+                    cursor.getString(cursor.getColumnIndex(Tables.Images.Columns.image_path)));
             cursor.close();
-            return new DoctorsContract.ListItemModel()
-            {
-                @Override
-                public int getId()
-                {
-                    return id;
-                }
-
-                @Override
-                public String getPhotoPath()
-                {
-                    return photoPath;
-                }
-
-                @Override
-                public String getLastName()
-                {
-                    return last_name;
-                }
-
-                @Override
-                public String getFirstName()
-                {
-                    return first_name;
-                }
-
-                @Override
-                public String getMiddleName()
-                {
-                    return middle_name;
-                }
-
-                @Override
-                public String getFirstPosition()
-                {
-                    return first_position;
-                }
-
-                @Override
-                public String getSecondPosition()
-                {
-                    return second_position;
-                }
-
-                @Override
-                public String getThirdPosition()
-                {
-                    return third_position;
-                }
-            };
+            return doctor;
         }
 
         @Override
@@ -184,39 +135,12 @@ public class SQliteApi
                 cursor.close();
                 return null;
             }
-            final int entity_id = cursor.getInt(cursor.getColumnIndex(Columns.entity_id));
-            final String image_path = cursor.getString(cursor.getColumnIndex(Columns.image_path));
-            final String image_url = cursor.getString(cursor.getColumnIndex(Columns.image_url));
+            ImagesContract.Model model = new ImageModel(id, type,
+                    cursor.getInt(cursor.getColumnIndex(Columns.entity_id)),
+                    cursor.getString(cursor.getColumnIndex(Columns.image_path)),
+                    cursor.getString(cursor.getColumnIndex(Columns.image_url)));
             cursor.close();
-            return new ImagesContract.Model()
-            {
-                @Override
-                public int getId()
-                {
-                    return id;
-                }
-                @Override
-                public int getType()
-                {
-                    return type;
-                }
-                @Override
-                public int getEntityId()
-                {
-                    return entity_id;
-                }
-                @Override
-                public String getImagePath()
-                {
-                    return image_path;
-                }
-
-                @Override
-                public String getImageUrl()
-                {
-                    return image_url;
-                }
-            };
+            return model;
         }
 
         @Override

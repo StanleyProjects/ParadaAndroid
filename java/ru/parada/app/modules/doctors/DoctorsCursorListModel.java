@@ -12,10 +12,6 @@ public class DoctorsCursorListModel
 {
     private Cursor data;
 
-    public DoctorsCursorListModel()
-    {
-
-    }
     public DoctorsCursorListModel(Cursor d)
     {
         this.data = d;

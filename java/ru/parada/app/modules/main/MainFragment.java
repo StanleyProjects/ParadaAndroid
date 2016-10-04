@@ -9,16 +9,9 @@ import ru.parada.app.contracts.MainContract;
 import ru.parada.app.units.MVPFragment;
 
 public class MainFragment
-        extends MVPFragment<MainContract.Presenter, MainFragmentListener>
+        extends MVPFragment<MainContract.Presenter, MainContract.Behaviour>
         implements MainContract.View
 {
-    static public MainFragment newInstanse(MainFragmentListener l)
-    {
-        MainFragment fragment = new MainFragment();
-        fragment.setListener(l);
-        return fragment;
-    }
-
     private ImageView phone;
 
     private Drawable btn_phone;
@@ -38,12 +31,6 @@ public class MainFragment
     }
 
     @Override
-    protected MainContract.Presenter setPresenter()
-    {
-        return new MainPresenter(this);
-    }
-
-    @Override
     protected View.OnClickListener setClickListener()
     {
         return new View.OnClickListener()
@@ -54,13 +41,13 @@ public class MainFragment
                 switch(v.getId())
                 {
                     case R.id.menu:
-                        getListener().openMenu();
+                        getBehaviour().openMenu();
                         break;
                     case R.id.phone:
                         getPresenter().phoneSwitch();
                         break;
                     case R.id.services:
-                        getListener().openService();
+                        getBehaviour().openService();
                         break;
                 }
             }

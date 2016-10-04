@@ -7,16 +7,9 @@ import ru.parada.app.contracts.MenuContract;
 import ru.parada.app.units.MVPFragment;
 
 public class MenuFragment
-        extends MVPFragment<MenuContract.Presenter, MenuFragmentListener>
+        extends MVPFragment<MenuContract.Presenter, MenuContract.Behaviour>
         implements MenuContract.View
 {
-    static public MenuFragment newInstanse(MenuFragmentListener l)
-    {
-        MenuFragment fragment = new MenuFragment();
-        fragment.setListener(l);
-        return fragment;
-    }
-
     @Override
     protected int setContentView()
     {
@@ -27,12 +20,6 @@ public class MenuFragment
     protected void initViews(View v)
     {
         setClickListener(v.findViewById(R.id.main), v.findViewById(R.id.service), v.findViewById(R.id.doctors));
-    }
-
-    @Override
-    protected MenuContract.Presenter setPresenter()
-    {
-        return new MenuPresenter(this);
     }
 
     @Override
@@ -67,18 +54,18 @@ public class MenuFragment
     @Override
     public void setMain()
     {
-        getListener().openMain();
+        getBehaviour().openMain();
     }
 
     @Override
     public void setServices()
     {
-        getListener().openServices();
+        getBehaviour().openServices();
     }
 
     @Override
     public void setDoctors()
     {
-        getListener().openDoctors();
+        getBehaviour().openDoctors();
     }
 }

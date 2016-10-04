@@ -6,7 +6,7 @@ public class Request
 {
     private String baseUrl;
     private String method;
-    public ArrayList<Field> fields;
+    private ArrayList<Field> fields;
 
     public Request(String u, String m)
     {
@@ -52,8 +52,8 @@ public class Request
 
     private class Field
     {
-        public String key;
-        public Object value;
+        private String key;
+        private Object value;
 
         private Field(String k, Object v)
         {

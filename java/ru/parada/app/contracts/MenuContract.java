@@ -15,4 +15,11 @@ public interface MenuContract
         void openServices();
         void openDoctors();
     }
+
+    interface Behaviour
+    {
+        void openMain();
+        void openServices();
+        void openDoctors();
+    }
 }

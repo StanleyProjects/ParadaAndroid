@@ -10,16 +10,9 @@ import ru.parada.app.units.ListModel;
 import ru.parada.app.units.MVPFragment;
 
 public class DoctorsFragment
-        extends MVPFragment<DoctorsContract.Presenter, DoctorsFragmentListener>
+        extends MVPFragment<DoctorsContract.Presenter, DoctorsContract.Behaviour>
         implements DoctorsContract.View
 {
-    static public DoctorsFragment newInstanse(DoctorsFragmentListener l)
-    {
-        DoctorsFragment fragment = new DoctorsFragment();
-        fragment.setListener(l);
-        return fragment;
-    }
-
     private RecyclerView list;
 
     private DoctorsAdapter adapter;
@@ -38,12 +31,6 @@ public class DoctorsFragment
     }
 
     @Override
-    protected DoctorsContract.Presenter setPresenter()
-    {
-        return new DoctorsPresenter(this);
-    }
-
-    @Override
     protected View.OnClickListener setClickListener()
     {
         return new View.OnClickListener()
@@ -54,7 +41,7 @@ public class DoctorsFragment
                 switch(v.getId())
                 {
                     case R.id.menu:
-                        getListener().openMenu();
+                        getBehaviour().openMenu();
                         break;
                 }
             }
