@@ -10,10 +10,23 @@ public class MenuFragment
         extends MVPFragment<MenuContract.Presenter, MenuContract.Behaviour>
         implements MenuContract.View
 {
+    static public MenuFragment newInstanse(MenuContract.Behaviour behaviour)
+    {
+        MenuFragment fragment = new MenuFragment();
+        fragment.setBehaviour(behaviour);
+        return fragment;
+    }
+
     @Override
     protected int setContentView()
     {
         return R.layout.menu_fragment;
+    }
+
+    @Override
+    protected MenuContract.Presenter setPresenter()
+    {
+        return new MenuPresenter(this);
     }
 
     @Override

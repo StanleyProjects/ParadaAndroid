@@ -10,10 +10,23 @@ public class ServicesFragment
         extends MVPFragment<ServicesContract.Presenter, ServicesContract.Behaviour>
         implements ServicesContract.View
 {
+    static public ServicesFragment newInstanse(ServicesContract.Behaviour behaviour)
+    {
+        ServicesFragment fragment = new ServicesFragment();
+        fragment.setBehaviour(behaviour);
+        return fragment;
+    }
+
     @Override
     protected int setContentView()
     {
         return R.layout.service_fragment;
+    }
+
+    @Override
+    protected ServicesContract.Presenter setPresenter()
+    {
+        return new ServicesPresenter(this);
     }
 
     @Override

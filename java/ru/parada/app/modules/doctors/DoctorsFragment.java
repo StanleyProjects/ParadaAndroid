@@ -13,6 +13,13 @@ public class DoctorsFragment
         extends MVPFragment<DoctorsContract.Presenter, DoctorsContract.Behaviour>
         implements DoctorsContract.View
 {
+    static public DoctorsFragment newInstanse(DoctorsContract.Behaviour behaviour)
+    {
+        DoctorsFragment fragment = new DoctorsFragment();
+        fragment.setBehaviour(behaviour);
+        return fragment;
+    }
+
     private RecyclerView list;
 
     private DoctorsAdapter adapter;
@@ -21,6 +28,12 @@ public class DoctorsFragment
     protected int setContentView()
     {
         return R.layout.doctors_fragment;
+    }
+
+    @Override
+    protected DoctorsContract.Presenter setPresenter()
+    {
+        return new DoctorsPresenter(this);
     }
 
     @Override

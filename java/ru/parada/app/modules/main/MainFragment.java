@@ -12,6 +12,13 @@ public class MainFragment
         extends MVPFragment<MainContract.Presenter, MainContract.Behaviour>
         implements MainContract.View
 {
+    static public MainFragment newInstanse(MainContract.Behaviour behaviour)
+    {
+        MainFragment fragment = new MainFragment();
+        fragment.setBehaviour(behaviour);
+        return fragment;
+    }
+
     private ImageView phone;
 
     private Drawable btn_phone;
@@ -21,6 +28,12 @@ public class MainFragment
     protected int setContentView()
     {
         return R.layout.main_fragment;
+    }
+
+    @Override
+    protected MainContract.Presenter setPresenter()
+    {
+        return new MainPresenter(this);
     }
 
     @Override
