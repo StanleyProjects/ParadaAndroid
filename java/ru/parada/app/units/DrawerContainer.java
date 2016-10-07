@@ -4,12 +4,18 @@ import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Context;
+import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
+
+import ru.parada.app.utils.AndroidUtil;
 
 public class DrawerContainer
         extends FrameLayout
@@ -17,7 +23,9 @@ public class DrawerContainer
     private View drawerLayout;
 
     private AnimatorSet currentAnimation;
+    private int durationAnimation = 150;
     private float drawerPosition;
+    private int drawerWidth;
 
     private boolean drawerOpened;
     private boolean startedTouch;
@@ -25,26 +33,55 @@ public class DrawerContainer
     private float startedTrackingX;
     private float startedTrackingY;
 
-    private Drawable shadow;
+    private Drawable rightDrawable;
+
+    private Paint scrimPaint = new Paint();
 
     public DrawerContainer(Context context, AttributeSet attrs)
     {
         super(context, attrs);
+        post(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                findDrawer();
+            }
+        });
+    }
+
+    private void findDrawer()
+    {
+        for(int i = 0; i < getChildCount(); i++)
+        {
+            View v = getChildAt(i);
+            FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams)v.getLayoutParams();
+            if(lp.gravity == Gravity.START)
+            {
+                setDrawerLayout(v);
+                return;
+            }
+        }
     }
 
     public void setDrawerPosition(float value)
     {
-        Log.e(this.getClass().getCanonicalName(), "value " + value);
-        drawerPosition = value - getMeasuredWidth();
+        if(drawerLayout == null)
+        {
+            return;
+        }
+//        Log.e(this.getClass().getCanonicalName(), "value " + value);
+        drawerPosition = value - drawerWidth;
         if(drawerPosition > 0)
         {
             drawerPosition = 0;
         }
-        else if(drawerPosition < -getMeasuredWidth())
+        else if(drawerPosition < -drawerWidth)
         {
-            drawerPosition = -getMeasuredWidth();
+            drawerPosition = -drawerWidth;
         }
         drawerLayout.setTranslationX(drawerPosition);
+        invalidate();
     }
 
     public void cancelCurrentAnimation()
@@ -58,11 +95,14 @@ public class DrawerContainer
 
     public void openDrawer()
     {
+        if(drawerLayout == null)
+        {
+            return;
+        }
         cancelCurrentAnimation();
-        getDrawerLayout().setVisibility(View.VISIBLE);
         currentAnimation = new AnimatorSet();
-        currentAnimation.play(ObjectAnimator.ofFloat(this, "drawerPosition", drawerPosition + getMeasuredWidth(), getMeasuredWidth()));
-        currentAnimation.setDuration(200);
+        currentAnimation.play(ObjectAnimator.ofFloat(this, "drawerPosition", drawerPosition + drawerWidth, drawerWidth));
+        currentAnimation.setDuration(durationAnimation);
         currentAnimation.addListener(new Animator.AnimatorListener()
         {
             @Override
@@ -94,11 +134,14 @@ public class DrawerContainer
 
     public void closeDrawer()
     {
+        if(drawerLayout == null)
+        {
+            return;
+        }
         cancelCurrentAnimation();
-        getDrawerLayout().setVisibility(View.VISIBLE);
         currentAnimation = new AnimatorSet();
-        currentAnimation.play(ObjectAnimator.ofFloat(this, "drawerPosition", drawerPosition + getMeasuredWidth(), 0));
-        currentAnimation.setDuration(200);
+        currentAnimation.play(ObjectAnimator.ofFloat(this, "drawerPosition", drawerPosition + drawerWidth, 0));
+        currentAnimation.setDuration(durationAnimation);
         currentAnimation.addListener(new Animator.AnimatorListener()
         {
             @Override
@@ -131,6 +174,14 @@ public class DrawerContainer
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev)
     {
+        if(drawerOpened && ev.getX() > drawerPosition + drawerWidth)
+        {
+            if(ev.getAction() == MotionEvent.ACTION_UP && !moveProcess)
+            {
+                onTouchEvent(ev);
+            }
+            return true;
+        }
         switch(ev.getAction())
         {
             case MotionEvent.ACTION_DOWN:
@@ -149,20 +200,34 @@ public class DrawerContainer
                 {
                     float x = ev.getX() - startedTrackingX;
                     float y = ev.getY() - startedTrackingY;
-                    Log.e(this.getClass().getCanonicalName(), "x " + x + " y " + y);
-                    if(x < 2 && x > -2)
+                    double a = Math.sqrt(x*x + y*y);
+//                    Log.e(this.getClass()
+//                              .getCanonicalName(), "x " + x + " y " + y + " a " + a);
+                    if(!drawerOpened && x < 0)
+                    {
+                        return super.onInterceptTouchEvent(ev);
+                    }
+                    if(drawerOpened && x > 0)
+                    {
+                        return super.onInterceptTouchEvent(ev);
+                    }
+                    if(Math.abs(x) < 2)
                     {
                     }
-                    else if(y < 5 && y > -5)
+                    else if(Math.abs(y) < Math.abs(x)-1)
                     {
-                        Log.e(this.getClass().getCanonicalName(), "move");
+                        Log.e(this.getClass()
+                                  .getCanonicalName(), "move");
                         onTouchEvent(ev);
                     }
                     else
                     {
                         startedTouch = false;
                         moveProcess = false;
-                        closeDrawer();
+                        if(!drawerOpened)
+                        {
+                            closeDrawer();
+                        }
                     }
                 }
                 else if(moveProcess)
@@ -188,13 +253,28 @@ public class DrawerContainer
     @Override
     public boolean onTouchEvent(MotionEvent ev)
     {
+        if(drawerOpened && ev.getX() > drawerPosition + drawerWidth && !moveProcess)
+        {
+            if(ev.getAction() == MotionEvent.ACTION_UP)
+            {
+                startedTouch = false;
+                moveProcess = false;
+                closeDrawer();
+                return true;
+            }
+        }
         if(ev.getAction() == MotionEvent.ACTION_UP)
         {
             startedTouch = false;
             if(moveProcess)
             {
                 moveProcess = false;
-                if(ev.getX() - startedTrackingX > (getMeasuredWidth() / 2))
+                float x = ev.getX() - startedTrackingX;
+                if(drawerOpened)
+                {
+                    x += drawerWidth;
+                }
+                if(x > (drawerWidth / 2))
                 {
                     openDrawer();
                 }
@@ -210,33 +290,70 @@ public class DrawerContainer
             startedTouch = true;
             startedTrackingX = ev.getX();
             startedTrackingY = ev.getY();
-            Log.e(this.getClass().getCanonicalName(), "startedTrackingY " + startedTrackingY);
-            cancelCurrentAnimation();
+//            Log.e(this.getClass()
+//                      .getCanonicalName(), "startedTrackingY " + startedTrackingY);
+//            cancelCurrentAnimation();
             return true;
         }
         if(ev.getAction() == MotionEvent.ACTION_MOVE && startedTouch)
         {
             moveProcess = true;
-            if(!drawerOpened)
+            if(drawerOpened)
             {
-                setDrawerPosition(ev.getX() - startedTrackingX);
+                setDrawerPosition(drawerWidth + ev.getX() - startedTrackingX);
             }
             else
             {
-                setDrawerPosition(getMeasuredWidth() + ev.getX() - startedTrackingX);
+                setDrawerPosition(ev.getX() - startedTrackingX);
             }
             return true;
         }
         return false;
     }
 
-    public View getDrawerLayout()
+    @Override
+    protected boolean drawChild(Canvas canvas, View child, long drawingTime)
     {
-        return drawerLayout;
+        boolean result = super.drawChild(canvas, child, drawingTime);
+        float dpos = drawerPosition + drawerWidth;
+        if(child != drawerLayout)
+        {
+            float scrimOpacity = dpos / drawerWidth;
+            scrimPaint.setColor((int)(((0x99000000 & 0xff000000) >>> 24) * scrimOpacity) << 24);
+            canvas.drawRect(dpos, 0, getWidth(), getHeight(), scrimPaint);
+            if(rightDrawable != null)
+            {
+                float alpha = Math.max(0, Math.min(dpos / AndroidUtil.dp(20), 1.0f));
+                if(alpha != 0)
+                {
+                    rightDrawable.setBounds((int)dpos, child.getTop(), (int)dpos + rightDrawable.getIntrinsicWidth(), child.getBottom());
+                    rightDrawable.setAlpha((int)(0xff * alpha));
+                    rightDrawable.draw(canvas);
+                }
+            }
+        }
+        return result;
     }
 
-    public void setDrawerLayout(View d)
+    private void setDrawerLayout(View d)
     {
         this.drawerLayout = d;
+        this.drawerLayout.post(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                ViewGroup.LayoutParams lp = drawerLayout.getLayoutParams();
+                drawerWidth = getMeasuredWidth() - AndroidUtil.dp(56);
+                lp.width = drawerWidth;
+                drawerLayout.setLayoutParams(lp);
+                setDrawerPosition(0);
+            }
+        });
+    }
+
+    public void setRightDrawable(Drawable s)
+    {
+        this.rightDrawable = s;
     }
 }

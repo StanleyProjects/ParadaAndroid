@@ -17,19 +17,19 @@ public abstract class MVPFragment<PRESENTER, BEHAVIOUR>
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        if(mainView == null)
-        {
-            mainView = inflater.inflate(setContentView(), container, false);
-            this.presenter = setPresenter();
-            this.clickListener = setClickListener();
-            initViews(mainView);
-            init();
-        }
-//        mainView = inflater.inflate(setContentView(), container, false);
-//        this.clickListener = setClickListener();
-//        this.presenter = setPresenter();
-//        initViews(mainView);
-//        init();
+//        if(mainView == null)
+//        {
+//            mainView = inflater.inflate(setContentView(), container, false);
+//            this.presenter = setPresenter();
+//            this.clickListener = setClickListener();
+//            initViews(mainView);
+//            init();
+//        }
+        mainView = inflater.inflate(setContentView(), container, false);
+        this.clickListener = setClickListener();
+        this.presenter = setPresenter();
+        initViews(mainView);
+        init();
         return mainView;
     }
 
@@ -41,6 +41,14 @@ public abstract class MVPFragment<PRESENTER, BEHAVIOUR>
             {
                 v.setOnClickListener(clickListener);
             }
+        }
+    }
+
+    protected void runOnUiThread(Runnable r, long d)
+    {
+        if(mainView != null)
+        {
+            mainView.postDelayed(r, d);
         }
     }
 

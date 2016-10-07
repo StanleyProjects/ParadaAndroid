@@ -25,6 +25,12 @@ public class DoctorsFragment
     private DoctorsAdapter adapter;
 
     @Override
+    public void onPause()
+    {
+        super.onPause();
+        adapter.swapData(null);
+    }
+    @Override
     protected int setContentView()
     {
         return R.layout.doctors_fragment;
@@ -73,9 +79,16 @@ public class DoctorsFragment
     }
 
     @Override
-    public void updateDoctors(ListModel<DoctorsContract.ListItemModel> data)
+    public void updateDoctors(final ListModel<DoctorsContract.ListItemModel> data)
     {
-        adapter.swapData(data);
-        adapter.notifyDataSetChanged();
+        runOnUiThread(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                adapter.swapData(data);
+                adapter.notifyDataSetChanged();
+            }
+        }, 200);
     }
 }

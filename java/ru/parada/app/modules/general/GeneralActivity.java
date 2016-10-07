@@ -3,8 +3,6 @@ package ru.parada.app.modules.general;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
-import android.view.MotionEvent;
-import android.view.View;
 
 import ru.parada.app.R;
 import ru.parada.app.contracts.DoctorsContract;
@@ -71,7 +69,6 @@ public class GeneralActivity
     });
 
     private DrawerContainer drawerContainer;
-    private View menu;
 
     private GeneralContract.Presenter presenter;
 
@@ -79,47 +76,24 @@ public class GeneralActivity
     public void onCreate(Bundle bundle)
     {
         super.onCreate(bundle);
-//        drawerContainer = new DrawerContainer(this);
-//        drawerContainer.setParentLayout(new FrameLayout(this));
-//        drawerContainer.setDrawerLayout(new FrameLayout(this));
-//        setContentView(R.layout.general_activity);
         setContentView(R.layout.general_drawer_activity);
-//        setContentView(drawerContainer, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         initViews();
         init();
     }
 
     private void initViews()
     {
-//        menu = findViewById(R.id.menu);
         drawerContainer = (DrawerContainer)findViewById(R.id.main_drawer);
-        drawerContainer.setDrawerLayout(findViewById(R.id.menu_frame));
-//        findViewById(R.id.close_menu).setOnClickListener(new View.OnClickListener()
-//        {
-//            @Override
-//            public void onClick(View view)
-//            {
-//                closeMenu();
-//            }
-//        });
     }
 
     private void init()
     {
+//        drawerContainer.setShadow(getResources().getDrawable(R.drawable.menu_shadow));
         presenter = new GeneralPresenter(this);
         getSupportFragmentManager().beginTransaction()
-//                                   .add(R.id.drawer_id, menuFragment)
-//                                   .add(drawerContainer.getDrawerLayout().getId(), menuFragment)
                                    .add(R.id.menu_frame, menuFragment)
                                    .commit();
         showMainScreen();
-    }
-    @Override
-    public boolean onTouchEvent(MotionEvent ev)
-    {
-//        onTouchEvent(ev);
-        return super.onTouchEvent(ev);
-//        return !needTouch(ev);
     }
 
     @Override
@@ -145,13 +119,11 @@ public class GeneralActivity
 
     private void openMenu()
     {
-//        menu.setVisibility(View.VISIBLE);
         drawerContainer.openDrawer();
     }
 
     private void closeMenu()
     {
-//        menu.setVisibility(View.GONE);
         drawerContainer.closeDrawer();
     }
 

@@ -1,6 +1,7 @@
 package ru.parada.app.modules.doctors;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.ViewGroup;
 
 import ru.parada.app.contracts.DoctorsContract;
@@ -21,6 +22,7 @@ public class DoctorsAdapter
     @Override
     protected DoctorsContract.ListItemModel getItem(int position)
     {
+        Log.e(this.getClass().getCanonicalName(), "pos " + position);
         return data.getItem(position);
     }
 

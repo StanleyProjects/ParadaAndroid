@@ -1,7 +1,5 @@
 package ru.parada.app.modules.doctors;
 
-import android.os.Handler;
-import android.os.Looper;
 import android.util.Log;
 
 import java.io.File;
@@ -18,6 +16,7 @@ import ru.parada.app.db.SQliteApi;
 import ru.parada.app.json.JSONParser;
 import ru.parada.app.managers.FoldersManager;
 import ru.parada.app.modules.images.ImageModel;
+import ru.parada.app.units.ListModel;
 
 public class DoctorsPresenter
     implements DoctorsContract.Presenter
@@ -32,7 +31,14 @@ public class DoctorsPresenter
     @Override
     public void loadDoctors()
     {
-        view.updateDoctors(SQliteApi.getInstanse().getDoctors().getAll());
+        new Thread(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                updateDoctors(SQliteApi.getInstanse().getDoctors().getAll());
+            }
+        }).start();
         new Request(ParadaService.BASE_URL, ParadaService.GET_DOCTORS).execute(new Request.RequestListener()
         {
             @Override
@@ -63,7 +69,7 @@ public class DoctorsPresenter
                             (String)((HashMap)doctor).get("third_position")));
                 }
                 SQliteApi.getInstanse().endTransaction();
-                updateDoctors();
+                updateDoctors(SQliteApi.getInstanse().getDoctors().getAll());
             }
             @Override
             public void error(Exception error)
@@ -90,7 +96,7 @@ public class DoctorsPresenter
                     {
                         new File(oldModel.getImagePath()).delete();
                     }
-                    updateDoctors();
+                    updateDoctors(SQliteApi.getInstanse().getDoctors().getAll());
                 }
                 @Override
                 public void error(Exception error)
@@ -101,15 +107,8 @@ public class DoctorsPresenter
         }
     }
 
-    private void updateDoctors()
+    private void updateDoctors(ListModel<DoctorsContract.ListItemModel> data)
     {
-        new Handler(Looper.getMainLooper()).post(new Runnable()
-        {
-            @Override
-            public void run()
-            {
-                view.updateDoctors(SQliteApi.getInstanse().getDoctors().getAll());
-            }
-        });
+        view.updateDoctors(data);
     }
 }

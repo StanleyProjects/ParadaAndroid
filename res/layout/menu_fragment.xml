@@ -70,5 +70,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
         </LinearLayout>
+        <View
+            android:background="@color/colorAccent"
+            android:layout_width="wrap_content"
+            android:layout_height="444dp"/>
     </LinearLayout>
 </ScrollView>

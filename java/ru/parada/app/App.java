@@ -1,10 +1,10 @@
 package ru.parada.app;
 
 import android.app.Application;
-import android.util.Log;
 
 import ru.parada.app.db.SQliteApi;
 import ru.parada.app.managers.FoldersManager;
+import ru.parada.app.utils.AndroidUtil;
 
 public class App
         extends Application
@@ -15,5 +15,6 @@ public class App
         super.onCreate();
         SQliteApi.getInstanse().createDB(getApplicationContext());
         FoldersManager.setFilesDirectory(getApplicationContext().getFilesDir().getAbsolutePath());
+        AndroidUtil.setDensity(getApplicationContext().getResources().getDisplayMetrics().density);
     }
 }
