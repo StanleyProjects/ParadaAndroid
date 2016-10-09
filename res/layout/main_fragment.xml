@@ -90,4 +90,41 @@
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
+    <TextView
+        android:background="@color/greylight"
+        android:text="@string/news"
+        android:textSize="16dp"
+        android:textColor="@color/grey"
+        android:textAllCaps="true"
+        android:paddingLeft="24dp"
+        android:gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"/>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/list"
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"/>
+    <FrameLayout
+        android:layout_gravity="center_horizontal"
+        android:layout_width="256dp"
+        android:layout_height="96dp">
+        <TextView
+            android:gravity="center"
+            android:text="@string/all_news"
+            android:textSize="16dp"
+            android:textColor="@color/colorAccent"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/accent_border"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+        <ImageView
+            android:layout_gravity="center_vertical|right"
+            android:src="@mipmap/arrow_right"
+            android:tint="@color/colorAccent"
+            android:layout_marginRight="16dp"
+            android:layout_width="16dp"
+            android:layout_height="16dp"/>
+    </FrameLayout>
 </LinearLayout>

@@ -122,8 +122,11 @@ public class DoctorsFragment
 
     private void searchClear()
     {
-        search.setText("");
-        getPresenter().updateDoctors();
+        if(search.getText().toString().length() > 0)
+        {
+            search.setText("");
+            getPresenter().updateDoctors();
+        }
     }
 
     @Override

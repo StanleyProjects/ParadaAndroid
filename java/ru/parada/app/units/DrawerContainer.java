@@ -257,6 +257,7 @@ public class DrawerContainer
     @Override
     public boolean onTouchEvent(MotionEvent ev)
     {
+        float factor = 2;
         if(drawerOpened && ev.getX() > drawerPosition + drawerWidth && !moveProcess)
         {
             if(ev.getAction() == MotionEvent.ACTION_UP)
@@ -273,7 +274,7 @@ public class DrawerContainer
             if(moveProcess)
             {
                 moveProcess = false;
-                float x = ev.getX() - startedTrackingX;
+                float x = (ev.getX() - startedTrackingX)*factor;
                 if(drawerOpened)
                 {
                     x += drawerWidth;
@@ -304,11 +305,11 @@ public class DrawerContainer
             moveProcess = true;
             if(drawerOpened)
             {
-                setDrawerPosition(drawerWidth + ev.getX() - startedTrackingX);
+                setDrawerPosition(drawerWidth + (ev.getX() - startedTrackingX)*factor);
             }
             else
             {
-                setDrawerPosition(ev.getX() - startedTrackingX);
+                setDrawerPosition((ev.getX() - startedTrackingX)*factor);
             }
             return true;
         }

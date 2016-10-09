@@ -46,7 +46,7 @@ public class ServicesPresenter
                     Log.e(this.getClass().getName(), "parse services " + e.getMessage());
                     return;
                 }
-                SQliteApi.getInstanse().getDoctors().clearTable();
+                SQliteApi.getInstanse().getServices().clearTable();
                 SQliteApi.getInstanse().startTransaction();
                 for(Object service : services)
                 {

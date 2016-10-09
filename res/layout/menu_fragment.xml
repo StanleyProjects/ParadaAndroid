@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-              android:background="@color/white"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
     <LinearLayout
+        android:background="@color/white"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -11,6 +11,7 @@
             android:padding="16dp"
             android:scaleType="fitCenter"
             android:src="@drawable/menu_logo"
+            android:layout_marginRight="96dp"
             android:layout_width="wrap_content"
             android:layout_height="144dp"/>
         <LinearLayout
@@ -20,6 +21,7 @@
             android:layout_height="56dp">
             <ImageView
                 android:src="@mipmap/menu_main_active"
+                android:tint="@color/grey"
                 android:scaleType="fitCenter"
                 android:layout_width="24dp"
                 android:layout_marginLeft="16dp"
@@ -28,7 +30,7 @@
             <TextView
                 android:text="@string/main"
                 android:textSize="18dp"
-                android:textColor="@color/black"
+                android:textColor="@color/greydark"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
         </LinearLayout>
@@ -39,6 +41,7 @@
             android:layout_height="56dp">
             <ImageView
                 android:src="@mipmap/menu_service"
+                android:tint="@color/grey"
                 android:scaleType="fitCenter"
                 android:layout_width="24dp"
                 android:layout_marginLeft="16dp"
@@ -47,7 +50,7 @@
             <TextView
                 android:text="@string/service"
                 android:textSize="18dp"
-                android:textColor="@color/black"
+                android:textColor="@color/greydark"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
         </LinearLayout>
@@ -58,6 +61,7 @@
             android:layout_height="56dp">
             <ImageView
                 android:src="@mipmap/menu_doctors"
+                android:tint="@color/grey"
                 android:scaleType="fitCenter"
                 android:layout_width="24dp"
                 android:layout_marginLeft="16dp"
@@ -66,7 +70,7 @@
             <TextView
                 android:text="@string/doctors"
                 android:textSize="18dp"
-                android:textColor="@color/black"
+                android:textColor="@color/greydark"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
         </LinearLayout>

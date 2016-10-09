@@ -7,6 +7,7 @@ import java.util.HashMap;
 
 import ru.parada.app.contracts.DoctorsContract;
 import ru.parada.app.contracts.ImagesContract;
+import ru.parada.app.contracts.MainContract;
 import ru.parada.app.contracts.ServicesContract;
 import ru.parada.app.units.ListModel;
 
@@ -34,9 +35,11 @@ public interface Tables
             String image = TABLE_NAME + "_" + "image";
         }
 
-        Cursor getAll();
+        ListModel<MainContract.ListItemModel> getAll();
+        ListModel<MainContract.ListItemModel> getAllWithLimit(int limit);
         Cursor getOneFromId(int id);
-        long insertOne(HashMap item);
+        long insertOne(MainContract.ListItemModel item);
+        void clearTable();
     }
     interface Services
     {
@@ -71,6 +74,7 @@ public interface Tables
         ListModel<ServicesContract.ListItemModel> getAll();
         ServicesContract.ListItemModel getOneFromId(int id);
         long insertOne(ServicesContract.ListItemModel item);
+        void clearTable();
     }
     interface Doctors
     {
@@ -80,6 +84,7 @@ public interface Tables
                 Columns.first_name + " text" + "," +
                 Columns.last_name + " text" + "," +
                 Columns.middle_name + " text" + "," +
+                Columns.first_last_middle + " text" + "," +
                 Columns.descr + " text" + "," +
                 Columns.first_position + " text" + "," +
                 Columns.second_position + " text" + "," +
@@ -94,6 +99,7 @@ public interface Tables
             String first_name = TABLE_NAME + "_" + "first_name";
             String last_name = TABLE_NAME + "_" + "last_name";
             String middle_name = TABLE_NAME + "_" + "middle_name";
+            String first_last_middle = TABLE_NAME + "_" + "first_last_middle";
             String first_position = TABLE_NAME + "_" + "first_position";
             String second_position = TABLE_NAME + "_" + "second_position";
             String third_position = TABLE_NAME + "_" + "third_position";
