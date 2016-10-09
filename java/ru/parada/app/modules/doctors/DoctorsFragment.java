@@ -40,6 +40,7 @@ public class DoctorsFragment
         super.onPause();
         adapter.swapData(null);
     }
+
     @Override
     protected int setContentView()
     {
@@ -137,7 +138,5 @@ public class DoctorsFragment
                 adapter.notifyDataSetChanged();
             }
         }, 0);
-//        adapter.swapData(data);
-//        adapter.notifyDataSetChanged();
     }
 }

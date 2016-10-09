@@ -7,6 +7,7 @@ import java.util.HashMap;
 
 import ru.parada.app.contracts.DoctorsContract;
 import ru.parada.app.contracts.ImagesContract;
+import ru.parada.app.contracts.ServicesContract;
 import ru.parada.app.units.ListModel;
 
 public interface Tables
@@ -67,9 +68,9 @@ public interface Tables
             String preview = TABLE_NAME + "_" + "preview";
         }
 
-        Cursor getAll();
-        Cursor getOneFromId(int id);
-        long insertOne(HashMap item);
+        ListModel<ServicesContract.ListItemModel> getAll();
+        ServicesContract.ListItemModel getOneFromId(int id);
+        long insertOne(ServicesContract.ListItemModel item);
     }
     interface Doctors
     {

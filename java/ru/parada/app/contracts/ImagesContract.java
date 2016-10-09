@@ -5,6 +5,7 @@ public interface ImagesContract
     interface Types
     {
         int DOCTORS_TYPE = 1;
+        int SERVICES_TYPE = 2;
     }
 
     interface Model

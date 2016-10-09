@@ -10,15 +10,17 @@ import java.util.HashMap;
 
 import ru.parada.app.contracts.DoctorsContract;
 import ru.parada.app.contracts.ImagesContract;
+import ru.parada.app.contracts.ServicesContract;
 import ru.parada.app.modules.doctors.Doctor;
 import ru.parada.app.modules.doctors.DoctorsCursorListModel;
 import ru.parada.app.modules.images.ImageModel;
+import ru.parada.app.modules.services.ServicesCursorListModel;
 import ru.parada.app.units.ListModel;
 
 public class SQliteApi
 {
     static private final String DB_NAME = "parada";
-    static private final int DB_VERSION = 1610040237;
+    static private final int DB_VERSION = 1610092040;
     static private volatile SQliteApi instanse;
 
     static public SQliteApi getInstanse()
@@ -54,19 +56,23 @@ public class SQliteApi
     private final Tables.Services services = new Tables.Services()
     {
         @Override
-        public Cursor getAll()
+        public ListModel<ServicesContract.ListItemModel> getAll()
         {
-            return sdb.query(TABLE_NAME, null, null, null, null, null, null);
+            return new ServicesCursorListModel(sdb.rawQuery("SELECT * "
+                    + "FROM " + TABLE_NAME + " "
+                    + "LEFT JOIN " + Tables.Images.TABLE_NAME + " "
+                    + "ON " + Tables.Images.Columns.type + " = " + ImagesContract.Types.SERVICES_TYPE + " "
+                    + "AND " + TABLE_NAME + "." + BaseColumns._ID + " = " + Tables.Images.Columns.entity_id, new String[]{}));
         }
 
         @Override
-        public Cursor getOneFromId(int id)
+        public ServicesContract.ListItemModel getOneFromId(int id)
         {
             return null;
         }
 
         @Override
-        public long insertOne(HashMap item)
+        public long insertOne(ServicesContract.ListItemModel item)
         {
             return sdb.insertWithOnConflict(TABLE_NAME, null, ContentDriver.getServiceContentValues(item), SQLiteDatabase.CONFLICT_REPLACE);
         }
@@ -80,7 +86,7 @@ public class SQliteApi
                     + "FROM " + TABLE_NAME + " "
                     + "LEFT JOIN " + Tables.Images.TABLE_NAME + " "
                     + "ON " + Tables.Images.Columns.type + " = " + ImagesContract.Types.DOCTORS_TYPE + " "
-                    + "AND " + Tables.Doctors.TABLE_NAME + "." + BaseColumns._ID + " = " + Tables.Images.Columns.entity_id, new String[]{}));
+                    + "AND " + TABLE_NAME + "." + BaseColumns._ID + " = " + Tables.Images.Columns.entity_id, new String[]{}));
         }
 
         @Override

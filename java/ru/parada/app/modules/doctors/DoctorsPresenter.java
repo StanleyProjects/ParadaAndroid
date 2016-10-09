@@ -50,7 +50,7 @@ public class DoctorsPresenter
                 SQliteApi.getInstanse().startTransaction();
                 for(Object doctor : doctors)
                 {
-                    final int id = Integer.parseInt((String)((HashMap)doctor).get("id"));
+                    int id = Integer.parseInt((String)((HashMap)doctor).get("id"));
                     checkImage(id, (String)((HashMap)doctor).get("photo_url"));
                     SQliteApi.getInstanse().getDoctors().insertOne(new Doctor(id,
                             (String)((HashMap)doctor).get("last_name"),

@@ -13,7 +13,7 @@ import ru.parada.app.contracts.ServicesContract;
 import ru.parada.app.modules.doctors.DoctorsFragment;
 import ru.parada.app.modules.main.MainFragment;
 import ru.parada.app.modules.menu.MenuFragment;
-import ru.parada.app.modules.service.ServicesFragment;
+import ru.parada.app.modules.services.ServicesFragment;
 import ru.parada.app.units.DrawerContainer;
 
 public class GeneralActivity

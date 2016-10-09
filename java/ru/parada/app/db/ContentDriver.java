@@ -7,15 +7,15 @@ import java.util.HashMap;
 
 import ru.parada.app.contracts.DoctorsContract;
 import ru.parada.app.contracts.ImagesContract;
+import ru.parada.app.contracts.ServicesContract;
 
 public class ContentDriver
 {
-    static public ContentValues getServiceContentValues(HashMap item)
+    static public ContentValues getServiceContentValues(ServicesContract.ListItemModel item)
     {
         ContentValues content = new ContentValues();
-        content.put(BaseColumns._ID, Integer.parseInt((String)item.get("id")));
-        content.put(Tables.Services.Columns.title, (String)item.get("title"));
-        content.put(Tables.Services.Columns.descr, (String)item.get("descr"));
+        content.put(BaseColumns._ID, item.getId());
+        content.put(Tables.Services.Columns.title, item.getTitle());
         return content;
     }
 
