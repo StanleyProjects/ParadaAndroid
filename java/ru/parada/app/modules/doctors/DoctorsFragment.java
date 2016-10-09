@@ -25,6 +25,12 @@ public class DoctorsFragment
     private DoctorsAdapter adapter;
 
     @Override
+    public void onResume()
+    {
+        super.onResume();
+        getPresenter().updateDoctors();
+    }
+    @Override
     public void onPause()
     {
         super.onPause();
@@ -89,6 +95,8 @@ public class DoctorsFragment
                 adapter.swapData(data);
                 adapter.notifyDataSetChanged();
             }
-        }, 200);
+        }, 0);
+//        adapter.swapData(data);
+//        adapter.notifyDataSetChanged();
     }
 }

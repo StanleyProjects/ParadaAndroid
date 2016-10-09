@@ -93,28 +93,46 @@ public class GeneralActivity
         getSupportFragmentManager().beginTransaction()
                                    .add(R.id.menu_frame, menuFragment)
                                    .commit();
-        showMainScreen();
+        replaceFragment(mainFragment);
     }
 
     @Override
     public void showMainScreen()
     {
-        replaceFragment(mainFragment);
-        closeMenu();
+        closeMenu(new DrawerContainer.AnimationEndListener()
+        {
+            @Override
+            public void onAnimationEnd()
+            {
+                replaceFragment(mainFragment);
+            }
+        });
     }
 
     @Override
     public void showServicesScreen()
     {
-        replaceFragment(servicesFragment);
-        closeMenu();
+        closeMenu(new DrawerContainer.AnimationEndListener()
+        {
+            @Override
+            public void onAnimationEnd()
+            {
+                replaceFragment(servicesFragment);
+            }
+        });
     }
 
     @Override
     public void showDoctorsScreen()
     {
-        replaceFragment(doctorsFragment);
-        closeMenu();
+        closeMenu(new DrawerContainer.AnimationEndListener()
+        {
+            @Override
+            public void onAnimationEnd()
+            {
+                replaceFragment(doctorsFragment);
+            }
+        });
     }
 
     private void openMenu()
@@ -122,9 +140,9 @@ public class GeneralActivity
         drawerContainer.openDrawer();
     }
 
-    private void closeMenu()
+    private void closeMenu(DrawerContainer.AnimationEndListener listener)
     {
-        drawerContainer.closeDrawer();
+        drawerContainer.closeDrawer(listener);
     }
 
     private void replaceFragment(Fragment fragment)

@@ -31,14 +31,6 @@ public class DoctorsPresenter
     @Override
     public void loadDoctors()
     {
-        new Thread(new Runnable()
-        {
-            @Override
-            public void run()
-            {
-                updateDoctors(SQliteApi.getInstanse().getDoctors().getAll());
-            }
-        }).start();
         new Request(ParadaService.BASE_URL, ParadaService.GET_DOCTORS).execute(new Request.RequestListener()
         {
             @Override
@@ -69,7 +61,7 @@ public class DoctorsPresenter
                             (String)((HashMap)doctor).get("third_position")));
                 }
                 SQliteApi.getInstanse().endTransaction();
-                updateDoctors(SQliteApi.getInstanse().getDoctors().getAll());
+                updateDoctors();
             }
             @Override
             public void error(Exception error)
@@ -77,6 +69,12 @@ public class DoctorsPresenter
                 Log.e(this.getClass().getName(), "load doctors " + error.getMessage());
             }
         });
+    }
+
+    @Override
+    public void updateDoctors()
+    {
+        updateDoctors(SQliteApi.getInstanse().getDoctors().getAll());
     }
 
     private void checkImage(final int id, final String photo_url)
@@ -96,7 +94,7 @@ public class DoctorsPresenter
                     {
                         new File(oldModel.getImagePath()).delete();
                     }
-                    updateDoctors(SQliteApi.getInstanse().getDoctors().getAll());
+                    updateDoctors();
                 }
                 @Override
                 public void error(Exception error)

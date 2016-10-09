@@ -132,7 +132,7 @@ public class DrawerContainer
         currentAnimation.start();
     }
 
-    public void closeDrawer()
+    public void closeDrawer(final AnimationEndListener listener)
     {
         if(drawerLayout == null)
         {
@@ -154,6 +154,10 @@ public class DrawerContainer
             public void onAnimationEnd(Animator animator)
             {
                 drawerOpened = false;
+                if(listener != null)
+                {
+                    listener.onAnimationEnd();
+                }
             }
 
             @Override
@@ -226,7 +230,7 @@ public class DrawerContainer
                         moveProcess = false;
                         if(!drawerOpened)
                         {
-                            closeDrawer();
+                            closeDrawer(null);
                         }
                     }
                 }
@@ -259,7 +263,7 @@ public class DrawerContainer
             {
                 startedTouch = false;
                 moveProcess = false;
-                closeDrawer();
+                closeDrawer(null);
                 return true;
             }
         }
@@ -280,7 +284,7 @@ public class DrawerContainer
                 }
                 else
                 {
-                    closeDrawer();
+                    closeDrawer(null);
                 }
             }
             return false;
@@ -355,5 +359,10 @@ public class DrawerContainer
     public void setRightDrawable(Drawable s)
     {
         this.rightDrawable = s;
+    }
+
+    public interface AnimationEndListener
+    {
+        void onAnimationEnd();
     }
 }

@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import ru.parada.app.R;
 import ru.parada.app.units.AdapterHolder;
+import ru.parada.app.utils.AndroidUtil;
+import ru.parada.app.utils.ImagesUtils;
 
 public class DoctorHolder
     extends AdapterHolder
@@ -46,7 +48,8 @@ public class DoctorHolder
         }
         else
         {
-            photo.setImageDrawable(Drawable.createFromPath(photoPath));
+//            photo.setImageDrawable(Drawable.createFromPath(photoPath));
+            ImagesUtils.setThumpImage(photoPath, photo, AndroidUtil.dp(112), AndroidUtil.dp(112));
         }
     }
     public void setLastName(String lastName)

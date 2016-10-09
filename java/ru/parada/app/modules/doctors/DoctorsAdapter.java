@@ -22,13 +22,13 @@ public class DoctorsAdapter
     @Override
     protected DoctorsContract.ListItemModel getItem(int position)
     {
-        Log.e(this.getClass().getCanonicalName(), "pos " + position);
         return data.getItem(position);
     }
 
     @Override
     protected void setData(DoctorHolder holder, DoctorsContract.ListItemModel item)
     {
+        long b = System.currentTimeMillis();
         if(item.getPhotoPath() != null)
         {
             holder.setPhoto(FoldersManager.getImagesDirectory() + "/" + item.getPhotoPath());
@@ -42,6 +42,7 @@ public class DoctorsAdapter
         holder.setFirstPosition(item.getFirstPosition());
         holder.setSecondPosition(item.getSecondPosition());
         holder.setThirdPosition(item.getThirdPosition());
+        Log.e(this.getClass().getCanonicalName(), "setData " + (System.currentTimeMillis()-b));
     }
 
     @Override

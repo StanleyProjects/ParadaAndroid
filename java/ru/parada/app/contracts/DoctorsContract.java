@@ -24,6 +24,7 @@ public interface DoctorsContract
     interface Presenter
     {
         void loadDoctors();
+        void updateDoctors();
     }
 
     interface Behaviour

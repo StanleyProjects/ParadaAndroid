@@ -11,8 +11,8 @@ import java.util.Map;
 
 public class ImagesUtils
 {
-    static private Map<String, Drawable> imagesCache = new HashMap<>();
-    static public void addImageToCache(Drawable d, String path)
+    static private final Map<String, Drawable> imagesCache = new HashMap<>();
+    static private void addImageToCache(Drawable d, String path)
     {
         if(imagesCache.size() > 30)
         {
@@ -21,20 +21,39 @@ public class ImagesUtils
         }
         imagesCache.put(path, d);
     }
-    static public Drawable getImageToCache(String path)
+    static private Drawable getImageToCache(String path)
     {
         return imagesCache.get(path);
     }
 
-    static public void setThumpImage(String name, ImageView iv, int h, int w)
+    static public void setThumpImage(String path, ImageView iv, int h, int w)
     {
+        Drawable drawable = getImageToCache("thumb" + path);
+        if(drawable != null)
+        {
+            iv.setImageDrawable(drawable);
+            return;
+        }
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
-        BitmapFactory.decodeFile(name, options);
+        BitmapFactory.decodeFile(path, options);
         int inSampleSize = ImagesUtils.calculateInSampleSize(options, h, w);
-        Bitmap bitmap = ImagesUtils.optimize(name, inSampleSize);
+        Bitmap bitmap = ImagesUtils.optimize(path, inSampleSize);
         BitmapDrawable bd = new BitmapDrawable(iv.getContext().getResources(), bitmap);
+        addImageToCache(bd, "thumb" + path);
         iv.setImageDrawable(bd);
+    }
+    static public void setImage(String path, ImageView iv)
+    {
+        Drawable drawable = getImageToCache(path);
+        if(drawable != null)
+        {
+            iv.setImageDrawable(drawable);
+            return;
+        }
+        drawable = Drawable.createFromPath(path);
+        addImageToCache(drawable, path);
+        iv.setImageDrawable(drawable);
     }
 
     static private Bitmap optimize(String name, int inSampleSize)
