@@ -77,6 +77,19 @@ public class DoctorsPresenter
         updateDoctors(SQliteApi.getInstanse().getDoctors().getAll());
     }
 
+    @Override
+    public void searchDoctors(final String keys)
+    {
+        new Thread(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                updateDoctors(SQliteApi.getInstanse().getDoctors().getFromKeys(keys));
+            }
+        }).start();
+    }
+
     private void checkImage(final int id, final String photo_url)
     {
         final ImagesContract.Model oldModel = SQliteApi.getInstanse().getImages().getOneFromTypeAndEntityId(ImagesContract.Types.DOCTORS_TYPE, id);

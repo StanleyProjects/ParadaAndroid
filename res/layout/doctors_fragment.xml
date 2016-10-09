@@ -23,6 +23,35 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
     </FrameLayout>
+    <FrameLayout
+        android:background="@color/greylight"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="56dp">
+        <EditText
+            android:id="@+id/search"
+            android:paddingLeft="10dp"
+            android:paddingRight="38dp"
+            android:drawablePadding="8dp"
+            android:drawableLeft="@drawable/ic_search_scope"
+            android:background="@drawable/white_corners"
+            android:textColor="@color/black"
+            android:maxLength="20"
+            android:lines="1"
+            android:singleLine="true"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+        <ImageView
+            android:id="@+id/search_clear"
+            android:layout_marginRight="10dp"
+            android:layout_gravity="center_vertical|right"
+            android:src="@mipmap/close"
+            android:layout_width="20dp"
+            android:layout_height="20dp"/>
+    </FrameLayout>
     <android.support.v7.widget.RecyclerView
         android:id="@+id/list"
         android:layout_width="match_parent"

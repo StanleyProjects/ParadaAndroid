@@ -84,6 +84,19 @@ public class SQliteApi
         }
 
         @Override
+        public ListModel<DoctorsContract.ListItemModel> getFromKeys(String keys)
+        {
+            return new DoctorsCursorListModel(sdb.rawQuery("SELECT * "
+                    + "FROM " + TABLE_NAME + " "
+                    + "LEFT JOIN " + Tables.Images.TABLE_NAME + " "
+                    + "ON " + Tables.Images.Columns.type + " = " + ImagesContract.Types.DOCTORS_TYPE + " "
+                    + "AND " + TABLE_NAME + "." + BaseColumns._ID + " = " + Tables.Images.Columns.entity_id + " "
+                    + "WHERE " + Columns.first_name + " LIKE \"%" +keys+ "%\"" + " "
+                    + "OR " + Columns.last_name + " LIKE \"%" +keys+ "%\"" + " "
+                    + "OR " + Columns.middle_name + " LIKE \"%" +keys+ "%\"" + " ", new String[]{}));
+        }
+
+        @Override
         public DoctorsContract.ListItemModel getOneFromId(final int id)
         {
             Cursor cursor = sdb.rawQuery("SELECT * "

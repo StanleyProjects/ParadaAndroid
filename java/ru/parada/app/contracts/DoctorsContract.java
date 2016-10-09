@@ -25,6 +25,7 @@ public interface DoctorsContract
     {
         void loadDoctors();
         void updateDoctors();
+        void searchDoctors(String keys);
     }
 
     interface Behaviour

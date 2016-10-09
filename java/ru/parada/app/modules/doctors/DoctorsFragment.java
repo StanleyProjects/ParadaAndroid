@@ -2,7 +2,10 @@ package ru.parada.app.modules.doctors;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
+import android.widget.EditText;
 
 import ru.parada.app.R;
 import ru.parada.app.contracts.DoctorsContract;
@@ -21,6 +24,7 @@ public class DoctorsFragment
     }
 
     private RecyclerView list;
+    private EditText search;
 
     private DoctorsAdapter adapter;
 
@@ -52,7 +56,9 @@ public class DoctorsFragment
     protected void initViews(View v)
     {
         setClickListener(v.findViewById(R.id.menu));
+        setClickListener(v.findViewById(R.id.search_clear));
         list = (RecyclerView)v.findViewById(R.id.list);
+        search = (EditText)v.findViewById(R.id.search);
     }
 
     @Override
@@ -68,6 +74,9 @@ public class DoctorsFragment
                     case R.id.menu:
                         getBehaviour().openMenu();
                         break;
+                    case R.id.search_clear:
+                        searchClear();
+                        break;
                 }
             }
         };
@@ -81,7 +90,39 @@ public class DoctorsFragment
         });
         list.setLayoutManager(new LinearLayoutManager(getActivity()));
         list.setAdapter(adapter);
+        search.addTextChangedListener(new TextWatcher()
+        {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after)
+            {
+
+            }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count)
+            {
+                String keys = s.toString();
+                if(keys.length() > 0)
+                {
+                    getPresenter().searchDoctors(keys);
+                }
+                else
+                {
+                    getPresenter().updateDoctors();
+                }
+            }
+            @Override
+            public void afterTextChanged(Editable s)
+            {
+
+            }
+        });
         getPresenter().loadDoctors();
+    }
+
+    private void searchClear()
+    {
+        search.setText("");
+        getPresenter().updateDoctors();
     }
 
     @Override

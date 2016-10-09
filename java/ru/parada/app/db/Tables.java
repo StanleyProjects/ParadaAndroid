@@ -100,6 +100,7 @@ public interface Tables
         }
 
         ListModel<DoctorsContract.ListItemModel> getAll();
+        ListModel<DoctorsContract.ListItemModel> getFromKeys(String keys);
         DoctorsContract.ListItemModel getOneFromId(int id);
         long insertOne(DoctorsContract.ListItemModel item);
         void clearTable();
