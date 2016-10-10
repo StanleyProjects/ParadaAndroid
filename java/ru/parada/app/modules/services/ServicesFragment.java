@@ -25,19 +25,6 @@ public class ServicesFragment
     private ServicesAdapter adapter;
 
     @Override
-    public void onResume()
-    {
-        super.onResume();
-        getPresenter().updateServices();
-    }
-    @Override
-    public void onPause()
-    {
-        super.onPause();
-        adapter.swapData(null);
-    }
-
-    @Override
     protected int setContentView()
     {
         return R.layout.service_fragment;
@@ -82,6 +69,7 @@ public class ServicesFragment
         });
         list.setLayoutManager(new LinearLayoutManager(getActivity()));
         list.setAdapter(adapter);
+        getPresenter().updateServices();
         getPresenter().loadServices();
     }
 

@@ -1,7 +1,9 @@
 package ru.parada.app.units;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +15,7 @@ public abstract class MVPFragment<PRESENTER, BEHAVIOUR>
     private BEHAVIOUR behaviour;
     private View.OnClickListener clickListener;
     private View mainView;
+    private Handler uiHandler;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -20,6 +23,7 @@ public abstract class MVPFragment<PRESENTER, BEHAVIOUR>
         if(mainView == null)
         {
             mainView = inflater.inflate(setContentView(), container, false);
+            this.uiHandler = new Handler();
             this.presenter = setPresenter();
             this.clickListener = setClickListener();
             initViews(mainView);
@@ -46,10 +50,18 @@ public abstract class MVPFragment<PRESENTER, BEHAVIOUR>
 
     protected void runOnUiThread(Runnable r, long d)
     {
-        if(mainView != null)
+        if(d>0)
         {
-            mainView.postDelayed(r, d);
+            uiHandler.postDelayed(r, d);
         }
+        else
+        {
+            uiHandler.post(r);
+        }
+    }
+    protected void runOnUiThread(Runnable r)
+    {
+        uiHandler.post(r);
     }
 
     protected void setBehaviour(BEHAVIOUR b)

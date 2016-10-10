@@ -61,6 +61,7 @@ public class DoctorsPresenter
                             (String)((HashMap)doctor).get("third_position")));
                 }
                 SQliteApi.getInstanse().endTransaction();
+                Log.e(this.getClass().getName(), "loadDoctors");
                 updateDoctors();
             }
             @Override
@@ -74,7 +75,15 @@ public class DoctorsPresenter
     @Override
     public void updateDoctors()
     {
-        updateDoctors(SQliteApi.getInstanse().getDoctors().getAll());
+        new Thread(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                Log.e(this.getClass().getName(), "updateDoctors t " + Thread.currentThread());
+                updateDoctors(SQliteApi.getInstanse().getDoctors().getAll());
+            }
+        }).start();
     }
 
     @Override
@@ -120,6 +129,7 @@ public class DoctorsPresenter
 
     private void updateDoctors(ListModel<DoctorsContract.ListItemModel> data)
     {
+        Log.e(this.getClass().getName(), "updateDoctors " + data.getItemsCount());
         view.updateDoctors(data);
     }
 }

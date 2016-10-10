@@ -26,9 +26,23 @@ public interface MainContract
         void updateNews();
     }
 
-    interface Behaviour
+    interface MainBehaviour
+        extends ToolbarBehaviour, HeaderBehaviour, FooterBehaviour
+    {
+    }
+
+    interface ToolbarBehaviour
     {
         void openMenu();
-        void openService();
+    }
+    interface HeaderBehaviour
+    {
+        void openServices();
+        void openSubscribe();
+        void openPrices();
+    }
+    interface FooterBehaviour
+    {
+        void openAllNews();
     }
 }

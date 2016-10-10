@@ -3,6 +3,7 @@ package ru.parada.app.modules.main;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -12,10 +13,10 @@ import ru.parada.app.units.ListModel;
 import ru.parada.app.units.MVPFragment;
 
 public class MainFragment
-        extends MVPFragment<MainContract.Presenter, MainContract.Behaviour>
+        extends MVPFragment<MainContract.Presenter, MainContract.MainBehaviour>
         implements MainContract.View
 {
-    static public MainFragment newInstanse(MainContract.Behaviour behaviour)
+    static public MainFragment newInstanse(MainContract.MainBehaviour behaviour)
     {
         MainFragment fragment = new MainFragment();
         fragment.setBehaviour(behaviour);
@@ -31,22 +32,9 @@ public class MainFragment
     private Drawable btn_phone_close;
 
     @Override
-    public void onResume()
-    {
-        super.onResume();
-        getPresenter().updateNews();
-    }
-    @Override
-    public void onPause()
-    {
-        super.onPause();
-        adapter.swapData(null);
-    }
-
-    @Override
     protected int setContentView()
     {
-        return R.layout.main_fragment;
+        return R.layout.main_screen;
     }
 
     @Override
@@ -58,7 +46,7 @@ public class MainFragment
     @Override
     protected void initViews(View v)
     {
-        setClickListener(v.findViewById(R.id.menu), v.findViewById(R.id.services));
+        setClickListener(v.findViewById(R.id.menu));
         phone = (ImageView)v.findViewById(R.id.phone);
         list = (RecyclerView)v.findViewById(R.id.list);
     }
@@ -79,9 +67,6 @@ public class MainFragment
                     case R.id.phone:
                         getPresenter().phoneSwitch();
                         break;
-                    case R.id.services:
-                        getBehaviour().openService();
-                        break;
                 }
             }
         };
@@ -98,9 +83,30 @@ public class MainFragment
         phoneOpen();
         adapter = new NewsAdapter(getActivity(), new NewsAdapterListener()
         {
+            @Override
+            public void openServices()
+            {
+                getBehaviour().openServices();
+            }
+            @Override
+            public void openSubscribe()
+            {
+                getBehaviour().openSubscribe();
+            }
+            @Override
+            public void openPrices()
+            {
+                getBehaviour().openPrices();
+            }
+            @Override
+            public void openAllNews()
+            {
+                getBehaviour().openAllNews();
+            }
         });
         list.setLayoutManager(new LinearLayoutManager(getActivity()));
         list.setAdapter(adapter);
+        getPresenter().updateNews();
         getPresenter().loadNews();
     }
 
@@ -124,6 +130,7 @@ public class MainFragment
             @Override
             public void run()
             {
+                Log.e(this.getClass().getName(), "updateNews " + data.getItemsCount() + " " + Thread.currentThread());
                 adapter.swapData(data);
                 adapter.notifyDataSetChanged();
             }

@@ -11,6 +11,7 @@
     <string name="doctor_position">• %s</string>
     <string name="news">Новости</string>
     <string name="all_news">Все новости</string>
+    <string name="search">Поиск</string>
 
     <string-array name="months">
         <item>января</item>

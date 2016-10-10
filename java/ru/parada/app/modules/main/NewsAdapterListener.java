@@ -1,5 +1,8 @@
 package ru.parada.app.modules.main;
 
-public class NewsAdapterListener
+import ru.parada.app.contracts.MainContract;
+
+public interface NewsAdapterListener
+    extends MainContract.HeaderBehaviour, MainContract.FooterBehaviour
 {
 }

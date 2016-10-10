@@ -1,14 +1,15 @@
 package ru.parada.app.modules.main;
 
 import android.content.Context;
+import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
 import ru.parada.app.contracts.MainContract;
+import ru.parada.app.units.HeadFootAdapter;
 import ru.parada.app.units.ListModel;
-import ru.parada.app.units.ModelAdapter;
 
 public class NewsAdapter
-    extends ModelAdapter<OneOfNewsHolder, MainContract.ListItemModel, NewsAdapterListener>
+    extends HeadFootAdapter<OneOfNewsHolder, MainContract.ListItemModel, NewsAdapterListener>
 {
     private ListModel<MainContract.ListItemModel> data;
 
@@ -24,6 +25,48 @@ public class NewsAdapter
     }
 
     @Override
+    protected RecyclerView.ViewHolder createHeaderHolder(ViewGroup parent)
+    {
+        return new MainHeaderHolder(getContext(), parent, new MainContract.HeaderBehaviour()
+        {
+            @Override
+            public void openServices()
+            {
+                getListener().openServices();
+            }
+            @Override
+            public void openSubscribe()
+            {
+                getListener().openSubscribe();
+            }
+            @Override
+            public void openPrices()
+            {
+                getListener().openPrices();
+            }
+        });
+    }
+
+    @Override
+    protected RecyclerView.ViewHolder createFooterHolder(ViewGroup parent)
+    {
+        return new MainFooterHolder(getContext(), parent, new MainContract.FooterBehaviour()
+        {
+            @Override
+            public void openAllNews()
+            {
+                getListener().openAllNews();
+            }
+        });
+    }
+
+    @Override
+    protected OneOfNewsHolder createNormalHolder(ViewGroup parent)
+    {
+        return new OneOfNewsHolder(getContext(), parent);
+    }
+
+    @Override
     protected void setData(OneOfNewsHolder holder, MainContract.ListItemModel item)
     {
         holder.setTitle(item.getTitle());
@@ -32,13 +75,18 @@ public class NewsAdapter
     }
 
     @Override
-    public OneOfNewsHolder onCreateViewHolder(ViewGroup parent, int viewType)
+    protected void setHeader(RecyclerView.ViewHolder holder)
     {
-        return new OneOfNewsHolder(getContext(), parent);
     }
 
     @Override
-    public int getItemCount()
+    protected void setFooter(RecyclerView.ViewHolder holder)
+    {
+
+    }
+
+    @Override
+    protected int getRealCount()
     {
         if(data == null)
         {

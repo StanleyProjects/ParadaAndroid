@@ -38,7 +38,7 @@ public class GeneralActivity
             presenter.setDoctorsScreen();
         }
     });
-    private final Fragment mainFragment = MainFragment.newInstanse(new MainContract.Behaviour()
+    private final Fragment mainFragment = MainFragment.newInstanse(new MainContract.MainBehaviour()
     {
         @Override
         public void openMenu()
@@ -46,9 +46,24 @@ public class GeneralActivity
             GeneralActivity.this.openMenu();
         }
         @Override
-        public void openService()
+        public void openServices()
         {
             presenter.setServicesScreen();
+        }
+        @Override
+        public void openSubscribe()
+        {
+
+        }
+        @Override
+        public void openPrices()
+        {
+
+        }
+        @Override
+        public void openAllNews()
+        {
+
         }
     });
     private final Fragment servicesFragment = ServicesFragment.newInstanse(new ServicesContract.Behaviour()

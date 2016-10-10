@@ -4,6 +4,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
@@ -27,19 +28,6 @@ public class DoctorsFragment
     private EditText search;
 
     private DoctorsAdapter adapter;
-
-    @Override
-    public void onResume()
-    {
-        super.onResume();
-        getPresenter().updateDoctors();
-    }
-    @Override
-    public void onPause()
-    {
-        super.onPause();
-        adapter.swapData(null);
-    }
 
     @Override
     protected int setContentView()
@@ -117,6 +105,8 @@ public class DoctorsFragment
 
             }
         });
+        Log.e(this.getClass().getName(), " - updateDoctors");
+        getPresenter().updateDoctors();
         getPresenter().loadDoctors();
     }
 
@@ -139,6 +129,7 @@ public class DoctorsFragment
             {
                 adapter.swapData(data);
                 adapter.notifyDataSetChanged();
+                Log.e(this.getClass().getName(), "updateDoctors " + data.getItemsCount());
             }
         }, 0);
     }

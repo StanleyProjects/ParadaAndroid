@@ -81,11 +81,20 @@ public class MainPresenter
     @Override
     public void updateNews()
     {
-        updateNews(SQliteApi.getInstanse().getNews().getAllWithLimit(2));
+        new Thread(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                Log.e(this.getClass().getName(), "updateNews " + Thread.currentThread());
+                updateNews(SQliteApi.getInstanse().getNews().getAllWithLimit(2));
+            }
+        }).start();
     }
 
     private void updateNews(ListModel<MainContract.ListItemModel> data)
     {
+        Log.e(this.getClass().getName(), "updateNews " + data.getItemsCount() + " view " + view);
         view.updateNews(data);
     }
 }

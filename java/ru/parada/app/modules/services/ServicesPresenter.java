@@ -96,11 +96,19 @@ public class ServicesPresenter
     @Override
     public void updateServices()
     {
-        updateServices(SQliteApi.getInstanse().getServices().getAll());
+        new Thread(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                updateServices(SQliteApi.getInstanse().getServices().getAll());
+            }
+        }).start();
     }
 
     private void updateServices(ListModel<ServicesContract.ListItemModel> data)
     {
+        //Log.e(this.getClass().getName(), "updateServices " + data.getItemsCount());
         view.updateServices(data);
     }
 }
