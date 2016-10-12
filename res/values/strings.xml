@@ -12,6 +12,10 @@
     <string name="news">Новости</string>
     <string name="all_news">Все новости</string>
     <string name="search">Поиск</string>
+    <string name="phone">Телефон</string>
+    <string name="sms">Сообщения</string>
+    <string name="whatsapp">WhatsApp</string>
+    <string name="viber">Viber</string>
 
     <string-array name="months">
         <item>января</item>

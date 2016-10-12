@@ -28,6 +28,7 @@ public class MainPresenter
     @Override
     public void phoneSwitch()
     {
+        phoneOpen = !phoneOpen;
         if(phoneOpen)
         {
             view.phoneOpen();
@@ -36,7 +37,6 @@ public class MainPresenter
         {
             view.phoneClose();
         }
-        phoneOpen = !phoneOpen;
     }
 
     @Override

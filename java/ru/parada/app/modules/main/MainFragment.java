@@ -9,6 +9,8 @@ import android.widget.ImageView;
 
 import ru.parada.app.R;
 import ru.parada.app.contracts.MainContract;
+import ru.parada.app.modules.call.CallDialog;
+import ru.parada.app.modules.call.CallDialogListener;
 import ru.parada.app.units.ListModel;
 import ru.parada.app.units.MVPFragment;
 
@@ -80,7 +82,7 @@ public class MainFragment
                                  .getDrawable(R.drawable.btn_phone);
         btn_phone_close = getActivity().getResources()
                                        .getDrawable(R.drawable.btn_phone_close);
-        phoneOpen();
+        phoneClose();
         adapter = new NewsAdapter(getActivity(), new NewsAdapterListener()
         {
             @Override
@@ -113,13 +115,40 @@ public class MainFragment
     @Override
     public void phoneOpen()
     {
-        phone.setImageDrawable(btn_phone);
+        phone.setImageDrawable(btn_phone_close);
+        CallDialog.newInstance(new CallDialogListener()
+        {
+            @Override
+            public void phone()
+            {
+            }
+            @Override
+            public void sms()
+            {
+
+            }
+            @Override
+            public void whatsapp()
+            {
+
+            }
+            @Override
+            public void viber()
+            {
+
+            }
+            @Override
+            public void close()
+            {
+                getPresenter().phoneSwitch();
+            }
+        }).show(getActivity().getSupportFragmentManager(), CallDialog.class.getCanonicalName());
     }
 
     @Override
     public void phoneClose()
     {
-        phone.setImageDrawable(btn_phone_close);
+        phone.setImageDrawable(btn_phone);
     }
 
     @Override
