@@ -35,6 +35,10 @@ public class CallDialog
                     dismiss();
                     listener.phone();
                     break;
+                case R.id.sms:
+                    dismiss();
+                    listener.sms();
+                    break;
             }
         }
     };
@@ -67,6 +71,8 @@ public class CallDialog
     private void initViews(View v)
     {
         v.findViewById(R.id.phone)
+         .setOnClickListener(clickListener);
+        v.findViewById(R.id.sms)
          .setOnClickListener(clickListener);
     }
 

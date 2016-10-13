@@ -16,6 +16,8 @@
     <string name="sms">Сообщения</string>
     <string name="whatsapp">WhatsApp</string>
     <string name="viber">Viber</string>
+    <string name="phone_number">+7812337230403</string>
+    <string name="message_number">+79315410591</string>
 
     <string-array name="months">
         <item>января</item>

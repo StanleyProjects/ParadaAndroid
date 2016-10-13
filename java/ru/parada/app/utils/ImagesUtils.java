@@ -29,30 +29,26 @@ public class ImagesUtils
     static public void setThumpImage(String path, ImageView iv, int h, int w)
     {
         Drawable drawable = getImageToCache("thumb" + path);
-        if(drawable != null)
+        if(drawable == null)
         {
-            iv.setImageDrawable(drawable);
-            return;
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inJustDecodeBounds = true;
+            BitmapFactory.decodeFile(path, options);
+            int inSampleSize = ImagesUtils.calculateInSampleSize(options, h, w);
+            Bitmap bitmap = ImagesUtils.optimize(path, inSampleSize);
+            drawable = new BitmapDrawable(iv.getContext().getResources(), bitmap);
+            addImageToCache(drawable, "thumb" + path);
         }
-        BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inJustDecodeBounds = true;
-        BitmapFactory.decodeFile(path, options);
-        int inSampleSize = ImagesUtils.calculateInSampleSize(options, h, w);
-        Bitmap bitmap = ImagesUtils.optimize(path, inSampleSize);
-        BitmapDrawable bd = new BitmapDrawable(iv.getContext().getResources(), bitmap);
-        addImageToCache(bd, "thumb" + path);
-        iv.setImageDrawable(bd);
+        iv.setImageDrawable(drawable);
     }
     static public void setImage(String path, ImageView iv)
     {
         Drawable drawable = getImageToCache(path);
-        if(drawable != null)
+        if(drawable == null)
         {
-            iv.setImageDrawable(drawable);
-            return;
+            drawable = Drawable.createFromPath(path);
+            addImageToCache(drawable, path);
         }
-        drawable = Drawable.createFromPath(path);
-        addImageToCache(drawable, path);
         iv.setImageDrawable(drawable);
     }
 

@@ -17,26 +17,20 @@ public class MainPresenter
 {
     private MainContract.View view;
 
-    private boolean phoneOpen;
-
     public MainPresenter(MainContract.View v)
     {
         this.view = v;
-        phoneOpen = false;
     }
 
     @Override
-    public void phoneSwitch()
+    public void callDialogOpen()
     {
-        phoneOpen = !phoneOpen;
-        if(phoneOpen)
-        {
-            view.phoneOpen();
-        }
-        else
-        {
-            view.phoneClose();
-        }
+        view.callDialogOpen();
+    }
+    @Override
+    public void callDialogClose()
+    {
+        view.callDialogClose();
     }
 
     @Override

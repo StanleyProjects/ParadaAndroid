@@ -14,16 +14,17 @@ public interface MainContract
 
     interface View
     {
-        void phoneOpen();
-        void phoneClose();
+        void callDialogOpen();
+        void callDialogClose();
         void updateNews(ListModel<ListItemModel> data);
     }
 
     interface Presenter
     {
-        void phoneSwitch();
         void loadNews();
         void updateNews();
+        void callDialogOpen();
+        void callDialogClose();
     }
 
     interface MainBehaviour

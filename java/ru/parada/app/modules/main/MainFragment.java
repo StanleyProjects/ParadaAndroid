@@ -1,6 +1,8 @@
 package ru.parada.app.modules.main;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -29,9 +31,6 @@ public class MainFragment
     private RecyclerView list;
 
     private NewsAdapter adapter;
-
-    private Drawable btn_phone;
-    private Drawable btn_phone_close;
 
     @Override
     protected int setContentView()
@@ -67,7 +66,7 @@ public class MainFragment
                         getBehaviour().openMenu();
                         break;
                     case R.id.phone:
-                        getPresenter().phoneSwitch();
+                        getPresenter().callDialogOpen();
                         break;
                 }
             }
@@ -78,11 +77,6 @@ public class MainFragment
     protected void init()
     {
         setClickListener(phone);
-        btn_phone = getActivity().getResources()
-                                 .getDrawable(R.drawable.btn_phone);
-        btn_phone_close = getActivity().getResources()
-                                       .getDrawable(R.drawable.btn_phone_close);
-        phoneClose();
         adapter = new NewsAdapter(getActivity(), new NewsAdapterListener()
         {
             @Override
@@ -113,19 +107,23 @@ public class MainFragment
     }
 
     @Override
-    public void phoneOpen()
+    public void callDialogOpen()
     {
-        phone.setImageDrawable(btn_phone_close);
         CallDialog.newInstance(new CallDialogListener()
         {
             @Override
             public void phone()
             {
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                intent.setData(Uri.parse("tel:" + getActivity().getResources().getString(R.string.phone_number)));
+                startActivity(intent);
             }
             @Override
             public void sms()
             {
-
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse("sms:" + getActivity().getResources().getString(R.string.message_number)));
+                startActivity(intent);
             }
             @Override
             public void whatsapp()
@@ -140,15 +138,14 @@ public class MainFragment
             @Override
             public void close()
             {
-                getPresenter().phoneSwitch();
+                getPresenter().callDialogClose();
             }
         }).show(getActivity().getSupportFragmentManager(), CallDialog.class.getCanonicalName());
     }
 
     @Override
-    public void phoneClose()
+    public void callDialogClose()
     {
-        phone.setImageDrawable(btn_phone);
     }
 
     @Override
