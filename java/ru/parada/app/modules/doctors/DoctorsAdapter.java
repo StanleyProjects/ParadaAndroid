@@ -2,17 +2,19 @@ package ru.parada.app.modules.doctors;
 
 import android.content.Context;
 import android.util.Log;
+import android.view.View;
 import android.view.ViewGroup;
 
+import ru.parada.app.contracts.DoctorDetailContract;
 import ru.parada.app.contracts.DoctorsContract;
 import ru.parada.app.managers.FoldersManager;
 import ru.parada.app.units.ListModel;
 import ru.parada.app.units.ModelAdapter;
 
 public class DoctorsAdapter
-    extends ModelAdapter<DoctorHolder, DoctorsContract.ListItemModel, DoctorsAdapterListener>
+    extends ModelAdapter<DoctorAdapterHolder, DoctorDetailContract.Model, DoctorsAdapterListener>
 {
-    private ListModel<DoctorsContract.ListItemModel> data;
+    private ListModel<DoctorDetailContract.Model> data;
 
     public DoctorsAdapter(Context c, DoctorsAdapterListener l)
     {
@@ -20,33 +22,42 @@ public class DoctorsAdapter
     }
 
     @Override
-    protected DoctorsContract.ListItemModel getItem(int position)
+    protected DoctorDetailContract.Model getItem(int position)
     {
         return data.getItem(position);
     }
 
     @Override
-    protected void setData(DoctorHolder holder, DoctorsContract.ListItemModel item)
+    protected void setData(DoctorAdapterHolder holder, DoctorDetailContract.Model item)
     {
         if(item.getPhotoPath() != null)
         {
-            holder.setPhoto(FoldersManager.getImagesDirectory() + "/" + item.getPhotoPath());
+            holder.getHolder().setPhoto(FoldersManager.getImagesDirectory() + "/" + item.getPhotoPath());
         }
         else
         {
-            holder.setPhotoPlaceHolder();
+            holder.getHolder().setPhotoPlaceHolder();
         }
-        holder.setLastName(item.getLastName());
-        holder.setFirstMiddleName(item.getFirstName(), item.getMiddleName());
-        holder.setFirstPosition(item.getFirstPosition());
-        holder.setSecondPosition(item.getSecondPosition());
-        holder.setThirdPosition(item.getThirdPosition());
+        holder.getHolder().setLastName(item.getLastName());
+        holder.getHolder().setFirstMiddleName(item.getFirstName(), item.getMiddleName());
+        holder.getHolder().setFirstPosition(item.getFirstPosition());
+        holder.getHolder().setSecondPosition(item.getSecondPosition());
+        holder.getHolder().setThirdPosition(item.getThirdPosition());
+        final int id = item.getId();
+        holder.itemView.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                getListener().getDoctor(id);
+            }
+        });
     }
 
     @Override
-    public DoctorHolder onCreateViewHolder(ViewGroup parent, int viewType)
+    public DoctorAdapterHolder onCreateViewHolder(ViewGroup parent, int viewType)
     {
-        return new DoctorHolder(getContext(), parent);
+        return new DoctorAdapterHolder(getContext(), parent);
     }
 
     @Override
@@ -59,7 +70,7 @@ public class DoctorsAdapter
         return data.getItemsCount();
     }
 
-    public void swapData(ListModel<DoctorsContract.ListItemModel> d)
+    public void swapData(ListModel<DoctorDetailContract.Model> d)
     {
         if(this.data != null)
         {

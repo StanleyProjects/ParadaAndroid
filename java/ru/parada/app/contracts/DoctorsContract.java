@@ -4,21 +4,9 @@ import ru.parada.app.units.ListModel;
 
 public interface DoctorsContract
 {
-    interface ListItemModel
-    {
-        int getId();
-        String getPhotoPath();
-        String getLastName();
-        String getFirstName();
-        String getMiddleName();
-        String getFirstPosition();
-        String getSecondPosition();
-        String getThirdPosition();
-    }
-
     interface View
     {
-        void updateDoctors(ListModel<ListItemModel> data);
+        void updateDoctors(ListModel<DoctorDetailContract.Model> data);
     }
 
     interface Presenter

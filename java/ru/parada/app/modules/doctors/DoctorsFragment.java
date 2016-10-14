@@ -1,5 +1,7 @@
 package ru.parada.app.modules.doctors;
 
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -9,7 +11,9 @@ import android.view.View;
 import android.widget.EditText;
 
 import ru.parada.app.R;
+import ru.parada.app.contracts.DoctorDetailContract;
 import ru.parada.app.contracts.DoctorsContract;
+import ru.parada.app.modules.doctordetail.DoctorDetailFragment;
 import ru.parada.app.units.ListModel;
 import ru.parada.app.units.MVPFragment;
 
@@ -24,15 +28,29 @@ public class DoctorsFragment
         return fragment;
     }
 
+    private Fragment detailFragment;
+
     private RecyclerView list;
     private EditText search;
 
     private DoctorsAdapter adapter;
 
     @Override
+    public void onResume()
+    {
+        super.onResume();
+//        Log.e(getClass().getName(), "n " + getChildFragmentManager().getBackStackEntryAt(0).getName());
+//        if(detailFragment != null && getChildFragmentManager().findFragmentByTag(DoctorDetailFragment.class.getName()) == null)
+        if(detailFragment != null && getChildFragmentManager().getBackStackEntryCount() == 0)
+        {
+            showDetail();
+        }
+    }
+
+    @Override
     protected int setContentView()
     {
-        return R.layout.doctors_fragment;
+        return R.layout.doctors_screen;
     }
 
     @Override
@@ -76,6 +94,20 @@ public class DoctorsFragment
     {
         adapter = new DoctorsAdapter(getActivity(), new DoctorsAdapterListener()
         {
+            @Override
+            public void getDoctor(int id)
+            {
+                detailFragment = DoctorDetailFragment.newInstanse(new DoctorDetailContract.Behaviour()
+                {
+                    @Override
+                    public void back()
+                    {
+                        getChildFragmentManager().popBackStack();
+                        detailFragment = null;
+                    }
+                }, id);
+                showDetail();
+            }
         });
         list.setLayoutManager(new LinearLayoutManager(getActivity()));
         list.setAdapter(adapter);
@@ -86,6 +118,7 @@ public class DoctorsFragment
             {
 
             }
+
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count)
             {
@@ -99,20 +132,24 @@ public class DoctorsFragment
                     getPresenter().updateDoctors();
                 }
             }
+
             @Override
             public void afterTextChanged(Editable s)
             {
 
             }
         });
-        Log.e(this.getClass().getName(), " - updateDoctors");
+        Log.e(this.getClass()
+                  .getName(), " - updateDoctors");
         getPresenter().updateDoctors();
         getPresenter().loadDoctors();
     }
 
     private void searchClear()
     {
-        if(search.getText().toString().length() > 0)
+        if(search.getText()
+                 .toString()
+                 .length() > 0)
         {
             search.setText("");
             getPresenter().updateDoctors();
@@ -120,7 +157,7 @@ public class DoctorsFragment
     }
 
     @Override
-    public void updateDoctors(final ListModel<DoctorsContract.ListItemModel> data)
+    public void updateDoctors(final ListModel<DoctorDetailContract.Model> data)
     {
         runOnUiThread(new Runnable()
         {
@@ -129,8 +166,17 @@ public class DoctorsFragment
             {
                 adapter.swapData(data);
                 adapter.notifyDataSetChanged();
-                Log.e(this.getClass().getName(), "updateDoctors " + data.getItemsCount());
+                Log.e(this.getClass()
+                          .getName(), "updateDoctors " + data.getItemsCount());
             }
         }, 0);
+    }
+
+    public void showDetail()
+    {
+        getChildFragmentManager().beginTransaction()
+                                 .add(R.id.detail_frame, detailFragment)
+                                 .addToBackStack(DoctorDetailFragment.class.getName())
+                                 .commit();
     }
 }

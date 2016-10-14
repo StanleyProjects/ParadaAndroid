@@ -10,6 +10,7 @@ import java.util.UUID;
 import ru.parada.app.connection.DownloadFile;
 import ru.parada.app.connection.ParadaService;
 import ru.parada.app.connection.Request;
+import ru.parada.app.contracts.DoctorDetailContract;
 import ru.parada.app.contracts.DoctorsContract;
 import ru.parada.app.contracts.ImagesContract;
 import ru.parada.app.db.SQliteApi;
@@ -58,7 +59,11 @@ public class DoctorsPresenter
                             (String)((HashMap)doctor).get("middle_name"),
                             (String)((HashMap)doctor).get("first_position"),
                             (String)((HashMap)doctor).get("second_position"),
-                            (String)((HashMap)doctor).get("third_position")));
+                            (String)((HashMap)doctor).get("third_position"),
+                            null,
+                            (String)((HashMap)doctor).get("descr"),
+                            Integer.parseInt((String)((HashMap)doctor).get("order")),
+                            (String)((HashMap)doctor).get("phone")));
                 }
                 SQliteApi.getInstanse().endTransaction();
                 Log.e(this.getClass().getName(), "loadDoctors");
@@ -127,7 +132,7 @@ public class DoctorsPresenter
         }
     }
 
-    private void updateDoctors(ListModel<DoctorsContract.ListItemModel> data)
+    private void updateDoctors(ListModel<DoctorDetailContract.Model> data)
     {
         Log.e(this.getClass().getName(), "updateDoctors " + data.getItemsCount());
         view.updateDoctors(data);

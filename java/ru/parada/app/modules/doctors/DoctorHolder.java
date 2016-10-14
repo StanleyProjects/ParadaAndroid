@@ -3,18 +3,17 @@ package ru.parada.app.modules.doctors;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import ru.parada.app.R;
-import ru.parada.app.units.AdapterHolder;
 import ru.parada.app.utils.AndroidUtil;
 import ru.parada.app.utils.ImagesUtils;
 
 public class DoctorHolder
-    extends AdapterHolder
 {
+    private Context context;
+
     private ImageView photo;
     private TextView last_name;
     private TextView first_middle_name;
@@ -24,16 +23,16 @@ public class DoctorHolder
 
     private Drawable photo_placeholder;
 
-    public DoctorHolder(Context context, ViewGroup parent)
+    public DoctorHolder(Context c, ImageView p, TextView ln, TextView fmn, TextView fp, TextView sp, TextView tp, Drawable pph)
     {
-        super(context, parent, R.layout.doctor_list_item);
-        photo = (ImageView) itemView.findViewById(R.id.photo);
-        last_name = (TextView) itemView.findViewById(R.id.last_name);
-        first_middle_name = (TextView) itemView.findViewById(R.id.first_middle_name);
-        first_position = (TextView) itemView.findViewById(R.id.first_position);
-        second_position = (TextView) itemView.findViewById(R.id.second_position);
-        third_position = (TextView) itemView.findViewById(R.id.third_position);
-        photo_placeholder = context.getResources().getDrawable(R.drawable.photo_placeholder);
+        context = c;
+        photo = p;
+        last_name = ln;
+        first_middle_name = fmn;
+        first_position = fp;
+        second_position = sp;
+        third_position = tp;
+        photo_placeholder = pph;
     }
 
     public void setPhotoPlaceHolder()
@@ -48,7 +47,6 @@ public class DoctorHolder
         }
         else
         {
-//            photo.setImageDrawable(Drawable.createFromPath(photoPath));
             ImagesUtils.setThumpImage(photoPath, photo, AndroidUtil.dp(112), AndroidUtil.dp(112));
         }
     }
@@ -58,7 +56,7 @@ public class DoctorHolder
     }
     public void setFirstMiddleName(String firstName, String middleName)
     {
-        first_middle_name.setText(itemView.getResources().getString(R.string.first_middle_name, firstName, middleName));
+        first_middle_name.setText(context.getResources().getString(R.string.first_middle_name, firstName, middleName));
     }
 
     public void setFirstPosition(String position)
@@ -69,7 +67,7 @@ public class DoctorHolder
         }
         else
         {
-            first_position.setText(itemView.getResources().getString(R.string.doctor_position, position));
+            first_position.setText(context.getResources().getString(R.string.doctor_position, position));
             first_position.setVisibility(View.VISIBLE);
         }
     }
@@ -81,7 +79,7 @@ public class DoctorHolder
         }
         else
         {
-            second_position.setText(itemView.getResources().getString(R.string.doctor_position, position));
+            second_position.setText(context.getResources().getString(R.string.doctor_position, position));
             second_position.setVisibility(View.VISIBLE);
         }
     }
@@ -93,7 +91,7 @@ public class DoctorHolder
         }
         else
         {
-            third_position.setText(itemView.getResources()
+            third_position.setText(context.getResources()
                                            .getString(R.string.doctor_position, position));
             third_position.setVisibility(View.VISIBLE);
         }

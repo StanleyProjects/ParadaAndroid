@@ -20,6 +20,7 @@ public class GeneralActivity
         extends AppCompatActivity
         implements GeneralContract.View
 {
+    private Fragment currentFragment;
     private final Fragment menuFragment = MenuFragment.newInstanse(new MenuContract.Behaviour()
     {
         @Override
@@ -88,6 +89,14 @@ public class GeneralActivity
     private GeneralContract.Presenter presenter;
 
     @Override
+    public void onBackPressed()
+    {
+        if(!currentFragment.getChildFragmentManager().popBackStackImmediate())
+        {
+            super.onBackPressed();
+        }
+    }
+    @Override
     public void onCreate(Bundle bundle)
     {
         super.onCreate(bundle);
@@ -103,12 +112,12 @@ public class GeneralActivity
 
     private void init()
     {
-//        drawerContainer.setShadow(getResources().getDrawable(R.drawable.menu_shadow));
         presenter = new GeneralPresenter(this);
         getSupportFragmentManager().beginTransaction()
                                    .add(R.id.menu_frame, menuFragment)
                                    .commit();
-        replaceFragment(mainFragment);
+        currentFragment = mainFragment;
+        replaceFragment();
     }
 
     @Override
@@ -119,7 +128,8 @@ public class GeneralActivity
             @Override
             public void onAnimationEnd()
             {
-                replaceFragment(mainFragment);
+                currentFragment = mainFragment;
+                replaceFragment();
             }
         });
     }
@@ -132,7 +142,8 @@ public class GeneralActivity
             @Override
             public void onAnimationEnd()
             {
-                replaceFragment(servicesFragment);
+                currentFragment = servicesFragment;
+                replaceFragment();
             }
         });
     }
@@ -145,7 +156,8 @@ public class GeneralActivity
             @Override
             public void onAnimationEnd()
             {
-                replaceFragment(doctorsFragment);
+                currentFragment = doctorsFragment;
+                replaceFragment();
             }
         });
     }
@@ -160,11 +172,10 @@ public class GeneralActivity
         drawerContainer.closeDrawer(listener);
     }
 
-    private void replaceFragment(Fragment fragment)
+    private void replaceFragment()
     {
         getSupportFragmentManager().beginTransaction()
-//                                   .replace(drawerContainer.getParentLayout().getId(), fragment)
-                                   .replace(R.id.main_frame, fragment)
+                                   .replace(R.id.main_frame, currentFragment)
                                    .commit();
     }
 }

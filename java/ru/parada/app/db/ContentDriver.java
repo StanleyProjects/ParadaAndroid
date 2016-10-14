@@ -5,6 +5,7 @@ import android.provider.BaseColumns;
 
 import java.util.HashMap;
 
+import ru.parada.app.contracts.DoctorDetailContract;
 import ru.parada.app.contracts.DoctorsContract;
 import ru.parada.app.contracts.ImagesContract;
 import ru.parada.app.contracts.MainContract;
@@ -20,7 +21,7 @@ public class ContentDriver
         return content;
     }
 
-    static public ContentValues getContentValues(DoctorsContract.ListItemModel item)
+    static public ContentValues getContentValues(DoctorDetailContract.Model item)
     {
         ContentValues content = new ContentValues();
         content.put(BaseColumns._ID, item.getId());
@@ -30,6 +31,9 @@ public class ContentDriver
         content.put(Tables.Doctors.Columns.first_position, item.getFirstPosition());
         content.put(Tables.Doctors.Columns.second_position, item.getSecondPosition());
         content.put(Tables.Doctors.Columns.third_position, item.getThirdPosition());
+        content.put(Tables.Doctors.Columns.descr, item.getDescription());
+        content.put(Tables.Doctors.Columns.phone, item.getPhone());
+        content.put(Tables.Doctors.Columns.order, item.getOrder());
         content.put(Tables.Doctors.Columns.first_last_middle, item.getFirstName().toLowerCase() + item.getLastName().toLowerCase() + item.getMiddleName().toLowerCase());
         return content;
     }

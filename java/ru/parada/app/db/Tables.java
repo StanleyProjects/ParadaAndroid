@@ -5,6 +5,7 @@ import android.provider.BaseColumns;
 
 import java.util.HashMap;
 
+import ru.parada.app.contracts.DoctorDetailContract;
 import ru.parada.app.contracts.DoctorsContract;
 import ru.parada.app.contracts.ImagesContract;
 import ru.parada.app.contracts.MainContract;
@@ -106,17 +107,17 @@ public interface Tables
             String phone = TABLE_NAME + "_" + "phone";
         }
 
-        ListModel<DoctorsContract.ListItemModel> getAll();
-        ListModel<DoctorsContract.ListItemModel> getFromKeys(String keys);
-        DoctorsContract.ListItemModel getOneFromId(int id);
-        long insertOne(DoctorsContract.ListItemModel item);
+        ListModel<DoctorDetailContract.Model> getAll();
+        ListModel<DoctorDetailContract.Model> getFromKeys(String keys);
+        DoctorDetailContract.Model getOneFromId(int id);
+        long insertOne(DoctorDetailContract.Model item);
         void clearTable();
     }
     interface Images
     {
         String TABLE_NAME = Images.class.getCanonicalName().toLowerCase().replace('.', '_') + "_table";
         String CREATE_TABLE = "create table if not exists " + TABLE_NAME + " (" +
-                BaseColumns._ID + " integer primary key autoincrement, " +
+                Columns.id + " integer primary key autoincrement, " +
                 Columns.image_path + " text" + "," +
                 Columns.image_url + " text" + "," +
                 Columns.entity_id + " integer" + "," +
@@ -124,6 +125,7 @@ public interface Tables
                 ");";
         interface Columns
         {
+            String id = TABLE_NAME + "_" + "id";
             String type = TABLE_NAME + "_" + "type";
             String entity_id = TABLE_NAME + "_" + "entity_id";
             String image_path = TABLE_NAME + "_" + "image_path";

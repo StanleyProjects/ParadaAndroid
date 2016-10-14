@@ -18,6 +18,7 @@
     <string name="viber">Viber</string>
     <string name="phone_number">+7812337230403</string>
     <string name="message_number">+79315410591</string>
+    <string name="watch_video">Смотреть видео</string>
 
     <string-array name="months">
         <item>января</item>

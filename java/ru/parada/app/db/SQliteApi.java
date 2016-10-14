@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.BaseColumns;
 
+import ru.parada.app.contracts.DoctorDetailContract;
 import ru.parada.app.contracts.DoctorsContract;
 import ru.parada.app.contracts.ImagesContract;
 import ru.parada.app.contracts.MainContract;
@@ -20,7 +21,7 @@ import ru.parada.app.units.ListModel;
 public class SQliteApi
 {
     static private final String DB_NAME = "parada";
-    static private final int DB_VERSION = 1610100226;
+    static private final int DB_VERSION = 1610141737;
     static private volatile SQliteApi instanse;
 
     static public SQliteApi getInstanse()
@@ -44,7 +45,9 @@ public class SQliteApi
         @Override
         public ListModel<MainContract.ListItemModel> getAllWithLimit(int limit)
         {
-            return new NewsCursorListModel(sdb.rawQuery("SELECT * " + "FROM " + TABLE_NAME + " " + "ORDER BY " + Columns.date + " DESC " + "LIMIT " + limit, new String[]{}));
+            return new NewsCursorListModel(sdb.rawQuery("SELECT * "
+                    + "FROM " + TABLE_NAME + " "
+                    + "ORDER BY " + Columns.date + " DESC " + "LIMIT " + limit, new String[]{}));
         }
 
         @Override
@@ -96,13 +99,20 @@ public class SQliteApi
     private final Tables.Doctors doctors = new Tables.Doctors()
     {
         @Override
-        public ListModel<DoctorsContract.ListItemModel> getAll()
+        public ListModel<DoctorDetailContract.Model> getAll()
         {
-            return new DoctorsCursorListModel(sdb.rawQuery("SELECT * " + "FROM " + TABLE_NAME + " " + "LEFT JOIN " + Tables.Images.TABLE_NAME + " " + "ON " + Tables.Images.Columns.type + " = " + ImagesContract.Types.DOCTORS_TYPE + " " + "AND " + TABLE_NAME + "." + BaseColumns._ID + " = " + Tables.Images.Columns.entity_id, new String[]{}));
+            return new DoctorsCursorListModel(sdb.rawQuery(
+                    "SELECT * "
+                    + "FROM " + TABLE_NAME + " "
+                    + "LEFT JOIN " + Tables.Images.TABLE_NAME + " "
+                    + "ON " + Tables.Images.Columns.type + " = " + ImagesContract.Types.DOCTORS_TYPE + " "
+                    + "AND " + TABLE_NAME + "." + BaseColumns._ID + " = " + Tables.Images.Columns.entity_id + " "
+                            + "ORDER BY " + Columns.order + " ASC "
+                    , new String[]{}));
         }
 
         @Override
-        public ListModel<DoctorsContract.ListItemModel> getFromKeys(String keys)
+        public ListModel<DoctorDetailContract.Model> getFromKeys(String keys)
         {
             return new DoctorsCursorListModel(sdb.rawQuery("SELECT * "
                     + "FROM " + TABLE_NAME + " "
@@ -113,21 +123,38 @@ public class SQliteApi
         }
 
         @Override
-        public DoctorsContract.ListItemModel getOneFromId(final int id)
+        public DoctorDetailContract.Model getOneFromId(int id)
         {
-            Cursor cursor = sdb.rawQuery("SELECT * " + "FROM " + TABLE_NAME + " " + "WHERE " + BaseColumns._ID + "=" + id + " " + "LEFT JOIN " + Tables.Images.TABLE_NAME + " " + "ON " + Tables.Images.Columns.type + " = " + ImagesContract.Types.DOCTORS_TYPE, new String[]{});
+            Cursor cursor = sdb.rawQuery(
+                    "SELECT * "
+                    + "FROM " + TABLE_NAME + " "
+                    + "LEFT JOIN " + Tables.Images.TABLE_NAME + " "
+                    + "ON " + Tables.Images.Columns.type + " = " + ImagesContract.Types.DOCTORS_TYPE + " "
+                    + "AND " + TABLE_NAME + "." + BaseColumns._ID + " = " + Tables.Images.Columns.entity_id + " "
+                    + "WHERE " + TABLE_NAME + "." + BaseColumns._ID + "=" + id + " "
+                    , new String[]{});
             if(!cursor.moveToFirst())
             {
                 cursor.close();
                 return null;
             }
-            DoctorsContract.ListItemModel doctor = new Doctor(id, cursor.getString(cursor.getColumnIndex(Columns.last_name)), cursor.getString(cursor.getColumnIndex(Columns.first_name)), cursor.getString(cursor.getColumnIndex(Columns.middle_name)), cursor.getString(cursor.getColumnIndex(Columns.first_position)), cursor.getString(cursor.getColumnIndex(Columns.second_position)), cursor.getString(cursor.getColumnIndex(Columns.third_position)), cursor.getString(cursor.getColumnIndex(Tables.Images.Columns.image_path)));
+            DoctorDetailContract.Model doctor = new Doctor(id,
+                    cursor.getString(cursor.getColumnIndex(Columns.last_name)),
+                    cursor.getString(cursor.getColumnIndex(Columns.first_name)),
+                    cursor.getString(cursor.getColumnIndex(Columns.middle_name)),
+                    cursor.getString(cursor.getColumnIndex(Columns.first_position)),
+                    cursor.getString(cursor.getColumnIndex(Columns.second_position)),
+                    cursor.getString(cursor.getColumnIndex(Columns.third_position)),
+                    cursor.getString(cursor.getColumnIndex(Tables.Images.Columns.image_path)),
+                            cursor.getString(cursor.getColumnIndex(Columns.descr)),
+                            cursor.getInt(cursor.getColumnIndex(Columns.order)),
+                            cursor.getString(cursor.getColumnIndex(Columns.phone)));
             cursor.close();
             return doctor;
         }
 
         @Override
-        public long insertOne(DoctorsContract.ListItemModel item)
+        public long insertOne(DoctorDetailContract.Model item)
         {
             return sdb.insertWithOnConflict(TABLE_NAME, null, ContentDriver.getContentValues(item), SQLiteDatabase.CONFLICT_REPLACE);
         }

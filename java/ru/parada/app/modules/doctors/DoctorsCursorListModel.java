@@ -3,12 +3,13 @@ package ru.parada.app.modules.doctors;
 import android.database.Cursor;
 import android.provider.BaseColumns;
 
+import ru.parada.app.contracts.DoctorDetailContract;
 import ru.parada.app.contracts.DoctorsContract;
 import ru.parada.app.db.Tables;
 import ru.parada.app.units.ListModel;
 
 public class DoctorsCursorListModel
-    implements ListModel<DoctorsContract.ListItemModel>
+    implements ListModel<DoctorDetailContract.Model>
 {
     private Cursor data;
 
@@ -18,13 +19,13 @@ public class DoctorsCursorListModel
     }
 
     @Override
-    public DoctorsContract.ListItemModel getItem(int i)
+    public DoctorDetailContract.Model getItem(int i)
     {
         if(!data.moveToPosition(i))
         {
             return null;
         }
-        return new DoctorsContract.ListItemModel()
+        return new DoctorDetailContract.Model()
         {
             @Override
             public int getId()
@@ -77,6 +78,24 @@ public class DoctorsCursorListModel
             public String getThirdPosition()
             {
                 return data.getString(data.getColumnIndex(Tables.Doctors.Columns.third_position));
+            }
+
+            @Override
+            public String getDescription()
+            {
+                return data.getString(data.getColumnIndex(Tables.Doctors.Columns.descr));
+            }
+
+            @Override
+            public String getPhone()
+            {
+                return data.getString(data.getColumnIndex(Tables.Doctors.Columns.phone));
+            }
+
+            @Override
+            public int getOrder()
+            {
+                return data.getInt(data.getColumnIndex(Tables.Doctors.Columns.order));
             }
         };
     }

@@ -1,9 +1,9 @@
 package ru.parada.app.modules.doctors;
 
-import ru.parada.app.contracts.DoctorsContract;
+import ru.parada.app.contracts.DoctorDetailContract;
 
 public class Doctor
-    implements DoctorsContract.ListItemModel
+    implements DoctorDetailContract.Model
 {
     private int id;
     private String last_name;
@@ -13,8 +13,11 @@ public class Doctor
     private String second_position;
     private String third_position;
     private String image_path;
+    private String descr;
+    private int order;
+    private String phone;
 
-    public Doctor(int i, String ln, String fn, String mn, String fp, String sp, String tp)
+    public Doctor(int i, String ln, String fn, String mn, String fp, String sp, String tp, String ip, String d, int o, String ph)
     {
         this.id = i;
         this.last_name = ln;
@@ -23,11 +26,10 @@ public class Doctor
         this.first_position = fp;
         this.second_position = sp;
         this.third_position = tp;
-    }
-    public Doctor(int i, String ln, String fn, String mn, String fp, String sp, String tp, String ip)
-    {
-        this(i, ln, fn, mn, fp, sp, tp);
         this.image_path = ip;
+        this.descr = d;
+        this.order = o;
+        this.phone = ph;
     }
 
     @Override
@@ -46,6 +48,7 @@ public class Doctor
     public String getLastName()
     {
         return last_name;
+//        return "id " + id;
     }
 
     @Override
@@ -76,5 +79,23 @@ public class Doctor
     public String getThirdPosition()
     {
         return third_position;
+    }
+
+    @Override
+    public String getDescription()
+    {
+        return descr;
+    }
+
+    @Override
+    public String getPhone()
+    {
+        return phone;
+    }
+
+    @Override
+    public int getOrder()
+    {
+        return order;
     }
 }
