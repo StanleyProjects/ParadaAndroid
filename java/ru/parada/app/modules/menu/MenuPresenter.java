@@ -29,4 +29,10 @@ public class MenuPresenter
     {
         view.setDoctors();
     }
+
+    @Override
+    public void openPrices()
+    {
+
+    }
 }

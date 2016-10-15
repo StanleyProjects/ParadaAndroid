@@ -75,17 +75,6 @@ public class NewsAdapter
     }
 
     @Override
-    protected void setHeader(RecyclerView.ViewHolder holder)
-    {
-    }
-
-    @Override
-    protected void setFooter(RecyclerView.ViewHolder holder)
-    {
-
-    }
-
-    @Override
     protected int getRealCount()
     {
         if(data == null)

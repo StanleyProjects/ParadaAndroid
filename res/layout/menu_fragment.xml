@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:background="@color/white"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
     <LinearLayout
-        android:background="@color/white"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -11,6 +11,7 @@
             android:padding="16dp"
             android:scaleType="fitCenter"
             android:src="@drawable/menu_logo"
+            android:tint="@color/colorPrimaryDark"
             android:layout_marginRight="96dp"
             android:layout_width="wrap_content"
             android:layout_height="144dp"/>
@@ -56,6 +57,7 @@
         </LinearLayout>
         <LinearLayout
             android:id="@+id/doctors"
+            android:background="@color/greylight"
             android:gravity="center_vertical"
             android:layout_width="match_parent"
             android:layout_height="56dp">
@@ -74,9 +76,25 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
         </LinearLayout>
-        <View
-            android:background="@color/colorAccent"
-            android:layout_width="wrap_content"
-            android:layout_height="444dp"/>
+        <LinearLayout
+            android:id="@+id/prices"
+            android:gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="56dp">
+            <ImageView
+                android:src="@mipmap/menu_prices"
+                android:tint="@color/grey"
+                android:scaleType="fitCenter"
+                android:layout_width="24dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_height="24dp"/>
+            <TextView
+                android:text="@string/prices"
+                android:textSize="18dp"
+                android:textColor="@color/greydark"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
     </LinearLayout>
 </ScrollView>

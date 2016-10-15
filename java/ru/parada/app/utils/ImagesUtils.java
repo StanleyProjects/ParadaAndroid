@@ -14,21 +14,21 @@ public class ImagesUtils
     static private final Map<String, Drawable> imagesCache = new HashMap<>();
     static private void addImageToCache(Drawable d, String path)
     {
-        if(imagesCache.size() > 30)
+        if(imagesCache.size() > 50)
         {
             Map.Entry<String, Drawable> entry = imagesCache.entrySet().iterator().next();
             imagesCache.remove(entry.getKey());
         }
         imagesCache.put(path, d);
     }
-    static private Drawable getImageToCache(String path)
+    static private Drawable getImageFromCache(String path)
     {
         return imagesCache.get(path);
     }
 
     static public void setThumpImage(String path, ImageView iv, int h, int w)
     {
-        Drawable drawable = getImageToCache("thumb" + path);
+        Drawable drawable = getImageFromCache("thumb" + path);
         if(drawable == null)
         {
             BitmapFactory.Options options = new BitmapFactory.Options();
@@ -43,11 +43,21 @@ public class ImagesUtils
     }
     static public void setImage(String path, ImageView iv)
     {
-        Drawable drawable = getImageToCache(path);
+        Drawable drawable = getImageFromCache(path);
         if(drawable == null)
         {
             drawable = Drawable.createFromPath(path);
             addImageToCache(drawable, path);
+        }
+        iv.setImageDrawable(drawable);
+    }
+    static public void setImageFromResources(int id, ImageView iv)
+    {
+        Drawable drawable = getImageFromCache("res"+id);
+        if(drawable == null)
+        {
+            drawable = iv.getContext().getResources().getDrawable(id);
+            addImageToCache(drawable, "res"+id);
         }
         iv.setImageDrawable(drawable);
     }

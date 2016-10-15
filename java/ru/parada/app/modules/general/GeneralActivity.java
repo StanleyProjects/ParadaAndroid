@@ -38,6 +38,12 @@ public class GeneralActivity
         {
             presenter.setDoctorsScreen();
         }
+
+        @Override
+        public void openPrices()
+        {
+
+        }
     });
     private final Fragment mainFragment = MainFragment.newInstanse(new MainContract.MainBehaviour()
     {

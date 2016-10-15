@@ -40,22 +40,25 @@ public abstract class HeadFootAdapter<MODELHOLDER extends RecyclerView.ViewHolde
         if(getItemViewType(position) == ViewTypes.HEADER)
         {
             setHeader(holder);
-            return;
         }
         else if(getItemViewType(position) == ViewTypes.FOOTER)
         {
             setFooter(holder);
-            return;
         }
-        MODEL item = getItem(position - 1);
-        if(item != null)
+        else
         {
-            setData((MODELHOLDER)holder, item);
+            setData((MODELHOLDER)holder, getItem(position - 1));
         }
     }
 
-    protected abstract void setHeader(RecyclerView.ViewHolder holder);
-    protected abstract void setFooter(RecyclerView.ViewHolder holder);
+    protected void setHeader(RecyclerView.ViewHolder holder)
+    {
+
+    }
+    protected void setFooter(RecyclerView.ViewHolder holder)
+    {
+
+    }
 
     @Override
     public int getItemViewType(int position)

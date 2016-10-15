@@ -7,6 +7,7 @@ public interface MenuContract
         void setMain();
         void setServices();
         void setDoctors();
+        void setPrices();
     }
 
     interface Presenter
@@ -14,6 +15,7 @@ public interface MenuContract
         void openMain();
         void openServices();
         void openDoctors();
+        void openPrices();
     }
 
     interface Behaviour
@@ -21,5 +23,6 @@ public interface MenuContract
         void openMain();
         void openServices();
         void openDoctors();
+        void openPrices();
     }
 }
