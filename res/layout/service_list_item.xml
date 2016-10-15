@@ -13,19 +13,20 @@
         android:layout_height="match_parent"
         android:layout_marginLeft="48dp"
         android:layout_marginRight="48dp"
-        android:background="@color/colorPrimary"/>
+        android:background="@color/colorPrimaryDark"/>
 
     <View
         android:layout_width="96dp"
         android:layout_height="match_parent"
         android:layout_gravity="right"
-        android:background="@drawable/primary_circle"/>
+        android:background="@drawable/primarydark_circle"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <FrameLayout
+            android:layout_marginRight="8dp"
             android:layout_width="96dp"
             android:layout_height="match_parent">
 
@@ -35,6 +36,10 @@
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
                 android:src="@drawable/service_test"/>
+            <ImageView
+                android:src="@drawable/service_mask"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
         </FrameLayout>
 
         <TextView
