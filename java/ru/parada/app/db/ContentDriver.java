@@ -10,6 +10,7 @@ import ru.parada.app.contracts.DoctorsContract;
 import ru.parada.app.contracts.ImagesContract;
 import ru.parada.app.contracts.MainContract;
 import ru.parada.app.contracts.ServicesContract;
+import ru.parada.app.contracts.ServicesWithPricesContract;
 
 public class ContentDriver
 {
@@ -55,6 +56,19 @@ public class ContentDriver
         content.put(Tables.News.Columns.title, item.getTitle());
         content.put(Tables.News.Columns.descr, item.getDescription());
         content.put(Tables.News.Columns.date, item.getDate());
+        return content;
+    }
+
+    public static ContentValues getContentValues(ServicesWithPricesContract.Model item)
+    {
+        ContentValues content = new ContentValues();
+        content.put(BaseColumns._ID, item.getId());
+        content.put(Tables.ServicesWithPrices.Columns.title, item.getTitle());
+        content.put(Tables.ServicesWithPrices.Columns.order, item.getOrder());
+        content.put(Tables.ServicesWithPrices.Columns.group_id, item.getGroupId());
+        content.put(Tables.ServicesWithPrices.Columns.group, item.getGroupName());
+        content.put(Tables.ServicesWithPrices.Columns.group_order, item.getGroupOrder());
+        content.put(Tables.ServicesWithPrices.Columns.title_search, item.getTitle().toLowerCase());
         return content;
     }
 }

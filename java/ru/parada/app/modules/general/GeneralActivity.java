@@ -11,10 +11,12 @@ import ru.parada.app.contracts.MainContract;
 import ru.parada.app.contracts.MenuContract;
 import ru.parada.app.contracts.ScreenType;
 import ru.parada.app.contracts.ServicesContract;
+import ru.parada.app.contracts.ServicesWithPricesContract;
 import ru.parada.app.modules.doctors.DoctorsFragment;
 import ru.parada.app.modules.main.MainFragment;
 import ru.parada.app.modules.menu.MenuFragment;
 import ru.parada.app.modules.services.ServicesFragment;
+import ru.parada.app.modules.servicesprices.ServicesWithPricesFragment;
 import ru.parada.app.units.DrawerContainer;
 
 public class GeneralActivity
@@ -22,12 +24,17 @@ public class GeneralActivity
         implements GeneralContract.View
 {
     private Fragment currentFragment;
-    private final Fragment menuFragment = MenuFragment.newInstanse(new MenuContract.Behaviour()
+    private final Fragment menuFragment = MenuFragment.newInstanse(new MenuContract.MenuBehaviour()
     {
         @Override
         public void open(ScreenType screenType)
         {
             presenter.setScreen(screenType);
+        }
+        @Override
+        public void setCallback(MenuContract.Callback callback)
+        {
+            menuCallback = callback;
         }
     });
     private final Fragment mainFragment = MainFragment.newInstanse(new MainContract.MainBehaviour()
@@ -41,6 +48,7 @@ public class GeneralActivity
         public void openServices()
         {
             presenter.setScreen(ScreenType.SERVICES_SCREEN);
+            menuCallback.open(ScreenType.SERVICES_SCREEN);
         }
         @Override
         public void openSubscribe()
@@ -50,6 +58,8 @@ public class GeneralActivity
         @Override
         public void openPrices()
         {
+            presenter.setScreen(ScreenType.PRICES_SCREEN);
+            menuCallback.open(ScreenType.PRICES_SCREEN);
         }
         @Override
         public void openAllNews()
@@ -73,10 +83,19 @@ public class GeneralActivity
             GeneralActivity.this.openMenu();
         }
     });
+    private final Fragment pricesFragment = ServicesWithPricesFragment.newInstanse(new ServicesWithPricesContract.Behaviour()
+    {
+        @Override
+        public void openMenu()
+        {
+            GeneralActivity.this.openMenu();
+        }
+    });
 
     private DrawerContainer drawerContainer;
 
     private GeneralContract.Presenter presenter;
+    private MenuContract.Callback menuCallback;
 
     @Override
     public void onBackPressed()
@@ -128,6 +147,9 @@ public class GeneralActivity
                         break;
                     case DOCTORS_SCREEN:
                         currentFragment = doctorsFragment;
+                        break;
+                    case PRICES_SCREEN:
+                        currentFragment = pricesFragment;
                         break;
                     default:
                         return;

@@ -4,6 +4,7 @@
     <color name="colorPrimaryDark">@color/purpledark</color>
     <color name="colorAccent">@color/purplelight</color>
 
+    <color name="purplealpha">#886563A4</color>
     <color name="purple">#6563A4</color>
     <color name="purplelight">#9036D3</color>
     <color name="purpledark">#4F487D</color>

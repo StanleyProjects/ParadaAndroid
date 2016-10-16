@@ -1,7 +1,6 @@
 package ru.parada.app.modules.doctors;
 
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -14,6 +13,8 @@ import ru.parada.app.R;
 import ru.parada.app.contracts.DoctorDetailContract;
 import ru.parada.app.contracts.DoctorsContract;
 import ru.parada.app.modules.doctordetail.DoctorDetailFragment;
+import ru.parada.app.modules.doctors.adapter.DoctorsAdapter;
+import ru.parada.app.modules.doctors.adapter.DoctorsAdapterListener;
 import ru.parada.app.units.ListModel;
 import ru.parada.app.units.MVPFragment;
 
@@ -62,8 +63,7 @@ public class DoctorsFragment
     @Override
     protected void initViews(View v)
     {
-        setClickListener(v.findViewById(R.id.menu));
-        setClickListener(v.findViewById(R.id.search_clear));
+        setClickListener(v.findViewById(R.id.menu), v.findViewById(R.id.search_clear));
         list = (RecyclerView)v.findViewById(R.id.list);
         search = (EditText)v.findViewById(R.id.search);
     }
@@ -139,8 +139,6 @@ public class DoctorsFragment
 
             }
         });
-        Log.e(this.getClass()
-                  .getName(), " - updateDoctors");
         getPresenter().updateDoctors();
         getPresenter().loadDoctors();
     }

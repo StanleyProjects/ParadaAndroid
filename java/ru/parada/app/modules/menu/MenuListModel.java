@@ -2,24 +2,16 @@ package ru.parada.app.modules.menu;
 
 import java.util.ArrayList;
 
-import ru.parada.app.units.ListModel;
+import ru.parada.app.units.ArrayListModel;
 
 public class MenuListModel
-    implements ListModel<MenuModel>
+    extends ArrayListModel<MenuModel>
 {
     private int h;
 
-    private ArrayList<MenuModel> data;
-
     public MenuListModel(ArrayList<MenuModel> d)
     {
-        this.data = d;
-    }
-
-    @Override
-    public MenuModel getItem(int i)
-    {
-        return data.get(i);
+        super(d);
     }
 
     public void setHighlight(int i)
@@ -28,25 +20,6 @@ public class MenuListModel
     }
     public boolean isHighlight(MenuModel model)
     {
-        return data.get(h).equals(model);
-    }
-
-    @Override
-    public int getItemsCount()
-    {
-        if(data == null)
-        {
-            return 0;
-        }
-        return data.size();
-    }
-
-    @Override
-    public void clear()
-    {
-        if(data != null)
-        {
-            data = null;
-        }
+        return getItem(h).equals(model);
     }
 }

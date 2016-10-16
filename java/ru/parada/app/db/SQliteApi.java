@@ -6,22 +6,27 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.BaseColumns;
 
+import java.util.ArrayList;
+
 import ru.parada.app.contracts.DoctorDetailContract;
-import ru.parada.app.contracts.DoctorsContract;
 import ru.parada.app.contracts.ImagesContract;
 import ru.parada.app.contracts.MainContract;
 import ru.parada.app.contracts.ServicesContract;
-import ru.parada.app.modules.doctors.Doctor;
-import ru.parada.app.modules.doctors.DoctorsCursorListModel;
+import ru.parada.app.contracts.ServicesWithPricesContract;
+import ru.parada.app.modules.doctors.models.Doctor;
+import ru.parada.app.modules.doctors.models.DoctorsCursorListModel;
 import ru.parada.app.modules.images.ImageModel;
 import ru.parada.app.modules.main.NewsCursorListModel;
 import ru.parada.app.modules.services.ServicesCursorListModel;
+import ru.parada.app.modules.servicesprices.models.ServiceGroupPrice;
+import ru.parada.app.modules.servicesprices.models.ServiceWithPrice;
+import ru.parada.app.units.ArrayListModel;
 import ru.parada.app.units.ListModel;
 
 public class SQliteApi
 {
     static private final String DB_NAME = "parada";
-    static private final int DB_VERSION = 1610141737;
+    static private final int DB_VERSION = 1610162339;
     static private volatile SQliteApi instanse;
 
     static public SQliteApi getInstanse()
@@ -41,7 +46,6 @@ public class SQliteApi
         {
             return new NewsCursorListModel(sdb.rawQuery("SELECT * " + "FROM " + TABLE_NAME, new String[]{}));
         }
-
         @Override
         public ListModel<MainContract.ListItemModel> getAllWithLimit(int limit)
         {
@@ -49,19 +53,16 @@ public class SQliteApi
                     + "FROM " + TABLE_NAME + " "
                     + "ORDER BY " + Columns.date + " DESC " + "LIMIT " + limit, new String[]{}));
         }
-
         @Override
         public Cursor getOneFromId(int id)
         {
             return null;
         }
-
         @Override
         public long insertOne(MainContract.ListItemModel item)
         {
             return sdb.insertWithOnConflict(TABLE_NAME, null, ContentDriver.getContentValues(item), SQLiteDatabase.CONFLICT_REPLACE);
         }
-
         @Override
         public void clearTable()
         {
@@ -203,6 +204,108 @@ public class SQliteApi
             return sdb.insert(TABLE_NAME, null, ContentDriver.getContentValues(item));
         }
     };
+    private final Tables.ServicesWithPrices servicesWithPrices = new Tables.ServicesWithPrices()
+    {
+        @Override
+        public ListModel<ServicesWithPricesContract.Model> getAll()
+        {
+            Cursor cursor = sdb.rawQuery("SELECT * "
+                    + "FROM " + TABLE_NAME + " "
+                    + "ORDER BY " + Columns.group_id + " ASC ", new String[]{});
+            ArrayList<ServicesWithPricesContract.Model> data = new ArrayList<>();
+            if(cursor.moveToFirst())
+            {
+                do
+                {
+                    data.add(new ServiceWithPrice(
+                            cursor.getInt(cursor.getColumnIndex(BaseColumns._ID)),
+                            cursor.getString(cursor.getColumnIndex(Columns.title)),
+                            cursor.getInt(cursor.getColumnIndex(Columns.order)),
+                            cursor.getInt(cursor.getColumnIndex(Columns.group_id)),
+                            cursor.getString(cursor.getColumnIndex(Columns.group)),
+                            cursor.getInt(cursor.getColumnIndex(Columns.group_order))
+                    ));
+                }
+                while(cursor.moveToNext());
+            }
+            cursor.close();
+            return new ArrayListModel<>(data);
+        }
+
+        @Override
+        public ListModel<ServicesWithPricesContract.GroupModel> getAllGroups()
+        {
+            Cursor cursor = sdb.rawQuery("SELECT DISTINCT "
+                    + Columns.group + ", " + Columns.group_order + ", " + Columns.group_id + " "
+                    + "FROM " + TABLE_NAME + " "
+                    + "ORDER BY " + Columns.group_id + " ASC ", new String[]{});
+            ArrayList<ServicesWithPricesContract.GroupModel> data = new ArrayList<>();
+            if(cursor.moveToFirst())
+            {
+                do
+                {
+                    data.add(new ServiceGroupPrice(cursor.getInt(cursor.getColumnIndex(Columns.group_id)), cursor.getString(cursor.getColumnIndex(Columns.group)), cursor.getInt(cursor.getColumnIndex(Columns.group_order))));
+                }
+                while(cursor.moveToNext());
+            }
+            cursor.close();
+            return new ArrayListModel<>(data);
+        }
+
+        @Override
+        public ListModel<ServicesWithPricesContract.Model> getAllFromKeys(String keys)
+        {
+            Cursor cursor = sdb.rawQuery("SELECT * "
+                    + "FROM " + TABLE_NAME + " "
+                    + "WHERE " + Columns.title_search + " LIKE \"%" + keys.toLowerCase() + "%\"" + " "
+                    + "ORDER BY " + Columns.group_id + " ASC ", new String[]{});
+            ArrayList<ServicesWithPricesContract.Model> data = new ArrayList<>();
+            if(cursor.moveToFirst())
+            {
+                do
+                {
+                    data.add(new ServiceWithPrice(cursor.getInt(cursor.getColumnIndex(BaseColumns._ID)), cursor.getString(cursor.getColumnIndex(Columns.title)), cursor.getInt(cursor.getColumnIndex(Columns.order)), cursor.getInt(cursor.getColumnIndex(Columns.group_id)), cursor.getString(cursor.getColumnIndex(Columns.group)), cursor.getInt(cursor.getColumnIndex(Columns.group_order))));
+                }
+                while(cursor.moveToNext());
+            }
+            cursor.close();
+            return new ArrayListModel<>(data);
+        }
+
+        @Override
+        public ListModel<ServicesWithPricesContract.GroupModel> getGroupsFromKeys(String keys)
+        {
+            Cursor cursor = sdb.rawQuery("SELECT DISTINCT "
+                    + Columns.group + ", " + Columns.group_order + ", " + Columns.group_id + " "
+                    + "FROM " + TABLE_NAME + " "
+                    + "WHERE " + Columns.title_search + " LIKE \"%" + keys.toLowerCase() + "%\"" + " "
+                    + "ORDER BY " + Columns.group_id + " ASC" + " ", new String[]{});
+            ArrayList<ServicesWithPricesContract.GroupModel> data = new ArrayList<>();
+            if(cursor.moveToFirst())
+            {
+                do
+                {
+                    data.add(new ServiceGroupPrice(cursor.getInt(cursor.getColumnIndex(Columns.group_id)), cursor.getString(cursor.getColumnIndex(Columns.group)), cursor.getInt(cursor.getColumnIndex(Columns.group_order))));
+                }
+                while(cursor.moveToNext());
+            }
+            cursor.close();
+            return new ArrayListModel<>(data);
+        }
+
+        @Override
+        public long insertOne(ServicesWithPricesContract.Model item)
+        {
+            return sdb.insertWithOnConflict(TABLE_NAME, null, ContentDriver.getContentValues(item), SQLiteDatabase.CONFLICT_REPLACE);
+        }
+
+        @Override
+        public void clearTable()
+        {
+            sdb.execSQL("drop table if exists " + TABLE_NAME);
+            sdb.execSQL(CREATE_TABLE);
+        }
+    };
 
     private SQliteApi()
     {
@@ -259,12 +362,18 @@ public class SQliteApi
         return images;
     }
 
+    public Tables.ServicesWithPrices getServicesWithPrices()
+    {
+        return servicesWithPrices;
+    }
+
     private void clearTables(SQLiteDatabase db)
     {
         db.execSQL("drop table if exists " + Tables.News.TABLE_NAME);
         db.execSQL("drop table if exists " + Tables.Services.TABLE_NAME);
         db.execSQL("drop table if exists " + Tables.Doctors.TABLE_NAME);
         db.execSQL("drop table if exists " + Tables.Images.TABLE_NAME);
+        db.execSQL("drop table if exists " + Tables.ServicesWithPrices.TABLE_NAME);
     }
 
     private void createTables(SQLiteDatabase db)
@@ -273,5 +382,6 @@ public class SQliteApi
         db.execSQL(Tables.Services.CREATE_TABLE);
         db.execSQL(Tables.Doctors.CREATE_TABLE);
         db.execSQL(Tables.Images.CREATE_TABLE);
+        db.execSQL(Tables.ServicesWithPrices.CREATE_TABLE);
     }
 }

@@ -12,10 +12,10 @@ import ru.parada.app.contracts.ScreenType;
 import ru.parada.app.units.MVPFragment;
 
 public class MenuFragment
-        extends MVPFragment<MenuContract.Presenter, MenuContract.Behaviour>
+        extends MVPFragment<MenuContract.Presenter, MenuContract.MenuBehaviour>
         implements MenuContract.View
 {
-    static public MenuFragment newInstanse(MenuContract.Behaviour behaviour)
+    static public MenuFragment newInstanse(MenuContract.MenuBehaviour behaviour)
     {
         MenuFragment fragment = new MenuFragment();
         fragment.setBehaviour(behaviour);
@@ -44,6 +44,14 @@ public class MenuFragment
     {
         //setClickListener(v.findViewById(R.id.main), v.findViewById(R.id.service), v.findViewById(R.id.doctors), v.findViewById(R.id.prices));
         list = (RecyclerView)v.findViewById(R.id.list);
+        getBehaviour().setCallback(new MenuContract.Callback()
+        {
+            @Override
+            public void open(ScreenType screenType)
+            {
+                getPresenter().open(screenType);
+            }
+        });
     }
 
     @Override

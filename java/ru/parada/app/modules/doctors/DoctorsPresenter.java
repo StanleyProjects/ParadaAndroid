@@ -16,6 +16,7 @@ import ru.parada.app.contracts.ImagesContract;
 import ru.parada.app.db.SQliteApi;
 import ru.parada.app.json.JSONParser;
 import ru.parada.app.managers.FoldersManager;
+import ru.parada.app.modules.doctors.models.Doctor;
 import ru.parada.app.modules.images.ImageModel;
 import ru.parada.app.units.ListModel;
 

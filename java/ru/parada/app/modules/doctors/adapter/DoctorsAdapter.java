@@ -1,12 +1,10 @@
-package ru.parada.app.modules.doctors;
+package ru.parada.app.modules.doctors.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
 import ru.parada.app.contracts.DoctorDetailContract;
-import ru.parada.app.contracts.DoctorsContract;
 import ru.parada.app.managers.FoldersManager;
 import ru.parada.app.units.ListModel;
 import ru.parada.app.units.ModelAdapter;

@@ -1,4 +1,4 @@
-package ru.parada.app.modules.doctors;
+package ru.parada.app.modules.doctors.models;
 
 import ru.parada.app.contracts.DoctorDetailContract;
 

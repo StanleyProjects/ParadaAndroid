@@ -10,6 +10,7 @@ import ru.parada.app.contracts.DoctorsContract;
 import ru.parada.app.contracts.ImagesContract;
 import ru.parada.app.contracts.MainContract;
 import ru.parada.app.contracts.ServicesContract;
+import ru.parada.app.contracts.ServicesWithPricesContract;
 import ru.parada.app.units.ListModel;
 
 public interface Tables
@@ -136,5 +137,36 @@ public interface Tables
         String getUrl(int type, int id);
         long insertOne(ImagesContract.Model item);
 //        long removeOneFromTypeAndEntityId(int type, int id);
+    }
+
+    interface ServicesWithPrices
+    {
+        String TABLE_NAME = ServicesWithPrices.class.getCanonicalName().toLowerCase().replace('.', '_') + "_table";
+        String CREATE_TABLE = "create table if not exists " + TABLE_NAME + " (" +
+                BaseColumns._ID + " integer primary key autoincrement, " +
+                Columns.title + " text" + "," +
+                Columns.order + " integer" + "," +
+                Columns.group_id + " integer" + "," +
+                Columns.group + " text" + "," +
+                Columns.title_search + " text" + "," +
+                Columns.group_order + " integer" + //"," +
+                ");";
+
+        interface Columns
+        {
+            String title = TABLE_NAME + "_" + "title";
+            String order = TABLE_NAME + "_" + "order";
+            String group_id = TABLE_NAME + "_" + "group_id";
+            String group = TABLE_NAME + "_" + "group";
+            String group_order = TABLE_NAME + "_" + "group_order";
+            String title_search = TABLE_NAME + "_" + "title_search";
+        }
+
+        ListModel<ServicesWithPricesContract.Model> getAll();
+        ListModel<ServicesWithPricesContract.GroupModel> getAllGroups();
+        ListModel<ServicesWithPricesContract.Model> getAllFromKeys(String keys);
+        ListModel<ServicesWithPricesContract.GroupModel> getGroupsFromKeys(String keys);
+        long insertOne(ServicesWithPricesContract.Model item);
+        void clearTable();
     }
 }
