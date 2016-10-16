@@ -4,25 +4,16 @@ public interface MenuContract
 {
     interface View
     {
-        void setMain();
-        void setServices();
-        void setDoctors();
-        void setPrices();
+        void set(ScreenType screenType);
     }
 
     interface Presenter
     {
-        void openMain();
-        void openServices();
-        void openDoctors();
-        void openPrices();
+        void open(ScreenType screenType);
     }
 
     interface Behaviour
     {
-        void openMain();
-        void openServices();
-        void openDoctors();
-        void openPrices();
+        void open(ScreenType screenType);
     }
 }

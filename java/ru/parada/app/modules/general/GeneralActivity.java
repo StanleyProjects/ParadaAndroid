@@ -9,6 +9,7 @@ import ru.parada.app.contracts.DoctorsContract;
 import ru.parada.app.contracts.GeneralContract;
 import ru.parada.app.contracts.MainContract;
 import ru.parada.app.contracts.MenuContract;
+import ru.parada.app.contracts.ScreenType;
 import ru.parada.app.contracts.ServicesContract;
 import ru.parada.app.modules.doctors.DoctorsFragment;
 import ru.parada.app.modules.main.MainFragment;
@@ -24,25 +25,9 @@ public class GeneralActivity
     private final Fragment menuFragment = MenuFragment.newInstanse(new MenuContract.Behaviour()
     {
         @Override
-        public void openMain()
+        public void open(ScreenType screenType)
         {
-            presenter.setMainScreen();
-        }
-        @Override
-        public void openServices()
-        {
-            presenter.setServicesScreen();
-        }
-        @Override
-        public void openDoctors()
-        {
-            presenter.setDoctorsScreen();
-        }
-
-        @Override
-        public void openPrices()
-        {
-
+            presenter.setScreen(screenType);
         }
     });
     private final Fragment mainFragment = MainFragment.newInstanse(new MainContract.MainBehaviour()
@@ -55,7 +40,7 @@ public class GeneralActivity
         @Override
         public void openServices()
         {
-            presenter.setServicesScreen();
+            presenter.setScreen(ScreenType.SERVICES_SCREEN);
         }
         @Override
         public void openSubscribe()
@@ -65,7 +50,6 @@ public class GeneralActivity
         @Override
         public void openPrices()
         {
-
         }
         @Override
         public void openAllNews()
@@ -127,42 +111,27 @@ public class GeneralActivity
     }
 
     @Override
-    public void showMainScreen()
+    public void showScreen(final ScreenType screenType)
     {
         closeMenu(new DrawerContainer.AnimationEndListener()
         {
             @Override
             public void onAnimationEnd()
             {
-                currentFragment = mainFragment;
-                replaceFragment();
-            }
-        });
-    }
-
-    @Override
-    public void showServicesScreen()
-    {
-        closeMenu(new DrawerContainer.AnimationEndListener()
-        {
-            @Override
-            public void onAnimationEnd()
-            {
-                currentFragment = servicesFragment;
-                replaceFragment();
-            }
-        });
-    }
-
-    @Override
-    public void showDoctorsScreen()
-    {
-        closeMenu(new DrawerContainer.AnimationEndListener()
-        {
-            @Override
-            public void onAnimationEnd()
-            {
-                currentFragment = doctorsFragment;
+                switch(screenType)
+                {
+                    case MAIN_SCREEN:
+                        currentFragment = mainFragment;
+                        break;
+                    case SERVICES_SCREEN:
+                        currentFragment = servicesFragment;
+                        break;
+                    case DOCTORS_SCREEN:
+                        currentFragment = doctorsFragment;
+                        break;
+                    default:
+                        return;
+                }
                 replaceFragment();
             }
         });

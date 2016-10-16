@@ -16,32 +16,12 @@ public class GeneralPresenter
     }
 
     @Override
-    public void setMainScreen()
+    public void setScreen(ScreenType st)
     {
-        if(screenType != ScreenType.MAIN_SCREEN)
+        if(screenType != st)
         {
-            screenType = ScreenType.MAIN_SCREEN;
-            view.showMainScreen();
-        }
-    }
-
-    @Override
-    public void setServicesScreen()
-    {
-        if(screenType != ScreenType.SERVICES_SCREEN)
-        {
-            screenType = ScreenType.SERVICES_SCREEN;
-            view.showServicesScreen();
-        }
-    }
-
-    @Override
-    public void setDoctorsScreen()
-    {
-        if(screenType != ScreenType.DOCTORS_SCREEN)
-        {
-            screenType = ScreenType.DOCTORS_SCREEN;
-            view.showDoctorsScreen();
+            screenType = st;
+            view.showScreen(screenType);
         }
     }
 }

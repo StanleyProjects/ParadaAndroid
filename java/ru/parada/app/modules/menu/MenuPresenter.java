@@ -1,6 +1,7 @@
 package ru.parada.app.modules.menu;
 
 import ru.parada.app.contracts.MenuContract;
+import ru.parada.app.contracts.ScreenType;
 
 public class MenuPresenter
     implements MenuContract.Presenter
@@ -13,26 +14,8 @@ public class MenuPresenter
     }
 
     @Override
-    public void openMain()
+    public void open(ScreenType screenType)
     {
-        view.setMain();
-    }
-
-    @Override
-    public void openServices()
-    {
-        view.setServices();
-    }
-
-    @Override
-    public void openDoctors()
-    {
-        view.setDoctors();
-    }
-
-    @Override
-    public void openPrices()
-    {
-
+        view.set(screenType);
     }
 }
