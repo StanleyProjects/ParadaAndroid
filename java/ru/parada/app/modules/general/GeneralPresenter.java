@@ -1,25 +1,26 @@
 package ru.parada.app.modules.general;
 
 import ru.parada.app.contracts.GeneralContract;
+import ru.parada.app.contracts.ScreenType;
 
 public class GeneralPresenter
     implements GeneralContract.Presenter
 {
     private GeneralContract.View view;
-    private int currentScreen;
+    private ScreenType screenType;
 
     public GeneralPresenter(GeneralContract.View v)
     {
         view = v;
-        currentScreen = Screens.MAIN_SCREEN;
+        screenType = ScreenType.MAIN_SCREEN;
     }
 
     @Override
     public void setMainScreen()
     {
-        if(currentScreen != Screens.MAIN_SCREEN)
+        if(screenType != ScreenType.MAIN_SCREEN)
         {
-            currentScreen = Screens.MAIN_SCREEN;
+            screenType = ScreenType.MAIN_SCREEN;
             view.showMainScreen();
         }
     }
@@ -27,9 +28,9 @@ public class GeneralPresenter
     @Override
     public void setServicesScreen()
     {
-        if(currentScreen != Screens.SERVICES_SCREEN)
+        if(screenType != ScreenType.SERVICES_SCREEN)
         {
-            currentScreen = Screens.SERVICES_SCREEN;
+            screenType = ScreenType.SERVICES_SCREEN;
             view.showServicesScreen();
         }
     }
@@ -37,9 +38,9 @@ public class GeneralPresenter
     @Override
     public void setDoctorsScreen()
     {
-        if(currentScreen != Screens.DOCTORS_SCREEN)
+        if(screenType != ScreenType.DOCTORS_SCREEN)
         {
-            currentScreen = Screens.DOCTORS_SCREEN;
+            screenType = ScreenType.DOCTORS_SCREEN;
             view.showDoctorsScreen();
         }
     }

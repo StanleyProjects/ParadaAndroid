@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import ru.parada.app.R;
 import ru.parada.app.contracts.MenuContract;
+import ru.parada.app.contracts.ScreenType;
 import ru.parada.app.units.MVPFragment;
 
 public class MenuFragment
@@ -71,16 +72,19 @@ public class MenuFragment
             {
                 getPresenter().openMain();
             }
+
             @Override
             public void openServices()
             {
                 getPresenter().openServices();
             }
+
             @Override
             public void openDoctors()
             {
                 getPresenter().openDoctors();
             }
+
             @Override
             public void openPrices()
             {
@@ -90,42 +94,60 @@ public class MenuFragment
         list.setLayoutManager(new LinearLayoutManager(getActivity()));
         list.setAdapter(adapter);
     }
+
     private void initMenuListModel()
     {
         ArrayList<MenuModel> menuModels = new ArrayList<>();
-        menuModels.add(new MenuModel(R.mipmap.menu_main_active, getActivity().getResources()
-                                                                             .getString(R.string.main))
+        for(ScreenType screenType : ScreenType.values())
         {
-            @Override
-            public void click(MenuContract.Behaviour behaviour)
+            switch(screenType)
             {
-                behaviour.openMain();
+                case MAIN_SCREEN:
+                    menuModels.add(new MenuModel(R.mipmap.menu_main_active, getActivity().getResources()
+                                                                                         .getString(R.string.main))
+                    {
+                        @Override
+                        public void click(MenuContract.Behaviour behaviour)
+                        {
+                            behaviour.openMain();
+                        }
+                    });
+                    break;
+                case SERVICES_SCREEN:
+                    menuModels.add(new MenuModel(R.mipmap.menu_service, getActivity().getResources()
+                                                                                     .getString(R.string.services))
+                    {
+                        @Override
+                        public void click(MenuContract.Behaviour behaviour)
+                        {
+                            behaviour.openServices();
+                        }
+                    });
+                    break;
+                case DOCTORS_SCREEN:
+                    menuModels.add(new MenuModel(R.mipmap.menu_doctors, getActivity().getResources()
+                                                                                     .getString(R.string.doctors))
+                    {
+                        @Override
+                        public void click(MenuContract.Behaviour behaviour)
+                        {
+                            behaviour.openDoctors();
+                        }
+                    });
+                    break;
+                case PRICES_SCREEN:
+                    menuModels.add(new MenuModel(R.mipmap.menu_prices, getActivity().getResources()
+                                                                                    .getString(R.string.prices))
+                    {
+                        @Override
+                        public void click(MenuContract.Behaviour behaviour)
+                        {
+                            behaviour.openPrices();
+                        }
+                    });
+                    break;
             }
-        });
-        menuModels.add(new MenuModel(R.mipmap.menu_service, getActivity().getResources().getString(R.string.services))
-        {
-            @Override
-            public void click(MenuContract.Behaviour behaviour)
-            {
-                behaviour.openServices();
-            }
-        });
-        menuModels.add(new MenuModel(R.mipmap.menu_doctors, getActivity().getResources().getString(R.string.doctors))
-        {
-            @Override
-            public void click(MenuContract.Behaviour behaviour)
-            {
-                behaviour.openDoctors();
-            }
-        });
-        menuModels.add(new MenuModel(R.mipmap.menu_prices, getActivity().getResources().getString(R.string.prices))
-        {
-            @Override
-            public void click(MenuContract.Behaviour behaviour)
-            {
-                behaviour.openPrices();
-            }
-        });
+        }
         menuListModel = new MenuListModel(menuModels);
     }
 
@@ -133,7 +155,7 @@ public class MenuFragment
     public void setMain()
     {
         getBehaviour().openMain();
-        menuListModel.setHighlight(0);
+        menuListModel.setHighlight(ScreenType.MAIN_SCREEN.ordinal());
         adapter.notifyDataSetChanged();
     }
 
@@ -141,7 +163,7 @@ public class MenuFragment
     public void setServices()
     {
         getBehaviour().openServices();
-        menuListModel.setHighlight(1);
+        menuListModel.setHighlight(ScreenType.SERVICES_SCREEN.ordinal());
         adapter.notifyDataSetChanged();
     }
 
@@ -149,7 +171,7 @@ public class MenuFragment
     public void setDoctors()
     {
         getBehaviour().openDoctors();
-        menuListModel.setHighlight(2);
+        menuListModel.setHighlight(ScreenType.DOCTORS_SCREEN.ordinal());
         adapter.notifyDataSetChanged();
     }
 
@@ -157,7 +179,7 @@ public class MenuFragment
     public void setPrices()
     {
         getBehaviour().openPrices();
-        menuListModel.setHighlight(3);
+        menuListModel.setHighlight(ScreenType.PRICES_SCREEN.ordinal());
         adapter.notifyDataSetChanged();
     }
 }
