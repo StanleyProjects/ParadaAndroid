@@ -4,20 +4,32 @@ import ru.parada.app.units.ListModel;
 
 public interface PricesContract
 {
-    interface ListItemModel
+    interface Mark
+    {
+        String SERVICE_ID = Mark.class.getCanonicalName().toLowerCase().replace(".", "_") + "_" + "service_id";
+    }
+
+    interface Model
     {
         int getId();
+        int getServiceId();
+        String getTitle();
+        String getValue();
     }
 
     interface View
     {
-        void updatePrices(ListModel<ListItemModel> data);
+        void update(ListModel<Model> data, ServicesWithPricesContract.Model service);
     }
 
     interface Presenter
     {
-        void loadPrices();
-        void updatePrices();
-        void searchServices(String keys);
+        void load(int id);
+        void update(int id);
+    }
+
+    interface Behaviour
+    {
+        void back();
     }
 }

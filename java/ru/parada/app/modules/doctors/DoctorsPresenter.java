@@ -13,6 +13,7 @@ import ru.parada.app.connection.Request;
 import ru.parada.app.contracts.DoctorDetailContract;
 import ru.parada.app.contracts.DoctorsContract;
 import ru.parada.app.contracts.ImagesContract;
+import ru.parada.app.core.DoctorsCore;
 import ru.parada.app.db.SQliteApi;
 import ru.parada.app.json.JSONParser;
 import ru.parada.app.managers.FoldersManager;
@@ -33,7 +34,7 @@ public class DoctorsPresenter
     @Override
     public void loadDoctors()
     {
-        new Request(ParadaService.BASE_URL, ParadaService.GET_DOCTORS).execute(new Request.RequestListener()
+        new Request(ParadaService.BASE_URL, ParadaService.Get.DOCTORS).execute(new Request.RequestListener()
         {
             @Override
             public void answer(String answer)
@@ -48,23 +49,27 @@ public class DoctorsPresenter
                     Log.e(this.getClass().getName(), "parse doctors " + e.getMessage());
                     return;
                 }
-                SQliteApi.getInstanse().getDoctors().clearTable();
+                SQliteApi.getInstanse().getDoctors().clear();
                 SQliteApi.getInstanse().startTransaction();
                 for(Object doctor : doctors)
                 {
+                    if(!correcting((HashMap)doctor))
+                    {
+                        continue;
+                    }
                     int id = Integer.parseInt((String)((HashMap)doctor).get("id"));
                     checkImage(id, (String)((HashMap)doctor).get("photo_url"));
                     SQliteApi.getInstanse().getDoctors().insertOne(new Doctor(id,
-                            (String)((HashMap)doctor).get("last_name"),
-                            (String)((HashMap)doctor).get("first_name"),
-                            (String)((HashMap)doctor).get("middle_name"),
-                            (String)((HashMap)doctor).get("first_position"),
-                            (String)((HashMap)doctor).get("second_position"),
-                            (String)((HashMap)doctor).get("third_position"),
+                            getString((HashMap)doctor, "last_name"),
+                            getString((HashMap)doctor, "first_name"),
+                            getString((HashMap)doctor, "middle_name"),
+                            getString((HashMap)doctor, "first_position"),
+                            getString((HashMap)doctor, "second_position"),
+                            getString((HashMap)doctor, "third_position"),
                             null,
-                            (String)((HashMap)doctor).get("descr"),
+                            getString((HashMap)doctor, "descr"),
                             Integer.parseInt((String)((HashMap)doctor).get("order")),
-                            (String)((HashMap)doctor).get("phone")));
+                            getString((HashMap)doctor, "phone")));
                 }
                 SQliteApi.getInstanse().endTransaction();
                 Log.e(this.getClass().getName(), "loadDoctors");
@@ -76,6 +81,42 @@ public class DoctorsPresenter
                 Log.e(this.getClass().getName(), "load doctors " + error.getMessage());
             }
         });
+    }
+    private String getString(HashMap map, String key)
+    {
+        if(map.get(key) == null)
+        {
+            return "";
+        }
+        return (String)map.get(key);
+    }
+    private boolean correcting(HashMap doctor)
+    {
+        if(doctor.get("id") == null)
+        {
+            return false;
+        }
+        try
+        {
+            Integer.parseInt((String)doctor.get("id"));
+        }
+        catch(Exception e)
+        {
+            return false;
+        }
+        if(doctor.get("order") == null)
+        {
+            doctor.put("order", 0);
+        }
+        try
+        {
+            Integer.parseInt((String)doctor.get("order"));
+        }
+        catch(Exception e)
+        {
+            doctor.put("order", 0);
+        }
+        return true;
     }
 
     @Override
@@ -133,7 +174,7 @@ public class DoctorsPresenter
         }
     }
 
-    private void updateDoctors(ListModel<DoctorDetailContract.Model> data)
+    private void updateDoctors(ListModel<DoctorsCore.DetailModel> data)
     {
         Log.e(this.getClass().getName(), "updateDoctors " + data.getItemsCount());
         view.updateDoctors(data);

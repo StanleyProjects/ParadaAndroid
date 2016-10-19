@@ -72,14 +72,14 @@ public abstract class MVPFragment<PRESENTER, BEHAVIOUR>
     {
         return behaviour;
     }
-
     protected PRESENTER getPresenter()
     {
         return presenter;
     }
 
-    abstract protected int setContentView();
     abstract protected PRESENTER setPresenter();
+
+    abstract protected int setContentView();
     abstract protected void initViews(View v);
     abstract protected View.OnClickListener setClickListener();
     abstract protected void init();

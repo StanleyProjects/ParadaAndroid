@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import ru.parada.app.R;
 import ru.parada.app.contracts.DoctorDetailContract;
+import ru.parada.app.core.DoctorsCore;
 import ru.parada.app.managers.FoldersManager;
 import ru.parada.app.modules.call.CallDialog;
 import ru.parada.app.modules.call.CallDialogListener;
@@ -37,15 +38,15 @@ public class DoctorDetailFragment
     private String phone;
 
     @Override
-    protected int setContentView()
-    {
-        return R.layout.doctor_detail_fragment;
-    }
-
-    @Override
     protected DoctorDetailContract.Presenter setPresenter()
     {
         return new DoctorDetailPresenter(this);
+    }
+
+    @Override
+    protected int setContentView()
+    {
+        return R.layout.doctor_detail_fragment;
     }
 
     @Override
@@ -128,7 +129,7 @@ public class DoctorDetailFragment
     }
 
     @Override
-    public void update(final DoctorDetailContract.Model item)
+    public void update(final DoctorsCore.DetailModel item)
     {
         runOnUiThread(new Runnable()
         {

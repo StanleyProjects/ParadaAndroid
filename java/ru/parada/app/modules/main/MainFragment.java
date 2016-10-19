@@ -33,15 +33,15 @@ public class MainFragment
     private NewsAdapter adapter;
 
     @Override
-    protected int setContentView()
-    {
-        return R.layout.main_screen;
-    }
-
-    @Override
     protected MainContract.Presenter setPresenter()
     {
         return new MainPresenter(this);
+    }
+
+    @Override
+    protected int setContentView()
+    {
+        return R.layout.main_screen;
     }
 
     @Override

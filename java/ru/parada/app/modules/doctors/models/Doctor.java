@@ -1,9 +1,9 @@
 package ru.parada.app.modules.doctors.models;
 
-import ru.parada.app.contracts.DoctorDetailContract;
+import ru.parada.app.core.DoctorsCore;
 
 public class Doctor
-    implements DoctorDetailContract.Model
+    implements DoctorsCore.DetailModel
 {
     private int id;
     private String last_name;

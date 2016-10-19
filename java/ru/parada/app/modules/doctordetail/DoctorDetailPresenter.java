@@ -1,6 +1,7 @@
 package ru.parada.app.modules.doctordetail;
 
 import ru.parada.app.contracts.DoctorDetailContract;
+import ru.parada.app.core.DoctorsCore;
 import ru.parada.app.db.SQliteApi;
 
 public class DoctorDetailPresenter
@@ -26,7 +27,7 @@ public class DoctorDetailPresenter
         }).start();
     }
 
-    private void updateDoctor(DoctorDetailContract.Model model)
+    private void updateDoctor(DoctorsCore.DetailModel model)
     {
         view.update(model);
     }

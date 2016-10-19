@@ -9,8 +9,10 @@ import ru.parada.app.contracts.DoctorDetailContract;
 import ru.parada.app.contracts.DoctorsContract;
 import ru.parada.app.contracts.ImagesContract;
 import ru.parada.app.contracts.MainContract;
+import ru.parada.app.contracts.PricesContract;
 import ru.parada.app.contracts.ServicesContract;
 import ru.parada.app.contracts.ServicesWithPricesContract;
+import ru.parada.app.core.DoctorsCore;
 
 public class ContentDriver
 {
@@ -22,7 +24,7 @@ public class ContentDriver
         return content;
     }
 
-    static public ContentValues getContentValues(DoctorDetailContract.Model item)
+    static public ContentValues getContentValues(DoctorsCore.DetailModel item)
     {
         ContentValues content = new ContentValues();
         content.put(BaseColumns._ID, item.getId());
@@ -69,6 +71,16 @@ public class ContentDriver
         content.put(Tables.ServicesWithPrices.Columns.group, item.getGroupName());
         content.put(Tables.ServicesWithPrices.Columns.group_order, item.getGroupOrder());
         content.put(Tables.ServicesWithPrices.Columns.title_search, item.getTitle().toLowerCase());
+        return content;
+    }
+
+    public static ContentValues getContentValues(PricesContract.Model item)
+    {
+        ContentValues content = new ContentValues();
+        content.put(BaseColumns._ID, item.getId());
+        content.put(Tables.Prices.Columns.title, item.getTitle());
+        content.put(Tables.Prices.Columns.service_id, item.getServiceId());
+        content.put(Tables.Prices.Columns.value, item.getValue());
         return content;
     }
 }

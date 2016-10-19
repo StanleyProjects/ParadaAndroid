@@ -12,9 +12,9 @@
     <color name="red">#F44336</color>
 
     <color name="white">#ffffff</color>
-    <color name="grey">#c8c8c8</color>
-    <color name="greylight">#F3F3F5</color>
-    <color name="greytext">#BDC1C0</color>
-    <color name="greydark">#333333</color>
+    <color name="gray">#c8c8c8</color>
+    <color name="graylight">#F3F3F5</color>
+    <color name="graytext">#BDC1C0</color>
+    <color name="graydark">#333333</color>
     <color name="black">#000000</color>
 </resources>

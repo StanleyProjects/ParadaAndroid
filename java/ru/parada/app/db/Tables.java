@@ -9,8 +9,10 @@ import ru.parada.app.contracts.DoctorDetailContract;
 import ru.parada.app.contracts.DoctorsContract;
 import ru.parada.app.contracts.ImagesContract;
 import ru.parada.app.contracts.MainContract;
+import ru.parada.app.contracts.PricesContract;
 import ru.parada.app.contracts.ServicesContract;
 import ru.parada.app.contracts.ServicesWithPricesContract;
+import ru.parada.app.core.DoctorsCore;
 import ru.parada.app.units.ListModel;
 
 public interface Tables
@@ -79,6 +81,7 @@ public interface Tables
         void clearTable();
     }
     interface Doctors
+        extends DAO.Doctors
     {
         String TABLE_NAME = Doctors.class.getCanonicalName().toLowerCase().replace('.', '_') + "_table";
         String CREATE_TABLE = "create table if not exists " + TABLE_NAME + " (" +
@@ -107,12 +110,6 @@ public interface Tables
             String third_position = TABLE_NAME + "_" + "third_position";
             String phone = TABLE_NAME + "_" + "phone";
         }
-
-        ListModel<DoctorDetailContract.Model> getAll();
-        ListModel<DoctorDetailContract.Model> getFromKeys(String keys);
-        DoctorDetailContract.Model getOneFromId(int id);
-        long insertOne(DoctorDetailContract.Model item);
-        void clearTable();
     }
     interface Images
     {
@@ -140,6 +137,7 @@ public interface Tables
     }
 
     interface ServicesWithPrices
+            extends DAO.ServicesWithPrices
     {
         String TABLE_NAME = ServicesWithPrices.class.getCanonicalName().toLowerCase().replace('.', '_') + "_table";
         String CREATE_TABLE = "create table if not exists " + TABLE_NAME + " (" +
@@ -161,12 +159,24 @@ public interface Tables
             String group_order = TABLE_NAME + "_" + "group_order";
             String title_search = TABLE_NAME + "_" + "title_search";
         }
+    }
 
-        ListModel<ServicesWithPricesContract.Model> getAll();
-        ListModel<ServicesWithPricesContract.GroupModel> getAllGroups();
-        ListModel<ServicesWithPricesContract.Model> getAllFromKeys(String keys);
-        ListModel<ServicesWithPricesContract.GroupModel> getGroupsFromKeys(String keys);
-        long insertOne(ServicesWithPricesContract.Model item);
-        void clearTable();
+    interface Prices
+        extends DAO.Prices
+    {
+        String TABLE_NAME = Prices.class.getCanonicalName().toLowerCase().replace('.', '_') + "_table";
+        String CREATE_TABLE = "create table if not exists " + TABLE_NAME + " (" +
+                BaseColumns._ID + " integer primary key autoincrement, " +
+                Columns.title + " text" + "," +
+                Columns.service_id + " integer" + "," +
+                Columns.value + " text" + //"," +
+                ");";
+
+        interface Columns
+        {
+            String title = TABLE_NAME + "_" + "title";
+            String service_id = TABLE_NAME + "_" + "service_id";
+            String value = TABLE_NAME + "_" + "value";
+        }
     }
 }

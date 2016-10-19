@@ -51,7 +51,7 @@
                     android:layout_height="72dp"/>
                 <TextView
                     android:text="@string/services"
-                    android:textColor="@color/greytext"
+                    android:textColor="@color/graytext"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
             </LinearLayout>
@@ -68,7 +68,7 @@
                     android:layout_height="96dp"/>
                 <TextView
                     android:text="@string/subscribe"
-                    android:textColor="@color/greytext"
+                    android:textColor="@color/graytext"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
             </LinearLayout>
@@ -84,17 +84,17 @@
                     android:layout_height="72dp"/>
                 <TextView
                     android:text="@string/prices"
-                    android:textColor="@color/greytext"
+                    android:textColor="@color/graytext"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
     <TextView
-        android:background="@color/greylight"
+        android:background="@color/graylight"
         android:text="@string/news"
         android:textSize="16dp"
-        android:textColor="@color/grey"
+        android:textColor="@color/gray"
         android:textAllCaps="true"
         android:paddingLeft="24dp"
         android:gravity="center_vertical"

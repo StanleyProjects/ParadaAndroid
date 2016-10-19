@@ -9,16 +9,25 @@ import java.util.ArrayList;
 import ru.parada.app.R;
 import ru.parada.app.contracts.MenuContract;
 import ru.parada.app.contracts.ScreenType;
+import ru.parada.app.units.CallbackConnector;
 import ru.parada.app.units.MVPFragment;
 
 public class MenuFragment
-        extends MVPFragment<MenuContract.Presenter, MenuContract.MenuBehaviour>
+        extends MVPFragment<MenuContract.Presenter, MenuContract.Behaviour>
         implements MenuContract.View
 {
-    static public MenuFragment newInstanse(MenuContract.MenuBehaviour behaviour)
+    static public MenuFragment newInstanse(MenuContract.Behaviour behaviour, CallbackConnector<MenuContract.Callback> cconnector)
     {
-        MenuFragment fragment = new MenuFragment();
+        final MenuFragment fragment = new MenuFragment();
         fragment.setBehaviour(behaviour);
+        cconnector.setCallback(new MenuContract.Callback()
+        {
+            @Override
+            public void open(ScreenType screenType)
+            {
+                fragment.getPresenter().open(screenType);
+            }
+        });
         return fragment;
     }
 
@@ -28,15 +37,15 @@ public class MenuFragment
     private MenuListModel menuListModel;
 
     @Override
-    protected int setContentView()
-    {
-        return R.layout.menu_screen;
-    }
-
-    @Override
     protected MenuContract.Presenter setPresenter()
     {
         return new MenuPresenter(this);
+    }
+
+    @Override
+    protected int setContentView()
+    {
+        return R.layout.menu_screen;
     }
 
     @Override
@@ -44,14 +53,6 @@ public class MenuFragment
     {
         //setClickListener(v.findViewById(R.id.main), v.findViewById(R.id.service), v.findViewById(R.id.doctors), v.findViewById(R.id.prices));
         list = (RecyclerView)v.findViewById(R.id.list);
-        getBehaviour().setCallback(new MenuContract.Callback()
-        {
-            @Override
-            public void open(ScreenType screenType)
-            {
-                getPresenter().open(screenType);
-            }
-        });
     }
 
     @Override

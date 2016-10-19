@@ -36,7 +36,7 @@
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="56dp"
-            android:background="@color/greylight"
+            android:background="@color/graylight"
             android:paddingBottom="10dp"
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
@@ -56,7 +56,7 @@
                 android:paddingRight="38dp"
                 android:singleLine="true"
                 android:textColor="@color/black"
-                android:textColorHint="@color/grey"/>
+                android:textColorHint="@color/gray"/>
 
             <ImageView
                 android:id="@+id/search_clear"
@@ -72,4 +72,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
     </LinearLayout>
+    <FrameLayout
+        android:id="@+id/prices_frame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 </FrameLayout>

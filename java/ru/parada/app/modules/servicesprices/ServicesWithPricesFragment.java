@@ -1,5 +1,6 @@
 package ru.parada.app.modules.servicesprices;
 
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -10,7 +11,10 @@ import android.widget.EditText;
 import java.util.ArrayList;
 
 import ru.parada.app.R;
+import ru.parada.app.contracts.PricesContract;
 import ru.parada.app.contracts.ServicesWithPricesContract;
+import ru.parada.app.modules.prices.PricesFragment;
+import ru.parada.app.modules.prices.PricesPresenter;
 import ru.parada.app.modules.servicesprices.adapter.PricesGroupData;
 import ru.parada.app.modules.servicesprices.adapter.ServicesPricesAdapterListener;
 import ru.parada.app.units.ArrayListModel;
@@ -30,6 +34,8 @@ public class ServicesWithPricesFragment
         return fragment;
     }
 
+    private Fragment pricesFragment;
+
     private RecyclerView list;
     private EditText search;
 
@@ -37,15 +43,25 @@ public class ServicesWithPricesFragment
     private PricesGroupData pricesGroupData;
 
     @Override
-    protected int setContentView()
+    public void onResume()
     {
-        return R.layout.services_prices_fragment;
+        super.onResume();
+        if(pricesFragment != null && getChildFragmentManager().getBackStackEntryCount() == 0)
+        {
+            showPrices();
+        }
     }
 
     @Override
     protected ServicesWithPricesContract.Presenter setPresenter()
     {
         return new ServicesWithPricesPresenter(this);
+    }
+
+    @Override
+    protected int setContentView()
+    {
+        return R.layout.services_prices_fragment;
     }
 
     @Override
@@ -80,10 +96,24 @@ public class ServicesWithPricesFragment
     @Override
     protected void init()
     {
-        pricesGroupData = new PricesGroupData();
-        adapter = new GroupAdapter<>(getActivity(), pricesGroupData, new ServicesPricesAdapterListener()
+        pricesGroupData = new PricesGroupData(new ServicesPricesAdapterListener()
         {
+            @Override
+            public void getService(int id)
+            {
+                pricesFragment = PricesFragment.newInstanse(new PricesContract.Behaviour()
+                {
+                    @Override
+                    public void back()
+                    {
+                        getChildFragmentManager().popBackStack();
+                        pricesFragment = null;
+                    }
+                }, id);
+                showPrices();
+            }
         });
+        adapter = new GroupAdapter<>(getActivity(), pricesGroupData);
         list.setLayoutManager(new LinearLayoutManager(getActivity()));
         list.setAdapter(adapter);
         search.addTextChangedListener(new TextWatcher()
@@ -159,5 +189,13 @@ public class ServicesWithPricesFragment
                 adapter.notifyDataSetChanged();
             }
         });
+    }
+
+    public void showPrices()
+    {
+        getChildFragmentManager().beginTransaction()
+                                 .add(R.id.prices_frame, pricesFragment)
+                                 .addToBackStack(pricesFragment.getClass().getName())
+                                 .commit();
     }
 }

@@ -2,14 +2,20 @@ package ru.parada.app.modules.servicesprices.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.view.ViewGroup;
 
 import ru.parada.app.contracts.ServicesWithPricesContract;
 import ru.parada.app.units.GroupData;
 
 public class PricesGroupData
-    extends GroupData
+    extends GroupData<ServicesPricesAdapterListener>
 {
+    public PricesGroupData(ServicesPricesAdapterListener l)
+    {
+        super(l);
+    }
+
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(Context context, ViewGroup parent, int viewType)
     {
@@ -36,9 +42,17 @@ public class PricesGroupData
         }
     }
 
-    private void setNormal(ServicePriceHolder holder, ServicesWithPricesContract.Model data)
+    private void setNormal(ServicePriceHolder holder, final ServicesWithPricesContract.Model data)
     {
         holder.setTitle(data.getTitle());
+        holder.itemView.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                getListener().getService(data.getId());
+            }
+        });
     }
 
     private void setGroup(ServicePriceGroupHolder holder, ServicesWithPricesContract.GroupModel data)

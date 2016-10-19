@@ -8,15 +8,17 @@ import android.provider.BaseColumns;
 
 import java.util.ArrayList;
 
-import ru.parada.app.contracts.DoctorDetailContract;
 import ru.parada.app.contracts.ImagesContract;
 import ru.parada.app.contracts.MainContract;
+import ru.parada.app.contracts.PricesContract;
 import ru.parada.app.contracts.ServicesContract;
 import ru.parada.app.contracts.ServicesWithPricesContract;
+import ru.parada.app.core.DoctorsCore;
 import ru.parada.app.modules.doctors.models.Doctor;
 import ru.parada.app.modules.doctors.models.DoctorsCursorListModel;
 import ru.parada.app.modules.images.ImageModel;
 import ru.parada.app.modules.main.NewsCursorListModel;
+import ru.parada.app.modules.prices.models.PricesCursorListModel;
 import ru.parada.app.modules.services.ServicesCursorListModel;
 import ru.parada.app.modules.servicesprices.models.ServiceGroupPrice;
 import ru.parada.app.modules.servicesprices.models.ServiceWithPrice;
@@ -26,7 +28,7 @@ import ru.parada.app.units.ListModel;
 public class SQliteApi
 {
     static private final String DB_NAME = "parada";
-    static private final int DB_VERSION = 1610162339;
+    static private final int DB_VERSION = 1610190207;
     static private volatile SQliteApi instanse;
 
     static public SQliteApi getInstanse()
@@ -97,10 +99,10 @@ public class SQliteApi
             sdb.execSQL(CREATE_TABLE);
         }
     };
-    private final Tables.Doctors doctors = new Tables.Doctors()
+    private final DAO.Doctors doctors = new Tables.Doctors()
     {
         @Override
-        public ListModel<DoctorDetailContract.Model> getAll()
+        public ListModel<DoctorsCore.DetailModel> getAll()
         {
             return new DoctorsCursorListModel(sdb.rawQuery(
                     "SELECT * "
@@ -113,7 +115,7 @@ public class SQliteApi
         }
 
         @Override
-        public ListModel<DoctorDetailContract.Model> getFromKeys(String keys)
+        public ListModel<DoctorsCore.DetailModel> getFromKeys(String keys)
         {
             return new DoctorsCursorListModel(sdb.rawQuery("SELECT * "
                     + "FROM " + TABLE_NAME + " "
@@ -124,7 +126,7 @@ public class SQliteApi
         }
 
         @Override
-        public DoctorDetailContract.Model getOneFromId(int id)
+        public DoctorsCore.DetailModel getOneFromId(int id)
         {
             Cursor cursor = sdb.rawQuery(
                     "SELECT * "
@@ -139,7 +141,7 @@ public class SQliteApi
                 cursor.close();
                 return null;
             }
-            DoctorDetailContract.Model doctor = new Doctor(id,
+            DoctorsCore.DetailModel doctor = new Doctor(id,
                     cursor.getString(cursor.getColumnIndex(Columns.last_name)),
                     cursor.getString(cursor.getColumnIndex(Columns.first_name)),
                     cursor.getString(cursor.getColumnIndex(Columns.middle_name)),
@@ -155,13 +157,13 @@ public class SQliteApi
         }
 
         @Override
-        public long insertOne(DoctorDetailContract.Model item)
+        public void insertOne(DoctorsCore.DetailModel item)
         {
-            return sdb.insertWithOnConflict(TABLE_NAME, null, ContentDriver.getContentValues(item), SQLiteDatabase.CONFLICT_REPLACE);
+            sdb.insertWithOnConflict(TABLE_NAME, null, ContentDriver.getContentValues(item), SQLiteDatabase.CONFLICT_REPLACE);
         }
 
         @Override
-        public void clearTable()
+        public void clear()
         {
             sdb.execSQL("drop table if exists " + TABLE_NAME);
             sdb.execSQL(CREATE_TABLE);
@@ -204,7 +206,7 @@ public class SQliteApi
             return sdb.insert(TABLE_NAME, null, ContentDriver.getContentValues(item));
         }
     };
-    private final Tables.ServicesWithPrices servicesWithPrices = new Tables.ServicesWithPrices()
+    private final DAO.ServicesWithPrices servicesWithPrices = new Tables.ServicesWithPrices()
     {
         @Override
         public ListModel<ServicesWithPricesContract.Model> getAll()
@@ -230,6 +232,28 @@ public class SQliteApi
             }
             cursor.close();
             return new ArrayListModel<>(data);
+        }
+
+        @Override
+        public ServicesWithPricesContract.Model getOneFromId(int id)
+        {
+            Cursor cursor = sdb.rawQuery("SELECT * "
+                    + "FROM " + TABLE_NAME + " "
+                    + "WHERE " + BaseColumns._ID + "=" + id, new String[]{});
+            ServicesWithPricesContract.Model data = null;
+            if(cursor.moveToFirst())
+            {
+                data = new ServiceWithPrice(
+                        cursor.getInt(cursor.getColumnIndex(BaseColumns._ID)),
+                        cursor.getString(cursor.getColumnIndex(Columns.title)),
+                        cursor.getInt(cursor.getColumnIndex(Columns.order)),
+                        cursor.getInt(cursor.getColumnIndex(Columns.group_id)),
+                        cursor.getString(cursor.getColumnIndex(Columns.group)),
+                        cursor.getInt(cursor.getColumnIndex(Columns.group_order))
+                );
+            }
+            cursor.close();
+            return data;
         }
 
         @Override
@@ -294,13 +318,34 @@ public class SQliteApi
         }
 
         @Override
-        public long insertOne(ServicesWithPricesContract.Model item)
+        public void insertOne(ServicesWithPricesContract.Model item)
         {
-            return sdb.insertWithOnConflict(TABLE_NAME, null, ContentDriver.getContentValues(item), SQLiteDatabase.CONFLICT_REPLACE);
+            sdb.insertWithOnConflict(TABLE_NAME, null, ContentDriver.getContentValues(item), SQLiteDatabase.CONFLICT_REPLACE);
         }
 
         @Override
-        public void clearTable()
+        public void clear()
+        {
+            sdb.execSQL("drop table if exists " + TABLE_NAME);
+            sdb.execSQL(CREATE_TABLE);
+        }
+    };
+    private final DAO.Prices prices = new Tables.Prices()
+    {
+        @Override
+        public ListModel<PricesContract.Model> getAllFromServiceId(int id)
+        {
+            return new PricesCursorListModel(sdb.rawQuery("SELECT * "
+                    + "FROM " + TABLE_NAME + " "
+                    + "WHERE " + Columns.service_id + "=" + id, new String[]{}));
+        }
+        @Override
+        public void insertOne(PricesContract.Model item)
+        {
+            sdb.insertWithOnConflict(TABLE_NAME, null, ContentDriver.getContentValues(item), SQLiteDatabase.CONFLICT_REPLACE);
+        }
+        @Override
+        public void clear()
         {
             sdb.execSQL("drop table if exists " + TABLE_NAME);
             sdb.execSQL(CREATE_TABLE);
@@ -352,7 +397,7 @@ public class SQliteApi
         return services;
     }
 
-    public Tables.Doctors getDoctors()
+    public DAO.Doctors getDoctors()
     {
         return doctors;
     }
@@ -361,8 +406,12 @@ public class SQliteApi
     {
         return images;
     }
+    public DAO.Prices getPrices()
+    {
+        return prices;
+    }
 
-    public Tables.ServicesWithPrices getServicesWithPrices()
+    public DAO.ServicesWithPrices getServicesWithPrices()
     {
         return servicesWithPrices;
     }
@@ -374,6 +423,7 @@ public class SQliteApi
         db.execSQL("drop table if exists " + Tables.Doctors.TABLE_NAME);
         db.execSQL("drop table if exists " + Tables.Images.TABLE_NAME);
         db.execSQL("drop table if exists " + Tables.ServicesWithPrices.TABLE_NAME);
+        db.execSQL("drop table if exists " + Tables.Prices.TABLE_NAME);
     }
 
     private void createTables(SQLiteDatabase db)
@@ -383,5 +433,6 @@ public class SQliteApi
         db.execSQL(Tables.Doctors.CREATE_TABLE);
         db.execSQL(Tables.Images.CREATE_TABLE);
         db.execSQL(Tables.ServicesWithPrices.CREATE_TABLE);
+        db.execSQL(Tables.Prices.CREATE_TABLE);
     }
 }

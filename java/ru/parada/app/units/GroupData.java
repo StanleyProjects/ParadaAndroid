@@ -4,9 +4,15 @@ import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
-public abstract class GroupData
+public abstract class GroupData<LISTENER>
 {
+    private LISTENER listener;
     private ListModel<GroupModel> listModel;
+
+    public GroupData(LISTENER l)
+    {
+        listener = l;
+    }
 
     protected GroupModel getItem(int position)
     {
@@ -36,6 +42,11 @@ public abstract class GroupData
             listModel.clear();
         }
         listModel = l;
+    }
+
+    public LISTENER getListener()
+    {
+        return listener;
     }
 
     public abstract RecyclerView.ViewHolder onCreateViewHolder(Context context, ViewGroup parent, int viewType);

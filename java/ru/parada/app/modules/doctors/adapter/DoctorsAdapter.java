@@ -5,14 +5,15 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import ru.parada.app.contracts.DoctorDetailContract;
+import ru.parada.app.core.DoctorsCore;
 import ru.parada.app.managers.FoldersManager;
 import ru.parada.app.units.ListModel;
 import ru.parada.app.units.ModelAdapter;
 
 public class DoctorsAdapter
-    extends ModelAdapter<DoctorAdapterHolder, DoctorDetailContract.Model, DoctorsAdapterListener>
+    extends ModelAdapter<DoctorAdapterHolder, DoctorsCore.DetailModel, DoctorsAdapterListener>
 {
-    private ListModel<DoctorDetailContract.Model> data;
+    private ListModel<DoctorsCore.DetailModel> data;
 
     public DoctorsAdapter(Context c, DoctorsAdapterListener l)
     {
@@ -20,13 +21,13 @@ public class DoctorsAdapter
     }
 
     @Override
-    protected DoctorDetailContract.Model getItem(int position)
+    protected DoctorsCore.DetailModel getItem(int position)
     {
         return data.getItem(position);
     }
 
     @Override
-    protected void setData(DoctorAdapterHolder holder, DoctorDetailContract.Model item)
+    protected void setData(DoctorAdapterHolder holder, DoctorsCore.DetailModel item)
     {
         if(item.getPhotoPath() != null)
         {
@@ -68,7 +69,7 @@ public class DoctorsAdapter
         return data.getItemsCount();
     }
 
-    public void swapData(ListModel<DoctorDetailContract.Model> d)
+    public void swapData(ListModel<DoctorsCore.DetailModel> d)
     {
         if(this.data != null)
         {

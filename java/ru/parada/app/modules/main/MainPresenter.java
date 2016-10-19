@@ -36,7 +36,7 @@ public class MainPresenter
     @Override
     public void loadNews()
     {
-        new Request(ParadaService.BASE_URL, ParadaService.GET_NEWS).execute(new Request.RequestListener()
+        new Request(ParadaService.BASE_URL, ParadaService.Get.NEWS).execute(new Request.RequestListener()
         {
             @Override
             public void answer(String answer)

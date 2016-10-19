@@ -1,5 +1,7 @@
 package ru.parada.app.contracts;
 
+import ru.parada.app.core.DoctorsCore;
+
 public interface DoctorDetailContract
 {
     interface Mark
@@ -7,24 +9,9 @@ public interface DoctorDetailContract
         String DOCTOR_ID = Mark.class.getCanonicalName().toLowerCase().replace(".", "_") + "_" + "doctor_id";
     }
 
-    interface Model
-    {
-        int getId();
-        String getPhotoPath();
-        String getLastName();
-        String getFirstName();
-        String getMiddleName();
-        String getFirstPosition();
-        String getSecondPosition();
-        String getThirdPosition();
-        String getDescription();
-        String getPhone();
-        int getOrder();
-    }
-
     interface View
     {
-        void update(Model data);
+        void update(DoctorsCore.DetailModel data);
     }
 
     interface Presenter

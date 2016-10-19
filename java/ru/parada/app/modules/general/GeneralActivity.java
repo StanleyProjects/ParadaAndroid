@@ -17,6 +17,7 @@ import ru.parada.app.modules.main.MainFragment;
 import ru.parada.app.modules.menu.MenuFragment;
 import ru.parada.app.modules.services.ServicesFragment;
 import ru.parada.app.modules.servicesprices.ServicesWithPricesFragment;
+import ru.parada.app.units.CallbackConnector;
 import ru.parada.app.units.DrawerContainer;
 
 public class GeneralActivity
@@ -24,13 +25,15 @@ public class GeneralActivity
         implements GeneralContract.View
 {
     private Fragment currentFragment;
-    private final Fragment menuFragment = MenuFragment.newInstanse(new MenuContract.MenuBehaviour()
+    private final Fragment menuFragment = MenuFragment.newInstanse(new MenuContract.Behaviour()
     {
         @Override
         public void open(ScreenType screenType)
         {
             presenter.setScreen(screenType);
         }
+    }, new CallbackConnector<MenuContract.Callback>()
+    {
         @Override
         public void setCallback(MenuContract.Callback callback)
         {
@@ -44,23 +47,27 @@ public class GeneralActivity
         {
             GeneralActivity.this.openMenu();
         }
+
         @Override
         public void openServices()
         {
             presenter.setScreen(ScreenType.SERVICES_SCREEN);
             menuCallback.open(ScreenType.SERVICES_SCREEN);
         }
+
         @Override
         public void openSubscribe()
         {
 
         }
+
         @Override
         public void openPrices()
         {
             presenter.setScreen(ScreenType.PRICES_SCREEN);
             menuCallback.open(ScreenType.PRICES_SCREEN);
         }
+
         @Override
         public void openAllNews()
         {

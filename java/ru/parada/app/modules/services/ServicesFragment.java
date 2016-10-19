@@ -25,15 +25,15 @@ public class ServicesFragment
     private ServicesAdapter adapter;
 
     @Override
-    protected int setContentView()
-    {
-        return R.layout.service_fragment;
-    }
-
-    @Override
     protected ServicesContract.Presenter setPresenter()
     {
         return new ServicesPresenter(this);
+    }
+
+    @Override
+    protected int setContentView()
+    {
+        return R.layout.service_fragment;
     }
 
     @Override

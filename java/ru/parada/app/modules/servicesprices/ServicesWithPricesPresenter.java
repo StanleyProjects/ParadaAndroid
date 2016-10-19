@@ -26,7 +26,7 @@ public class ServicesWithPricesPresenter
     @Override
     public void load()
     {
-        new Request(ParadaService.BASE_URL, ParadaService.GET_SERVICES_WITH_PRICES).execute(new Request.RequestListener()
+        new Request(ParadaService.BASE_URL, ParadaService.Get.SERVICES_WITH_PRICES).execute(new Request.RequestListener()
         {
             @Override
             public void answer(String answer)
@@ -45,7 +45,7 @@ public class ServicesWithPricesPresenter
                 }
                 SQliteApi.getInstanse()
                          .getServicesWithPrices()
-                         .clearTable();
+                         .clear();
                 SQliteApi.getInstanse()
                          .startTransaction();
                 for(Object service : services)

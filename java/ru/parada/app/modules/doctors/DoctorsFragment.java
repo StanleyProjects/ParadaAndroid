@@ -12,7 +12,9 @@ import android.widget.EditText;
 import ru.parada.app.R;
 import ru.parada.app.contracts.DoctorDetailContract;
 import ru.parada.app.contracts.DoctorsContract;
+import ru.parada.app.core.DoctorsCore;
 import ru.parada.app.modules.doctordetail.DoctorDetailFragment;
+import ru.parada.app.modules.doctordetail.DoctorDetailPresenter;
 import ru.parada.app.modules.doctors.adapter.DoctorsAdapter;
 import ru.parada.app.modules.doctors.adapter.DoctorsAdapterListener;
 import ru.parada.app.units.ListModel;
@@ -49,15 +51,15 @@ public class DoctorsFragment
     }
 
     @Override
-    protected int setContentView()
-    {
-        return R.layout.doctors_screen;
-    }
-
-    @Override
     protected DoctorsContract.Presenter setPresenter()
     {
         return new DoctorsPresenter(this);
+    }
+
+    @Override
+    protected int setContentView()
+    {
+        return R.layout.doctors_screen;
     }
 
     @Override
@@ -155,7 +157,7 @@ public class DoctorsFragment
     }
 
     @Override
-    public void updateDoctors(final ListModel<DoctorDetailContract.Model> data)
+    public void updateDoctors(final ListModel<DoctorsCore.DetailModel> data)
     {
         runOnUiThread(new Runnable()
         {

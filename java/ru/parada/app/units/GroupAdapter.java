@@ -4,18 +4,16 @@ import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
-public class GroupAdapter<DATA extends GroupData, LISTENER>
+public class GroupAdapter<DATA extends GroupData>
         extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 {
     private Context context;
     private DATA data;
-    private LISTENER listener;
 
-    public GroupAdapter(Context c, DATA d, LISTENER l)
+    public GroupAdapter(Context c, DATA d)
     {
         context = c;
         data = d;
-        listener = l;
     }
 
     @Override

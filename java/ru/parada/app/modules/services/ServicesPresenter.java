@@ -31,7 +31,7 @@ public class ServicesPresenter
     @Override
     public void loadServices()
     {
-        new Request(ParadaService.BASE_URL, ParadaService.GET_SERVICES).execute(new Request.RequestListener()
+        new Request(ParadaService.BASE_URL, ParadaService.Get.SERVICES).execute(new Request.RequestListener()
         {
             @Override
             public void answer(String answer)

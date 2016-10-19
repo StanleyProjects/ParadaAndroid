@@ -17,7 +17,7 @@
             android:layout_height="56dp"/>
         <TextView
             android:layout_gravity="center"
-            android:text="@string/service"
+            android:text="@string/services"
             android:textSize="16dp"
             android:textColor="@color/white"
             android:layout_width="wrap_content"

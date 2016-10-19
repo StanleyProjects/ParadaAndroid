@@ -20,11 +20,11 @@ public class MenuAdapterHolder
                 itemView.findViewById(R.id.background),
                 (ImageView)itemView.findViewById(R.id.icon),
                 (TextView)itemView.findViewById(R.id.name),
-                context.getResources().getColor(R.color.greylight),
+                context.getResources().getColor(R.color.graylight),
                 context.getResources().getColor(R.color.colorAccent),
                 context.getResources().getColor(R.color.white),
-                context.getResources().getColor(R.color.grey),
-                context.getResources().getColor(R.color.greydark)
+                context.getResources().getColor(R.color.gray),
+                context.getResources().getColor(R.color.graydark)
         );
     }
 

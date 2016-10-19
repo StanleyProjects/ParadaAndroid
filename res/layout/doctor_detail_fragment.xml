@@ -18,11 +18,13 @@
             android:layout_height="56dp"/>
         <TextView
             android:id="@+id/doctor_fullname"
-            android:layout_gravity="center"
+            android:gravity="center"
             android:textSize="16dp"
             android:textColor="@color/white"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:paddingLeft="56dp"
+            android:paddingRight="56dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
     </FrameLayout>
     <ScrollView
         android:layout_weight="1"
@@ -113,7 +115,7 @@
     </ScrollView>
     <FrameLayout
         android:id="@+id/watch_video"
-        android:background="@color/greylight"
+        android:background="@color/graylight"
         android:layout_width="match_parent"
         android:layout_height="48dp">
         <TextView
@@ -123,7 +125,7 @@
             android:drawableLeft="@drawable/ic_watch_video"
             android:text="@string/watch_video"
             android:textSize="14dp"
-            android:textColor="@color/grey"
+            android:textColor="@color/gray"
             android:textAllCaps="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
