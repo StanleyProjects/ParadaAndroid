@@ -1,4 +1,4 @@
-package ru.parada.app.modules.menu;
+package ru.parada.app.modules.menu.models;
 
 import java.util.ArrayList;
 

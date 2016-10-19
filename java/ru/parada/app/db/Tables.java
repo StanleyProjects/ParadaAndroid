@@ -146,6 +146,7 @@ public interface Tables
                 Columns.order + " integer" + "," +
                 Columns.group_id + " integer" + "," +
                 Columns.group + " text" + "," +
+                Columns.subtitle + " text" + "," +
                 Columns.title_search + " text" + "," +
                 Columns.group_order + " integer" + //"," +
                 ");";
@@ -153,6 +154,7 @@ public interface Tables
         interface Columns
         {
             String title = TABLE_NAME + "_" + "title";
+            String subtitle = TABLE_NAME + "_" + "subtitle";
             String order = TABLE_NAME + "_" + "order";
             String group_id = TABLE_NAME + "_" + "group_id";
             String group = TABLE_NAME + "_" + "group";

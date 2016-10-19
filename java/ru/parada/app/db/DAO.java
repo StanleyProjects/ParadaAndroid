@@ -3,6 +3,7 @@ package ru.parada.app.db;
 import ru.parada.app.contracts.PricesContract;
 import ru.parada.app.contracts.ServicesWithPricesContract;
 import ru.parada.app.core.DoctorsCore;
+import ru.parada.app.core.ServicesWithPricesCore;
 import ru.parada.app.units.ListModel;
 
 public interface DAO
@@ -15,12 +16,12 @@ public interface DAO
     }
     interface ServicesWithPrices
     {
-        ListModel<ServicesWithPricesContract.Model> getAll();
-        ServicesWithPricesContract.Model getOneFromId(int id);
+        ListModel<ServicesWithPricesCore.Model> getAll();
+        ServicesWithPricesCore.Model getOneFromId(int id);
         ListModel<ServicesWithPricesContract.GroupModel> getAllGroups();
-        ListModel<ServicesWithPricesContract.Model> getAllFromKeys(String keys);
+        ListModel<ServicesWithPricesCore.Model> getAllFromKeys(String keys);
         ListModel<ServicesWithPricesContract.GroupModel> getGroupsFromKeys(String keys);
-        void insertOne(ServicesWithPricesContract.Model item);
+        void insertOne(ServicesWithPricesCore.Model item);
         void clear();
     }
     interface Doctors

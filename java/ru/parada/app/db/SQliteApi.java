@@ -14,6 +14,7 @@ import ru.parada.app.contracts.PricesContract;
 import ru.parada.app.contracts.ServicesContract;
 import ru.parada.app.contracts.ServicesWithPricesContract;
 import ru.parada.app.core.DoctorsCore;
+import ru.parada.app.core.ServicesWithPricesCore;
 import ru.parada.app.modules.doctors.models.Doctor;
 import ru.parada.app.modules.doctors.models.DoctorsCursorListModel;
 import ru.parada.app.modules.images.ImageModel;
@@ -28,7 +29,7 @@ import ru.parada.app.units.ListModel;
 public class SQliteApi
 {
     static private final String DB_NAME = "parada";
-    static private final int DB_VERSION = 1610190207;
+    static private final int DB_VERSION = 1610200130;
     static private volatile SQliteApi instanse;
 
     static public SQliteApi getInstanse()
@@ -209,12 +210,12 @@ public class SQliteApi
     private final DAO.ServicesWithPrices servicesWithPrices = new Tables.ServicesWithPrices()
     {
         @Override
-        public ListModel<ServicesWithPricesContract.Model> getAll()
+        public ListModel<ServicesWithPricesCore.Model> getAll()
         {
             Cursor cursor = sdb.rawQuery("SELECT * "
                     + "FROM " + TABLE_NAME + " "
                     + "ORDER BY " + Columns.group_id + " ASC ", new String[]{});
-            ArrayList<ServicesWithPricesContract.Model> data = new ArrayList<>();
+            ArrayList<ServicesWithPricesCore.Model> data = new ArrayList<>();
             if(cursor.moveToFirst())
             {
                 do
@@ -222,6 +223,7 @@ public class SQliteApi
                     data.add(new ServiceWithPrice(
                             cursor.getInt(cursor.getColumnIndex(BaseColumns._ID)),
                             cursor.getString(cursor.getColumnIndex(Columns.title)),
+                            cursor.getString(cursor.getColumnIndex(Columns.subtitle)),
                             cursor.getInt(cursor.getColumnIndex(Columns.order)),
                             cursor.getInt(cursor.getColumnIndex(Columns.group_id)),
                             cursor.getString(cursor.getColumnIndex(Columns.group)),
@@ -235,17 +237,18 @@ public class SQliteApi
         }
 
         @Override
-        public ServicesWithPricesContract.Model getOneFromId(int id)
+        public ServicesWithPricesCore.Model getOneFromId(int id)
         {
             Cursor cursor = sdb.rawQuery("SELECT * "
                     + "FROM " + TABLE_NAME + " "
                     + "WHERE " + BaseColumns._ID + "=" + id, new String[]{});
-            ServicesWithPricesContract.Model data = null;
+            ServicesWithPricesCore.Model data = null;
             if(cursor.moveToFirst())
             {
                 data = new ServiceWithPrice(
                         cursor.getInt(cursor.getColumnIndex(BaseColumns._ID)),
                         cursor.getString(cursor.getColumnIndex(Columns.title)),
+                        cursor.getString(cursor.getColumnIndex(Columns.subtitle)),
                         cursor.getInt(cursor.getColumnIndex(Columns.order)),
                         cursor.getInt(cursor.getColumnIndex(Columns.group_id)),
                         cursor.getString(cursor.getColumnIndex(Columns.group)),
@@ -277,18 +280,23 @@ public class SQliteApi
         }
 
         @Override
-        public ListModel<ServicesWithPricesContract.Model> getAllFromKeys(String keys)
+        public ListModel<ServicesWithPricesCore.Model> getAllFromKeys(String keys)
         {
             Cursor cursor = sdb.rawQuery("SELECT * "
                     + "FROM " + TABLE_NAME + " "
                     + "WHERE " + Columns.title_search + " LIKE \"%" + keys.toLowerCase() + "%\"" + " "
                     + "ORDER BY " + Columns.group_id + " ASC ", new String[]{});
-            ArrayList<ServicesWithPricesContract.Model> data = new ArrayList<>();
+            ArrayList<ServicesWithPricesCore.Model> data = new ArrayList<>();
             if(cursor.moveToFirst())
             {
                 do
                 {
-                    data.add(new ServiceWithPrice(cursor.getInt(cursor.getColumnIndex(BaseColumns._ID)), cursor.getString(cursor.getColumnIndex(Columns.title)), cursor.getInt(cursor.getColumnIndex(Columns.order)), cursor.getInt(cursor.getColumnIndex(Columns.group_id)), cursor.getString(cursor.getColumnIndex(Columns.group)), cursor.getInt(cursor.getColumnIndex(Columns.group_order))));
+                    data.add(new ServiceWithPrice(
+                            cursor.getInt(cursor.getColumnIndex(BaseColumns._ID)),
+                            cursor.getString(cursor.getColumnIndex(Columns.title)),
+                            cursor.getString(cursor.getColumnIndex(Columns.subtitle)),
+                            cursor.getInt(cursor.getColumnIndex(Columns.order)),
+                            cursor.getInt(cursor.getColumnIndex(Columns.group_id)), cursor.getString(cursor.getColumnIndex(Columns.group)), cursor.getInt(cursor.getColumnIndex(Columns.group_order))));
                 }
                 while(cursor.moveToNext());
             }
@@ -318,7 +326,7 @@ public class SQliteApi
         }
 
         @Override
-        public void insertOne(ServicesWithPricesContract.Model item)
+        public void insertOne(ServicesWithPricesCore.Model item)
         {
             sdb.insertWithOnConflict(TABLE_NAME, null, ContentDriver.getContentValues(item), SQLiteDatabase.CONFLICT_REPLACE);
         }

@@ -1,21 +1,23 @@
 package ru.parada.app.modules.servicesprices.models;
 
-import ru.parada.app.contracts.ServicesWithPricesContract;
+import ru.parada.app.core.ServicesWithPricesCore;
 
 public class ServiceWithPrice
-    implements ServicesWithPricesContract.Model
+    implements ServicesWithPricesCore.Model
 {
     private int id;
     private String title;
+    private String subtitle;
     private int order;
     private int group_id;
     private String group;
     private int group_order;
 
-    public ServiceWithPrice(int i, String t, int o, int gi, String gn, int go)
+    public ServiceWithPrice(int i, String t, String s, int o, int gi, String gn, int go)
     {
         id = i;
         title = t;
+        subtitle = s;
         order = o;
         group_id = gi;
         group = gn;
@@ -32,6 +34,12 @@ public class ServiceWithPrice
     public String getTitle()
     {
         return title;
+    }
+
+    @Override
+    public String getSubTitle()
+    {
+        return subtitle;
     }
 
     @Override

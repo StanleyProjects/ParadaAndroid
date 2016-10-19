@@ -4,6 +4,7 @@
     <color name="colorPrimaryDark">@color/purpledark</color>
     <color name="colorAccent">@color/purplelight</color>
 
+    <color name="purplesuperalpha">#446563A4</color>
     <color name="purplealpha">#886563A4</color>
     <color name="purple">#6563A4</color>
     <color name="purplelight">#9036D3</color>
@@ -13,7 +14,8 @@
 
     <color name="white">#ffffff</color>
     <color name="gray">#c8c8c8</color>
-    <color name="graylight">#F3F3F5</color>
+    <color name="graylight">#EEEEEE</color>
+    <color name="graysuperlight">#FAFAFA</color>
     <color name="graytext">#BDC1C0</color>
     <color name="graydark">#333333</color>
     <color name="black">#000000</color>

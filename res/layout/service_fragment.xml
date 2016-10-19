@@ -7,7 +7,7 @@
     <FrameLayout
         android:background="@color/colorPrimary"
         android:layout_width="match_parent"
-        android:layout_height="56dp">
+        android:layout_height="@dimen/toolbar_height">
         <ImageView
             android:id="@+id/menu"
             android:src="@mipmap/icon_menu"
@@ -18,7 +18,7 @@
         <TextView
             android:layout_gravity="center"
             android:text="@string/services"
-            android:textSize="16dp"
+            android:textSize="@dimen/text_size_medium"
             android:textColor="@color/white"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>

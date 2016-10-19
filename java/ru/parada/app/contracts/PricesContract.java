@@ -1,5 +1,6 @@
 package ru.parada.app.contracts;
 
+import ru.parada.app.core.ServicesWithPricesCore;
 import ru.parada.app.units.ListModel;
 
 public interface PricesContract
@@ -19,7 +20,7 @@ public interface PricesContract
 
     interface View
     {
-        void update(ListModel<Model> data, ServicesWithPricesContract.Model service);
+        void update(ListModel<Model> data, ServicesWithPricesCore.Model service);
     }
 
     interface Presenter

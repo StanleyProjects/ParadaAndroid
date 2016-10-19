@@ -1,4 +1,4 @@
-package ru.parada.app.modules.menu;
+package ru.parada.app.modules.menu.adapter;
 
 import android.content.Context;
 import android.view.ViewGroup;
@@ -6,6 +6,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import ru.parada.app.R;
+import ru.parada.app.modules.menu.MenuHolder;
 import ru.parada.app.units.AdapterHolder;
 
 public class MenuAdapterHolder

@@ -5,63 +5,65 @@
               android:layout_height="wrap_content">
     <LinearLayout
         android:background="@color/colorPrimary"
-        android:gravity="center"
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <LinearLayout
-            android:id="@+id/services"
-            android:gravity="center_horizontal"
-            android:orientation="vertical"
-            android:layout_width="wrap_content"
+            android:gravity="center"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <ImageView
+                android:id="@+id/services"
                 android:src="@drawable/btn_services"
                 android:layout_width="72dp"
                 android:layout_height="72dp"/>
-            <TextView
-                android:text="@string/services"
-                android:textColor="@color/graytext"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-        </LinearLayout>
-        <LinearLayout
-            android:id="@+id/subscribe"
-            android:gravity="center_horizontal"
-            android:orientation="vertical"
-            android:layout_margin="8dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
             <ImageView
+                android:id="@+id/subscribe"
                 android:src="@drawable/btn_subscribe"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
                 android:layout_width="96dp"
                 android:layout_height="96dp"/>
-            <TextView
-                android:text="@string/subscribe"
-                android:textColor="@color/graytext"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-        </LinearLayout>
-        <LinearLayout
-            android:id="@+id/prices"
-            android:gravity="center_horizontal"
-            android:orientation="vertical"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
             <ImageView
+                android:id="@+id/prices"
                 android:src="@drawable/btn_prices"
                 android:layout_width="72dp"
                 android:layout_height="72dp"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_marginBottom="8dp"
+            android:gravity="center_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:text="@string/services"
+                android:textColor="@color/graytext"
+                android:textSize="@dimen/text_size_medium"
+                android:gravity="center_horizontal"
+                android:layout_width="72dp"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:text="@string/subscribe"
+                android:textColor="@color/graytext"
+                android:textSize="@dimen/text_size_medium"
+                android:gravity="center_horizontal"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"/>
             <TextView
                 android:text="@string/prices"
                 android:textColor="@color/graytext"
-                android:layout_width="wrap_content"
+                android:textSize="@dimen/text_size_medium"
+                android:gravity="center_horizontal"
+                android:layout_width="72dp"
                 android:layout_height="wrap_content"/>
         </LinearLayout>
     </LinearLayout>
     <TextView
         android:background="@color/graylight"
         android:text="@string/news"
-        android:textSize="14dp"
+        android:textSize="@dimen/text_size_medium"
         android:textColor="@color/gray"
         android:textAllCaps="true"
         android:paddingLeft="24dp"

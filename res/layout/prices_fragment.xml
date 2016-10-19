@@ -7,7 +7,7 @@
     <FrameLayout
         android:background="@color/colorPrimary"
         android:layout_width="match_parent"
-        android:layout_height="56dp">
+        android:layout_height="@dimen/toolbar_height">
         <ImageView
             android:id="@+id/back"
             android:src="@mipmap/icon_back"
@@ -19,7 +19,7 @@
         <TextView
             android:id="@+id/service_name"
             android:gravity="center"
-            android:textSize="16dp"
+            android:textSize="@dimen/text_size_medium"
             android:textColor="@color/white"
             android:paddingLeft="56dp"
             android:paddingRight="56dp"
@@ -30,10 +30,10 @@
     <LinearLayout
         android:background="@color/graylight"
         android:layout_width="match_parent"
-        android:layout_height="42dp">
+        android:layout_height="@dimen/container_height_small">
         <TextView
             android:text="@string/service"
-            android:textSize="14dp"
+            android:textSize="@dimen/text_size"
             android:textColor="@color/graydark"
             android:textAllCaps="true"
             android:gravity="center"
@@ -42,7 +42,7 @@
             android:layout_height="match_parent"/>
         <TextView
             android:text="@string/cost"
-            android:textSize="14dp"
+            android:textSize="@dimen/text_size"
             android:textColor="@color/graydark"
             android:textAllCaps="true"
             android:gravity="center"

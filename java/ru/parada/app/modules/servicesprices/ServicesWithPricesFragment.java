@@ -13,8 +13,8 @@ import java.util.ArrayList;
 import ru.parada.app.R;
 import ru.parada.app.contracts.PricesContract;
 import ru.parada.app.contracts.ServicesWithPricesContract;
+import ru.parada.app.core.ServicesWithPricesCore;
 import ru.parada.app.modules.prices.PricesFragment;
-import ru.parada.app.modules.prices.PricesPresenter;
 import ru.parada.app.modules.servicesprices.adapter.PricesGroupData;
 import ru.parada.app.modules.servicesprices.adapter.ServicesPricesAdapterListener;
 import ru.parada.app.units.ArrayListModel;
@@ -157,7 +157,7 @@ public class ServicesWithPricesFragment
     }
 
     @Override
-    public void update(ListModel<ServicesWithPricesContract.Model> allData, ListModel<ServicesWithPricesContract.GroupModel> groups)
+    public void update(ListModel<ServicesWithPricesCore.Model> allData, ListModel<ServicesWithPricesContract.GroupModel> groups)
     {
         ArrayList<GroupModel> data = new ArrayList<>();
         int n = 0;
@@ -167,7 +167,7 @@ public class ServicesWithPricesFragment
             data.add(new GroupModel<>(gm, PricesGroupData.ViewTypes.GROUP));
             while(n < allData.getItemsCount())
             {
-                ServicesWithPricesContract.Model m = allData.getItem(n);
+                ServicesWithPricesCore.Model m = allData.getItem(n);
                 if(m.getGroupId() == gm.getId())
                 {
                     data.add(new GroupModel<>(m, PricesGroupData.ViewTypes.NORMAL));

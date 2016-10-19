@@ -3,16 +3,12 @@ package ru.parada.app.db;
 import android.content.ContentValues;
 import android.provider.BaseColumns;
 
-import java.util.HashMap;
-
-import ru.parada.app.contracts.DoctorDetailContract;
-import ru.parada.app.contracts.DoctorsContract;
 import ru.parada.app.contracts.ImagesContract;
 import ru.parada.app.contracts.MainContract;
 import ru.parada.app.contracts.PricesContract;
 import ru.parada.app.contracts.ServicesContract;
-import ru.parada.app.contracts.ServicesWithPricesContract;
 import ru.parada.app.core.DoctorsCore;
+import ru.parada.app.core.ServicesWithPricesCore;
 
 public class ContentDriver
 {
@@ -61,7 +57,7 @@ public class ContentDriver
         return content;
     }
 
-    public static ContentValues getContentValues(ServicesWithPricesContract.Model item)
+    public static ContentValues getContentValues(ServicesWithPricesCore.Model item)
     {
         ContentValues content = new ContentValues();
         content.put(BaseColumns._ID, item.getId());
@@ -70,7 +66,8 @@ public class ContentDriver
         content.put(Tables.ServicesWithPrices.Columns.group_id, item.getGroupId());
         content.put(Tables.ServicesWithPrices.Columns.group, item.getGroupName());
         content.put(Tables.ServicesWithPrices.Columns.group_order, item.getGroupOrder());
-        content.put(Tables.ServicesWithPrices.Columns.title_search, item.getTitle().toLowerCase());
+        content.put(Tables.ServicesWithPrices.Columns.subtitle, item.getSubTitle());
+        content.put(Tables.ServicesWithPrices.Columns.title_search, item.getTitle().toLowerCase() + item.getSubTitle().toLowerCase());
         return content;
     }
 

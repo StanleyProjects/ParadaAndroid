@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import ru.parada.app.contracts.ServicesWithPricesContract;
+import ru.parada.app.core.ServicesWithPricesCore;
 import ru.parada.app.units.GroupData;
 
 public class PricesGroupData
@@ -37,14 +38,15 @@ public class PricesGroupData
                 setGroup((ServicePriceGroupHolder)holder, (ServicesWithPricesContract.GroupModel)getItem(position).getData());
                 break;
             case ViewTypes.NORMAL:
-                setNormal((ServicePriceHolder)holder, (ServicesWithPricesContract.Model)getItem(position).getData());
+                setNormal((ServicePriceHolder)holder, (ServicesWithPricesCore.Model)getItem(position).getData());
                 break;
         }
     }
 
-    private void setNormal(ServicePriceHolder holder, final ServicesWithPricesContract.Model data)
+    private void setNormal(ServicePriceHolder holder, final ServicesWithPricesCore.Model data)
     {
         holder.setTitle(data.getTitle());
+        holder.setSubTitle(data.getSubTitle());
         holder.itemView.setOnClickListener(new View.OnClickListener()
         {
             @Override

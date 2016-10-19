@@ -9,6 +9,9 @@ import java.util.ArrayList;
 import ru.parada.app.R;
 import ru.parada.app.contracts.MenuContract;
 import ru.parada.app.contracts.ScreenType;
+import ru.parada.app.modules.menu.adapter.MenuAdapter;
+import ru.parada.app.modules.menu.models.MenuListModel;
+import ru.parada.app.modules.menu.models.MenuModel;
 import ru.parada.app.units.CallbackConnector;
 import ru.parada.app.units.MVPFragment;
 

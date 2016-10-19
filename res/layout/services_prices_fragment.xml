@@ -13,7 +13,7 @@
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="56dp"
+            android:layout_height="@dimen/toolbar_height"
             android:background="@color/colorPrimary">
 
             <ImageView
@@ -30,12 +30,12 @@
                 android:layout_gravity="center"
                 android:text="@string/prices"
                 android:textColor="@color/white"
-                android:textSize="16dp"/>
+                android:textSize="@dimen/text_size_medium"/>
         </FrameLayout>
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="56dp"
+            android:layout_height="@dimen/container_height"
             android:background="@color/graylight"
             android:paddingBottom="10dp"
             android:paddingLeft="16dp"
@@ -47,23 +47,28 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/white_corners"
-                android:drawableLeft="@drawable/ic_search_scope"
-                android:drawablePadding="8dp"
                 android:hint="@string/search"
                 android:lines="1"
                 android:maxLength="20"
-                android:paddingLeft="10dp"
-                android:paddingRight="38dp"
+                android:paddingLeft="32dp"
+                android:paddingRight="32dp"
                 android:singleLine="true"
+                android:textSize="@dimen/text_size_medium"
                 android:textColor="@color/black"
                 android:textColorHint="@color/gray"/>
 
             <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="8dp"
+                android:src="@mipmap/search_scope"/>
+            <ImageView
                 android:id="@+id/search_clear"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
                 android:layout_gravity="center_vertical|right"
-                android:layout_marginRight="10dp"
+                android:layout_marginRight="8dp"
                 android:src="@mipmap/close"/>
         </FrameLayout>
 

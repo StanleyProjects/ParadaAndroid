@@ -76,9 +76,10 @@ public class DoctorsPresenter
                 updateDoctors();
             }
             @Override
-            public void error(Exception error)
+            public void error(Exception e)
             {
-                Log.e(this.getClass().getName(), "load doctors " + error.getMessage());
+                Log.e(this.getClass()
+                          .getName(), "request " + ParadaService.BASE_URL + "\n" + ParadaService.Get.SERVICES_WITH_PRICES + "\n" + e.getMessage());
             }
         });
     }

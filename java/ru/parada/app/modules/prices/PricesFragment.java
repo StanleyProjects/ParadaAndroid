@@ -10,6 +10,7 @@ import android.widget.TextView;
 import ru.parada.app.R;
 import ru.parada.app.contracts.PricesContract;
 import ru.parada.app.contracts.ServicesWithPricesContract;
+import ru.parada.app.core.ServicesWithPricesCore;
 import ru.parada.app.modules.prices.adapter.PricesAdapter;
 import ru.parada.app.modules.prices.adapter.PricesAdapterListener;
 import ru.parada.app.units.ListModel;
@@ -85,7 +86,7 @@ public class PricesFragment
     }
 
     @Override
-    public void update(final ListModel<PricesContract.Model> data, final ServicesWithPricesContract.Model service)
+    public void update(final ListModel<PricesContract.Model> data, final ServicesWithPricesCore.Model service)
     {
         runOnUiThread(new Runnable()
         {

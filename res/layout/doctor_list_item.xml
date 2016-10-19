@@ -3,14 +3,14 @@
               android:background="@color/white"
               android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="128dp">
+              android:layout_height="108dp">
     <LinearLayout
         android:layout_weight="1"
         android:layout_width="match_parent"
         android:layout_height="0dp">
         <FrameLayout
             android:padding="8dp"
-            android:layout_width="128dp"
+            android:layout_width="108dp"
             android:layout_height="match_parent">
             <ImageView
                 android:id="@+id/photo"
@@ -26,29 +26,30 @@
         </FrameLayout>
         <LinearLayout
             android:orientation="vertical"
+            android:paddingRight="16dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <TextView
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="8dp"
                 android:id="@+id/last_name"
                 android:text="last_name"
                 android:textColor="@color/black"
                 android:textStyle="bold"
-                android:textSize="15dp"
+                android:textSize="@dimen/text_size_big"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
             <TextView
-                android:layout_marginBottom="8dp"
+                android:layout_marginBottom="4dp"
                 android:id="@+id/first_middle_name"
                 android:text="first_middle_name"
                 android:textColor="@color/black"
-                android:textSize="14dp"
+                android:textSize="@dimen/text_size_medium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
             <TextView
                 android:id="@+id/first_position"
                 android:text="first_position"
-                android:textSize="11dp"
+                android:textSize="@dimen/text_size_small"
                 android:textColor="@color/colorPrimary"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
@@ -56,14 +57,14 @@
                 android:id="@+id/second_position"
                 android:text="second_position"
                 android:textColor="@color/colorPrimary"
-                android:textSize="11dp"
+                android:textSize="@dimen/text_size_small"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
             <TextView
                 android:id="@+id/third_position"
                 android:text="third_position"
                 android:textColor="@color/colorPrimary"
-                android:textSize="11dp"
+                android:textSize="@dimen/text_size_small"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
         </LinearLayout>

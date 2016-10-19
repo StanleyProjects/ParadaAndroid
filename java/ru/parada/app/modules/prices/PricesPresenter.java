@@ -9,6 +9,7 @@ import ru.parada.app.connection.ParadaService;
 import ru.parada.app.connection.Request;
 import ru.parada.app.contracts.PricesContract;
 import ru.parada.app.contracts.ServicesWithPricesContract;
+import ru.parada.app.core.ServicesWithPricesCore;
 import ru.parada.app.db.SQliteApi;
 import ru.parada.app.json.JSONParser;
 import ru.parada.app.modules.prices.models.Price;
@@ -85,7 +86,7 @@ public class PricesPresenter
             }
         }).start();
     }
-    private void update(ListModel<PricesContract.Model> data, ServicesWithPricesContract.Model service)
+    private void update(ListModel<PricesContract.Model> data, ServicesWithPricesCore.Model service)
     {
         Log.e(this.getClass().getName(), "update " + data.getItemsCount() + " service " + service.getTitle());
         view.update(data, service);

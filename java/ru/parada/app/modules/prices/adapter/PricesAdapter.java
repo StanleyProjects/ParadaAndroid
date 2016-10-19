@@ -28,6 +28,7 @@ public class PricesAdapter
     {
         holder.setTitle(item.getTitle());
         holder.setValue(item.getValue());
+        holder.drawOdd(holder.getAdapterPosition() % 2 == 0);
     }
 
     @Override

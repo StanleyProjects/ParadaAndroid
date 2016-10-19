@@ -8,6 +8,7 @@ import java.util.HashMap;
 import ru.parada.app.connection.ParadaService;
 import ru.parada.app.connection.Request;
 import ru.parada.app.contracts.ServicesWithPricesContract;
+import ru.parada.app.core.ServicesWithPricesCore;
 import ru.parada.app.db.SQliteApi;
 import ru.parada.app.json.JSONParser;
 import ru.parada.app.modules.servicesprices.models.ServiceWithPrice;
@@ -40,7 +41,7 @@ public class ServicesWithPricesPresenter
                 catch(Exception e)
                 {
                     Log.e(this.getClass()
-                              .getName(), "parse services " + e.getMessage());
+                              .getName(), "parse " + e.getMessage());
                     return;
                 }
                 SQliteApi.getInstanse()
@@ -54,10 +55,11 @@ public class ServicesWithPricesPresenter
                              .getServicesWithPrices()
                              .insertOne(new ServiceWithPrice(
                                      Integer.parseInt((String)((HashMap)service).get("id")),
-                                     (String)((HashMap)service).get("title"),
+                                     getString((HashMap)service, "title"),
+                                     getString((HashMap)service, "subtitle"),
                                      Integer.parseInt((String)((HashMap)service).get("order")),
                                      Integer.parseInt((String)((HashMap)service).get("group_id")),
-                                     (String)((HashMap)service).get("group"),
+                                     getString((HashMap)service, "group"),
                                      0
 //                                     Integer.parseInt((String)((HashMap)service).get("group_order"))
                              ));
@@ -67,11 +69,20 @@ public class ServicesWithPricesPresenter
                 update();
             }
             @Override
-            public void error(Exception error)
+            public void error(Exception e)
             {
-
+                Log.e(this.getClass()
+                          .getName(), "request " + ParadaService.BASE_URL + "\n" + ParadaService.Get.SERVICES_WITH_PRICES + "\n" + e.getMessage());
             }
         });
+    }
+    private String getString(HashMap map, String key)
+    {
+        if(map.get(key) == null)
+        {
+            return "";
+        }
+        return (String)map.get(key);
     }
 
     @Override
@@ -87,7 +98,7 @@ public class ServicesWithPricesPresenter
         }).start();
     }
 
-    private void updateServicesWithPrices(ListModel<ServicesWithPricesContract.Model> allData, ListModel<ServicesWithPricesContract.GroupModel> groups)
+    private void updateServicesWithPrices(ListModel<ServicesWithPricesCore.Model> allData, ListModel<ServicesWithPricesContract.GroupModel> groups)
     {
         view.update(allData, groups);
     }

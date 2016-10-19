@@ -14,7 +14,7 @@
         <TextView
             android:id="@+id/date"
             android:textColor="@color/gray"
-            android:textSize="16dp"
+            android:textSize="@dimen/text_size_medium"
             android:text="123123"
             android:layout_marginBottom="8dp"
             android:layout_width="wrap_content"
@@ -22,7 +22,7 @@
         <TextView
             android:id="@+id/title"
             android:textColor="@color/black"
-            android:textSize="16dp"
+            android:textSize="@dimen/text_size_medium"
             android:text="123123"
             android:layout_marginBottom="8dp"
             android:layout_width="wrap_content"
@@ -30,7 +30,7 @@
         <TextView
             android:id="@+id/descr"
             android:textColor="@color/graydark"
-            android:textSize="16dp"
+            android:textSize="@dimen/text_size_medium"
             android:text="123123"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>

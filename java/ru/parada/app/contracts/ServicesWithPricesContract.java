@@ -1,18 +1,10 @@
 package ru.parada.app.contracts;
 
+import ru.parada.app.core.ServicesWithPricesCore;
 import ru.parada.app.units.ListModel;
 
 public interface ServicesWithPricesContract
 {
-    interface Model
-    {
-        int getId();
-        String getTitle();
-        int getOrder();
-        int getGroupId();
-        String getGroupName();
-        int getGroupOrder();
-    }
     interface GroupModel
     {
         int getId();
@@ -22,7 +14,7 @@ public interface ServicesWithPricesContract
 
     interface View
     {
-        void update(ListModel<Model> allData, ListModel<GroupModel> groups);
+        void update(ListModel<ServicesWithPricesCore.Model> allData, ListModel<GroupModel> groups);
     }
 
     interface Presenter
