@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 import ru.parada.app.R;
 import ru.parada.app.contracts.MenuContract;
-import ru.parada.app.contracts.ScreenType;
+import ru.parada.app.core.GeneralCore;
 import ru.parada.app.modules.menu.adapter.MenuAdapter;
 import ru.parada.app.modules.menu.models.MenuListModel;
 import ru.parada.app.modules.menu.models.MenuModel;
@@ -26,7 +26,7 @@ public class MenuFragment
         cconnector.setCallback(new MenuContract.Callback()
         {
             @Override
-            public void open(ScreenType screenType)
+            public void open(GeneralCore.ScreenType screenType)
             {
                 fragment.getPresenter().open(screenType);
             }
@@ -80,7 +80,7 @@ public class MenuFragment
         adapter = new MenuAdapter(getActivity(), menuListModel, new MenuContract.Behaviour()
         {
             @Override
-            public void open(ScreenType screenType)
+            public void open(GeneralCore.ScreenType screenType)
             {
                 getPresenter().open(screenType);
             }
@@ -92,7 +92,7 @@ public class MenuFragment
     private void initMenuListModel()
     {
         ArrayList<MenuModel> menuModels = new ArrayList<>();
-        for(final ScreenType screenType : ScreenType.values())
+        for(final GeneralCore.ScreenType screenType : GeneralCore.ScreenType.values())
         {
             int ico = 0;
             String name = null;
@@ -118,6 +118,11 @@ public class MenuFragment
                     name = getActivity().getResources()
                                         .getString(R.string.prices);
                     break;
+                case EVENTS_SCREEN:
+                    ico = R.mipmap.menu_news_and_actions;
+                    name = getActivity().getResources()
+                                        .getString(R.string.events);
+                    break;
                 default:
                     continue;
             }
@@ -134,7 +139,7 @@ public class MenuFragment
     }
 
     @Override
-    public void set(ScreenType screenType)
+    public void set(GeneralCore.ScreenType screenType)
     {
         getBehaviour().open(screenType);
         menuListModel.setHighlight(screenType.ordinal());

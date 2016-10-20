@@ -1,22 +1,22 @@
 package ru.parada.app.modules.general;
 
 import ru.parada.app.contracts.GeneralContract;
-import ru.parada.app.contracts.ScreenType;
+import ru.parada.app.core.GeneralCore;
 
 public class GeneralPresenter
     implements GeneralContract.Presenter
 {
     private GeneralContract.View view;
-    private ScreenType screenType;
+    private GeneralCore.ScreenType screenType;
 
     public GeneralPresenter(GeneralContract.View v)
     {
         view = v;
-        screenType = ScreenType.MAIN_SCREEN;
+        screenType = GeneralCore.ScreenType.MAIN_SCREEN;
     }
 
     @Override
-    public void setScreen(ScreenType st)
+    public void setScreen(GeneralCore.ScreenType st)
     {
         if(screenType != st)
         {

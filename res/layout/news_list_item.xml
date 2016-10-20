@@ -31,7 +31,9 @@
             android:id="@+id/descr"
             android:textColor="@color/graydark"
             android:textSize="@dimen/text_size_medium"
-            android:text="123123"
+            android:text="1231"
+            android:ellipsize="end"
+            android:maxLines="3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
     </LinearLayout>

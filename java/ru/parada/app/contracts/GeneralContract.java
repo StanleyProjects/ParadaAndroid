@@ -1,14 +1,16 @@
 package ru.parada.app.contracts;
 
+import ru.parada.app.core.GeneralCore;
+
 public interface GeneralContract
 {
     interface View
     {
-        void showScreen(ScreenType screenType);
+        void showScreen(GeneralCore.ScreenType screenType);
     }
 
     interface Presenter
     {
-        void setScreen(ScreenType screenType);
+        void setScreen(GeneralCore.ScreenType screenType);
     }
 }

@@ -6,13 +6,15 @@ import android.support.v7.app.AppCompatActivity;
 
 import ru.parada.app.R;
 import ru.parada.app.contracts.DoctorsContract;
+import ru.parada.app.contracts.EventsContract;
 import ru.parada.app.contracts.GeneralContract;
 import ru.parada.app.contracts.MainContract;
 import ru.parada.app.contracts.MenuContract;
-import ru.parada.app.contracts.ScreenType;
 import ru.parada.app.contracts.ServicesContract;
 import ru.parada.app.contracts.ServicesWithPricesContract;
+import ru.parada.app.core.GeneralCore;
 import ru.parada.app.modules.doctors.DoctorsFragment;
+import ru.parada.app.modules.events.EventsFragment;
 import ru.parada.app.modules.main.MainFragment;
 import ru.parada.app.modules.menu.MenuFragment;
 import ru.parada.app.modules.services.ServicesFragment;
@@ -28,7 +30,7 @@ public class GeneralActivity
     private final Fragment menuFragment = MenuFragment.newInstanse(new MenuContract.Behaviour()
     {
         @Override
-        public void open(ScreenType screenType)
+        public void open(GeneralCore.ScreenType screenType)
         {
             presenter.setScreen(screenType);
         }
@@ -51,8 +53,8 @@ public class GeneralActivity
         @Override
         public void openServices()
         {
-            presenter.setScreen(ScreenType.SERVICES_SCREEN);
-            menuCallback.open(ScreenType.SERVICES_SCREEN);
+            presenter.setScreen(GeneralCore.ScreenType.SERVICES_SCREEN);
+            menuCallback.open(GeneralCore.ScreenType.SERVICES_SCREEN);
         }
 
         @Override
@@ -64,8 +66,8 @@ public class GeneralActivity
         @Override
         public void openPrices()
         {
-            presenter.setScreen(ScreenType.PRICES_SCREEN);
-            menuCallback.open(ScreenType.PRICES_SCREEN);
+            presenter.setScreen(GeneralCore.ScreenType.PRICES_SCREEN);
+            menuCallback.open(GeneralCore.ScreenType.PRICES_SCREEN);
         }
 
         @Override
@@ -91,6 +93,14 @@ public class GeneralActivity
         }
     });
     private final Fragment pricesFragment = ServicesWithPricesFragment.newInstanse(new ServicesWithPricesContract.Behaviour()
+    {
+        @Override
+        public void openMenu()
+        {
+            GeneralActivity.this.openMenu();
+        }
+    });
+    private final Fragment eventsFragment = EventsFragment.newInstanse(new EventsContract.Behaviour()
     {
         @Override
         public void openMenu()
@@ -137,7 +147,7 @@ public class GeneralActivity
     }
 
     @Override
-    public void showScreen(final ScreenType screenType)
+    public void showScreen(final GeneralCore.ScreenType screenType)
     {
         closeMenu(new DrawerContainer.AnimationEndListener()
         {
@@ -157,6 +167,9 @@ public class GeneralActivity
                         break;
                     case PRICES_SCREEN:
                         currentFragment = pricesFragment;
+                        break;
+                    case EVENTS_SCREEN:
+                        currentFragment = eventsFragment;
                         break;
                     default:
                         return;
