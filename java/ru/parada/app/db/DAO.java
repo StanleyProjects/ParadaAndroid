@@ -2,6 +2,7 @@ package ru.parada.app.db;
 
 import ru.parada.app.contracts.PricesContract;
 import ru.parada.app.contracts.ServicesWithPricesContract;
+import ru.parada.app.core.ActionsCore;
 import ru.parada.app.core.DoctorsCore;
 import ru.parada.app.core.NewsCore;
 import ru.parada.app.core.ServicesWithPricesCore;
@@ -15,6 +16,13 @@ public interface DAO
         ListModel<NewsCore.OneOfNewsModel> getAllWithLimit(int limit);
         NewsCore.OneOfNewsModel getOneFromId(int id);
         void insertOne(NewsCore.OneOfNewsModel item);
+        void clear();
+    }
+    interface Actions
+    {
+        ListModel<ActionsCore.ActionModel> getAll();
+        ActionsCore.ActionModel getOneFromId(int id);
+        void insertOne(ActionsCore.ActionModel item);
         void clear();
     }
     interface Prices

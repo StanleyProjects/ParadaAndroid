@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:background="@color/white"
+              android:layout_width="match_parent"
+              android:layout_height="108dp"
+             android:paddingBottom="8dp"
+             android:paddingLeft="24dp"
+             android:paddingRight="24dp"
+             android:paddingTop="8dp">
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="46dp"
+        android:layout_marginRight="46dp"
+        android:background="@color/purplealpha"/>
+    <View
+        android:layout_width="92dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="right"
+        android:background="@drawable/purplealpha_circle"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <FrameLayout
+            android:layout_width="92dp"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:background="@color/colorPrimaryDark"/>
+            <ImageView
+                android:src="@drawable/service_mask"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+        </FrameLayout>
+        <LinearLayout
+            android:layout_gravity="center_vertical"
+            android:orientation="vertical"
+            android:layout_marginRight="16dp"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/date"
+                android:text="18.06 - 16.08"
+                android:textColor="@color/purplebright"
+                android:textSize="@dimen/text_size"
+                android:singleLine="true"
+                android:lines="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/title"
+                android:text="18.06 - 16.08\nsdfsdf\nsdfsdfsdsdsdsdsdsdsdsd"
+                android:textColor="@color/graydark"
+                android:textSize="@dimen/text_size"
+                android:ellipsize="end"
+                android:maxLines="3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+    </LinearLayout>
+</FrameLayout>

@@ -12,9 +12,11 @@ import ru.parada.app.contracts.ImagesContract;
 import ru.parada.app.contracts.PricesContract;
 import ru.parada.app.contracts.ServicesContract;
 import ru.parada.app.contracts.ServicesWithPricesContract;
+import ru.parada.app.core.ActionsCore;
 import ru.parada.app.core.DoctorsCore;
 import ru.parada.app.core.NewsCore;
 import ru.parada.app.core.ServicesWithPricesCore;
+import ru.parada.app.modules.actions.model.ActionsCursorListModel;
 import ru.parada.app.modules.doctors.models.Doctor;
 import ru.parada.app.modules.doctors.models.DoctorsCursorListModel;
 import ru.parada.app.modules.images.ImageModel;
@@ -29,7 +31,7 @@ import ru.parada.app.units.ListModel;
 public class SQliteApi
 {
     static private final String DB_NAME = "parada";
-    static private final int DB_VERSION = 1610200130;
+    static private final int DB_VERSION = 1610222240;
     static private volatile SQliteApi instanse;
 
     static public SQliteApi getInstanse()
@@ -42,6 +44,34 @@ public class SQliteApi
     }
 
     private SQLiteDatabase sdb;
+    private final DAO.Actions actions = new Tables.Actions()
+    {
+        @Override
+        public ListModel<ActionsCore.ActionModel> getAll()
+        {
+            return new ActionsCursorListModel(sdb.rawQuery("SELECT * " +
+                    "FROM " + TABLE_NAME + " " +
+                    "LEFT JOIN " + Tables.Images.TABLE_NAME + " " +
+                    "ON " + Tables.Images.Columns.type + " = " + ImagesContract.Types.ACTIONS_TYPE + " " +
+                    "AND " + TABLE_NAME + "." + BaseColumns._ID + " = " + Tables.Images.Columns.entity_id, new String[]{}));
+        }
+        @Override
+        public ActionsCore.ActionModel getOneFromId(int id)
+        {
+            return null;
+        }
+        @Override
+        public void insertOne(ActionsCore.ActionModel item)
+        {
+            sdb.insertWithOnConflict(TABLE_NAME, null, ContentDriver.getContentValues(item), SQLiteDatabase.CONFLICT_REPLACE);
+        }
+        @Override
+        public void clear()
+        {
+            sdb.execSQL("drop table if exists " + TABLE_NAME);
+            sdb.execSQL(CREATE_TABLE);
+        }
+    };
     private final DAO.News news = new Tables.News()
     {
         @Override
@@ -78,7 +108,11 @@ public class SQliteApi
         @Override
         public ListModel<ServicesContract.ListItemModel> getAll()
         {
-            return new ServicesCursorListModel(sdb.rawQuery("SELECT * " + "FROM " + TABLE_NAME + " " + "LEFT JOIN " + Tables.Images.TABLE_NAME + " " + "ON " + Tables.Images.Columns.type + " = " + ImagesContract.Types.SERVICES_TYPE + " " + "AND " + TABLE_NAME + "." + BaseColumns._ID + " = " + Tables.Images.Columns.entity_id, new String[]{}));
+            return new ServicesCursorListModel(sdb.rawQuery("SELECT * " +
+                    "FROM " + TABLE_NAME + " " +
+                    "LEFT JOIN " + Tables.Images.TABLE_NAME + " " +
+                    "ON " + Tables.Images.Columns.type + " = " + ImagesContract.Types.SERVICES_TYPE + " " +
+                    "AND " + TABLE_NAME + "." + BaseColumns._ID + " = " + Tables.Images.Columns.entity_id, new String[]{}));
         }
 
         @Override
@@ -399,17 +433,18 @@ public class SQliteApi
     {
         return news;
     }
-
+    public DAO.Actions getActions()
+    {
+        return actions;
+    }
     public Tables.Services getServices()
     {
         return services;
     }
-
     public DAO.Doctors getDoctors()
     {
         return doctors;
     }
-
     public Tables.Images getImages()
     {
         return images;
@@ -418,7 +453,6 @@ public class SQliteApi
     {
         return prices;
     }
-
     public DAO.ServicesWithPrices getServicesWithPrices()
     {
         return servicesWithPrices;
@@ -432,6 +466,7 @@ public class SQliteApi
         db.execSQL("drop table if exists " + Tables.Images.TABLE_NAME);
         db.execSQL("drop table if exists " + Tables.ServicesWithPrices.TABLE_NAME);
         db.execSQL("drop table if exists " + Tables.Prices.TABLE_NAME);
+        db.execSQL("drop table if exists " + Tables.Actions.TABLE_NAME);
     }
 
     private void createTables(SQLiteDatabase db)
@@ -442,5 +477,6 @@ public class SQliteApi
         db.execSQL(Tables.Images.CREATE_TABLE);
         db.execSQL(Tables.ServicesWithPrices.CREATE_TABLE);
         db.execSQL(Tables.Prices.CREATE_TABLE);
+        db.execSQL(Tables.Actions.CREATE_TABLE);
     }
 }

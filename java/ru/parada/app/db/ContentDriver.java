@@ -7,6 +7,7 @@ import ru.parada.app.contracts.ImagesContract;
 import ru.parada.app.contracts.MainContract;
 import ru.parada.app.contracts.PricesContract;
 import ru.parada.app.contracts.ServicesContract;
+import ru.parada.app.core.ActionsCore;
 import ru.parada.app.core.DoctorsCore;
 import ru.parada.app.core.NewsCore;
 import ru.parada.app.core.ServicesWithPricesCore;
@@ -79,6 +80,18 @@ public class ContentDriver
         content.put(Tables.Prices.Columns.title, item.getTitle());
         content.put(Tables.Prices.Columns.service_id, item.getServiceId());
         content.put(Tables.Prices.Columns.value, item.getValue());
+        return content;
+    }
+
+    public static ContentValues getContentValues(ActionsCore.ActionModel item)
+    {
+        ContentValues content = new ContentValues();
+        content.put(BaseColumns._ID, item.getId());
+        content.put(Tables.Actions.Columns.title, item.getTitle());
+        content.put(Tables.Actions.Columns.descr, item.getDescription());
+        content.put(Tables.Actions.Columns.subtitle, item.getSubtitle());
+        content.put(Tables.Actions.Columns.from_date, item.getFromDate());
+        content.put(Tables.Actions.Columns.to_date, item.getToDate());
         return content;
     }
 }

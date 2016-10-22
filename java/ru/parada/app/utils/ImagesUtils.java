@@ -28,7 +28,7 @@ public class ImagesUtils
 
     static public void setThumpImage(String path, ImageView iv, int h, int w)
     {
-        Drawable drawable = getImageFromCache("thumb" + path);
+        Drawable drawable = getImageFromCache("thumb" +h+w+ path);
         if(drawable == null)
         {
             BitmapFactory.Options options = new BitmapFactory.Options();
@@ -37,7 +37,7 @@ public class ImagesUtils
             int inSampleSize = ImagesUtils.calculateInSampleSize(options, h, w);
             Bitmap bitmap = ImagesUtils.optimize(path, inSampleSize);
             drawable = new BitmapDrawable(iv.getContext().getResources(), bitmap);
-            addImageToCache(drawable, "thumb" + path);
+            addImageToCache(drawable, "thumb" +h+w+ path);
         }
         iv.setImageDrawable(drawable);
     }

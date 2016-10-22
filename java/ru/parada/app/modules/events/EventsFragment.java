@@ -4,8 +4,10 @@ import android.support.v4.app.Fragment;
 import android.view.View;
 
 import ru.parada.app.R;
+import ru.parada.app.contracts.ActionsContract;
 import ru.parada.app.contracts.EventsContract;
 import ru.parada.app.contracts.NewsContract;
+import ru.parada.app.modules.actions.ActionsFragment;
 import ru.parada.app.modules.news.NewsFragment;
 import ru.parada.app.units.MVPFragment;
 
@@ -20,7 +22,11 @@ public class EventsFragment
         return fragment;
     }
 
+    private Fragment currentFragment;
     private Fragment newsFragment = NewsFragment.newInstanse(new NewsContract.Behaviour()
+    {
+    });
+    private Fragment actionsFragment = ActionsFragment.newInstanse(new ActionsContract.Behaviour()
     {
     });
 
@@ -29,6 +35,13 @@ public class EventsFragment
 
     private int tabNormal;
     private int tabHighlight;
+
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        replaceFragment();
+    }
 
     @Override
     protected EventsContract.Presenter setPresenter()
@@ -89,7 +102,8 @@ public class EventsFragment
     {
         news_active.setBackgroundColor(tabHighlight);
         actions_active.setBackgroundColor(tabNormal);
-        replaceFragment(newsFragment);
+        currentFragment = newsFragment;
+        replaceFragment();
     }
 
     @Override
@@ -97,12 +111,14 @@ public class EventsFragment
     {
         actions_active.setBackgroundColor(tabHighlight);
         news_active.setBackgroundColor(tabNormal);
+        currentFragment = actionsFragment;
+        replaceFragment();
     }
 
-    private void replaceFragment(Fragment fragment)
+    private void replaceFragment()
     {
         getChildFragmentManager().beginTransaction()
-                                   .replace(R.id.events, fragment)
+                                   .replace(R.id.events, currentFragment)
                                    .commit();
     }
 }

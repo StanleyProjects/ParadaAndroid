@@ -31,6 +31,35 @@ public interface Tables
             String image = TABLE_NAME + "_" + "image";
         }
     }
+    interface Actions
+            extends DAO.Actions
+    {
+        String TABLE_NAME = Actions.class.getCanonicalName().toLowerCase().replace('.', '_') + "_table";
+        String CREATE_TABLE = "create table if not exists " + TABLE_NAME + " (" +
+                BaseColumns._ID + " integer primary key autoincrement, " +
+                Columns.title + " text" + "," +
+                Columns.descr + " text" + "," +
+                Columns.from_date + " integer" + "," +
+                Columns.to_date + " integer" + "," +
+                Columns.subtitle + " text" + "," +
+                Columns.preview_url + " text" + "," +
+                Columns.preview + " text" + "," +
+                Columns.image_url + " text" + "," +
+                Columns.image + " text" + //"," +
+                ");";
+        interface Columns
+        {
+            String title = TABLE_NAME + "_" + "title";
+            String descr = TABLE_NAME + "_" + "descr";
+            String from_date = TABLE_NAME + "_" + "from_date";
+            String to_date = TABLE_NAME + "_" + "to_date";
+            String subtitle = TABLE_NAME + "_" + "subtitle";
+            String image_url = TABLE_NAME + "_" + "image_url";
+            String image = TABLE_NAME + "_" + "image";
+            String preview_url = TABLE_NAME + "_" + "preview_url";
+            String preview = TABLE_NAME + "_" + "preview";
+        }
+    }
     interface Services
     {
         String TABLE_NAME = Services.class.getCanonicalName().toLowerCase().replace('.', '_') + "_table";

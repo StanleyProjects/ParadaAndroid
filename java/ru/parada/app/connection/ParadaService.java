@@ -6,6 +6,7 @@ public interface ParadaService
     interface Get
     {
         String NEWS = "get_news.php";
+        String ACTIONS = "get_actions.php";
         String SERVICES = "get_services.php";
         String DOCTORS = "get_doctors.php";
         String SERVICES_WITH_PRICES = "get_services_with_prices.php";
