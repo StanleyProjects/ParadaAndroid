@@ -5,21 +5,23 @@ import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
 import ru.parada.app.contracts.MainContract;
+import ru.parada.app.core.NewsCore;
+import ru.parada.app.modules.news.adapter.OneOfNewsHolder;
 import ru.parada.app.units.HeadFootAdapter;
 import ru.parada.app.units.ListModel;
 
-public class NewsAdapter
-    extends HeadFootAdapter<OneOfNewsHolder, MainContract.ListItemModel, NewsAdapterListener>
+public class MainNewsAdapter
+    extends HeadFootAdapter<OneOfNewsHolder, NewsCore.OneOfNewsModel, MainNewsAdapterListener>
 {
-    private ListModel<MainContract.ListItemModel> data;
+    private ListModel<NewsCore.OneOfNewsModel> data;
 
-    public NewsAdapter(Context c, NewsAdapterListener l)
+    public MainNewsAdapter(Context c, MainNewsAdapterListener l)
     {
         super(c, l);
     }
 
     @Override
-    protected MainContract.ListItemModel getItem(int position)
+    protected NewsCore.OneOfNewsModel getItem(int position)
     {
         return data.getItem(position);
     }
@@ -67,7 +69,7 @@ public class NewsAdapter
     }
 
     @Override
-    protected void setData(OneOfNewsHolder holder, MainContract.ListItemModel item)
+    protected void setData(OneOfNewsHolder holder, NewsCore.OneOfNewsModel item)
     {
         holder.setTitle(item.getTitle());
         holder.setDescr(item.getDescription());
@@ -84,7 +86,7 @@ public class NewsAdapter
         return data.getItemsCount();
     }
 
-    public void swapData(ListModel<MainContract.ListItemModel> d)
+    public void swapData(ListModel<NewsCore.OneOfNewsModel> d)
     {
         if(this.data != null)
         {

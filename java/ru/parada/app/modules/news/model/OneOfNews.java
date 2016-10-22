@@ -1,9 +1,9 @@
-package ru.parada.app.modules.main;
+package ru.parada.app.modules.news.model;
 
-import ru.parada.app.contracts.MainContract;
+import ru.parada.app.core.NewsCore;
 
 public class OneOfNews
-        implements MainContract.ListItemModel
+        implements NewsCore.OneOfNewsModel
 {
     private int id;
     private String title;

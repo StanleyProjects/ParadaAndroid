@@ -1,7 +1,6 @@
 package ru.parada.app.modules.main;
 
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,6 +10,7 @@ import android.widget.ImageView;
 
 import ru.parada.app.R;
 import ru.parada.app.contracts.MainContract;
+import ru.parada.app.core.NewsCore;
 import ru.parada.app.modules.call.CallDialog;
 import ru.parada.app.modules.call.CallDialogListener;
 import ru.parada.app.units.ListModel;
@@ -30,7 +30,7 @@ public class MainFragment
     private ImageView phone;
     private RecyclerView list;
 
-    private NewsAdapter adapter;
+    private MainNewsAdapter adapter;
 
     @Override
     protected MainContract.Presenter setPresenter()
@@ -77,7 +77,7 @@ public class MainFragment
     protected void init()
     {
         setClickListener(phone);
-        adapter = new NewsAdapter(getActivity(), new NewsAdapterListener()
+        adapter = new MainNewsAdapter(getActivity(), new MainNewsAdapterListener()
         {
             @Override
             public void openServices()
@@ -149,7 +149,7 @@ public class MainFragment
     }
 
     @Override
-    public void updateNews(final ListModel<MainContract.ListItemModel> data)
+    public void updateNews(final ListModel<NewsCore.OneOfNewsModel> data)
     {
         runOnUiThread(new Runnable()
         {

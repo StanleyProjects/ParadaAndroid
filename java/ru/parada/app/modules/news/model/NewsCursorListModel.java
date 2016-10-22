@@ -1,14 +1,14 @@
-package ru.parada.app.modules.main;
+package ru.parada.app.modules.news.model;
 
 import android.database.Cursor;
 import android.provider.BaseColumns;
 
-import ru.parada.app.contracts.MainContract;
+import ru.parada.app.core.NewsCore;
 import ru.parada.app.db.Tables;
 import ru.parada.app.units.CursorListModel;
 
 public class NewsCursorListModel
-        extends CursorListModel<MainContract.ListItemModel>
+        extends CursorListModel<NewsCore.OneOfNewsModel>
 {
     public NewsCursorListModel(Cursor d)
     {
@@ -16,9 +16,9 @@ public class NewsCursorListModel
     }
 
     @Override
-    public MainContract.ListItemModel getModel(int i)
+    public NewsCore.OneOfNewsModel getModel(int i)
     {
-        return new MainContract.ListItemModel()
+        return new NewsCore.OneOfNewsModel()
         {
             @Override
             public int getId()

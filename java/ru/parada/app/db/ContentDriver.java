@@ -8,6 +8,7 @@ import ru.parada.app.contracts.MainContract;
 import ru.parada.app.contracts.PricesContract;
 import ru.parada.app.contracts.ServicesContract;
 import ru.parada.app.core.DoctorsCore;
+import ru.parada.app.core.NewsCore;
 import ru.parada.app.core.ServicesWithPricesCore;
 
 public class ContentDriver
@@ -47,7 +48,7 @@ public class ContentDriver
         return content;
     }
 
-    public static ContentValues getContentValues(MainContract.ListItemModel item)
+    public static ContentValues getContentValues(NewsCore.OneOfNewsModel item)
     {
         ContentValues content = new ContentValues();
         content.put(BaseColumns._ID, item.getId());

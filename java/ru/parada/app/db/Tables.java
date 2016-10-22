@@ -1,23 +1,15 @@
 package ru.parada.app.db;
 
-import android.database.Cursor;
 import android.provider.BaseColumns;
 
-import java.util.HashMap;
-
-import ru.parada.app.contracts.DoctorDetailContract;
-import ru.parada.app.contracts.DoctorsContract;
 import ru.parada.app.contracts.ImagesContract;
-import ru.parada.app.contracts.MainContract;
-import ru.parada.app.contracts.PricesContract;
 import ru.parada.app.contracts.ServicesContract;
-import ru.parada.app.contracts.ServicesWithPricesContract;
-import ru.parada.app.core.DoctorsCore;
 import ru.parada.app.units.ListModel;
 
 public interface Tables
 {
     interface News
+            extends DAO.News
     {
         String TABLE_NAME = News.class.getCanonicalName().toLowerCase().replace('.', '_') + "_table";
         String CREATE_TABLE = "create table if not exists " + TABLE_NAME + " (" +
@@ -38,12 +30,6 @@ public interface Tables
             String image_url = TABLE_NAME + "_" + "image_url";
             String image = TABLE_NAME + "_" + "image";
         }
-
-        ListModel<MainContract.ListItemModel> getAll();
-        ListModel<MainContract.ListItemModel> getAllWithLimit(int limit);
-        Cursor getOneFromId(int id);
-        long insertOne(MainContract.ListItemModel item);
-        void clearTable();
     }
     interface Services
     {

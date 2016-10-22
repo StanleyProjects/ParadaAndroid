@@ -1,9 +1,12 @@
 package ru.parada.app.modules.events;
 
+import android.support.v4.app.Fragment;
 import android.view.View;
 
 import ru.parada.app.R;
 import ru.parada.app.contracts.EventsContract;
+import ru.parada.app.contracts.NewsContract;
+import ru.parada.app.modules.news.NewsFragment;
 import ru.parada.app.units.MVPFragment;
 
 public class EventsFragment
@@ -17,8 +20,13 @@ public class EventsFragment
         return fragment;
     }
 
+    private Fragment newsFragment = NewsFragment.newInstanse(new NewsContract.Behaviour()
+    {
+    });
+
     private View news_active;
     private View actions_active;
+
     private int tabNormal;
     private int tabHighlight;
 
@@ -81,6 +89,7 @@ public class EventsFragment
     {
         news_active.setBackgroundColor(tabHighlight);
         actions_active.setBackgroundColor(tabNormal);
+        replaceFragment(newsFragment);
     }
 
     @Override
@@ -88,5 +97,12 @@ public class EventsFragment
     {
         actions_active.setBackgroundColor(tabHighlight);
         news_active.setBackgroundColor(tabNormal);
+    }
+
+    private void replaceFragment(Fragment fragment)
+    {
+        getChildFragmentManager().beginTransaction()
+                                   .replace(R.id.events, fragment)
+                                   .commit();
     }
 }

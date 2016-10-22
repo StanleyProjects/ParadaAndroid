@@ -9,16 +9,16 @@ import android.provider.BaseColumns;
 import java.util.ArrayList;
 
 import ru.parada.app.contracts.ImagesContract;
-import ru.parada.app.contracts.MainContract;
 import ru.parada.app.contracts.PricesContract;
 import ru.parada.app.contracts.ServicesContract;
 import ru.parada.app.contracts.ServicesWithPricesContract;
 import ru.parada.app.core.DoctorsCore;
+import ru.parada.app.core.NewsCore;
 import ru.parada.app.core.ServicesWithPricesCore;
 import ru.parada.app.modules.doctors.models.Doctor;
 import ru.parada.app.modules.doctors.models.DoctorsCursorListModel;
 import ru.parada.app.modules.images.ImageModel;
-import ru.parada.app.modules.main.NewsCursorListModel;
+import ru.parada.app.modules.news.model.NewsCursorListModel;
 import ru.parada.app.modules.prices.models.PricesCursorListModel;
 import ru.parada.app.modules.services.ServicesCursorListModel;
 import ru.parada.app.modules.servicesprices.models.ServiceGroupPrice;
@@ -42,32 +42,32 @@ public class SQliteApi
     }
 
     private SQLiteDatabase sdb;
-    private final Tables.News news = new Tables.News()
+    private final DAO.News news = new Tables.News()
     {
         @Override
-        public ListModel<MainContract.ListItemModel> getAll()
+        public ListModel<NewsCore.OneOfNewsModel> getAll()
         {
             return new NewsCursorListModel(sdb.rawQuery("SELECT * " + "FROM " + TABLE_NAME, new String[]{}));
         }
         @Override
-        public ListModel<MainContract.ListItemModel> getAllWithLimit(int limit)
+        public ListModel<NewsCore.OneOfNewsModel> getAllWithLimit(int limit)
         {
             return new NewsCursorListModel(sdb.rawQuery("SELECT * "
                     + "FROM " + TABLE_NAME + " "
                     + "ORDER BY " + Columns.date + " DESC " + "LIMIT " + limit, new String[]{}));
         }
         @Override
-        public Cursor getOneFromId(int id)
+        public NewsCore.OneOfNewsModel getOneFromId(int id)
         {
             return null;
         }
         @Override
-        public long insertOne(MainContract.ListItemModel item)
+        public void insertOne(NewsCore.OneOfNewsModel item)
         {
-            return sdb.insertWithOnConflict(TABLE_NAME, null, ContentDriver.getContentValues(item), SQLiteDatabase.CONFLICT_REPLACE);
+            sdb.insertWithOnConflict(TABLE_NAME, null, ContentDriver.getContentValues(item), SQLiteDatabase.CONFLICT_REPLACE);
         }
         @Override
-        public void clearTable()
+        public void clear()
         {
             sdb.execSQL("drop table if exists " + TABLE_NAME);
             sdb.execSQL(CREATE_TABLE);
@@ -395,7 +395,7 @@ public class SQliteApi
         sdb.endTransaction();
     }
 
-    public Tables.News getNews()
+    public DAO.News getNews()
     {
         return news;
     }
