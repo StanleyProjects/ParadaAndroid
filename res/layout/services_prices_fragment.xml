@@ -59,15 +59,15 @@
                 android:textColorHint="@color/gray"/>
 
             <ImageView
-                android:layout_width="16dp"
-                android:layout_height="16dp"
+                android:layout_width="@dimen/icon_small"
+                android:layout_height="@dimen/icon_small"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="8dp"
                 android:src="@mipmap/search_scope"/>
             <ImageView
                 android:id="@+id/search_clear"
-                android:layout_width="16dp"
-                android:layout_height="16dp"
+                android:layout_width="@dimen/icon_small"
+                android:layout_height="@dimen/icon_small"
                 android:layout_gravity="center_vertical|right"
                 android:layout_marginRight="8dp"
                 android:src="@mipmap/close"/>

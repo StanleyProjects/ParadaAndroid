@@ -5,6 +5,7 @@ import android.provider.BaseColumns;
 
 import ru.parada.app.contracts.ImagesContract;
 import ru.parada.app.contracts.MainContract;
+import ru.parada.app.contracts.NotificationsContract;
 import ru.parada.app.contracts.PricesContract;
 import ru.parada.app.contracts.ServicesContract;
 import ru.parada.app.core.ActionsCore;
@@ -92,6 +93,15 @@ public class ContentDriver
         content.put(Tables.Actions.Columns.subtitle, item.getSubtitle());
         content.put(Tables.Actions.Columns.from_date, item.getFromDate());
         content.put(Tables.Actions.Columns.to_date, item.getToDate());
+        return content;
+    }
+
+    public static ContentValues getContentValues(NotificationsContract.Model item)
+    {
+        ContentValues content = new ContentValues();
+        content.put(BaseColumns._ID, item.getId());
+        content.put(Tables.Notifications.Columns.message, item.getMessage());
+        content.put(Tables.Notifications.Columns.date, item.getDate());
         return content;
     }
 }

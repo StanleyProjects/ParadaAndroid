@@ -11,5 +11,6 @@ public interface ParadaService
         String DOCTORS = "get_doctors.php";
         String SERVICES_WITH_PRICES = "get_services_with_prices.php";
         String PRICES = "get_prices.php";
+        String NOTIFICATIONS = "get_push.php";
     }
 }

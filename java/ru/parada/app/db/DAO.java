@@ -1,5 +1,6 @@
 package ru.parada.app.db;
 
+import ru.parada.app.contracts.NotificationsContract;
 import ru.parada.app.contracts.PricesContract;
 import ru.parada.app.contracts.ServicesWithPricesContract;
 import ru.parada.app.core.ActionsCore;
@@ -47,6 +48,12 @@ public interface DAO
         ListModel<DoctorsCore.DetailModel> getFromKeys(String keys);
         DoctorsCore.DetailModel getOneFromId(int id);
         void insertOne(DoctorsCore.DetailModel item);
+        void clear();
+    }
+    interface Notifications
+    {
+        ListModel<NotificationsContract.Model> getAll();
+        void insertOne(NotificationsContract.Model item);
         void clear();
     }
 }

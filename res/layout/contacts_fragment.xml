@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
+              android:background="@color/white"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
     <FrameLayout
@@ -42,9 +43,9 @@
             android:src="@mipmap/arrow_right"
             android:tint="@color/colorPrimary"
             android:layout_gravity="center_vertical|right"
-            android:padding="14dp"
-            android:layout_width="@dimen/container_height"
-            android:layout_height="@dimen/container_height"/>
+            android:layout_marginRight="@dimen/icon_small"
+            android:layout_width="@dimen/icon_small"
+            android:layout_height="@dimen/icon_small"/>
     </FrameLayout>
     <View
         android:background="@color/gray"
@@ -66,9 +67,9 @@
             android:src="@mipmap/arrow_right"
             android:tint="@color/colorPrimary"
             android:layout_gravity="center_vertical|right"
-            android:padding="14dp"
-            android:layout_width="@dimen/container_height"
-            android:layout_height="@dimen/container_height"/>
+            android:layout_marginRight="@dimen/icon_small"
+            android:layout_width="@dimen/icon_small"
+            android:layout_height="@dimen/icon_small"/>
     </FrameLayout>
     <View
         android:background="@color/gray"

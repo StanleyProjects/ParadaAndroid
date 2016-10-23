@@ -179,7 +179,7 @@ public interface Tables
     }
 
     interface Prices
-        extends DAO.Prices
+            extends DAO.Prices
     {
         String TABLE_NAME = Prices.class.getCanonicalName().toLowerCase().replace('.', '_') + "_table";
         String CREATE_TABLE = "create table if not exists " + TABLE_NAME + " (" +
@@ -194,6 +194,22 @@ public interface Tables
             String title = TABLE_NAME + "_" + "title";
             String service_id = TABLE_NAME + "_" + "service_id";
             String value = TABLE_NAME + "_" + "value";
+        }
+    }
+    interface Notifications
+            extends DAO.Notifications
+    {
+        String TABLE_NAME = Notifications.class.getCanonicalName().toLowerCase().replace('.', '_') + "_table";
+        String CREATE_TABLE = "create table if not exists " + TABLE_NAME + " (" +
+                BaseColumns._ID + " integer primary key autoincrement, " +
+                Columns.date + " integer" + "," +
+                Columns.message + " text" + //"," +
+                ");";
+
+        interface Columns
+        {
+            String message = TABLE_NAME + "_" + "message";
+            String date = TABLE_NAME + "_" + "date";
         }
     }
 }

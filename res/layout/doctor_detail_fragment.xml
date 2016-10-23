@@ -64,10 +64,10 @@
                         android:id="@+id/phone"
                         android:src="@drawable/btn_phone"
                         android:scaleType="fitCenter"
-                        android:padding="6dp"
+                        android:layout_margin="6dp"
                         android:layout_gravity="bottom|right"
-                        android:layout_width="@dimen/container_height_medium"
-                        android:layout_height="@dimen/container_height_medium"/>
+                        android:layout_width="@dimen/icon_big"
+                        android:layout_height="@dimen/icon_big"/>
                 </FrameLayout>
                 <LinearLayout
                     android:layout_gravity="center_vertical"
@@ -122,23 +122,32 @@
         android:id="@+id/watch_video"
         android:background="@color/graylight"
         android:layout_width="match_parent"
-        android:layout_height="48dp">
-        <TextView
+        android:layout_height="@dimen/container_height">
+        <LinearLayout
             android:layout_gravity="center"
-            android:gravity="center_vertical"
-            android:drawablePadding="8dp"
-            android:drawableLeft="@drawable/ic_watch_video"
-            android:text="@string/watch_video"
-            android:textSize="14dp"
-            android:textColor="@color/gray"
-            android:textAllCaps="true"
+            android:gravity="center"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content">
+            <ImageView
+                android:src="@drawable/ic_watch_video"
+                android:tint="@color/colorAccent"
+                android:layout_width="@dimen/icon"
+                android:layout_height="@dimen/icon"/>
+            <TextView
+                android:text="@string/watch_video"
+                android:textSize="14dp"
+                android:textColor="@color/gray"
+                android:textAllCaps="true"
+                android:layout_marginLeft="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
         <ImageView
+            android:src="@mipmap/arrow_right"
+            android:tint="@color/gray"
             android:layout_gravity="center_vertical|right"
             android:layout_marginRight="8dp"
-            android:src="@mipmap/arrow_right"
-            android:layout_width="16dp"
-            android:layout_height="16dp"/>
+            android:layout_width="@dimen/icon_small"
+            android:layout_height="@dimen/icon_small"/>
     </FrameLayout>
 </LinearLayout>

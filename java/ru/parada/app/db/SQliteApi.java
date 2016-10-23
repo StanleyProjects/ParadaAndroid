@@ -9,6 +9,7 @@ import android.provider.BaseColumns;
 import java.util.ArrayList;
 
 import ru.parada.app.contracts.ImagesContract;
+import ru.parada.app.contracts.NotificationsContract;
 import ru.parada.app.contracts.PricesContract;
 import ru.parada.app.contracts.ServicesContract;
 import ru.parada.app.contracts.ServicesWithPricesContract;
@@ -21,6 +22,7 @@ import ru.parada.app.modules.doctors.models.Doctor;
 import ru.parada.app.modules.doctors.models.DoctorsCursorListModel;
 import ru.parada.app.modules.images.ImageModel;
 import ru.parada.app.modules.news.model.NewsCursorListModel;
+import ru.parada.app.modules.notifications.model.NotificationsCursorListModel;
 import ru.parada.app.modules.prices.models.PricesCursorListModel;
 import ru.parada.app.modules.services.ServicesCursorListModel;
 import ru.parada.app.modules.servicesprices.models.ServiceGroupPrice;
@@ -31,7 +33,7 @@ import ru.parada.app.units.ListModel;
 public class SQliteApi
 {
     static private final String DB_NAME = "parada";
-    static private final int DB_VERSION = 1610222240;
+    static private final int DB_VERSION = 1610240114;
     static private volatile SQliteApi instanse;
 
     static public SQliteApi getInstanse()
@@ -393,6 +395,25 @@ public class SQliteApi
             sdb.execSQL(CREATE_TABLE);
         }
     };
+    private final DAO.Notifications notifications = new Tables.Notifications()
+    {
+        @Override
+        public ListModel<NotificationsContract.Model> getAll()
+        {
+            return new NotificationsCursorListModel(sdb.rawQuery("SELECT * " + "FROM " + TABLE_NAME, new String[]{}));
+        }
+        @Override
+        public void insertOne(NotificationsContract.Model item)
+        {
+            sdb.insertWithOnConflict(TABLE_NAME, null, ContentDriver.getContentValues(item), SQLiteDatabase.CONFLICT_REPLACE);
+        }
+        @Override
+        public void clear()
+        {
+            sdb.execSQL("drop table if exists " + TABLE_NAME);
+            sdb.execSQL(CREATE_TABLE);
+        }
+    };
 
     private SQliteApi()
     {
@@ -457,6 +478,10 @@ public class SQliteApi
     {
         return servicesWithPrices;
     }
+    public DAO.Notifications getNotifications()
+    {
+        return notifications;
+    }
 
     private void clearTables(SQLiteDatabase db)
     {
@@ -467,6 +492,7 @@ public class SQliteApi
         db.execSQL("drop table if exists " + Tables.ServicesWithPrices.TABLE_NAME);
         db.execSQL("drop table if exists " + Tables.Prices.TABLE_NAME);
         db.execSQL("drop table if exists " + Tables.Actions.TABLE_NAME);
+        db.execSQL("drop table if exists " + Tables.Notifications.TABLE_NAME);
     }
 
     private void createTables(SQLiteDatabase db)
@@ -478,5 +504,6 @@ public class SQliteApi
         db.execSQL(Tables.ServicesWithPrices.CREATE_TABLE);
         db.execSQL(Tables.Prices.CREATE_TABLE);
         db.execSQL(Tables.Actions.CREATE_TABLE);
+        db.execSQL(Tables.Notifications.CREATE_TABLE);
     }
 }
