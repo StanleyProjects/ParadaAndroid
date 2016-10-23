@@ -32,7 +32,9 @@ public class ContactsFragment
     @Override
     protected void initViews(View v)
     {
-        setClickListener(v.findViewById(R.id.menu));
+        setClickListener(v.findViewById(R.id.menu),
+                v.findViewById(R.id.plastic_surgery_center),
+                v.findViewById(R.id.baltmed));
     }
 
     @Override
@@ -47,6 +49,10 @@ public class ContactsFragment
                 {
                     case R.id.menu:
                         getBehaviour().openMenu();
+                        break;
+                    case R.id.plastic_surgery_center:
+                        break;
+                    case R.id.baltmed:
                         break;
                 }
             }

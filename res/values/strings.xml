@@ -29,6 +29,8 @@
     <string name="vkontakte">Vkontakte</string>
     <string name="youtube">YouTube</string>
     <string name="instagram">Intagram</string>
+    <string name="plastic_surgery_center">Центр пластической хирургии</string>
+    <string name="baltmed">Амбулаторный комплекс BaltMed</string>
 
     <string-array name="months">
         <item>января</item>
