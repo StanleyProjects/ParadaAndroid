@@ -23,10 +23,10 @@ public class EventsFragment
     }
 
     private Fragment currentFragment;
-    private Fragment newsFragment = NewsFragment.newInstanse(new NewsContract.Behaviour()
+    private final Fragment newsFragment = NewsFragment.newInstanse(new NewsContract.Behaviour()
     {
     });
-    private Fragment actionsFragment = ActionsFragment.newInstanse(new ActionsContract.Behaviour()
+    private final Fragment actionsFragment = ActionsFragment.newInstanse(new ActionsContract.Behaviour()
     {
     });
 

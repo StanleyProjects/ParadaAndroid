@@ -22,6 +22,9 @@
     <string name="cost">Cтоимость</string>
     <string name="events">События</string>
     <string name="actions">Акции</string>
+    <string name="socials">Социальные сети</string>
+    <string name="notifications">Уведомления</string>
+    <string name="contacts">Контакты</string>
 
     <string-array name="months">
         <item>января</item>

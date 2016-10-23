@@ -5,20 +5,26 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 
 import ru.parada.app.R;
+import ru.parada.app.contracts.ContactsContract;
 import ru.parada.app.contracts.DoctorsContract;
 import ru.parada.app.contracts.EventsContract;
 import ru.parada.app.contracts.GeneralContract;
 import ru.parada.app.contracts.MainContract;
 import ru.parada.app.contracts.MenuContract;
+import ru.parada.app.contracts.NotificationsContract;
 import ru.parada.app.contracts.ServicesContract;
 import ru.parada.app.contracts.ServicesWithPricesContract;
+import ru.parada.app.contracts.SocialsContract;
 import ru.parada.app.core.GeneralCore;
+import ru.parada.app.modules.contacts.ContactsFragment;
 import ru.parada.app.modules.doctors.DoctorsFragment;
 import ru.parada.app.modules.events.EventsFragment;
 import ru.parada.app.modules.main.MainFragment;
 import ru.parada.app.modules.menu.MenuFragment;
+import ru.parada.app.modules.notifications.NotificationsFragment;
 import ru.parada.app.modules.services.ServicesFragment;
 import ru.parada.app.modules.servicesprices.ServicesWithPricesFragment;
+import ru.parada.app.modules.socials.SocialsFragment;
 import ru.parada.app.units.CallbackConnector;
 import ru.parada.app.units.DrawerContainer;
 
@@ -108,6 +114,30 @@ public class GeneralActivity
             GeneralActivity.this.openMenu();
         }
     });
+    private final Fragment socialsFragment = SocialsFragment.newInstanse(new SocialsContract.Behaviour()
+    {
+        @Override
+        public void openMenu()
+        {
+            GeneralActivity.this.openMenu();
+        }
+    });
+    private final Fragment notificationsFragment = NotificationsFragment.newInstanse(new NotificationsContract.Behaviour()
+    {
+        @Override
+        public void openMenu()
+        {
+            GeneralActivity.this.openMenu();
+        }
+    });
+    private final Fragment contactsFragment = ContactsFragment.newInstanse(new ContactsContract.Behaviour()
+    {
+        @Override
+        public void openMenu()
+        {
+            GeneralActivity.this.openMenu();
+        }
+    });
 
     private DrawerContainer drawerContainer;
 
@@ -170,6 +200,15 @@ public class GeneralActivity
                         break;
                     case EVENTS_SCREEN:
                         currentFragment = eventsFragment;
+                        break;
+                    case SOCIALS_SCREEN:
+                        currentFragment = socialsFragment;
+                        break;
+                    case NOTIFICATIONS_SCREEN:
+                        currentFragment = notificationsFragment;
+                        break;
+                    case CONTACTS_SCREEN:
+                        currentFragment = contactsFragment;
                         break;
                     default:
                         return;

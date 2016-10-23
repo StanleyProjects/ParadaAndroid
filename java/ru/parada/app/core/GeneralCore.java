@@ -8,6 +8,9 @@ public interface GeneralCore
         SERVICES_SCREEN,
         DOCTORS_SCREEN,
         PRICES_SCREEN,
-        EVENTS_SCREEN
+        EVENTS_SCREEN,
+        SOCIALS_SCREEN,
+        NOTIFICATIONS_SCREEN,
+        CONTACTS_SCREEN
     }
 }

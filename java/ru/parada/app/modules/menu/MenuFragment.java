@@ -123,6 +123,21 @@ public class MenuFragment
                     name = getActivity().getResources()
                                         .getString(R.string.events);
                     break;
+                case SOCIALS_SCREEN:
+                    ico = R.mipmap.menu_socials;
+                    name = getActivity().getResources()
+                                        .getString(R.string.socials);
+                    break;
+                case NOTIFICATIONS_SCREEN:
+                    ico = R.mipmap.menu_push;
+                    name = getActivity().getResources()
+                                        .getString(R.string.notifications);
+                    break;
+                case CONTACTS_SCREEN:
+                    ico = R.mipmap.menu_contacts;
+                    name = getActivity().getResources()
+                                        .getString(R.string.contacts);
+                    break;
                 default:
                     continue;
             }
