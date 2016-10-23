@@ -12,10 +12,11 @@
             android:id="@+id/back"
             android:src="@mipmap/icon_back"
             android:scaleType="fitCenter"
-            android:padding="16dp"
+            android:padding="@dimen/toolbar_icon_padding"
             android:tint="@color/white"
-            android:layout_width="56dp"
-            android:layout_height="56dp"/>
+            android:layout_width="@dimen/toolbar_icon"
+            android:layout_height="@dimen/toolbar_icon"
+            android:layout_gravity="center_vertical"/>
         <TextView
             android:id="@+id/service_name"
             android:gravity="center"

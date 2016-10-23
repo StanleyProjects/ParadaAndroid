@@ -8,10 +8,10 @@
         android:id="@+id/icon"
         android:tint="@color/gray"
         android:scaleType="fitCenter"
-        android:layout_width="24dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_height="24dp"/>
+        android:layout_width="@dimen/container_height"
+        android:layout_height="@dimen/container_height"
+        android:padding="12dp"
+        android:layout_marginLeft="16dp"/>
     <TextView
         android:id="@+id/name"
         android:textSize="@dimen/text_size_big"

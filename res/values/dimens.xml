@@ -2,7 +2,19 @@
 <resources>
     <dimen name="container_height_small">36dp</dimen>
     <dimen name="container_height">48dp</dimen>
-    <dimen name="toolbar_height">56dp</dimen>
+    <dimen name="container_height_medium">56dp</dimen>
+    <dimen name="container_height_big">64dp</dimen>
+
+    <dimen name="toolbar_height">@dimen/container_height_medium</dimen>
+    <!--<dimen name="toolbar_height">@dimen/container_height</dimen>-->
+
+    <dimen name="toolbar_icon">@dimen/toolbar_height</dimen>
+    <!--<dimen name="toolbar_icon_padding">@dimen/toolbar_icon_padding_medium</dimen>-->
+    <dimen name="toolbar_icon_padding">@dimen/toolbar_icon_padding_big</dimen>
+    <dimen name="toolbar_icon_padding_small">12dp</dimen>
+    <dimen name="toolbar_icon_padding_medium">14dp</dimen>
+    <dimen name="toolbar_icon_padding_big">16dp</dimen>
+
 
     <dimen name="text_size_small">10dp</dimen>
     <dimen name="text_size">12dp</dimen>

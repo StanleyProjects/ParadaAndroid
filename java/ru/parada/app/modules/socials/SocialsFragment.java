@@ -32,7 +32,11 @@ public class SocialsFragment
     @Override
     protected void initViews(View v)
     {
-        setClickListener(v.findViewById(R.id.menu));
+        setClickListener(v.findViewById(R.id.menu),
+                v.findViewById(R.id.facebook),
+                v.findViewById(R.id.vkontakte),
+                v.findViewById(R.id.youtube),
+                v.findViewById(R.id.instagram));
     }
 
     @Override
@@ -47,6 +51,14 @@ public class SocialsFragment
                 {
                     case R.id.menu:
                         getBehaviour().openMenu();
+                        break;
+                    case R.id.facebook:
+                        break;
+                    case R.id.vkontakte:
+                        break;
+                    case R.id.youtube:
+                        break;
+                    case R.id.instagram:
                         break;
                 }
             }

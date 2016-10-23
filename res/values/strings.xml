@@ -25,6 +25,10 @@
     <string name="socials">Социальные сети</string>
     <string name="notifications">Уведомления</string>
     <string name="contacts">Контакты</string>
+    <string name="facebook">Facebook</string>
+    <string name="vkontakte">Vkontakte</string>
+    <string name="youtube">YouTube</string>
+    <string name="instagram">Intagram</string>
 
     <string-array name="months">
         <item>января</item>

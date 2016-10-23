@@ -12,9 +12,10 @@
             android:id="@+id/menu"
             android:src="@mipmap/icon_menu"
             android:scaleType="fitCenter"
-            android:padding="16dp"
-            android:layout_width="56dp"
-            android:layout_height="56dp"/>
+            android:padding="@dimen/toolbar_icon_padding"
+            android:layout_width="@dimen/toolbar_icon"
+            android:layout_height="@dimen/toolbar_icon"
+            android:layout_gravity="center_vertical"/>
         <TextView
             android:layout_gravity="center"
             android:text="@string/services"

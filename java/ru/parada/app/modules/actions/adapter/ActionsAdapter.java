@@ -31,7 +31,7 @@ public class ActionsAdapter
         {
             holder.setPhoto(FoldersManager.getImagesDirectory() + "/" + item.getPhotoPath());
         }
-        holder.setDate(item.getFromDate(), item.getToDate());
+        holder.setDate(item.getFromDate()*1000, item.getToDate()*1000);
         holder.setTitle(item.getTitle());
     }
 

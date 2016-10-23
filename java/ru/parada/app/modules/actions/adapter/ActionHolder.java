@@ -5,6 +5,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.Date;
+
 import ru.parada.app.R;
 import ru.parada.app.units.AdapterHolder;
 import ru.parada.app.utils.AndroidUtil;
@@ -33,8 +35,37 @@ public class ActionHolder
     }
     public void setDate(long from_date, long to_date)
     {
-        String d = "" + from_date;
-        date.setText(d);
+        Date from = new Date(from_date);
+        Date to = new Date(to_date);
+        int m;
+        int d;
+        String dt = "";
+        d = from.getDate();
+        if(d<10)
+        {
+            dt +="0";
+        }
+        dt += d + ".";
+        m = from.getMonth()+1;
+        if(m<10)
+        {
+            dt +="0";
+        }
+        dt += "" + m;
+        dt += " - ";
+        d = to.getDate();
+        if(d<10)
+        {
+            dt +="0";
+        }
+        dt += d + ".";
+        m = to.getMonth()+1;
+        if(m<10)
+        {
+            dt +="0";
+        }
+        dt += "" + m;
+        date.setText(dt);
     }
     public void setTitle(String t)
     {

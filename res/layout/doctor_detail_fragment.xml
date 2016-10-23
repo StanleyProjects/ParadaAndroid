@@ -12,10 +12,11 @@
             android:id="@+id/back"
             android:src="@mipmap/icon_back"
             android:scaleType="fitCenter"
-            android:padding="16dp"
+            android:padding="@dimen/toolbar_icon_padding"
             android:tint="@color/white"
-            android:layout_width="56dp"
-            android:layout_height="56dp"/>
+            android:layout_width="@dimen/toolbar_icon"
+            android:layout_height="@dimen/toolbar_icon"
+            android:layout_gravity="center_vertical"/>
         <TextView
             android:id="@+id/doctor_fullname"
             android:gravity="center"
@@ -58,14 +59,15 @@
                         android:layout_gravity="center_vertical|right"
                         android:layout_width="128dp"
                         android:layout_height="128dp"/>
+
                     <ImageView
                         android:id="@+id/phone"
                         android:src="@drawable/btn_phone"
                         android:scaleType="fitCenter"
                         android:padding="6dp"
                         android:layout_gravity="bottom|right"
-                        android:layout_width="56dp"
-                        android:layout_height="56dp"/>
+                        android:layout_width="@dimen/container_height_medium"
+                        android:layout_height="@dimen/container_height_medium"/>
                 </FrameLayout>
                 <LinearLayout
                     android:layout_gravity="center_vertical"
