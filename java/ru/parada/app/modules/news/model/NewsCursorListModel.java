@@ -8,7 +8,7 @@ import ru.parada.app.db.Tables;
 import ru.parada.app.units.CursorListModel;
 
 public class NewsCursorListModel
-        extends CursorListModel<NewsCore.OneOfNewsModel>
+        extends CursorListModel<NewsCore.Model>
 {
     public NewsCursorListModel(Cursor d)
     {
@@ -16,9 +16,9 @@ public class NewsCursorListModel
     }
 
     @Override
-    public NewsCore.OneOfNewsModel getModel(int i)
+    public NewsCore.Model getModel(int i)
     {
-        return new NewsCore.OneOfNewsModel()
+        return new NewsCore.Model()
         {
             @Override
             public int getId()
@@ -33,9 +33,26 @@ public class NewsCursorListModel
             }
 
             @Override
+            public String getFullDescription()
+            {
+                return getString(Tables.News.Columns.full_descr);
+            }
+
+            @Override
             public String getDescription()
             {
                 return getString(Tables.News.Columns.descr);
+            }
+
+            @Override
+            public String getImagePath()
+            {
+                int photoPathColumnIndex = getColumnIndex(Tables.Images.Columns.image_path);
+                if(photoPathColumnIndex < 0)
+                {
+                    return null;
+                }
+                return getString(Tables.Images.Columns.image_path);
             }
 
             @Override

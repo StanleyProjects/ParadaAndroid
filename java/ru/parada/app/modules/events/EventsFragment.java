@@ -8,9 +8,11 @@ import ru.parada.app.contracts.ActionDetailContract;
 import ru.parada.app.contracts.ActionsContract;
 import ru.parada.app.contracts.EventsContract;
 import ru.parada.app.contracts.NewsContract;
+import ru.parada.app.contracts.OneOfNewsDetailContract;
 import ru.parada.app.modules.actiondetail.ActionDetailFragment;
 import ru.parada.app.modules.actions.ActionsFragment;
 import ru.parada.app.modules.news.NewsFragment;
+import ru.parada.app.modules.oneofnewsdetail.OneOfNewsDetailFragment;
 import ru.parada.app.units.MVPFragment;
 
 public class EventsFragment
@@ -27,6 +29,20 @@ public class EventsFragment
     private Fragment currentFragment;
     private final Fragment newsFragment = NewsFragment.newInstanse(new NewsContract.Behaviour()
     {
+        @Override
+        public void getOneOfNews(int id)
+        {
+            detailFragment = OneOfNewsDetailFragment.newInstanse(new OneOfNewsDetailContract.Behaviour()
+            {
+                @Override
+                public void back()
+                {
+                    getChildFragmentManager().popBackStack();
+                    detailFragment = null;
+                }
+            }, id);
+            showDetail();
+        }
     });
     private final Fragment actionsFragment = ActionsFragment.newInstanse(new ActionsContract.Behaviour()
     {

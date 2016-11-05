@@ -22,7 +22,7 @@
             android:tint="@color/white"/>
 
         <TextView
-            android:id="@+id/title"
+            android:id="@+id/toolbar_title"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
@@ -46,66 +46,41 @@
             android:orientation="vertical">
             <LinearLayout
                 android:orientation="vertical"
-                android:background="@color/colorPrimaryDark"
+                android:layout_marginTop="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginBottom="8dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
                 <TextView
                     android:id="@+id/date"
-                    android:text="14-30 июля 2016"
+                    android:textColor="@color/gray"
                     android:textSize="@dimen/text_size_medium"
-                    android:textColor="@color/white"
-                    android:layout_margin="16dp"
+                    android:text="123123"
+                    android:layout_marginBottom="8dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
                 <TextView
-                    android:id="@+id/subtitle"
-                    android:text="14-30 июля 2016"
+                    android:id="@+id/title"
+                    android:textColor="@color/black"
                     android:textSize="@dimen/text_size_medium"
-                    android:textColor="@color/white"
-                    android:layout_marginBottom="16dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
+                    android:text="123123"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
-                <ImageView
-                    android:id="@id/image"
-                    android:src="@drawable/doctor_test"
-                    android:layout_marginLeft="56dp"
-                    android:layout_marginRight="56dp"
-                    android:scaleType="centerCrop"
-                    android:layout_width="match_parent"
-                    android:layout_height="128dp"/>
             </LinearLayout>
+            <ImageView
+                android:id="@+id/image"
+                android:background="@color/colorPrimaryDark"
+                android:scaleType="centerCrop"
+                android:layout_width="match_parent"
+                android:layout_height="222dp"/>
             <TextView
-                android:id="@+id/descr"
+                android:id="@+id/full_descr"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
                 android:textColor="@color/black"
                 android:textSize="@dimen/text_size_medium"/>
-            <TextView
-                android:id="@+id/subscribe_reception"
-                android:layout_width="228dp"
-                android:layout_height="@dimen/container_height_medium"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="8dp"
-                android:background="@drawable/accent_round"
-                android:gravity="center"
-                android:text="@string/subscribe_reception"
-                android:textColor="@color/white"
-                android:textSize="@dimen/text_size_medium"/>
-            <TextView
-                android:id="@+id/order_call"
-                android:layout_width="228dp"
-                android:layout_height="@dimen/container_height_medium"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="8dp"
-                android:background="@drawable/accent_border"
-                android:gravity="center"
-                android:text="@string/order_call"
-                android:textColor="@color/colorAccent"
-                android:textSize="@dimen/text_size_medium"/>
         </LinearLayout>
     </ScrollView>
-
 </LinearLayout>

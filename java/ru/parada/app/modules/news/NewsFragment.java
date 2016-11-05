@@ -64,15 +64,19 @@ public class NewsFragment
     {
         adapter = new NewsAdapter(getActivity(), new NewsAdapterListener()
         {
+            @Override
+            public void getOneOfNews(int id)
+            {
+                getBehaviour().getOneOfNews(id);
+            }
         });
         list.setLayoutManager(new LinearLayoutManager(getActivity()));
         list.setAdapter(adapter);
         getPresenter().update();
-        getPresenter().load();
     }
 
     @Override
-    public void update(final ListModel<NewsCore.OneOfNewsModel> data)
+    public void update(final ListModel<NewsCore.Model> data)
     {
         runOnUiThread(new Runnable()
         {

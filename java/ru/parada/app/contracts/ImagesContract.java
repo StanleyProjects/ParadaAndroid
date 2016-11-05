@@ -9,6 +9,7 @@ public interface ImagesContract
         int ACTIONS_TYPE = 3;
         int SERVICE_DETAIL_TYPE = 4;
         int ACTION_DETAIL_TYPE = 5;
+        int ONEOFNEWS_TYPE = 6;
     }
 
     interface Model

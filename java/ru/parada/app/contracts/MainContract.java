@@ -10,13 +10,13 @@ public interface MainContract
     {
         void callDialogOpen();
         void callDialogClose();
-        void updateNews(ListModel<NewsCore.OneOfNewsModel> data);
+        void update(ListModel<NewsCore.Model> data);
     }
 
     interface Presenter
     {
-        void loadNews();
-        void updateNews();
+        void load();
+        void update();
         void callDialogOpen();
         void callDialogClose();
     }

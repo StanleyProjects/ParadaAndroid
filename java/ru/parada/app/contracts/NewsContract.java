@@ -7,16 +7,16 @@ public interface NewsContract
 {
     interface View
     {
-        void update(ListModel<NewsCore.OneOfNewsModel> data);
+        void update(ListModel<NewsCore.Model> data);
     }
 
     interface Presenter
     {
         void update();
-        void load();
     }
 
     interface Behaviour
     {
+        void getOneOfNews(int id);
     }
 }

@@ -19,9 +19,7 @@ public interface Tables
                 Columns.title + " text" + "," +
                 Columns.descr + " text" + "," +
                 Columns.date + " integer" + "," +
-                Columns.full_descr + " text" + "," +
-                Columns.image_url + " text" + "," +
-                Columns.image + " text" + //"," +
+                Columns.full_descr + " text" + //"," +
                 ");";
 
         interface Columns
@@ -30,8 +28,6 @@ public interface Tables
             String descr = TABLE_NAME + "_" + "descr";
             String date = TABLE_NAME + "_" + "date";
             String full_descr = TABLE_NAME + "_" + "full_descr";
-            String image_url = TABLE_NAME + "_" + "image_url";
-            String image = TABLE_NAME + "_" + "image";
         }
     }
 
@@ -47,11 +43,7 @@ public interface Tables
                 Columns.descr + " text" + "," +
                 Columns.from_date + " integer" + "," +
                 Columns.to_date + " integer" + "," +
-                Columns.subtitle + " text" + "," +
-                Columns.preview_url + " text" + "," +
-                Columns.preview + " text" + "," +
-                Columns.image_url + " text" + "," +
-                Columns.image + " text" + //"," +
+                Columns.subtitle + " text" + //"," +
                 ");";
 
         interface Columns
@@ -61,10 +53,6 @@ public interface Tables
             String from_date = TABLE_NAME + "_" + "from_date";
             String to_date = TABLE_NAME + "_" + "to_date";
             String subtitle = TABLE_NAME + "_" + "subtitle";
-            String image_url = TABLE_NAME + "_" + "image_url";
-            String image = TABLE_NAME + "_" + "image";
-            String preview_url = TABLE_NAME + "_" + "preview_url";
-            String preview = TABLE_NAME + "_" + "preview";
         }
     }
 

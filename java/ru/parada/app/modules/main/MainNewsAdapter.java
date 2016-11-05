@@ -11,9 +11,9 @@ import ru.parada.app.units.HeadFootAdapter;
 import ru.parada.app.units.ListModel;
 
 public class MainNewsAdapter
-    extends HeadFootAdapter<OneOfNewsHolder, NewsCore.OneOfNewsModel, MainNewsAdapterListener>
+    extends HeadFootAdapter<OneOfNewsHolder, NewsCore.Model, MainNewsAdapterListener>
 {
-    private ListModel<NewsCore.OneOfNewsModel> data;
+    private ListModel<NewsCore.Model> data;
 
     public MainNewsAdapter(Context c, MainNewsAdapterListener l)
     {
@@ -21,7 +21,7 @@ public class MainNewsAdapter
     }
 
     @Override
-    protected NewsCore.OneOfNewsModel getItem(int position)
+    protected NewsCore.Model getItem(int position)
     {
         return data.getItem(position);
     }
@@ -69,7 +69,7 @@ public class MainNewsAdapter
     }
 
     @Override
-    protected void setData(OneOfNewsHolder holder, NewsCore.OneOfNewsModel item)
+    protected void setData(OneOfNewsHolder holder, NewsCore.Model item)
     {
         holder.setTitle(item.getTitle());
         holder.setDescr(item.getDescription());
@@ -86,7 +86,7 @@ public class MainNewsAdapter
         return data.getItemsCount();
     }
 
-    public void swapData(ListModel<NewsCore.OneOfNewsModel> d)
+    public void swapData(ListModel<NewsCore.Model> d)
     {
         if(this.data != null)
         {

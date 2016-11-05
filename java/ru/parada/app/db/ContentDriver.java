@@ -43,12 +43,13 @@ public class ContentDriver
         return content;
     }
 
-    public static ContentValues getContentValues(NewsCore.OneOfNewsModel item)
+    public static ContentValues getContentValues(NewsCore.Model item)
     {
         ContentValues content = new ContentValues();
         content.put(BaseColumns._ID, item.getId());
         content.put(Tables.News.Columns.title, item.getTitle());
         content.put(Tables.News.Columns.descr, item.getDescription());
+        content.put(Tables.News.Columns.full_descr, item.getFullDescription());
         content.put(Tables.News.Columns.date, item.getDate());
         return content;
     }

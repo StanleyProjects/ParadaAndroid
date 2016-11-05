@@ -14,10 +14,10 @@ public interface DAO
 {
     interface News
     {
-        ListModel<NewsCore.OneOfNewsModel> getAll();
-        ListModel<NewsCore.OneOfNewsModel> getAllWithLimit(int limit);
-        NewsCore.OneOfNewsModel getOneFromId(int id);
-        void insertOne(NewsCore.OneOfNewsModel item);
+        ListModel<NewsCore.Model> getAll();
+        ListModel<NewsCore.Model> getAllWithLimit(int limit);
+        NewsCore.Model getOneFromId(int id);
+        void insertOne(NewsCore.Model item);
         void clear();
     }
     interface Services

@@ -92,7 +92,7 @@ public class ActionDetailFragment
             public void run()
             {
                 title.setText(data.getTitle());
-                date.setText(getStringDate(data.getFromDate(), data.getToDate()));
+                date.setText(getStringDate(data.getFromDate()*1000, data.getToDate()*1000));
                 if(data.getSubtitle().length() > 0)
                 {
                     subtitle.setText(data.getSubtitle());

@@ -24,6 +24,7 @@ import ru.parada.app.modules.doctors.models.Doctor;
 import ru.parada.app.modules.doctors.models.DoctorsCursorListModel;
 import ru.parada.app.modules.images.ImageModel;
 import ru.parada.app.modules.news.model.NewsCursorListModel;
+import ru.parada.app.modules.news.model.OneOfNews;
 import ru.parada.app.modules.notifications.model.NotificationsCursorListModel;
 import ru.parada.app.modules.prices.models.PricesCursorListModel;
 import ru.parada.app.modules.services.Service;
@@ -36,7 +37,7 @@ import ru.parada.app.units.ListModel;
 public class SQliteApi
 {
     static private final String DB_NAME = "parada";
-    static private final int DB_VERSION = 1611052338;
+    static private final int DB_VERSION = 1611060105;
     static private volatile SQliteApi instanse;
 
     static public SQliteApi getInstanse()
@@ -101,24 +102,44 @@ public class SQliteApi
     private final DAO.News news = new Tables.News()
     {
         @Override
-        public ListModel<NewsCore.OneOfNewsModel> getAll()
+        public ListModel<NewsCore.Model> getAll()
         {
             return new NewsCursorListModel(sdb.rawQuery("SELECT * " + "FROM " + TABLE_NAME, new String[]{}));
         }
         @Override
-        public ListModel<NewsCore.OneOfNewsModel> getAllWithLimit(int limit)
+        public ListModel<NewsCore.Model> getAllWithLimit(int limit)
         {
             return new NewsCursorListModel(sdb.rawQuery("SELECT * "
                     + "FROM " + TABLE_NAME + " "
                     + "ORDER BY " + Columns.date + " DESC " + "LIMIT " + limit, new String[]{}));
         }
         @Override
-        public NewsCore.OneOfNewsModel getOneFromId(int id)
+        public NewsCore.Model getOneFromId(int id)
         {
-            return null;
+            Cursor cursor = sdb.rawQuery(
+                    "SELECT * "
+                            + "FROM " + TABLE_NAME + " "
+                            + "LEFT JOIN " + Tables.Images.TABLE_NAME + " "
+                            + "ON " + Tables.Images.Columns.type + " = " + ImagesContract.Types.ONEOFNEWS_TYPE + " "
+                            + "AND " + TABLE_NAME + "." + BaseColumns._ID + " = " + Tables.Images.Columns.entity_id + " "
+                            + "WHERE " + TABLE_NAME + "." + BaseColumns._ID + "=" + id + " "
+                    , new String[]{});
+            if(!cursor.moveToFirst())
+            {
+                cursor.close();
+                return null;
+            }
+            NewsCore.Model model = new OneOfNews(id,
+                    cursor.getString(cursor.getColumnIndex(Columns.title)),
+                    cursor.getString(cursor.getColumnIndex(Columns.descr)),
+                    cursor.getString(cursor.getColumnIndex(Columns.full_descr)),
+                    cursor.getString(cursor.getColumnIndex(Tables.Images.Columns.image_path)),
+                    cursor.getLong(cursor.getColumnIndex(Columns.date)));
+            cursor.close();
+            return model;
         }
         @Override
-        public void insertOne(NewsCore.OneOfNewsModel item)
+        public void insertOne(NewsCore.Model item)
         {
             sdb.insertWithOnConflict(TABLE_NAME, null, ContentDriver.getContentValues(item), SQLiteDatabase.CONFLICT_REPLACE);
         }

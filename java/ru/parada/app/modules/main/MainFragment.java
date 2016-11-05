@@ -102,8 +102,8 @@ public class MainFragment
         });
         list.setLayoutManager(new LinearLayoutManager(getActivity()));
         list.setAdapter(adapter);
-        getPresenter().updateNews();
-        getPresenter().loadNews();
+        getPresenter().update();
+        getPresenter().load();
     }
 
     @Override
@@ -149,7 +149,7 @@ public class MainFragment
     }
 
     @Override
-    public void updateNews(final ListModel<NewsCore.OneOfNewsModel> data)
+    public void update(final ListModel<NewsCore.Model> data)
     {
         runOnUiThread(new Runnable()
         {
