@@ -7,6 +7,7 @@ public interface ImagesContract
         int DOCTORS_TYPE = 1;
         int SERVICES_TYPE = 2;
         int ACTIONS_TYPE = 3;
+        int SERVICE_DETAIL_TYPE = 4;
     }
 
     interface Model

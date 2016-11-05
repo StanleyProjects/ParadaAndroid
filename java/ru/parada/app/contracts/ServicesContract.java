@@ -1,19 +1,13 @@
 package ru.parada.app.contracts;
 
+import ru.parada.app.core.ServicesCore;
 import ru.parada.app.units.ListModel;
 
 public interface ServicesContract
 {
-    interface ListItemModel
-    {
-        int getId();
-        String getPhotoPath();
-        String getTitle();
-    }
-
     interface View
     {
-        void updateServices(ListModel<ListItemModel> data);
+        void updateServices(ListModel<ServicesCore.Model> data);
     }
 
     interface Presenter

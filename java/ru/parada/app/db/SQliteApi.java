@@ -16,6 +16,7 @@ import ru.parada.app.contracts.ServicesWithPricesContract;
 import ru.parada.app.core.ActionsCore;
 import ru.parada.app.core.DoctorsCore;
 import ru.parada.app.core.NewsCore;
+import ru.parada.app.core.ServicesCore;
 import ru.parada.app.core.ServicesWithPricesCore;
 import ru.parada.app.modules.actions.model.ActionsCursorListModel;
 import ru.parada.app.modules.doctors.models.Doctor;
@@ -24,6 +25,7 @@ import ru.parada.app.modules.images.ImageModel;
 import ru.parada.app.modules.news.model.NewsCursorListModel;
 import ru.parada.app.modules.notifications.model.NotificationsCursorListModel;
 import ru.parada.app.modules.prices.models.PricesCursorListModel;
+import ru.parada.app.modules.services.Service;
 import ru.parada.app.modules.services.ServicesCursorListModel;
 import ru.parada.app.modules.servicesprices.models.ServiceGroupPrice;
 import ru.parada.app.modules.servicesprices.models.ServiceWithPrice;
@@ -33,7 +35,7 @@ import ru.parada.app.units.ListModel;
 public class SQliteApi
 {
     static private final String DB_NAME = "parada";
-    static private final int DB_VERSION = 1610240114;
+    static private final int DB_VERSION = 1611052216;
     static private volatile SQliteApi instanse;
 
     static public SQliteApi getInstanse()
@@ -105,10 +107,10 @@ public class SQliteApi
             sdb.execSQL(CREATE_TABLE);
         }
     };
-    private final Tables.Services services = new Tables.Services()
+    private final DAO.Services services = new Tables.Services()
     {
         @Override
-        public ListModel<ServicesContract.ListItemModel> getAll()
+        public ListModel<ServicesCore.Model> getAll()
         {
             return new ServicesCursorListModel(sdb.rawQuery("SELECT * " +
                     "FROM " + TABLE_NAME + " " +
@@ -118,19 +120,38 @@ public class SQliteApi
         }
 
         @Override
-        public ServicesContract.ListItemModel getOneFromId(int id)
+        public ServicesCore.Model getOneFromId(int id)
         {
-            return null;
+            Cursor cursor = sdb.rawQuery(
+                    "SELECT * "
+                            + "FROM " + TABLE_NAME + " "
+                            + "LEFT JOIN " + Tables.Images.TABLE_NAME + " "
+                            + "ON " + Tables.Images.Columns.type + " = " + ImagesContract.Types.SERVICE_DETAIL_TYPE + " "
+                            + "AND " + TABLE_NAME + "." + BaseColumns._ID + " = " + Tables.Images.Columns.entity_id + " "
+                            + "WHERE " + TABLE_NAME + "." + BaseColumns._ID + "=" + id + " "
+                    , new String[]{});
+            if(!cursor.moveToFirst())
+            {
+                cursor.close();
+                return null;
+            }
+            ServicesCore.Model model = new Service(id,
+                    cursor.getInt(cursor.getColumnIndex(Columns.order)),
+                    cursor.getString(cursor.getColumnIndex(Columns.title)),
+                    cursor.getString(cursor.getColumnIndex(Columns.descr)),
+                    cursor.getString(cursor.getColumnIndex(Tables.Images.Columns.image_path)));
+            cursor.close();
+            return model;
         }
 
         @Override
-        public long insertOne(ServicesContract.ListItemModel item)
+        public void insertOne(ServicesCore.Model item)
         {
-            return sdb.insertWithOnConflict(TABLE_NAME, null, ContentDriver.getContentValues(item), SQLiteDatabase.CONFLICT_REPLACE);
+            sdb.insertWithOnConflict(TABLE_NAME, null, ContentDriver.getContentValues(item), SQLiteDatabase.CONFLICT_REPLACE);
         }
 
         @Override
-        public void clearTable()
+        public void clear()
         {
             sdb.execSQL("drop table if exists " + TABLE_NAME);
             sdb.execSQL(CREATE_TABLE);
@@ -458,7 +479,7 @@ public class SQliteApi
     {
         return actions;
     }
-    public Tables.Services getServices()
+    public DAO.Services getServices()
     {
         return services;
     }

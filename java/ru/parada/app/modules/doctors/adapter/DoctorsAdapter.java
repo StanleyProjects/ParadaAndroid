@@ -4,26 +4,16 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 
-import ru.parada.app.contracts.DoctorDetailContract;
 import ru.parada.app.core.DoctorsCore;
 import ru.parada.app.managers.FoldersManager;
-import ru.parada.app.units.ListModel;
-import ru.parada.app.units.ModelAdapter;
+import ru.parada.app.units.ModelDataAdapter;
 
 public class DoctorsAdapter
-    extends ModelAdapter<DoctorAdapterHolder, DoctorsCore.DetailModel, DoctorsAdapterListener>
+    extends ModelDataAdapter<DoctorAdapterHolder, DoctorsCore.DetailModel, DoctorsAdapterListener>
 {
-    private ListModel<DoctorsCore.DetailModel> data;
-
     public DoctorsAdapter(Context c, DoctorsAdapterListener l)
     {
         super(c, l);
-    }
-
-    @Override
-    protected DoctorsCore.DetailModel getItem(int position)
-    {
-        return data.getItem(position);
     }
 
     @Override
@@ -57,24 +47,5 @@ public class DoctorsAdapter
     public DoctorAdapterHolder onCreateViewHolder(ViewGroup parent, int viewType)
     {
         return new DoctorAdapterHolder(getContext(), parent);
-    }
-
-    @Override
-    public int getItemCount()
-    {
-        if(data == null)
-        {
-            return 0;
-        }
-        return data.getItemsCount();
-    }
-
-    public void swapData(ListModel<DoctorsCore.DetailModel> d)
-    {
-        if(this.data != null)
-        {
-            this.data.clear();
-        }
-        this.data = d;
     }
 }

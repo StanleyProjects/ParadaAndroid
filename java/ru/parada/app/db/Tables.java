@@ -11,7 +11,9 @@ public interface Tables
     interface News
             extends DAO.News
     {
-        String TABLE_NAME = News.class.getCanonicalName().toLowerCase().replace('.', '_') + "_table";
+        String TABLE_NAME = News.class.getCanonicalName()
+                                      .toLowerCase()
+                                      .replace('.', '_') + "_table";
         String CREATE_TABLE = "create table if not exists " + TABLE_NAME + " (" +
                 BaseColumns._ID + " integer primary key autoincrement, " +
                 Columns.title + " text" + "," +
@@ -21,6 +23,7 @@ public interface Tables
                 Columns.image_url + " text" + "," +
                 Columns.image + " text" + //"," +
                 ");";
+
         interface Columns
         {
             String title = TABLE_NAME + "_" + "title";
@@ -31,10 +34,13 @@ public interface Tables
             String image = TABLE_NAME + "_" + "image";
         }
     }
+
     interface Actions
             extends DAO.Actions
     {
-        String TABLE_NAME = Actions.class.getCanonicalName().toLowerCase().replace('.', '_') + "_table";
+        String TABLE_NAME = Actions.class.getCanonicalName()
+                                         .toLowerCase()
+                                         .replace('.', '_') + "_table";
         String CREATE_TABLE = "create table if not exists " + TABLE_NAME + " (" +
                 BaseColumns._ID + " integer primary key autoincrement, " +
                 Columns.title + " text" + "," +
@@ -47,6 +53,7 @@ public interface Tables
                 Columns.image_url + " text" + "," +
                 Columns.image + " text" + //"," +
                 ");";
+
         interface Columns
         {
             String title = TABLE_NAME + "_" + "title";
@@ -60,45 +67,34 @@ public interface Tables
             String preview = TABLE_NAME + "_" + "preview";
         }
     }
+
     interface Services
+            extends DAO.Services
     {
-        String TABLE_NAME = Services.class.getCanonicalName().toLowerCase().replace('.', '_') + "_table";
+        String TABLE_NAME = Services.class.getCanonicalName()
+                                          .toLowerCase()
+                                          .replace('.', '_') + "_table";
         String CREATE_TABLE = "create table if not exists " + TABLE_NAME + " (" +
                 BaseColumns._ID + " integer primary key autoincrement, " +
                 Columns.title + " text" + "," +
                 Columns.descr + " text" + "," +
-                Columns.order + " integer" + "," +
-                Columns.group_id + " integer" + "," +
-                Columns.subtitle + " text" + "," +
-                Columns.full_descr + " text" + "," +
-                Columns.preview_url + " text" + "," +
-                Columns.preview + " text" + "," +
-                Columns.image_url + " text" + "," +
-                Columns.image + " text" + //"," +
+                Columns.order + " integer" + //"," +
                 ");";
+
         interface Columns
         {
             String title = TABLE_NAME + "_" + "title";
             String descr = TABLE_NAME + "_" + "descr";
-            String full_descr = TABLE_NAME + "_" + "full_descr";
             String order = TABLE_NAME + "_" + "order";
-            String group_id = TABLE_NAME + "_" + "group_id";
-            String subtitle = TABLE_NAME + "_" + "subtitle";
-            String image_url = TABLE_NAME + "_" + "image_url";
-            String image = TABLE_NAME + "_" + "image";
-            String preview_url = TABLE_NAME + "_" + "preview_url";
-            String preview = TABLE_NAME + "_" + "preview";
         }
-
-        ListModel<ServicesContract.ListItemModel> getAll();
-        ServicesContract.ListItemModel getOneFromId(int id);
-        long insertOne(ServicesContract.ListItemModel item);
-        void clearTable();
     }
+
     interface Doctors
-        extends DAO.Doctors
+            extends DAO.Doctors
     {
-        String TABLE_NAME = Doctors.class.getCanonicalName().toLowerCase().replace('.', '_') + "_table";
+        String TABLE_NAME = Doctors.class.getCanonicalName()
+                                         .toLowerCase()
+                                         .replace('.', '_') + "_table";
         String CREATE_TABLE = "create table if not exists " + TABLE_NAME + " (" +
                 BaseColumns._ID + " integer primary key autoincrement, " +
                 Columns.first_name + " text" + "," +
@@ -112,6 +108,7 @@ public interface Tables
                 Columns.order + " integer" + "," +
                 Columns.phone + " integer" + //"," +
                 ");";
+
         interface Columns
         {
             String descr = TABLE_NAME + "_" + "descr";
@@ -126,9 +123,12 @@ public interface Tables
             String phone = TABLE_NAME + "_" + "phone";
         }
     }
+
     interface Images
     {
-        String TABLE_NAME = Images.class.getCanonicalName().toLowerCase().replace('.', '_') + "_table";
+        String TABLE_NAME = Images.class.getCanonicalName()
+                                        .toLowerCase()
+                                        .replace('.', '_') + "_table";
         String CREATE_TABLE = "create table if not exists " + TABLE_NAME + " (" +
                 Columns.id + " integer primary key autoincrement, " +
                 Columns.image_path + " text" + "," +
@@ -136,6 +136,7 @@ public interface Tables
                 Columns.entity_id + " integer" + "," +
                 Columns.type + " integer" + //"," +
                 ");";
+
         interface Columns
         {
             String id = TABLE_NAME + "_" + "id";
@@ -146,7 +147,9 @@ public interface Tables
         }
 
         ImagesContract.Model getOneFromTypeAndEntityId(int type, int id);
+
         String getUrl(int type, int id);
+
         long insertOne(ImagesContract.Model item);
 //        long removeOneFromTypeAndEntityId(int type, int id);
     }
@@ -154,7 +157,9 @@ public interface Tables
     interface ServicesWithPrices
             extends DAO.ServicesWithPrices
     {
-        String TABLE_NAME = ServicesWithPrices.class.getCanonicalName().toLowerCase().replace('.', '_') + "_table";
+        String TABLE_NAME = ServicesWithPrices.class.getCanonicalName()
+                                                    .toLowerCase()
+                                                    .replace('.', '_') + "_table";
         String CREATE_TABLE = "create table if not exists " + TABLE_NAME + " (" +
                 BaseColumns._ID + " integer primary key autoincrement, " +
                 Columns.title + " text" + "," +
@@ -181,7 +186,9 @@ public interface Tables
     interface Prices
             extends DAO.Prices
     {
-        String TABLE_NAME = Prices.class.getCanonicalName().toLowerCase().replace('.', '_') + "_table";
+        String TABLE_NAME = Prices.class.getCanonicalName()
+                                        .toLowerCase()
+                                        .replace('.', '_') + "_table";
         String CREATE_TABLE = "create table if not exists " + TABLE_NAME + " (" +
                 BaseColumns._ID + " integer primary key autoincrement, " +
                 Columns.title + " text" + "," +
@@ -196,10 +203,13 @@ public interface Tables
             String value = TABLE_NAME + "_" + "value";
         }
     }
+
     interface Notifications
             extends DAO.Notifications
     {
-        String TABLE_NAME = Notifications.class.getCanonicalName().toLowerCase().replace('.', '_') + "_table";
+        String TABLE_NAME = Notifications.class.getCanonicalName()
+                                               .toLowerCase()
+                                               .replace('.', '_') + "_table";
         String CREATE_TABLE = "create table if not exists " + TABLE_NAME + " (" +
                 BaseColumns._ID + " integer primary key autoincrement, " +
                 Columns.date + " integer" + "," +

@@ -3,12 +3,12 @@ package ru.parada.app.modules.services;
 import android.database.Cursor;
 import android.provider.BaseColumns;
 
-import ru.parada.app.contracts.ServicesContract;
+import ru.parada.app.core.ServicesCore;
 import ru.parada.app.db.Tables;
 import ru.parada.app.units.CursorListModel;
 
 public class ServicesCursorListModel
-        extends CursorListModel<ServicesContract.ListItemModel>
+        extends CursorListModel<ServicesCore.Model>
 {
     public ServicesCursorListModel(Cursor d)
     {
@@ -16,9 +16,9 @@ public class ServicesCursorListModel
     }
 
     @Override
-    public ServicesContract.ListItemModel getModel(int i)
+    public ServicesCore.Model getModel(int i)
     {
-        return new ServicesContract.ListItemModel()
+        return new ServicesCore.Model()
         {
             @Override
             public int getId()
@@ -27,7 +27,7 @@ public class ServicesCursorListModel
             }
 
             @Override
-            public String getPhotoPath()
+            public String getImagePath()
             {
                 int photoPathColumnIndex = getColumnIndex(Tables.Images.Columns.image_path);
                 if(photoPathColumnIndex < 0)
@@ -41,6 +41,18 @@ public class ServicesCursorListModel
             public String getTitle()
             {
                 return getString(Tables.Services.Columns.title);
+            }
+
+            @Override
+            public String getDescription()
+            {
+                return getString(Tables.Services.Columns.descr);
+            }
+
+            @Override
+            public int getOrder()
+            {
+                return getInt(Tables.Services.Columns.order);
             }
         };
     }

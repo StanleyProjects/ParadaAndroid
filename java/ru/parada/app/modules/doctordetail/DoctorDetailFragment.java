@@ -21,7 +21,7 @@ public class DoctorDetailFragment
         extends MVPFragment<DoctorDetailContract.Presenter, DoctorDetailContract.Behaviour>
         implements DoctorDetailContract.View, DoctorDetailContract.Mark
 {
-    static public DoctorDetailFragment newInstanse(DoctorDetailContract.Behaviour behaviour, int doctor_id)
+    static public MVPFragment newInstanse(DoctorDetailContract.Behaviour behaviour, int doctor_id)
     {
         DoctorDetailFragment fragment = new DoctorDetailFragment();
         fragment.setBehaviour(behaviour);

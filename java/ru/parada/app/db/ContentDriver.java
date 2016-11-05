@@ -11,18 +11,11 @@ import ru.parada.app.contracts.ServicesContract;
 import ru.parada.app.core.ActionsCore;
 import ru.parada.app.core.DoctorsCore;
 import ru.parada.app.core.NewsCore;
+import ru.parada.app.core.ServicesCore;
 import ru.parada.app.core.ServicesWithPricesCore;
 
 public class ContentDriver
 {
-    static public ContentValues getContentValues(ServicesContract.ListItemModel item)
-    {
-        ContentValues content = new ContentValues();
-        content.put(BaseColumns._ID, item.getId());
-        content.put(Tables.Services.Columns.title, item.getTitle());
-        return content;
-    }
-
     static public ContentValues getContentValues(DoctorsCore.DetailModel item)
     {
         ContentValues content = new ContentValues();
@@ -102,6 +95,16 @@ public class ContentDriver
         content.put(BaseColumns._ID, item.getId());
         content.put(Tables.Notifications.Columns.message, item.getMessage());
         content.put(Tables.Notifications.Columns.date, item.getDate());
+        return content;
+    }
+
+    public static ContentValues getContentValues(ServicesCore.Model item)
+    {
+        ContentValues content = new ContentValues();
+        content.put(BaseColumns._ID, item.getId());
+        content.put(Tables.Services.Columns.title, item.getTitle());
+        content.put(Tables.Services.Columns.order, item.getOrder());
+        content.put(Tables.Services.Columns.descr, item.getDescription());
         return content;
     }
 }

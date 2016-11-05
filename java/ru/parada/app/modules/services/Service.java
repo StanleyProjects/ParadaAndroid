@@ -1,25 +1,24 @@
 package ru.parada.app.modules.services;
 
-import ru.parada.app.contracts.ServicesContract;
+import ru.parada.app.core.ServicesCore;
 
 public class Service
-    implements ServicesContract.ListItemModel
+    implements ServicesCore.Model
 {
     private int id;
+    private int order;
     private String title;
+    private String descr;
     private String image_path;
 
-    public Service(int i, String t)
+    public Service(int i, int o, String t, String d, String imp)
     {
         this.id = i;
+        this.order = o;
         this.title = t;
+        this.descr = d;
+        this.image_path = imp;
     }
-    public Service(int i, String t, String ip)
-    {
-        this(i, t);
-        this.image_path = ip;
-    }
-
     @Override
     public int getId()
     {
@@ -27,7 +26,7 @@ public class Service
     }
 
     @Override
-    public String getPhotoPath()
+    public String getImagePath()
     {
         return image_path;
     }
@@ -36,5 +35,17 @@ public class Service
     public String getTitle()
     {
         return title;
+    }
+
+    @Override
+    public String getDescription()
+    {
+        return descr;
+    }
+
+    @Override
+    public int getOrder()
+    {
+        return order;
     }
 }

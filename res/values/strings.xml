@@ -31,6 +31,8 @@
     <string name="instagram">Intagram</string>
     <string name="plastic_surgery_center">Центр пластической хирургии</string>
     <string name="baltmed">Амбулаторный комплекс BaltMed</string>
+    <string name="order_call">Заказать звонок</string>
+    <string name="subscribe_reception">Записаться на приём</string>
 
     <string-array name="months">
         <item>января</item>

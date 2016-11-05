@@ -12,6 +12,7 @@ import ru.parada.app.connection.ParadaService;
 import ru.parada.app.connection.Request;
 import ru.parada.app.contracts.ImagesContract;
 import ru.parada.app.contracts.ServicesContract;
+import ru.parada.app.core.ServicesCore;
 import ru.parada.app.db.SQliteApi;
 import ru.parada.app.json.JSONParser;
 import ru.parada.app.managers.FoldersManager;
@@ -46,14 +47,22 @@ public class ServicesPresenter
                     Log.e(this.getClass().getName(), "parse services " + e.getMessage());
                     return;
                 }
-                SQliteApi.getInstanse().getServices().clearTable();
+                SQliteApi.getInstanse().getServices().clear();
                 SQliteApi.getInstanse().startTransaction();
                 for(Object service : services)
                 {
+                    if(!correcting((HashMap)service))
+                    {
+                        continue;
+                    }
                     int id = Integer.parseInt((String)((HashMap)service).get("id"));
-                    checkImage(id, (String)((HashMap)service).get("image_url"));
+                    checkImage(id, (String)((HashMap)service).get("preview_url"));
+                    checkDetailImage(id, (String)((HashMap)service).get("image_url"));
                     SQliteApi.getInstanse().getServices().insertOne(new Service(id,
-                            (String)((HashMap)service).get("title")));
+                            Integer.parseInt((String)((HashMap)service).get("order")),
+                            getString((HashMap)service, "title"),
+                            getString((HashMap)service, "descr"),
+                            null));
                 }
                 SQliteApi.getInstanse().endTransaction();
                 updateServices();
@@ -63,6 +72,42 @@ public class ServicesPresenter
             {
             }
         });
+    }
+    private String getString(HashMap map, String key)
+    {
+        if(map.get(key) == null)
+        {
+            return "";
+        }
+        return (String)map.get(key);
+    }
+    private boolean correcting(HashMap service)
+    {
+        if(service.get("id") == null)
+        {
+            return false;
+        }
+        try
+        {
+            Integer.parseInt((String)service.get("id"));
+        }
+        catch(Exception e)
+        {
+            return false;
+        }
+        if(service.get("order") == null)
+        {
+            service.put("order", 0);
+        }
+        try
+        {
+            Integer.parseInt((String)service.get("order"));
+        }
+        catch(Exception e)
+        {
+            service.put("order", 0);
+        }
+        return true;
     }
 
     private void checkImage(final int id, final String photo_url)
@@ -87,7 +132,33 @@ public class ServicesPresenter
                 @Override
                 public void error(Exception error)
                 {
-                    Log.e(this.getClass().getName(), "download photo " + error.getMessage());
+                    Log.e(getClass().getName(), "download photo " + error.getMessage());
+                }
+            });
+        }
+    }
+    private void checkDetailImage(final int id, final String photo_url)
+    {
+        final ImagesContract.Model oldModel = SQliteApi.getInstanse().getImages().getOneFromTypeAndEntityId(ImagesContract.Types.SERVICE_DETAIL_TYPE, id);
+        if(oldModel == null || oldModel.getImageUrl() == null || !oldModel.getImageUrl().equals(photo_url))
+        {
+            final String relativePath = "service-detail-" + UUID.randomUUID().toString() + ".jpg";
+            String fullPath = FoldersManager.getImagesDirectory() + "/" + relativePath;
+            new DownloadFile(fullPath, photo_url).download(new DownloadFile.DownloadFileListener()
+            {
+                @Override
+                public void answer(File file)
+                {
+                    SQliteApi.getInstanse().getImages().insertOne(new ImageModel(ImagesContract.Types.SERVICE_DETAIL_TYPE, id, relativePath, photo_url));
+                    if(oldModel != null && oldModel.getImagePath() != null)
+                    {
+                        new File(oldModel.getImagePath()).delete();
+                    }
+                }
+                @Override
+                public void error(Exception error)
+                {
+                    Log.e(getClass().getName(), "download photo " + error.getMessage());
                 }
             });
         }
@@ -106,7 +177,7 @@ public class ServicesPresenter
         }).start();
     }
 
-    private void updateServices(ListModel<ServicesContract.ListItemModel> data)
+    private void updateServices(ListModel<ServicesCore.Model> data)
     {
         //Log.e(this.getClass().getName(), "updateServices " + data.getItemsCount());
         view.updateServices(data);

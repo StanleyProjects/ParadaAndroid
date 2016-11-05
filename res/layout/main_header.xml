@@ -3,6 +3,7 @@
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="wrap_content">
+
     <LinearLayout
         android:background="@color/colorPrimary"
         android:orientation="vertical"
@@ -60,6 +61,7 @@
                 android:layout_height="wrap_content"/>
         </LinearLayout>
     </LinearLayout>
+
     <TextView
         android:background="@color/graylight"
         android:text="@string/news"

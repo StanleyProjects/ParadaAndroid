@@ -1,153 +1,175 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:background="@color/white"
+              android:clickable="true"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:layout_height="match_parent"
+              android:background="@color/white"
+              android:orientation="vertical">
+
     <FrameLayout
-        android:background="@color/colorPrimary"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/toolbar_height">
+        android:layout_height="@dimen/toolbar_height"
+        android:background="@color/colorPrimary">
+
         <ImageView
             android:id="@+id/back"
-            android:src="@mipmap/icon_back"
-            android:scaleType="fitCenter"
-            android:padding="@dimen/toolbar_icon_padding"
-            android:tint="@color/white"
             android:layout_width="@dimen/toolbar_icon"
             android:layout_height="@dimen/toolbar_icon"
-            android:layout_gravity="center_vertical"/>
+            android:layout_gravity="center_vertical"
+            android:padding="@dimen/toolbar_icon_padding"
+            android:scaleType="fitCenter"
+            android:src="@mipmap/icon_back"
+            android:tint="@color/white"/>
+
         <TextView
             android:id="@+id/doctor_fullname"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:gravity="center"
-            android:textSize="@dimen/text_size_medium"
-            android:textColor="@color/white"
+            android:lines="1"
             android:paddingLeft="56dp"
             android:paddingRight="56dp"
             android:singleLine="true"
-            android:lines="1"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_medium"/>
     </FrameLayout>
+
     <ScrollView
-        android:layout_weight="1"
         android:layout_width="match_parent"
-        android:layout_height="0dp">
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
             <LinearLayout
-                android:background="@color/colorPrimaryDark"
                 android:layout_width="match_parent"
-                android:layout_height="148dp">
+                android:layout_height="148dp"
+                android:background="@color/colorPrimaryDark">
+
                 <FrameLayout
-                    android:layout_marginRight="8dp"
                     android:layout_width="148dp"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="8dp">
+
                     <ImageView
                         android:id="@+id/photo"
-                        android:src="@drawable/photo_placeholder"
+                        android:layout_width="128dp"
+                        android:layout_height="128dp"
+                        android:layout_gravity="center_vertical|right"
                         android:scaleType="fitCenter"
-                        android:layout_gravity="center_vertical|right"
-                        android:layout_width="128dp"
-                        android:layout_height="128dp"/>
+                        android:src="@drawable/photo_placeholder"/>
+
                     <ImageView
-                        android:tint="@color/colorPrimaryDark"
-                        android:src="@drawable/photo_mask"
-                        android:scaleType="fitXY"
-                        android:layout_gravity="center_vertical|right"
                         android:layout_width="128dp"
-                        android:layout_height="128dp"/>
+                        android:layout_height="128dp"
+                        android:layout_gravity="center_vertical|right"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/photo_mask"
+                        android:tint="@color/colorPrimaryDark"/>
 
                     <ImageView
                         android:id="@+id/phone"
-                        android:src="@drawable/btn_phone"
-                        android:scaleType="fitCenter"
-                        android:layout_margin="6dp"
-                        android:layout_gravity="bottom|right"
                         android:layout_width="@dimen/icon_big"
-                        android:layout_height="@dimen/icon_big"/>
+                        android:layout_height="@dimen/icon_big"
+                        android:layout_gravity="bottom|right"
+                        android:layout_margin="6dp"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/btn_phone"/>
                 </FrameLayout>
+
                 <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:orientation="vertical"
-                    android:paddingRight="16dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:paddingRight="16dp">
+
                     <TextView
                         android:id="@+id/last_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:textColor="@color/white"
-                        android:textStyle="bold"
                         android:textSize="@dimen/text_size_big"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:textStyle="bold"/>
+
                     <TextView
-                        android:layout_marginBottom="4dp"
                         android:id="@+id/first_middle_name"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/text_size_medium"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="4dp"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_size_medium"/>
+
                     <TextView
                         android:id="@+id/first_position"
-                        android:textSize="@dimen/text_size"
-                        android:textColor="@color/white"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_size"/>
+
                     <TextView
                         android:id="@+id/second_position"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/text_size"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_size"/>
+
                     <TextView
                         android:id="@+id/third_position"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/text_size"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_size"/>
                 </LinearLayout>
             </LinearLayout>
+
             <TextView
                 android:id="@+id/descr"
-                android:layout_margin="16dp"
-                android:textSize="@dimen/text_size_medium"
-                android:textColor="@color/black"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_size_medium"/>
         </LinearLayout>
     </ScrollView>
+
     <FrameLayout
         android:id="@+id/watch_video"
-        android:background="@color/graylight"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/container_height">
+        android:layout_height="@dimen/container_height"
+        android:background="@color/graylight">
+
         <LinearLayout
-            android:layout_gravity="center"
-            android:gravity="center"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center">
+
             <ImageView
-                android:src="@drawable/ic_watch_video"
-                android:tint="@color/colorAccent"
                 android:layout_width="@dimen/icon"
-                android:layout_height="@dimen/icon"/>
+                android:layout_height="@dimen/icon"
+                android:src="@drawable/ic_watch_video"
+                android:tint="@color/colorAccent"/>
+
             <TextView
-                android:text="@string/watch_video"
-                android:textSize="14dp"
-                android:textColor="@color/gray"
-                android:textAllCaps="true"
-                android:layout_marginLeft="8dp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:text="@string/watch_video"
+                android:textAllCaps="true"
+                android:textColor="@color/gray"
+                android:textSize="14dp"/>
         </LinearLayout>
+
         <ImageView
-            android:src="@mipmap/arrow_right"
-            android:tint="@color/gray"
+            android:layout_width="@dimen/icon_small"
+            android:layout_height="@dimen/icon_small"
             android:layout_gravity="center_vertical|right"
             android:layout_marginRight="8dp"
-            android:layout_width="@dimen/icon_small"
-            android:layout_height="@dimen/icon_small"/>
+            android:src="@mipmap/arrow_right"
+            android:tint="@color/gray"/>
     </FrameLayout>
 </LinearLayout>

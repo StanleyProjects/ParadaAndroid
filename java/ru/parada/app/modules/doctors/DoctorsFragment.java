@@ -42,8 +42,6 @@ public class DoctorsFragment
     public void onResume()
     {
         super.onResume();
-//        Log.e(getClass().getName(), "n " + getChildFragmentManager().getBackStackEntryAt(0).getName());
-//        if(detailFragment != null && getChildFragmentManager().findFragmentByTag(DoctorDetailFragment.class.getName()) == null)
         if(detailFragment != null && getChildFragmentManager().getBackStackEntryCount() == 0)
         {
             showDetail();
