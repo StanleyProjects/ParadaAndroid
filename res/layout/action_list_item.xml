@@ -23,6 +23,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <FrameLayout
+            android:layout_marginRight="8dp"
             android:layout_width="92dp"
             android:layout_height="match_parent">
 
@@ -33,7 +34,8 @@
                 android:scaleType="centerCrop"
                 android:background="@color/colorPrimaryDark"/>
             <ImageView
-                android:src="@drawable/service_mask"
+                android:src="@drawable/action_mask"
+                android:scaleType="centerCrop"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
         </FrameLayout>
