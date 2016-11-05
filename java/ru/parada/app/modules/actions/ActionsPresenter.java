@@ -44,7 +44,7 @@ public class ActionsPresenter
         }).start();
     }
 
-    private void updateActions(ListModel<ActionsCore.ActionModel> data)
+    private void updateActions(ListModel<ActionsCore.Model> data)
     {
         Log.e(this.getClass().getName(), "update " + data.getItemsCount() + " view " + view);
         view.update(data);
@@ -77,7 +77,8 @@ public class ActionsPresenter
                         continue;
                     }
                     int id = Integer.parseInt((String)((HashMap)action).get("id"));
-                    checkImage(id, (String)((HashMap)action).get("image_url"));
+                    checkImage(id, (String)((HashMap)action).get("preview_url"));
+                    checkDetailImage(id, (String)((HashMap)action).get("image_url"));
                     SQliteApi.getInstanse().getActions().insertOne(new Action(id,
                             getString((HashMap)action, "descr"),
                             getString((HashMap)action, "title"),
@@ -162,6 +163,32 @@ public class ActionsPresenter
                         new File(oldModel.getImagePath()).delete();
                     }
                     update();
+                }
+                @Override
+                public void error(Exception error)
+                {
+                    Log.e(this.getClass().getName(), "download photo " + error.getMessage());
+                }
+            });
+        }
+    }
+    private void checkDetailImage(final int id, final String photo_url)
+    {
+        final ImagesContract.Model oldModel = SQliteApi.getInstanse().getImages().getOneFromTypeAndEntityId(ImagesContract.Types.ACTION_DETAIL_TYPE, id);
+        if(oldModel == null || oldModel.getImageUrl() == null || !oldModel.getImageUrl().equals(photo_url))
+        {
+            final String relativePath = "action-detail-" + UUID.randomUUID().toString() + ".jpg";
+            String fullPath = FoldersManager.getImagesDirectory() + "/" + relativePath;
+            new DownloadFile(fullPath, photo_url).download(new DownloadFile.DownloadFileListener()
+            {
+                @Override
+                public void answer(File file)
+                {
+                    SQliteApi.getInstanse().getImages().insertOne(new ImageModel(ImagesContract.Types.ACTION_DETAIL_TYPE, id, relativePath, photo_url));
+                    if(oldModel != null && oldModel.getImagePath() != null)
+                    {
+                        new File(oldModel.getImagePath()).delete();
+                    }
                 }
                 @Override
                 public void error(Exception error)

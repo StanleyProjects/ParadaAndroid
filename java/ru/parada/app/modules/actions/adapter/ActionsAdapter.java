@@ -1,6 +1,7 @@
 package ru.parada.app.modules.actions.adapter;
 
 import android.content.Context;
+import android.view.View;
 import android.view.ViewGroup;
 
 import ru.parada.app.core.ActionsCore;
@@ -8,7 +9,7 @@ import ru.parada.app.managers.FoldersManager;
 import ru.parada.app.units.ModelDataAdapter;
 
 public class ActionsAdapter
-        extends ModelDataAdapter<ActionHolder, ActionsCore.ActionModel, ActionsAdapterListener>
+        extends ModelDataAdapter<ActionHolder, ActionsCore.Model, ActionsAdapterListener>
 {
     public ActionsAdapter(Context c, ActionsAdapterListener l)
     {
@@ -16,14 +17,23 @@ public class ActionsAdapter
     }
 
     @Override
-    protected void setData(ActionHolder holder, ActionsCore.ActionModel item)
+    protected void setData(ActionHolder holder, ActionsCore.Model item)
     {
-        if(item.getPhotoPath() != null)
+        if(item.getImagePath() != null)
         {
-            holder.setPhoto(FoldersManager.getImagesDirectory() + "/" + item.getPhotoPath());
+            holder.setPhoto(FoldersManager.getImagesDirectory() + "/" + item.getImagePath());
         }
         holder.setDate(item.getFromDate()*1000, item.getToDate()*1000);
         holder.setTitle(item.getTitle());
+        final int id = item.getId();
+        holder.itemView.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                getListener().getAction(id);
+            }
+        });
     }
 
     @Override

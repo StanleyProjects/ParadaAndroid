@@ -29,7 +29,7 @@ public class ActionsFragment
     private ActionsAdapter adapter;
 
     @Override
-    public void update(final ListModel<ActionsCore.ActionModel> data)
+    public void update(final ListModel<ActionsCore.Model> data)
     {
         runOnUiThread(new Runnable()
         {
@@ -79,6 +79,11 @@ public class ActionsFragment
     {
         adapter = new ActionsAdapter(getActivity(), new ActionsAdapterListener()
         {
+            @Override
+            public void getAction(int id)
+            {
+                getBehaviour().getAction(id);
+            }
         });
         list.setLayoutManager(new LinearLayoutManager(getActivity()));
         list.setAdapter(adapter);

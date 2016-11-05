@@ -77,7 +77,7 @@ public class ContentDriver
         return content;
     }
 
-    public static ContentValues getContentValues(ActionsCore.ActionModel item)
+    public static ContentValues getContentValues(ActionsCore.Model item)
     {
         ContentValues content = new ContentValues();
         content.put(BaseColumns._ID, item.getId());

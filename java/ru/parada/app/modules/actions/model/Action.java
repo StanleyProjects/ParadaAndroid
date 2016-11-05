@@ -3,7 +3,7 @@ package ru.parada.app.modules.actions.model;
 import ru.parada.app.core.ActionsCore;
 
 public class Action
-    implements ActionsCore.ActionModel
+    implements ActionsCore.Model
 {
     private int id;
     private String descr;
@@ -49,7 +49,7 @@ public class Action
     }
 
     @Override
-    public String getPhotoPath()
+    public String getImagePath()
     {
         return image_path;
     }

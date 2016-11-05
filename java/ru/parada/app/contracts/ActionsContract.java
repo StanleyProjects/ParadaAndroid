@@ -7,7 +7,7 @@ public interface ActionsContract
 {
     interface View
     {
-        void update(ListModel<ActionsCore.ActionModel> data);
+        void update(ListModel<ActionsCore.Model> data);
     }
 
     interface Presenter
@@ -18,5 +18,6 @@ public interface ActionsContract
 
     interface Behaviour
     {
+        void getAction(int id);
     }
 }

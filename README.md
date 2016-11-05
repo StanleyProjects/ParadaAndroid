@@ -6,11 +6,12 @@ App for [paradaplastika.ru](http://paradaplastika.ru/)
 # Build information
 ## defaultConfig
 	applicationId "ru.parada.app"
-	versionBase 1611052216
-	versionCode 1611052244
-	versionName "0.922"
+	versionBase 1611052338
+	versionCode 1611060031
+	versionName "0.923"
 ## dependencies
 	com.android.support:appcompat-v7:24.2.1
 	com.android.support:recyclerview-v7:24.2.1
+	com.google.firebase:firebase-messaging:9.8.0
 ## gradle
     2.2.0

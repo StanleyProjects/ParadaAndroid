@@ -8,7 +8,7 @@ import ru.parada.app.db.Tables;
 import ru.parada.app.units.CursorListModel;
 
 public class ActionsCursorListModel
-        extends CursorListModel<ActionsCore.ActionModel>
+        extends CursorListModel<ActionsCore.Model>
 {
     public ActionsCursorListModel(Cursor d)
     {
@@ -16,9 +16,9 @@ public class ActionsCursorListModel
     }
 
     @Override
-    protected ActionsCore.ActionModel getModel(int i)
+    protected ActionsCore.Model getModel(int i)
     {
-        return new ActionsCore.ActionModel()
+        return new ActionsCore.Model()
         {
             @Override
             public int getId()
@@ -45,7 +45,7 @@ public class ActionsCursorListModel
             }
 
             @Override
-            public String getPhotoPath()
+            public String getImagePath()
             {
                 int photoPathColumnIndex = getColumnIndex(Tables.Images.Columns.image_path);
                 if(photoPathColumnIndex < 0)

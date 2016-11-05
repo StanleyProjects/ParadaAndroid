@@ -29,9 +29,9 @@ public interface DAO
     }
     interface Actions
     {
-        ListModel<ActionsCore.ActionModel> getAll();
-        ActionsCore.ActionModel getOneFromId(int id);
-        void insertOne(ActionsCore.ActionModel item);
+        ListModel<ActionsCore.Model> getAll();
+        ActionsCore.Model getOneFromId(int id);
+        void insertOne(ActionsCore.Model item);
         void clear();
     }
     interface Prices

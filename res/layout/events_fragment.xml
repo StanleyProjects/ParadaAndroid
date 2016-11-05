@@ -85,7 +85,7 @@
             android:layout_height="match_parent"/>
     </LinearLayout>
     <FrameLayout
-        android:id="@+id/subframe"
+        android:id="@+id/detail_frame"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 </FrameLayout>

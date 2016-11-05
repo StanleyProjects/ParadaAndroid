@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:clickable="true"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:background="@color/white"
+              android:clickable="true"
               android:orientation="vertical">
 
     <FrameLayout
@@ -38,16 +38,43 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1">
+
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <ImageView
-                android:id="@id/image"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <LinearLayout
+                android:orientation="vertical"
                 android:background="@color/colorPrimaryDark"
-                android:scaleType="centerCrop"
                 android:layout_width="match_parent"
-                android:layout_height="222dp"/>
+                android:layout_height="match_parent">
+                <TextView
+                    android:id="@+id/date"
+                    android:text="14-30 июля 2016"
+                    android:textSize="@dimen/text_size_medium"
+                    android:textColor="@color/white"
+                    android:layout_margin="16dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:id="@+id/subtitle"
+                    android:text="14-30 июля 2016"
+                    android:textSize="@dimen/text_size_medium"
+                    android:textColor="@color/white"
+                    android:layout_marginBottom="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <ImageView
+                    android:id="@id/image"
+                    android:src="@drawable/doctor_test"
+                    android:layout_marginLeft="56dp"
+                    android:layout_marginRight="56dp"
+                    android:scaleType="centerCrop"
+                    android:layout_width="match_parent"
+                    android:layout_height="128dp"/>
+            </LinearLayout>
             <TextView
                 android:id="@+id/descr"
                 android:layout_width="wrap_content"
@@ -79,4 +106,5 @@
                 android:textSize="@dimen/text_size_medium"/>
         </LinearLayout>
     </ScrollView>
+
 </LinearLayout>

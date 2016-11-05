@@ -4,9 +4,11 @@ import android.support.v4.app.Fragment;
 import android.view.View;
 
 import ru.parada.app.R;
+import ru.parada.app.contracts.ActionDetailContract;
 import ru.parada.app.contracts.ActionsContract;
 import ru.parada.app.contracts.EventsContract;
 import ru.parada.app.contracts.NewsContract;
+import ru.parada.app.modules.actiondetail.ActionDetailFragment;
 import ru.parada.app.modules.actions.ActionsFragment;
 import ru.parada.app.modules.news.NewsFragment;
 import ru.parada.app.units.MVPFragment;
@@ -28,7 +30,22 @@ public class EventsFragment
     });
     private final Fragment actionsFragment = ActionsFragment.newInstanse(new ActionsContract.Behaviour()
     {
+        @Override
+        public void getAction(int id)
+        {
+            detailFragment = ActionDetailFragment.newInstanse(new ActionDetailContract.Behaviour()
+            {
+                @Override
+                public void back()
+                {
+                    getChildFragmentManager().popBackStack();
+                    detailFragment = null;
+                }
+            }, id);
+            showDetail();
+        }
     });
+    private Fragment detailFragment;
 
     private View news_active;
     private View actions_active;
@@ -41,6 +58,10 @@ public class EventsFragment
     {
         super.onResume();
         replaceFragment();
+        if(detailFragment != null && getChildFragmentManager().getBackStackEntryCount() == 0)
+        {
+            showDetail();
+        }
     }
 
     @Override
@@ -120,5 +141,13 @@ public class EventsFragment
         getChildFragmentManager().beginTransaction()
                                    .replace(R.id.events, currentFragment)
                                    .commit();
+    }
+
+    public void showDetail()
+    {
+        getChildFragmentManager().beginTransaction()
+                                 .add(R.id.detail_frame, detailFragment)
+                                 .addToBackStack(detailFragment.getClass().getName())
+                                 .commit();
     }
 }

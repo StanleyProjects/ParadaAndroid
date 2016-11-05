@@ -18,6 +18,7 @@ import ru.parada.app.core.DoctorsCore;
 import ru.parada.app.core.NewsCore;
 import ru.parada.app.core.ServicesCore;
 import ru.parada.app.core.ServicesWithPricesCore;
+import ru.parada.app.modules.actions.model.Action;
 import ru.parada.app.modules.actions.model.ActionsCursorListModel;
 import ru.parada.app.modules.doctors.models.Doctor;
 import ru.parada.app.modules.doctors.models.DoctorsCursorListModel;
@@ -35,7 +36,7 @@ import ru.parada.app.units.ListModel;
 public class SQliteApi
 {
     static private final String DB_NAME = "parada";
-    static private final int DB_VERSION = 1611052216;
+    static private final int DB_VERSION = 1611052338;
     static private volatile SQliteApi instanse;
 
     static public SQliteApi getInstanse()
@@ -51,7 +52,7 @@ public class SQliteApi
     private final DAO.Actions actions = new Tables.Actions()
     {
         @Override
-        public ListModel<ActionsCore.ActionModel> getAll()
+        public ListModel<ActionsCore.Model> getAll()
         {
             return new ActionsCursorListModel(sdb.rawQuery("SELECT * " +
                     "FROM " + TABLE_NAME + " " +
@@ -60,12 +61,33 @@ public class SQliteApi
                     "AND " + TABLE_NAME + "." + BaseColumns._ID + " = " + Tables.Images.Columns.entity_id, new String[]{}));
         }
         @Override
-        public ActionsCore.ActionModel getOneFromId(int id)
+        public ActionsCore.Model getOneFromId(int id)
         {
-            return null;
+            Cursor cursor = sdb.rawQuery(
+                    "SELECT * "
+                            + "FROM " + TABLE_NAME + " "
+                            + "LEFT JOIN " + Tables.Images.TABLE_NAME + " "
+                            + "ON " + Tables.Images.Columns.type + " = " + ImagesContract.Types.ACTION_DETAIL_TYPE + " "
+                            + "AND " + TABLE_NAME + "." + BaseColumns._ID + " = " + Tables.Images.Columns.entity_id + " "
+                            + "WHERE " + TABLE_NAME + "." + BaseColumns._ID + "=" + id + " "
+                    , new String[]{});
+            if(!cursor.moveToFirst())
+            {
+                cursor.close();
+                return null;
+            }
+            ActionsCore.Model model = new Action(id,
+                    cursor.getString(cursor.getColumnIndex(Columns.descr)),
+                    cursor.getString(cursor.getColumnIndex(Columns.title)),
+                    cursor.getString(cursor.getColumnIndex(Columns.subtitle)),
+                    cursor.getString(cursor.getColumnIndex(Tables.Images.Columns.image_path)),
+                    cursor.getLong(cursor.getColumnIndex(Columns.from_date)),
+                    cursor.getLong(cursor.getColumnIndex(Columns.to_date)));
+            cursor.close();
+            return model;
         }
         @Override
-        public void insertOne(ActionsCore.ActionModel item)
+        public void insertOne(ActionsCore.Model item)
         {
             sdb.insertWithOnConflict(TABLE_NAME, null, ContentDriver.getContentValues(item), SQLiteDatabase.CONFLICT_REPLACE);
         }
