@@ -24,6 +24,7 @@ public interface MainContract
     interface MainBehaviour
         extends ToolbarBehaviour, HeaderBehaviour, FooterBehaviour
     {
+        void oneOfNews(int id);
     }
 
     interface ToolbarBehaviour

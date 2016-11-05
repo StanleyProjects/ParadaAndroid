@@ -51,6 +51,14 @@ public class GeneralActivity
     private final Fragment mainFragment = MainFragment.newInstanse(new MainContract.MainBehaviour()
     {
         @Override
+        public void oneOfNews(int id)
+        {
+            presenter.setScreen(GeneralCore.ScreenType.EVENTS_SCREEN);
+            menuCallback.open(GeneralCore.ScreenType.EVENTS_SCREEN);
+            eventsCallback.setOneOfNews(id);
+        }
+
+        @Override
         public void openMenu()
         {
             GeneralActivity.this.openMenu();
@@ -79,7 +87,9 @@ public class GeneralActivity
         @Override
         public void openAllNews()
         {
-
+            presenter.setScreen(GeneralCore.ScreenType.EVENTS_SCREEN);
+            menuCallback.open(GeneralCore.ScreenType.EVENTS_SCREEN);
+            eventsCallback.setNews();
         }
     });
     private final Fragment servicesFragment = ServicesFragment.newInstanse(new ServicesContract.Behaviour()
@@ -113,6 +123,13 @@ public class GeneralActivity
         {
             GeneralActivity.this.openMenu();
         }
+    }, new CallbackConnector<EventsContract.Callback>()
+    {
+        @Override
+        public void setCallback(EventsContract.Callback callback)
+        {
+            eventsCallback = callback;
+        }
     });
     private final Fragment socialsFragment = SocialsFragment.newInstanse(new SocialsContract.Behaviour()
     {
@@ -143,6 +160,7 @@ public class GeneralActivity
 
     private GeneralContract.Presenter presenter;
     private MenuContract.Callback menuCallback;
+    private EventsContract.Callback eventsCallback;
 
     @Override
     public void onBackPressed()

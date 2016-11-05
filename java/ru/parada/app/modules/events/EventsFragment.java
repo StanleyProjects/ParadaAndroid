@@ -1,6 +1,8 @@
 package ru.parada.app.modules.events;
 
+import android.content.Context;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.View;
 
 import ru.parada.app.R;
@@ -13,16 +15,49 @@ import ru.parada.app.modules.actiondetail.ActionDetailFragment;
 import ru.parada.app.modules.actions.ActionsFragment;
 import ru.parada.app.modules.news.NewsFragment;
 import ru.parada.app.modules.oneofnewsdetail.OneOfNewsDetailFragment;
+import ru.parada.app.units.CallbackConnector;
 import ru.parada.app.units.MVPFragment;
 
 public class EventsFragment
     extends MVPFragment<EventsContract.Presenter, EventsContract.Behaviour>
     implements EventsContract.View
 {
-    static public EventsFragment newInstanse(EventsContract.Behaviour behaviour)
+    static public MVPFragment newInstanse(EventsContract.Behaviour behaviour, CallbackConnector<EventsContract.Callback> cconnector)
     {
-        EventsFragment fragment = new EventsFragment();
+        final EventsFragment fragment = new EventsFragment();
         fragment.setBehaviour(behaviour);
+        cconnector.setCallback(new EventsContract.Callback()
+        {
+            @Override
+            public void setNews()
+            {
+                fragment.runAfterResume(new Runnable()
+                {
+                    @Override
+                    public void run()
+                    {
+                        fragment.getPresenter().setNews();
+                    }
+                });
+            }
+            @Override
+            public void setOneOfNews(final int id)
+            {
+                fragment.runAfterResume(new Runnable()
+                {
+                    @Override
+                    public void run()
+                    {
+                        while(fragment.getChildFragmentManager().popBackStackImmediate())
+                        {
+
+                        }
+                        fragment.getPresenter().setNews();
+                        fragment.showOneOfNews(id);
+                    }
+                });
+            }
+        });
         return fragment;
     }
 
@@ -32,16 +67,7 @@ public class EventsFragment
         @Override
         public void getOneOfNews(int id)
         {
-            detailFragment = OneOfNewsDetailFragment.newInstanse(new OneOfNewsDetailContract.Behaviour()
-            {
-                @Override
-                public void back()
-                {
-                    getChildFragmentManager().popBackStack();
-                    detailFragment = null;
-                }
-            }, id);
-            showDetail();
+            showOneOfNews(id);
         }
     });
     private final Fragment actionsFragment = ActionsFragment.newInstanse(new ActionsContract.Behaviour()
@@ -78,6 +104,7 @@ public class EventsFragment
         {
             showDetail();
         }
+        Log.e(getClass().getName(), "onResume");
     }
 
     @Override
@@ -159,6 +186,32 @@ public class EventsFragment
                                    .commit();
     }
 
+    @Override
+    public void onAttach(Context context)
+    {
+        super.onAttach(context);
+        Log.e(getClass().getName(), "onAttach " + context);
+    }
+    @Override
+    public void onDetach()
+    {
+        super.onDetach();
+        Log.e(getClass().getName(), "onDetach");
+    }
+
+    public void showOneOfNews(int id)
+    {
+        detailFragment = OneOfNewsDetailFragment.newInstanse(new OneOfNewsDetailContract.Behaviour()
+        {
+            @Override
+            public void back()
+            {
+                getChildFragmentManager().popBackStack();
+                detailFragment = null;
+            }
+        }, id);
+        showDetail();
+    }
     public void showDetail()
     {
         getChildFragmentManager().beginTransaction()

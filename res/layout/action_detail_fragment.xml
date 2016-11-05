@@ -69,7 +69,6 @@
                     android:layout_height="wrap_content"/>
                 <ImageView
                     android:id="@id/image"
-                    android:src="@drawable/doctor_test"
                     android:layout_marginLeft="56dp"
                     android:layout_marginRight="56dp"
                     android:scaleType="centerCrop"

@@ -63,6 +63,21 @@ public abstract class MVPFragment<PRESENTER, BEHAVIOUR>
     {
         uiHandler.post(r);
     }
+    protected void runAfterResume(final Runnable r)
+    {
+        new Thread(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                while(!isResumed())
+                {
+
+                }
+                uiHandler.post(r);
+            }
+        }).start();
+    }
 
     protected void setBehaviour(BEHAVIOUR b)
     {

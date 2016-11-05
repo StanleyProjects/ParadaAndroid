@@ -80,6 +80,11 @@ public class MainFragment
         adapter = new MainNewsAdapter(getActivity(), new MainNewsAdapterListener()
         {
             @Override
+            public void oneOfNews(int id)
+            {
+                getBehaviour().oneOfNews(id);
+            }
+            @Override
             public void openServices()
             {
                 getBehaviour().openServices();

@@ -18,4 +18,10 @@ public interface EventsContract
     {
         void openMenu();
     }
+
+    interface Callback
+    {
+        void setNews();
+        void setOneOfNews(int id);
+    }
 }

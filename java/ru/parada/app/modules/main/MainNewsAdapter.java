@@ -2,6 +2,7 @@ package ru.parada.app.modules.main;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.view.ViewGroup;
 
 import ru.parada.app.contracts.MainContract;
@@ -74,6 +75,15 @@ public class MainNewsAdapter
         holder.setTitle(item.getTitle());
         holder.setDescr(item.getDescription());
         holder.setDate(item.getDate()*1000);
+        final int id = item.getId();
+        holder.itemView.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                getListener().oneOfNews(id);
+            }
+        });
     }
 
     @Override
