@@ -111,6 +111,28 @@ public interface Tables
             String phone = TABLE_NAME + "_" + "phone";
         }
     }
+    interface Videos
+        extends DAO.Videos
+    {
+        String TABLE_NAME = Videos.class.getCanonicalName()
+                                         .toLowerCase()
+                                         .replace('.', '_') + "_table";
+        String CREATE_TABLE = "create table if not exists " + TABLE_NAME + " (" +
+                Columns.id + " integer primary key autoincrement, " +
+                Columns.descr + " text" + "," +
+                Columns.title + " text" + "," +
+                Columns.link + " text" + "," +
+                Columns.doctor_id + " integer" + //"," +
+                ");";
+        interface Columns
+        {
+            String id = TABLE_NAME + "_" + "id";
+            String doctor_id = TABLE_NAME + "_" + "doctor_id";
+            String title = TABLE_NAME + "_" + "title";
+            String descr = TABLE_NAME + "_" + "descr";
+            String link = TABLE_NAME + "_" + "link";
+        }
+    }
 
     interface Images
     {

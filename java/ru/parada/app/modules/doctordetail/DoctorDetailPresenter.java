@@ -22,13 +22,8 @@ public class DoctorDetailPresenter
             @Override
             public void run()
             {
-                updateDoctor(SQliteApi.getInstanse().getDoctors().getOneFromId(id));
+                view.update(SQliteApi.getInstanse().getDoctors().getOneFromId(id));
             }
         }).start();
-    }
-
-    private void updateDoctor(DoctorsCore.DetailModel model)
-    {
-        view.update(model);
     }
 }

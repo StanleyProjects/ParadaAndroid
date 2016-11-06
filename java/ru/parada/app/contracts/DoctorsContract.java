@@ -7,14 +7,14 @@ public interface DoctorsContract
 {
     interface View
     {
-        void updateDoctors(ListModel<DoctorsCore.DetailModel> data);
+        void update(ListModel<DoctorsCore.DetailModel> data);
     }
 
     interface Presenter
     {
-        void loadDoctors();
-        void updateDoctors();
-        void searchDoctors(String keys);
+        void load();
+        void update();
+        void search(String keys);
     }
 
     interface Behaviour

@@ -14,6 +14,7 @@ import ru.parada.app.contracts.PricesContract;
 import ru.parada.app.contracts.ServicesContract;
 import ru.parada.app.contracts.ServicesWithPricesContract;
 import ru.parada.app.core.ActionsCore;
+import ru.parada.app.core.DoctorVideosCore;
 import ru.parada.app.core.DoctorsCore;
 import ru.parada.app.core.NewsCore;
 import ru.parada.app.core.ServicesCore;
@@ -37,7 +38,7 @@ import ru.parada.app.units.ListModel;
 public class SQliteApi
 {
     static private final String DB_NAME = "parada";
-    static private final int DB_VERSION = 1611060105;
+    static private final int DB_VERSION = 1611070143;
     static private volatile SQliteApi instanse;
 
     static public SQliteApi getInstanse()
@@ -263,6 +264,30 @@ public class SQliteApi
             sdb.insertWithOnConflict(TABLE_NAME, null, ContentDriver.getContentValues(item), SQLiteDatabase.CONFLICT_REPLACE);
         }
 
+        @Override
+        public void clear()
+        {
+            sdb.execSQL("drop table if exists " + TABLE_NAME);
+            sdb.execSQL(CREATE_TABLE);
+        }
+    };
+    private final DAO.Videos videos = new Tables.Videos()
+    {
+        @Override
+        public ListModel<DoctorVideosCore.Model> getAll()
+        {
+            return null;
+        }
+        @Override
+        public DoctorVideosCore.Model getOneFromId(int id)
+        {
+            return null;
+        }
+        @Override
+        public void insertOne(DoctorVideosCore.Model item)
+        {
+            sdb.insertWithOnConflict(TABLE_NAME, null, ContentDriver.getContentValues(item), SQLiteDatabase.CONFLICT_REPLACE);
+        }
         @Override
         public void clear()
         {
@@ -545,6 +570,10 @@ public class SQliteApi
     public DAO.Notifications getNotifications()
     {
         return notifications;
+    }
+    public DAO.Videos getVideos()
+    {
+        return videos;
     }
 
     private void clearTables(SQLiteDatabase db)

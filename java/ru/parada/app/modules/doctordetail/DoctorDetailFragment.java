@@ -19,7 +19,7 @@ import ru.parada.app.units.MVPFragment;
 
 public class DoctorDetailFragment
         extends MVPFragment<DoctorDetailContract.Presenter, DoctorDetailContract.Behaviour>
-        implements DoctorDetailContract.View, DoctorDetailContract.Mark
+        implements DoctorDetailContract.View, DoctorsCore.Mark
 {
     static public MVPFragment newInstanse(DoctorDetailContract.Behaviour behaviour, int doctor_id)
     {

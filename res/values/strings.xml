@@ -33,6 +33,7 @@
     <string name="baltmed">Амбулаторный комплекс BaltMed</string>
     <string name="order_call">Заказать звонок</string>
     <string name="subscribe_reception">Записаться на приём</string>
+    <string name="video">Видео</string>
 
     <string-array name="months">
         <item>января</item>

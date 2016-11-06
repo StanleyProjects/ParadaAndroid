@@ -2,6 +2,11 @@ package ru.parada.app.core;
 
 public interface DoctorsCore
 {
+    interface Mark
+    {
+        String DOCTOR_ID = Mark.class.getCanonicalName().toLowerCase().replace(".", "_") + "_" + "doctor_id";
+    }
+
     interface DetailModel
     {
         int getId();

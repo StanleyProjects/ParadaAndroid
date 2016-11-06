@@ -125,11 +125,11 @@ public class DoctorsFragment
                 String keys = s.toString();
                 if(keys.length() > 0)
                 {
-                    getPresenter().searchDoctors(keys);
+                    getPresenter().search(keys);
                 }
                 else
                 {
-                    getPresenter().updateDoctors();
+                    getPresenter().update();
                 }
             }
 
@@ -139,8 +139,8 @@ public class DoctorsFragment
 
             }
         });
-        getPresenter().updateDoctors();
-        getPresenter().loadDoctors();
+        getPresenter().update();
+        getPresenter().load();
     }
 
     private void searchClear()
@@ -150,12 +150,12 @@ public class DoctorsFragment
                  .length() > 0)
         {
             search.setText("");
-            getPresenter().updateDoctors();
+            getPresenter().update();
         }
     }
 
     @Override
-    public void updateDoctors(final ListModel<DoctorsCore.DetailModel> data)
+    public void update(final ListModel<DoctorsCore.DetailModel> data)
     {
         runOnUiThread(new Runnable()
         {

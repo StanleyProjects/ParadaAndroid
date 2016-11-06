@@ -31,6 +31,7 @@ public class EventsFragment
             @Override
             public void setNews()
             {
+                fragment.detailFragment = null;
                 fragment.runAfterResume(new Runnable()
                 {
                     @Override
@@ -43,15 +44,12 @@ public class EventsFragment
             @Override
             public void setOneOfNews(final int id)
             {
+                fragment.detailFragment = null;
                 fragment.runAfterResume(new Runnable()
                 {
                     @Override
                     public void run()
                     {
-                        while(fragment.getChildFragmentManager().popBackStackImmediate())
-                        {
-
-                        }
                         fragment.getPresenter().setNews();
                         fragment.showOneOfNews(id);
                     }
