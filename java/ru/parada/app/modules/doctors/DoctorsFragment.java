@@ -11,12 +11,13 @@ import android.widget.EditText;
 
 import ru.parada.app.R;
 import ru.parada.app.contracts.DoctorDetailContract;
+import ru.parada.app.contracts.DoctorVideosContract;
 import ru.parada.app.contracts.DoctorsContract;
 import ru.parada.app.core.DoctorsCore;
 import ru.parada.app.modules.doctordetail.DoctorDetailFragment;
-import ru.parada.app.modules.doctordetail.DoctorDetailPresenter;
 import ru.parada.app.modules.doctors.adapter.DoctorsAdapter;
 import ru.parada.app.modules.doctors.adapter.DoctorsAdapterListener;
+import ru.parada.app.modules.doctorvideos.DoctorVideosFragment;
 import ru.parada.app.units.ListModel;
 import ru.parada.app.units.MVPFragment;
 
@@ -24,7 +25,7 @@ public class DoctorsFragment
         extends MVPFragment<DoctorsContract.Presenter, DoctorsContract.Behaviour>
         implements DoctorsContract.View
 {
-    static public DoctorsFragment newInstanse(DoctorsContract.Behaviour behaviour)
+    static public MVPFragment newInstanse(DoctorsContract.Behaviour behaviour)
     {
         DoctorsFragment fragment = new DoctorsFragment();
         fragment.setBehaviour(behaviour);
@@ -32,19 +33,51 @@ public class DoctorsFragment
     }
 
     private Fragment detailFragment;
+    private Fragment videosFragment;
 
     private RecyclerView list;
     private EditText search;
 
     private DoctorsAdapter adapter;
+    private final DoctorDetailContract.Behaviour doctorDetailBehaviour = new DoctorDetailContract.Behaviour()
+    {
+        @Override
+        public void back()
+        {
+            getChildFragmentManager().popBackStack();
+            detailFragment = null;
+        }
+        @Override
+        public void showVideos(int id)
+        {
+            videosFragment = DoctorVideosFragment.newInstanse(doctorVideosBehaviour, id);
+            showVideosScreen();
+        }
+    };
+    private final DoctorVideosContract.Behaviour doctorVideosBehaviour = new DoctorVideosContract.Behaviour()
+    {
+        @Override
+        public void back()
+        {
+            getChildFragmentManager().popBackStack();
+            videosFragment = null;
+        }
+    };
 
     @Override
     public void onResume()
     {
         super.onResume();
-        if(detailFragment != null && getChildFragmentManager().getBackStackEntryCount() == 0)
+        if(getChildFragmentManager().getBackStackEntryCount() == 0)
         {
-            showDetail();
+            if(detailFragment != null)
+            {
+                showDetailScreen();
+            }
+            if(videosFragment != null)
+            {
+                showVideosScreen();
+            }
         }
     }
 
@@ -97,16 +130,8 @@ public class DoctorsFragment
             @Override
             public void getDoctor(int id)
             {
-                detailFragment = DoctorDetailFragment.newInstanse(new DoctorDetailContract.Behaviour()
-                {
-                    @Override
-                    public void back()
-                    {
-                        getChildFragmentManager().popBackStack();
-                        detailFragment = null;
-                    }
-                }, id);
-                showDetail();
+                detailFragment = DoctorDetailFragment.newInstanse(doctorDetailBehaviour, id);
+                showDetailScreen();
             }
         });
         list.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -170,11 +195,19 @@ public class DoctorsFragment
         }, 0);
     }
 
-    public void showDetail()
+    private void showDetailScreen()
+    {
+        showSubscreen(detailFragment);
+    }
+    private void showVideosScreen()
+    {
+        showSubscreen(videosFragment);
+    }
+    private void showSubscreen(Fragment fragment)
     {
         getChildFragmentManager().beginTransaction()
-                                 .add(R.id.detail_frame, detailFragment)
-                                 .addToBackStack(DoctorDetailFragment.class.getName())
+                                 .add(R.id.subscreen, fragment)
+                                 .addToBackStack(fragment.getClass().getName())
                                  .commit();
     }
 }

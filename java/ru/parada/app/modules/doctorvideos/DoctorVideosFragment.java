@@ -1,5 +1,6 @@
 package ru.parada.app.modules.doctorvideos;
 
+import android.os.Bundle;
 import android.view.View;
 
 import ru.parada.app.R;
@@ -13,6 +14,16 @@ public class DoctorVideosFragment
         extends MVPFragment<DoctorVideosContract.Presenter, DoctorVideosContract.Behaviour>
         implements DoctorVideosContract.View, DoctorsCore.Mark
 {
+    static public MVPFragment newInstanse(DoctorVideosContract.Behaviour behaviour, int doctor_id)
+    {
+        DoctorVideosFragment fragment = new DoctorVideosFragment();
+        fragment.setBehaviour(behaviour);
+        Bundle bundle = new Bundle();
+        bundle.putInt(DOCTOR_ID, doctor_id);
+        fragment.setArguments(bundle);
+        return fragment;
+    }
+
     @Override
     protected DoctorVideosContract.Presenter setPresenter()
     {

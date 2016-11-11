@@ -35,6 +35,7 @@ public class DoctorDetailFragment
     private DoctorHolder holder;
     private TextView descr;
 
+    private int id;
     private String phone;
 
     @Override
@@ -81,6 +82,7 @@ public class DoctorDetailFragment
                         callDialogOpen();
                         break;
                     case R.id.watch_video:
+                        getBehaviour().showVideos(id);
                         break;
                 }
             }
@@ -125,7 +127,8 @@ public class DoctorDetailFragment
     @Override
     protected void init()
     {
-        getPresenter().update(getArguments().getInt(DOCTOR_ID));
+        id = getArguments().getInt(DOCTOR_ID);
+        getPresenter().update(id);
     }
 
     @Override

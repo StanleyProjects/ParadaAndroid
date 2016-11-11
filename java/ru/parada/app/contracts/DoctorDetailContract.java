@@ -17,5 +17,6 @@ public interface DoctorDetailContract
     interface Behaviour
     {
         void back();
+        void showVideos(int id);
     }
 }
