@@ -9,7 +9,7 @@ import ru.parada.app.db.Tables;
 import ru.parada.app.units.CursorListModel;
 
 public class DoctorsCursorListModel
-        extends CursorListModel<DoctorsCore.DetailModel>
+        extends CursorListModel<DoctorsCore.Model>
 {
     public DoctorsCursorListModel(Cursor d)
     {
@@ -17,9 +17,9 @@ public class DoctorsCursorListModel
     }
 
     @Override
-    public DoctorsCore.DetailModel getModel(int i)
+    public DoctorsCore.Model getModel(int i)
     {
-        return new DoctorsCore.DetailModel()
+        return new DoctorsCore.Model()
         {
             @Override
             public int getId()

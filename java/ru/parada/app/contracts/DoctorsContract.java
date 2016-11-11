@@ -7,7 +7,7 @@ public interface DoctorsContract
 {
     interface View
     {
-        void update(ListModel<DoctorsCore.DetailModel> data);
+        void update(ListModel<DoctorsCore.Model> data);
     }
 
     interface Presenter

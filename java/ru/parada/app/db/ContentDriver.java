@@ -17,7 +17,7 @@ import ru.parada.app.core.ServicesWithPricesCore;
 
 public class ContentDriver
 {
-    static public ContentValues getContentValues(DoctorsCore.DetailModel item)
+    static public ContentValues getContentValues(DoctorsCore.Model item)
     {
         ContentValues content = new ContentValues();
         content.put(BaseColumns._ID, item.getId());

@@ -132,7 +132,7 @@ public class DoctorDetailFragment
     }
 
     @Override
-    public void update(final DoctorsCore.DetailModel item)
+    public void update(final DoctorsCore.Model item)
     {
         runOnUiThread(new Runnable()
         {

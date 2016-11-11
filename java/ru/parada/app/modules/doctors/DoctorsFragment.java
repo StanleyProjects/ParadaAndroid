@@ -11,12 +11,14 @@ import android.widget.EditText;
 
 import ru.parada.app.R;
 import ru.parada.app.contracts.DoctorDetailContract;
+import ru.parada.app.contracts.DoctorVideoDetailContract;
 import ru.parada.app.contracts.DoctorVideosContract;
 import ru.parada.app.contracts.DoctorsContract;
 import ru.parada.app.core.DoctorsCore;
 import ru.parada.app.modules.doctordetail.DoctorDetailFragment;
 import ru.parada.app.modules.doctors.adapter.DoctorsAdapter;
 import ru.parada.app.modules.doctors.adapter.DoctorsAdapterListener;
+import ru.parada.app.modules.doctorvideodetail.DoctorVideoDetailFragment;
 import ru.parada.app.modules.doctorvideos.DoctorVideosFragment;
 import ru.parada.app.units.ListModel;
 import ru.parada.app.units.MVPFragment;
@@ -34,6 +36,7 @@ public class DoctorsFragment
 
     private Fragment detailFragment;
     private Fragment videosFragment;
+    private Fragment videoDetailFragment;
 
     private RecyclerView list;
     private EditText search;
@@ -62,6 +65,21 @@ public class DoctorsFragment
             getChildFragmentManager().popBackStack();
             videosFragment = null;
         }
+        @Override
+        public void getVideo(int id)
+        {
+            videoDetailFragment = DoctorVideoDetailFragment.newInstanse(doctorVideoDetailBehaviour, id);
+            showVideoDetailScreen();
+        }
+    };
+    private final DoctorVideoDetailContract.Behaviour doctorVideoDetailBehaviour = new DoctorVideoDetailContract.Behaviour()
+    {
+        @Override
+        public void back()
+        {
+            getChildFragmentManager().popBackStack();
+            videoDetailFragment = null;
+        }
     };
 
     @Override
@@ -77,6 +95,10 @@ public class DoctorsFragment
             if(videosFragment != null)
             {
                 showVideosScreen();
+            }
+            if(videoDetailFragment != null)
+            {
+                showVideoDetailScreen();
             }
         }
     }
@@ -180,7 +202,7 @@ public class DoctorsFragment
     }
 
     @Override
-    public void update(final ListModel<DoctorsCore.DetailModel> data)
+    public void update(final ListModel<DoctorsCore.Model> data)
     {
         runOnUiThread(new Runnable()
         {
@@ -202,6 +224,10 @@ public class DoctorsFragment
     private void showVideosScreen()
     {
         showSubscreen(videosFragment);
+    }
+    private void showVideoDetailScreen()
+    {
+        showSubscreen(videoDetailFragment);
     }
     private void showSubscreen(Fragment fragment)
     {

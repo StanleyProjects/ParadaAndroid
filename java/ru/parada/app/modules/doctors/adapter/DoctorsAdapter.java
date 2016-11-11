@@ -9,7 +9,7 @@ import ru.parada.app.managers.FoldersManager;
 import ru.parada.app.units.ModelDataAdapter;
 
 public class DoctorsAdapter
-    extends ModelDataAdapter<DoctorAdapterHolder, DoctorsCore.DetailModel, DoctorsAdapterListener>
+    extends ModelDataAdapter<DoctorAdapterHolder, DoctorsCore.Model, DoctorsAdapterListener>
 {
     public DoctorsAdapter(Context c, DoctorsAdapterListener l)
     {
@@ -17,7 +17,7 @@ public class DoctorsAdapter
     }
 
     @Override
-    protected void setData(DoctorAdapterHolder holder, DoctorsCore.DetailModel item)
+    protected void setData(DoctorAdapterHolder holder, DoctorsCore.Model item)
     {
         if(item.getPhotoPath() != null)
         {

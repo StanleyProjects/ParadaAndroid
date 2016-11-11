@@ -34,6 +34,7 @@
     <string name="order_call">Заказать звонок</string>
     <string name="subscribe_reception">Записаться на приём</string>
     <string name="video">Видео</string>
+    <string name="video_operation">Видео операции</string>
 
     <string-array name="months">
         <item>января</item>

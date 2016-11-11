@@ -7,7 +7,7 @@ public interface DoctorsCore
         String DOCTOR_ID = Mark.class.getCanonicalName().toLowerCase().replace(".", "_") + "_" + "doctor_id";
     }
 
-    interface DetailModel
+    interface Model
     {
         int getId();
         String getPhotoPath();

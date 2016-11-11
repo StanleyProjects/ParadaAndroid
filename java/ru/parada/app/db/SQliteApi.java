@@ -24,6 +24,7 @@ import ru.parada.app.modules.actions.model.ActionsCursorListModel;
 import ru.parada.app.modules.doctors.models.Doctor;
 import ru.parada.app.modules.doctors.models.DoctorsCursorListModel;
 import ru.parada.app.modules.doctorvideos.model.DoctorVideosCursorListModel;
+import ru.parada.app.modules.doctorvideos.model.Video;
 import ru.parada.app.modules.images.ImageModel;
 import ru.parada.app.modules.news.model.NewsCursorListModel;
 import ru.parada.app.modules.news.model.OneOfNews;
@@ -205,7 +206,7 @@ public class SQliteApi
     private final DAO.Doctors doctors = new Tables.Doctors()
     {
         @Override
-        public ListModel<DoctorsCore.DetailModel> getAll()
+        public ListModel<DoctorsCore.Model> getAll()
         {
             return new DoctorsCursorListModel(sdb.rawQuery(
                     "SELECT * "
@@ -218,7 +219,7 @@ public class SQliteApi
         }
 
         @Override
-        public ListModel<DoctorsCore.DetailModel> getFromKeys(String keys)
+        public ListModel<DoctorsCore.Model> getFromKeys(String keys)
         {
             return new DoctorsCursorListModel(sdb.rawQuery("SELECT * "
                     + "FROM " + TABLE_NAME + " "
@@ -229,7 +230,7 @@ public class SQliteApi
         }
 
         @Override
-        public DoctorsCore.DetailModel getOneFromId(int id)
+        public DoctorsCore.Model getOneFromId(int id)
         {
             Cursor cursor = sdb.rawQuery(
                     "SELECT * "
@@ -244,7 +245,7 @@ public class SQliteApi
                 cursor.close();
                 return null;
             }
-            DoctorsCore.DetailModel doctor = new Doctor(id,
+            DoctorsCore.Model doctor = new Doctor(id,
                     cursor.getString(cursor.getColumnIndex(Columns.last_name)),
                     cursor.getString(cursor.getColumnIndex(Columns.first_name)),
                     cursor.getString(cursor.getColumnIndex(Columns.middle_name)),
@@ -260,7 +261,7 @@ public class SQliteApi
         }
 
         @Override
-        public void insertOne(DoctorsCore.DetailModel item)
+        public void insertOne(DoctorsCore.Model item)
         {
             sdb.insertWithOnConflict(TABLE_NAME, null, ContentDriver.getContentValues(item), SQLiteDatabase.CONFLICT_REPLACE);
         }
@@ -289,7 +290,27 @@ public class SQliteApi
         @Override
         public DoctorVideosCore.Model getOneFromId(int id)
         {
-            return null;
+            Cursor cursor = sdb.rawQuery(
+                    "SELECT * "
+                            + "FROM " + TABLE_NAME + " "
+                            + "LEFT JOIN " + Tables.Images.TABLE_NAME + " "
+                            + "ON " + Tables.Images.Columns.type + " = " + ImagesContract.Types.DOCTOR_VIDEOS_TYPE + " "
+                            + "AND " + TABLE_NAME + "." + Columns.id + " = " + Tables.Images.Columns.entity_id + " "
+                            + "WHERE " + TABLE_NAME + "." + Columns.id + "=" + id + " "
+                    , new String[]{});
+            if(!cursor.moveToFirst())
+            {
+                cursor.close();
+                return null;
+            }
+            DoctorVideosCore.Model video = new Video(id,
+                    cursor.getInt(cursor.getColumnIndex(Columns.doctor_id)),
+                    cursor.getString(cursor.getColumnIndex(Columns.title)),
+                    cursor.getString(cursor.getColumnIndex(Columns.descr)),
+                    cursor.getString(cursor.getColumnIndex(Columns.link)),
+                    cursor.getString(cursor.getColumnIndex(Tables.Images.Columns.image_path)));
+            cursor.close();
+            return video;
         }
         @Override
         public void insertOne(DoctorVideosCore.Model item)

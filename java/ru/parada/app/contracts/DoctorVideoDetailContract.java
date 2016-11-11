@@ -1,12 +1,12 @@
 package ru.parada.app.contracts;
 
-import ru.parada.app.core.DoctorsCore;
+import ru.parada.app.core.DoctorVideosCore;
 
-public interface DoctorDetailContract
+public interface DoctorVideoDetailContract
 {
     interface View
     {
-        void update(DoctorsCore.Model data);
+        void update(DoctorVideosCore.Model data);
     }
 
     interface Presenter
@@ -17,6 +17,5 @@ public interface DoctorDetailContract
     interface Behaviour
     {
         void back();
-        void showVideos(int id);
     }
 }

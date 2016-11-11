@@ -3,7 +3,7 @@ package ru.parada.app.modules.doctors.models;
 import ru.parada.app.core.DoctorsCore;
 
 public class Doctor
-    implements DoctorsCore.DetailModel
+    implements DoctorsCore.Model
 {
     private int id;
     private String last_name;

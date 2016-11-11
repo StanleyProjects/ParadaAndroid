@@ -75,6 +75,11 @@ public class DoctorVideosFragment
     {
         adapter = new DoctorVideosAdapter(getActivity(), new DoctorVideosAdapterListener()
         {
+            @Override
+            public void getVideo(int id)
+            {
+                getBehaviour().getVideo(id);
+            }
         });
         list.setLayoutManager(new LinearLayoutManager(getActivity()));
         list.setAdapter(adapter);

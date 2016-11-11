@@ -241,7 +241,7 @@ public class DoctorsPresenter
         }
     }
 
-    private void updateDoctors(ListModel<DoctorsCore.DetailModel> data)
+    private void updateDoctors(ListModel<DoctorsCore.Model> data)
     {
         Log.e(getClass().getName(), "updateDoctors " + data.getItemsCount());
         view.update(data);

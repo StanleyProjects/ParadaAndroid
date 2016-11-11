@@ -1,6 +1,7 @@
 package ru.parada.app.modules.doctorvideos.adapter;
 
 import android.content.Context;
+import android.view.View;
 import android.view.ViewGroup;
 
 import ru.parada.app.core.DoctorVideosCore;
@@ -20,6 +21,15 @@ public class DoctorVideosAdapter
     {
         holder.setTitle(item.getTitle());
         holder.setImage(FoldersManager.getImagesDirectory() + "/" + item.getImagePath());
+        final int id = item.getId();
+        holder.itemView.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                getListener().getVideo(id);
+            }
+        });
     }
 
     @Override

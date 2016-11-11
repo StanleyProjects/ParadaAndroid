@@ -53,10 +53,10 @@ public interface DAO
     }
     interface Doctors
     {
-        ListModel<DoctorsCore.DetailModel> getAll();
-        ListModel<DoctorsCore.DetailModel> getFromKeys(String keys);
-        DoctorsCore.DetailModel getOneFromId(int id);
-        void insertOne(DoctorsCore.DetailModel item);
+        ListModel<DoctorsCore.Model> getAll();
+        ListModel<DoctorsCore.Model> getFromKeys(String keys);
+        DoctorsCore.Model getOneFromId(int id);
+        void insertOne(DoctorsCore.Model item);
         void clear();
     }
     interface Videos
