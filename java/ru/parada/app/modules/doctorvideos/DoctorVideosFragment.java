@@ -1,12 +1,17 @@
 package ru.parada.app.modules.doctorvideos;
 
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 
 import ru.parada.app.R;
 import ru.parada.app.contracts.DoctorVideosContract;
 import ru.parada.app.core.DoctorVideosCore;
 import ru.parada.app.core.DoctorsCore;
+import ru.parada.app.modules.doctorvideos.adapter.DoctorVideosAdapter;
+import ru.parada.app.modules.doctorvideos.adapter.DoctorVideosAdapterListener;
 import ru.parada.app.units.ListModel;
 import ru.parada.app.units.MVPFragment;
 
@@ -24,6 +29,10 @@ public class DoctorVideosFragment
         return fragment;
     }
 
+    private RecyclerView list;
+
+    private DoctorVideosAdapter adapter;
+
     @Override
     protected DoctorVideosContract.Presenter setPresenter()
     {
@@ -40,6 +49,7 @@ public class DoctorVideosFragment
     protected void initViews(View v)
     {
         setClickListener(v.findViewById(R.id.back));
+        list = (RecyclerView)v.findViewById(R.id.list);
     }
 
     @Override
@@ -63,12 +73,26 @@ public class DoctorVideosFragment
     @Override
     protected void init()
     {
-        getPresenter().update();
+        adapter = new DoctorVideosAdapter(getActivity(), new DoctorVideosAdapterListener()
+        {
+        });
+        list.setLayoutManager(new LinearLayoutManager(getActivity()));
+        list.setAdapter(adapter);
+        getPresenter().update(getArguments().getInt(DOCTOR_ID));
     }
 
     @Override
-    public void update(ListModel<DoctorVideosCore.Model> data)
+    public void update(final ListModel<DoctorVideosCore.Model> data)
     {
-
+        runOnUiThread(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                adapter.swapData(data);
+                adapter.notifyDataSetChanged();
+                Log.e(getClass().getName(), "update " + data.getItemsCount());
+            }
+        });
     }
 }

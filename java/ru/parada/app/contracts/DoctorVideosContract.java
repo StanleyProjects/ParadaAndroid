@@ -12,7 +12,7 @@ public interface DoctorVideosContract
 
     interface Presenter
     {
-        void update();
+        void update(int id);
     }
 
     interface Behaviour

@@ -61,7 +61,7 @@ public interface DAO
     }
     interface Videos
     {
-        ListModel<DoctorVideosCore.Model> getAll();
+        ListModel<DoctorVideosCore.Model> getAllFromDoctorId(int id);
         DoctorVideosCore.Model getOneFromId(int id);
         void insertOne(DoctorVideosCore.Model item);
         void clear();

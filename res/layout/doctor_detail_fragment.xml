@@ -162,7 +162,7 @@
                 android:text="@string/watch_video"
                 android:textAllCaps="true"
                 android:textColor="@color/gray"
-                android:textSize="14dp"/>
+                android:textSize="@dimen/text_size_medium"/>
         </LinearLayout>
 
         <ImageView

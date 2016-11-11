@@ -23,6 +23,7 @@ import ru.parada.app.modules.actions.model.Action;
 import ru.parada.app.modules.actions.model.ActionsCursorListModel;
 import ru.parada.app.modules.doctors.models.Doctor;
 import ru.parada.app.modules.doctors.models.DoctorsCursorListModel;
+import ru.parada.app.modules.doctorvideos.model.DoctorVideosCursorListModel;
 import ru.parada.app.modules.images.ImageModel;
 import ru.parada.app.modules.news.model.NewsCursorListModel;
 import ru.parada.app.modules.news.model.OneOfNews;
@@ -274,9 +275,16 @@ public class SQliteApi
     private final DAO.Videos videos = new Tables.Videos()
     {
         @Override
-        public ListModel<DoctorVideosCore.Model> getAll()
+        public ListModel<DoctorVideosCore.Model> getAllFromDoctorId(int id)
         {
-            return null;
+            return new DoctorVideosCursorListModel(sdb.rawQuery(
+                    "SELECT * "
+                            + "FROM " + TABLE_NAME + " "
+                            + "LEFT JOIN " + Tables.Images.TABLE_NAME + " "
+                            + "ON " + Tables.Images.Columns.type + " = " + ImagesContract.Types.DOCTOR_VIDEOS_TYPE + " "
+                            + "AND " + TABLE_NAME + "." + Columns.id + " = " + Tables.Images.Columns.entity_id + " "
+                            + "WHERE " + Columns.doctor_id + " = " + id + " "
+                    , new String[]{}));
         }
         @Override
         public DoctorVideosCore.Model getOneFromId(int id)
