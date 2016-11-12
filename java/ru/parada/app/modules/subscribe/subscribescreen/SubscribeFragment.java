@@ -1,12 +1,10 @@
-package ru.parada.app.modules.subscribe;
+package ru.parada.app.modules.subscribe.subscribescreen;
 
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import ru.parada.app.R;
-import ru.parada.app.contracts.SubscribeContract;
-import ru.parada.app.core.SubscribeCore;
+import ru.parada.app.contracts.subscribe.SubscribeContract;
 import ru.parada.app.modules.subscribe.model.UserData;
 import ru.parada.app.units.MVPFragment;
 
@@ -129,10 +127,5 @@ public class SubscribeFragment
         }
         String comment = this.comment.getText().toString();
         getBehaviour().send(new UserData(wish_date, wish_time, last_name, first_name, middle_name, email, phone, comment));
-    }
-
-    private void showToast(int mid)
-    {
-        Toast.makeText(getActivity(), mid, Toast.LENGTH_SHORT).show();
     }
 }

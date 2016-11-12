@@ -14,4 +14,8 @@ public interface ParadaService
         String NOTIFICATIONS = "get_push.php";
         String VIDEOS = "get_videos.php";
     }
+    interface Post
+    {
+        String SUBSCRIBE_DATA = "goto_action.php";
+    }
 }

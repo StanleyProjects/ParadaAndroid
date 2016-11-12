@@ -1,4 +1,4 @@
-package ru.parada.app.contracts;
+package ru.parada.app.contracts.subscribe;
 
 import ru.parada.app.core.SubscribeCore;
 

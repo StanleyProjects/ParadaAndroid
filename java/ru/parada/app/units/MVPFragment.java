@@ -3,10 +3,10 @@ package ru.parada.app.units;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 public abstract class MVPFragment<PRESENTER, BEHAVIOUR>
     extends Fragment
@@ -29,11 +29,6 @@ public abstract class MVPFragment<PRESENTER, BEHAVIOUR>
             initViews(mainView);
             init();
         }
-//        mainView = inflater.inflate(setContentView(), container, false);
-//        this.clickListener = setClickListener();
-//        this.presenter = setPresenter();
-//        initViews(mainView);
-//        init();
         return mainView;
     }
 
@@ -77,6 +72,11 @@ public abstract class MVPFragment<PRESENTER, BEHAVIOUR>
                 uiHandler.post(r);
             }
         }).start();
+    }
+
+    protected void showToast(int mid)
+    {
+        Toast.makeText(getActivity(), mid, Toast.LENGTH_SHORT).show();
     }
 
     protected void setBehaviour(BEHAVIOUR b)

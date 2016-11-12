@@ -1,6 +1,6 @@
-package ru.parada.app.modules.subscribe;
+package ru.parada.app.modules.subscribe.subscribescreen;
 
-import ru.parada.app.contracts.SubscribeContract;
+import ru.parada.app.contracts.subscribe.SubscribeContract;
 
 public class SubscribePresenter
         implements SubscribeContract.Presenter

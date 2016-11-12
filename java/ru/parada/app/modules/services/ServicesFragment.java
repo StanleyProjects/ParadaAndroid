@@ -8,13 +8,15 @@ import android.view.View;
 import ru.parada.app.R;
 import ru.parada.app.contracts.ServiceDetailContract;
 import ru.parada.app.contracts.ServicesContract;
-import ru.parada.app.contracts.SubscribeContract;
+import ru.parada.app.contracts.subscribe.SubscribeCheckContract;
+import ru.parada.app.contracts.subscribe.SubscribeContract;
 import ru.parada.app.core.ServicesCore;
 import ru.parada.app.core.SubscribeCore;
 import ru.parada.app.modules.servicedetail.ServiceDetailFragment;
 import ru.parada.app.modules.services.adapter.ServicesAdapter;
 import ru.parada.app.modules.services.adapter.ServicesAdapterListener;
-import ru.parada.app.modules.subscribe.SubscribeFragment;
+import ru.parada.app.modules.subscribe.subscribecheck.SubscribeCheckFragment;
+import ru.parada.app.modules.subscribe.subscribescreen.SubscribeFragment;
 import ru.parada.app.units.ListModel;
 import ru.parada.app.units.MVPFragment;
 
@@ -31,6 +33,7 @@ public class ServicesFragment
 
     private Fragment detailFragment;
     private Fragment subscribeFragment;
+    private Fragment subscribeCheckFragment;
 
     private RecyclerView list;
 
@@ -65,6 +68,21 @@ public class ServicesFragment
         @Override
         public void send(SubscribeCore.Model data)
         {
+            subscribeCheckFragment = SubscribeCheckFragment.newInstanse(subscribeCheckBehaviour, data);
+            showSubscribeCheckScreen();
+        }
+    };
+    private final SubscribeCheckContract.Behaviour subscribeCheckBehaviour = new SubscribeCheckContract.Behaviour()
+    {
+        @Override
+        public void back()
+        {
+            getChildFragmentManager().popBackStack();
+            subscribeCheckFragment = null;
+        }
+        @Override
+        public void sendSucess()
+        {
 
         }
     };
@@ -82,6 +100,10 @@ public class ServicesFragment
             if(subscribeFragment != null)
             {
                 showSubscribeScreen();
+            }
+            if(subscribeCheckFragment != null)
+            {
+                showSubscribeCheckScreen();
             }
         }
     }
@@ -162,6 +184,10 @@ public class ServicesFragment
     private void showSubscribeScreen()
     {
         showSubscreen(subscribeFragment);
+    }
+    private void showSubscribeCheckScreen()
+    {
+        showSubscreen(subscribeCheckFragment);
     }
     private void showSubscreen(Fragment fragment)
     {

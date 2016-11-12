@@ -1,16 +1,23 @@
 <resources>
     <string name="app_name">Parada</string>
-    <string name="services">Услуги</string>
-    <string name="subscribe">Запись на приём</string>
-    <string name="prices">Цены</string>
+
     <string name="main">Главная</string>
+    <string name="services">Услуги</string>
     <string name="doctors">Специалисты</string>
+    <string name="prices">Цены</string>
+    <string name="events">События</string>
+    <string name="socials">Социальные сети</string>
+    <string name="notifications">Уведомления</string>
+    <string name="contacts">Контакты</string>
+
+    <string name="subscribe">Запись на приём</string>
 
     <string name="first_middle_name" formatted="false">%s %s</string>
     <string name="doctor_position">• %s</string>
     <string name="news">Новости</string>
     <string name="all_news">Все новости</string>
     <string name="search">Поиск</string>
+
     <string name="phone">Телефон</string>
     <string name="sms">Сообщения</string>
     <string name="whatsapp">WhatsApp</string>
@@ -20,21 +27,22 @@
     <string name="watch_video">Смотреть видео</string>
     <string name="service">Услуга</string>
     <string name="cost">Cтоимость</string>
-    <string name="events">События</string>
     <string name="actions">Акции</string>
-    <string name="socials">Социальные сети</string>
-    <string name="notifications">Уведомления</string>
-    <string name="contacts">Контакты</string>
+
     <string name="facebook">Facebook</string>
     <string name="vkontakte">Vkontakte</string>
     <string name="youtube">YouTube</string>
     <string name="instagram">Intagram</string>
+
     <string name="plastic_surgery_center">Центр пластической хирургии</string>
     <string name="baltmed">Амбулаторный комплекс BaltMed</string>
+
     <string name="order_call">Заказать звонок</string>
     <string name="subscribe_reception">Записаться на приём</string>
+
     <string name="video">Видео</string>
     <string name="video_operation">Видео операции</string>
+
     <string name="send">Отправить</string>
     <string name="wish_date">Желаемая дата приёма</string>
     <string name="date_hint">ДД.ММ.ГГГГ</string>
@@ -54,6 +62,12 @@
     <string name="middle_name_empty">Укажите отчество</string>
     <string name="email_empty">Укажите почту</string>
     <string name="phone_empty">Укажите телефон</string>
+    <string name="check_data">Проверка данных</string>
+    <string name="send_subscribe_data_error">При отправке данных произошла ошибка</string>
+    <string name="date_reception">Дата приёма</string>
+    <string name="time_reception">Время приёма</string>
+    <string name="lfmname">ФИО</string>
+    <string name="we_call_confirm_subscribe">Мы свяжемся с Вами в ближайшее время для подтверждения заявки на приём.</string>
 
     <string-array name="months">
         <item>января</item>
