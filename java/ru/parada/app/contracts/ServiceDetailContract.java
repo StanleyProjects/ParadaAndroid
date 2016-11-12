@@ -22,5 +22,7 @@ public interface ServiceDetailContract
     interface Behaviour
     {
         void back();
+        void subscribe();
+        void call();
     }
 }

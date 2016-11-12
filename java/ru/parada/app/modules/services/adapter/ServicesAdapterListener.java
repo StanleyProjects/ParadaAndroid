@@ -1,4 +1,4 @@
-package ru.parada.app.modules.services;
+package ru.parada.app.modules.services.adapter;
 
 public interface ServicesAdapterListener
 {

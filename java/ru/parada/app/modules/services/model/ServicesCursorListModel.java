@@ -1,4 +1,4 @@
-package ru.parada.app.modules.services;
+package ru.parada.app.modules.services.model;
 
 import android.database.Cursor;
 import android.provider.BaseColumns;

@@ -8,8 +8,13 @@ import android.view.View;
 import ru.parada.app.R;
 import ru.parada.app.contracts.ServiceDetailContract;
 import ru.parada.app.contracts.ServicesContract;
+import ru.parada.app.contracts.SubscribeContract;
 import ru.parada.app.core.ServicesCore;
+import ru.parada.app.core.SubscribeCore;
 import ru.parada.app.modules.servicedetail.ServiceDetailFragment;
+import ru.parada.app.modules.services.adapter.ServicesAdapter;
+import ru.parada.app.modules.services.adapter.ServicesAdapterListener;
+import ru.parada.app.modules.subscribe.SubscribeFragment;
 import ru.parada.app.units.ListModel;
 import ru.parada.app.units.MVPFragment;
 
@@ -25,18 +30,59 @@ public class ServicesFragment
     }
 
     private Fragment detailFragment;
+    private Fragment subscribeFragment;
 
     private RecyclerView list;
 
     private ServicesAdapter adapter;
+    private final ServiceDetailContract.Behaviour serviceDetailBehaviour = new ServiceDetailContract.Behaviour()
+    {
+        @Override
+        public void back()
+        {
+            getChildFragmentManager().popBackStack();
+            detailFragment = null;
+        }
+        @Override
+        public void subscribe()
+        {
+            subscribeFragment = SubscribeFragment.newInstanse(subscribeBehaviour);
+            showSubscribeScreen();
+        }
+        @Override
+        public void call()
+        {
+        }
+    };
+    private final SubscribeContract.Behaviour subscribeBehaviour = new SubscribeContract.Behaviour()
+    {
+        @Override
+        public void back()
+        {
+            getChildFragmentManager().popBackStack();
+            subscribeFragment = null;
+        }
+        @Override
+        public void send(SubscribeCore.Model data)
+        {
+
+        }
+    };
 
     @Override
     public void onResume()
     {
         super.onResume();
-        if(detailFragment != null && getChildFragmentManager().getBackStackEntryCount() == 0)
+        if(getChildFragmentManager().getBackStackEntryCount() == 0)
         {
-            showDetail();
+            if(detailFragment != null)
+            {
+                showDetailScreen();
+            }
+            if(subscribeFragment != null)
+            {
+                showSubscribeScreen();
+            }
         }
     }
 
@@ -85,16 +131,8 @@ public class ServicesFragment
             @Override
             public void getService(int id)
             {
-                detailFragment = ServiceDetailFragment.newInstanse(new ServiceDetailContract.Behaviour()
-                {
-                    @Override
-                    public void back()
-                    {
-                        getChildFragmentManager().popBackStack();
-                        detailFragment = null;
-                    }
-                }, id);
-                showDetail();
+                detailFragment = ServiceDetailFragment.newInstanse(serviceDetailBehaviour, id);
+                showDetailScreen();
             }
         });
         list.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -117,11 +155,19 @@ public class ServicesFragment
         }, 0);
     }
 
-    public void showDetail()
+    private void showDetailScreen()
+    {
+        showSubscreen(detailFragment);
+    }
+    private void showSubscribeScreen()
+    {
+        showSubscreen(subscribeFragment);
+    }
+    private void showSubscreen(Fragment fragment)
     {
         getChildFragmentManager().beginTransaction()
-                                 .add(R.id.detail_frame, detailFragment)
-                                 .addToBackStack(ServiceDetailFragment.class.getName())
+                                 .add(R.id.subscreen, fragment)
+                                 .addToBackStack(fragment.getClass().getName())
                                  .commit();
     }
 }

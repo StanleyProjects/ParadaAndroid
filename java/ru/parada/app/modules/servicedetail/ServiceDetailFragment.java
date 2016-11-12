@@ -50,7 +50,7 @@ public class ServiceDetailFragment
         title = (TextView)v.findViewById(R.id.title);
         descr = (TextView)v.findViewById(R.id.descr);
         image = (ImageView)v.findViewById(R.id.image);
-        setClickListener(v.findViewById(R.id.back));
+        setClickListener(v.findViewById(R.id.back), v.findViewById(R.id.subscribe_reception), v.findViewById(R.id.order_call));
     }
 
     @Override
@@ -65,6 +65,12 @@ public class ServiceDetailFragment
                 {
                     case R.id.back:
                         getBehaviour().back();
+                        break;
+                    case R.id.subscribe_reception:
+                        getBehaviour().subscribe();
+                        break;
+                    case R.id.order_call:
+                        getBehaviour().call();
                         break;
                 }
             }

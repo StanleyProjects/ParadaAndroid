@@ -35,6 +35,25 @@
     <string name="subscribe_reception">Записаться на приём</string>
     <string name="video">Видео</string>
     <string name="video_operation">Видео операции</string>
+    <string name="send">Отправить</string>
+    <string name="wish_date">Желаемая дата приёма</string>
+    <string name="date_hint">ДД.ММ.ГГГГ</string>
+    <string name="wish_time">Желаемое время приёма</string>
+    <string name="time_hint">ЧЧ.ММ</string>
+    <string name="last_name">Фамилия</string>
+    <string name="first_name">Имя</string>
+    <string name="middle_name">Отчество</string>
+    <string name="email">Почта</string>
+    <string name="email_hint">e-mail</string>
+    <string name="phone_hint">+7</string>
+    <string name="comment">Примечание</string>
+    <string name="wish_date_empty">Укажите дату приёма</string>
+    <string name="wish_time_empty">Укажите время</string>
+    <string name="last_name_empty">Укажите фамилию</string>
+    <string name="first_name_empty">Укажите имя</string>
+    <string name="middle_name_empty">Укажите отчество</string>
+    <string name="email_empty">Укажите почту</string>
+    <string name="phone_empty">Укажите телефон</string>
 
     <string-array name="months">
         <item>января</item>

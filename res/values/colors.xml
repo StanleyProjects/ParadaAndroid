@@ -18,7 +18,6 @@
     <color name="gray">#c8c8c8</color>
     <color name="graylight">#EEEEEE</color>
     <color name="graysuperlight">#FAFAFA</color>
-    <color name="graytext">#BDC1C0</color>
     <color name="graydark">#333333</color>
     <color name="black">#000000</color>
 </resources>

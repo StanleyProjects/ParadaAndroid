@@ -1,4 +1,4 @@
-package ru.parada.app.modules.services;
+package ru.parada.app.modules.services.adapter;
 
 import android.content.Context;
 import android.view.ViewGroup;

@@ -17,6 +17,7 @@ import ru.parada.app.db.SQliteApi;
 import ru.parada.app.json.JSONParser;
 import ru.parada.app.managers.FoldersManager;
 import ru.parada.app.modules.images.ImageModel;
+import ru.parada.app.modules.services.model.Service;
 import ru.parada.app.units.ListModel;
 
 public class ServicesPresenter
