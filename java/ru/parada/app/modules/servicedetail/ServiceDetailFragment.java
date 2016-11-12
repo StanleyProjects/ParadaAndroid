@@ -89,7 +89,7 @@ public class ServiceDetailFragment
                 descr.setText(Html.fromHtml(data.getDescription()));
                 if(data.getImagePath() != null && data.getImagePath().length() > 0)
                 {
-                    ImagesUtils.setThumpImage(FoldersManager.getImagesDirectory() + "/" + data.getImagePath(), image, AndroidUtil.dp(222), AndroidUtil.dp(222));
+                    ImagesUtils.setThumbImage(FoldersManager.getImagesDirectory() + "/" + data.getImagePath(), image, AndroidUtil.dp(222), AndroidUtil.dp(222));
                 }
             }
         });

@@ -101,7 +101,7 @@ public class OneOfNewsDetailFragment
                 date.setText(currentDate.getDate() + " " + months[currentDate.getMonth()] + " " + (currentDate.getYear()+1900));
                 if(data.getImagePath() != null && data.getImagePath().length() > 0)
                 {
-                    ImagesUtils.setThumpImage(FoldersManager.getImagesDirectory() + "/" + data.getImagePath(), image, AndroidUtil.dp(222), AndroidUtil.dp(222));
+                    ImagesUtils.setThumbImage(FoldersManager.getImagesDirectory() + "/" + data.getImagePath(), image, AndroidUtil.dp(222), AndroidUtil.dp(222));
                 }
             }
         });

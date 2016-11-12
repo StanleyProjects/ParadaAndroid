@@ -47,7 +47,7 @@ public class DoctorHolder
         }
         else
         {
-            ImagesUtils.setThumpImage(photoPath, photo, AndroidUtil.dp(112), AndroidUtil.dp(112));
+            ImagesUtils.setThumbImage(photoPath, photo, AndroidUtil.dp(112), AndroidUtil.dp(112));
         }
     }
     public void setLastName(String lastName)

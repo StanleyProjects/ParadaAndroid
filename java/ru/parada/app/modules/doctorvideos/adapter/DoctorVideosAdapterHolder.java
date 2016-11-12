@@ -1,6 +1,7 @@
 package ru.parada.app.modules.doctorvideos.adapter;
 
 import android.content.Context;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -15,12 +16,14 @@ public class DoctorVideosAdapterHolder
 {
     private TextView title;
     private ImageView image;
+    private View play;
 
     public DoctorVideosAdapterHolder(Context context, ViewGroup parent)
     {
         super(context, parent, R.layout.doctor_videos_list_item);
         title = (TextView)itemView.findViewById(R.id.title);
         image = (ImageView)itemView.findViewById(R.id.image);
+        play = itemView.findViewById(R.id.play);
     }
 
     public void setTitle(String t)
@@ -29,6 +32,10 @@ public class DoctorVideosAdapterHolder
     }
     public void setImage(String imp)
     {
-        ImagesUtils.setThumpImage(imp, image, AndroidUtil.dp(128), AndroidUtil.dp(128));
+        ImagesUtils.setThumbImage(imp, image, AndroidUtil.dp(128), AndroidUtil.dp(128));
+    }
+    public void setPlay(View.OnClickListener clickListener)
+    {
+        play.setOnClickListener(clickListener);
     }
 }

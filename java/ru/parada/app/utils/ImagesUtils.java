@@ -26,7 +26,7 @@ public class ImagesUtils
         return imagesCache.get(path);
     }
 
-    static public void setThumpImage(String path, ImageView iv, int h, int w)
+    static public void setThumbImage(String path, ImageView iv, int h, int w)
     {
         Drawable drawable = getImageFromCache("thumb" +h+w+ path);
         if(drawable == null)

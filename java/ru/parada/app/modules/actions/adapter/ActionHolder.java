@@ -30,7 +30,7 @@ public class ActionHolder
     {
         if(photoPath != null)
         {
-            ImagesUtils.setThumpImage(photoPath, image, AndroidUtil.dp(92), AndroidUtil.dp(92));
+            ImagesUtils.setThumbImage(photoPath, image, AndroidUtil.dp(92), AndroidUtil.dp(92));
         }
     }
     public void setDate(long from_date, long to_date)

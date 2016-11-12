@@ -27,7 +27,7 @@ public class ServiceHolder
     {
         if(photoPath != null)
         {
-            ImagesUtils.setThumpImage(photoPath, image, AndroidUtil.dp(112), AndroidUtil.dp(112));
+            ImagesUtils.setThumbImage(photoPath, image, AndroidUtil.dp(112), AndroidUtil.dp(112));
         }
     }
     public void setTitle(String t)

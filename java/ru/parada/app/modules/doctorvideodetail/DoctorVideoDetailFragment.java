@@ -85,7 +85,7 @@ public class DoctorVideoDetailFragment
             {
                 if(data.getImagePath() != null)
                 {
-                    ImagesUtils.setThumpImage(FoldersManager.getImagesDirectory() + "/" + data.getImagePath(), image, AndroidUtil.dp(222), AndroidUtil.dp(222));
+                    ImagesUtils.setImage(FoldersManager.getImagesDirectory() + "/" + data.getImagePath(), image);
                 }
                 descr.setText(Html.fromHtml(data.getDescription()));
             }

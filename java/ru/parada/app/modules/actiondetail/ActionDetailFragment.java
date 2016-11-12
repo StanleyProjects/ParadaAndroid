@@ -104,7 +104,7 @@ public class ActionDetailFragment
                 }
                 if(data.getImagePath() != null && data.getImagePath().length() > 0)
                 {
-                    ImagesUtils.setThumpImage(FoldersManager.getImagesDirectory() + "/" + data.getImagePath(), image, AndroidUtil.dp(128), AndroidUtil.dp(128));
+                    ImagesUtils.setThumbImage(FoldersManager.getImagesDirectory() + "/" + data.getImagePath(), image, AndroidUtil.dp(128), AndroidUtil.dp(128));
                 }
                 descr.setText(Html.fromHtml(data.getDescription()));
             }

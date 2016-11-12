@@ -9,14 +9,24 @@
         android:layout_weight="1"
         android:layout_width="match_parent"
         android:layout_height="0dp">
-        <ImageView
-            android:id="@+id/image"
-            android:src="@drawable/youtubetest"
-            android:scaleType="centerCrop"
-            android:layout_marginRight="8dp"
+        <FrameLayout
+            android:id="@+id/play"
             android:layout_weight="1"
             android:layout_width="0dp"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent">
+            <ImageView
+                android:id="@+id/image"
+                android:src="@drawable/youtubetest"
+                android:scaleType="centerCrop"
+                android:layout_marginRight="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+            <ImageView
+                android:src="@mipmap/play_icon"
+                android:layout_gravity="center"
+                android:layout_width="@dimen/icon_big"
+                android:layout_height="@dimen/icon_big"/>
+        </FrameLayout>
         <TextView
             android:id="@+id/title"
             android:text="2134234\тыав\ndfdsfsdfsd\nfresfsdf\nfresfsdf\nfresfsdf\nfresfsdf\nfresfsdf\nfresfsdf"
