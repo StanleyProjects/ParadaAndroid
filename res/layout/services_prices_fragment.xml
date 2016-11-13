@@ -79,7 +79,7 @@
             android:layout_height="match_parent"/>
     </LinearLayout>
     <FrameLayout
-        android:id="@+id/prices_frame"
+        android:id="@+id/subscreen"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 </FrameLayout>

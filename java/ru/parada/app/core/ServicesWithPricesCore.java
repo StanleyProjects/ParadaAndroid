@@ -2,6 +2,11 @@ package ru.parada.app.core;
 
 public interface ServicesWithPricesCore
 {
+    interface Screens
+    {
+        int PRICES = 1;
+    }
+
     interface Model
     {
         int getId();

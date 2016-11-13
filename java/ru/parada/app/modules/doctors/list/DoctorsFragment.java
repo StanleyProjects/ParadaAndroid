@@ -1,4 +1,4 @@
-package ru.parada.app.modules.servicesprices;
+package ru.parada.app.modules.doctors.list;
 
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -8,68 +8,106 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 
-import java.util.ArrayList;
-
 import ru.parada.app.R;
-import ru.parada.app.contracts.PricesContract;
-import ru.parada.app.contracts.ServicesWithPricesContract;
-import ru.parada.app.core.ServicesWithPricesCore;
-import ru.parada.app.modules.prices.PricesFragment;
-import ru.parada.app.modules.servicesprices.adapter.PricesGroupData;
-import ru.parada.app.modules.servicesprices.adapter.ServicesPricesAdapterListener;
-import ru.parada.app.units.ArrayListModel;
-import ru.parada.app.units.GroupAdapter;
-import ru.parada.app.units.GroupModel;
+import ru.parada.app.contracts.DoctorDetailContract;
+import ru.parada.app.contracts.DoctorVideoDetailContract;
+import ru.parada.app.contracts.DoctorVideosContract;
+import ru.parada.app.contracts.DoctorsContract;
+import ru.parada.app.core.DoctorsCore;
+import ru.parada.app.modules.doctors.detail.DoctorDetailFragment;
+import ru.parada.app.modules.doctors.list.adapter.DoctorsAdapter;
+import ru.parada.app.modules.doctors.list.adapter.DoctorsAdapterListener;
+import ru.parada.app.modules.doctors.videos.detail.DoctorVideoDetailFragment;
+import ru.parada.app.modules.doctors.videos.list.DoctorVideosFragment;
 import ru.parada.app.units.ListModel;
 import ru.parada.app.units.MultiFragment;
 
-public class ServicesWithPricesFragment
-        extends MultiFragment<ServicesWithPricesContract.Presenter, ServicesWithPricesContract.Behaviour>
-        implements ServicesWithPricesContract.View
+public class DoctorsFragment
+        extends MultiFragment<DoctorsContract.Presenter, DoctorsContract.Behaviour>
+        implements DoctorsContract.View
 {
-    static public Fragment newInstanse(ServicesWithPricesContract.Behaviour behaviour)
+    static public Fragment newInstanse(DoctorsContract.Behaviour behaviour)
     {
-        ServicesWithPricesFragment fragment = new ServicesWithPricesFragment();
+        DoctorsFragment fragment = new DoctorsFragment();
         fragment.setBehaviour(behaviour);
         return fragment;
     }
 
-    private Fragment pricesFragment;
+    private Fragment detailFragment;
+    private Fragment videosFragment;
+    private Fragment videoDetailFragment;
 
     private RecyclerView list;
     private EditText search;
 
-    private GroupAdapter adapter;
-    private PricesGroupData pricesGroupData;
-    private final PricesContract.Behaviour pricesBehaviour = new PricesContract.Behaviour()
+    private DoctorsAdapter adapter;
+    private final DoctorDetailContract.Behaviour doctorDetailBehaviour = new DoctorDetailContract.Behaviour()
     {
         @Override
         public void back()
         {
             getChildFragmentManager().popBackStack();
-            pricesFragment = null;
+            detailFragment = null;
+        }
+        @Override
+        public void showVideos(int id)
+        {
+            videosFragment = DoctorVideosFragment.newInstanse(doctorVideosBehaviour, id);
+            addScreen(DoctorsCore.Screens.VIDEOS);
+        }
+    };
+    private final DoctorVideosContract.Behaviour doctorVideosBehaviour = new DoctorVideosContract.Behaviour()
+    {
+        @Override
+        public void back()
+        {
+            getChildFragmentManager().popBackStack();
+            videosFragment = null;
+        }
+        @Override
+        public void getVideo(int id)
+        {
+            videoDetailFragment = DoctorVideoDetailFragment.newInstanse(doctorVideoDetailBehaviour, id);
+            addScreen(DoctorsCore.Screens.VIDEO_DETAIL);
+        }
+    };
+    private final DoctorVideoDetailContract.Behaviour doctorVideoDetailBehaviour = new DoctorVideoDetailContract.Behaviour()
+    {
+        @Override
+        public void back()
+        {
+            getChildFragmentManager().popBackStack();
+            videoDetailFragment = null;
         }
     };
 
     @Override
     protected void setScreens(int screen)
     {
-        if(screen >= ServicesWithPricesCore.Screens.PRICES)
+        if(screen >= DoctorsCore.Screens.DETAIL)
         {
-            addSubscreen(pricesFragment);
+            addSubscreen(detailFragment);
+        }
+        if(screen >= DoctorsCore.Screens.VIDEOS)
+        {
+            addSubscreen(videosFragment);
+        }
+        if(screen >= DoctorsCore.Screens.VIDEO_DETAIL)
+        {
+            addSubscreen(videoDetailFragment);
         }
     }
 
     @Override
-    protected ServicesWithPricesContract.Presenter setPresenter()
+    protected DoctorsContract.Presenter setPresenter()
     {
-        return new ServicesWithPricesPresenter(this);
+        return new DoctorsPresenter(this);
     }
 
     @Override
     protected int setContentView()
     {
-        return R.layout.services_prices_fragment;
+        return R.layout.doctors_screen;
     }
 
     @Override
@@ -104,16 +142,15 @@ public class ServicesWithPricesFragment
     @Override
     protected void init()
     {
-        pricesGroupData = new PricesGroupData(new ServicesPricesAdapterListener()
+        adapter = new DoctorsAdapter(getActivity(), new DoctorsAdapterListener()
         {
             @Override
-            public void getService(int id)
+            public void getDoctor(int id)
             {
-                pricesFragment = PricesFragment.newInstanse(pricesBehaviour, id);
-                addScreen(ServicesWithPricesCore.Screens.PRICES);
+                detailFragment = DoctorDetailFragment.newInstanse(doctorDetailBehaviour, id);
+                addScreen(DoctorsCore.Screens.DETAIL);
             }
         });
-        adapter = new GroupAdapter<>(getActivity(), pricesGroupData);
         list.setLayoutManager(new LinearLayoutManager(getActivity()));
         list.setAdapter(adapter);
         search.addTextChangedListener(new TextWatcher()
@@ -145,6 +182,7 @@ public class ServicesWithPricesFragment
         getPresenter().update();
         getPresenter().load();
     }
+
     private void searchClear()
     {
         if(search.getText()
@@ -157,35 +195,14 @@ public class ServicesWithPricesFragment
     }
 
     @Override
-    public void update(ListModel<ServicesWithPricesCore.Model> allData, ListModel<ServicesWithPricesContract.GroupModel> groups)
+    public void update(final ListModel<DoctorsCore.Model> data)
     {
-        ArrayList<GroupModel> data = new ArrayList<>();
-        int n = 0;
-        for(int i=0; i<groups.getItemsCount(); i++)
-        {
-            ServicesWithPricesContract.GroupModel gm = groups.getItem(i);
-            data.add(new GroupModel<>(gm, PricesGroupData.ViewTypes.GROUP));
-            while(n < allData.getItemsCount())
-            {
-                ServicesWithPricesCore.Model m = allData.getItem(n);
-                if(m.getGroupId() == gm.getId())
-                {
-                    data.add(new GroupModel<>(m, PricesGroupData.ViewTypes.NORMAL));
-                    n++;
-                }
-                else
-                {
-                    break;
-                }
-            }
-        }
-        final ArrayListModel<GroupModel> servicesWithPrices = new ArrayListModel<>(data);
         runOnUiThread(new Runnable()
         {
             @Override
             public void run()
             {
-                pricesGroupData.swapData(servicesWithPrices);
+                adapter.swapData(data);
                 adapter.notifyDataSetChanged();
             }
         });
@@ -195,8 +212,14 @@ public class ServicesWithPricesFragment
     {
         switch(screen)
         {
-            case ServicesWithPricesCore.Screens.PRICES:
-                addSubscreen(pricesFragment);
+            case DoctorsCore.Screens.DETAIL:
+                addSubscreen(detailFragment);
+                break;
+            case DoctorsCore.Screens.VIDEOS:
+                addSubscreen(videosFragment);
+                break;
+            case DoctorsCore.Screens.VIDEO_DETAIL:
+                addSubscreen(videoDetailFragment);
                 break;
         }
     }

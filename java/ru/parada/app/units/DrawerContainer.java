@@ -8,7 +8,6 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -220,8 +219,6 @@ public class DrawerContainer
                     }
                     else if(Math.abs(y) < Math.abs(x)-1)
                     {
-                        Log.e(this.getClass()
-                                  .getCanonicalName(), "move");
                         onTouchEvent(ev);
                     }
                     else
