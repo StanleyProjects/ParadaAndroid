@@ -30,7 +30,7 @@ public class EventsFragment
             @Override
             public void setNews()
             {
-                fragment.detailFragment = null;
+                fragment.resetScreenIndex();
                 fragment.runAfterResume(new Runnable()
                 {
                     @Override
@@ -43,7 +43,7 @@ public class EventsFragment
             @Override
             public void setOneOfNews(final int id)
             {
-                fragment.detailFragment = null;
+                fragment.resetScreenIndex();
                 fragment.runAfterResume(new Runnable()
                 {
                     @Override
@@ -81,7 +81,7 @@ public class EventsFragment
                     detailFragment = null;
                 }
             }, id);
-            addScreen(EventsCore.Screens.ONEOFNEWS_or_ACTION);
+            addSubscreen(detailFragment);
         }
     });
     private Fragment detailFragment;
@@ -200,21 +200,9 @@ public class EventsFragment
                 detailFragment = null;
             }
         }, id);
-        addScreen(EventsCore.Screens.ONEOFNEWS_or_ACTION);
+        addSubscreen(detailFragment);
     }
 
-    private void addScreen(int screen)
-    {
-        switch(screen)
-        {
-            case EventsCore.Screens.NEWS_or_ACTIONS:
-                replaceList();
-                break;
-            case EventsCore.Screens.ONEOFNEWS_or_ACTION:
-                addSubscreen(detailFragment);
-                break;
-        }
-    }
     private void addSubscreen(Fragment fragment)
     {
         getChildFragmentManager().beginTransaction()

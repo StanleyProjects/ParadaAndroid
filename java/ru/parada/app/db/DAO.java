@@ -1,12 +1,12 @@
 package ru.parada.app.db;
 
-import ru.parada.app.contracts.NotificationsContract;
 import ru.parada.app.contracts.PricesContract;
 import ru.parada.app.contracts.ServicesWithPricesContract;
 import ru.parada.app.core.ActionsCore;
 import ru.parada.app.core.DoctorVideosCore;
 import ru.parada.app.core.DoctorsCore;
 import ru.parada.app.core.NewsCore;
+import ru.parada.app.core.NotificationsCore;
 import ru.parada.app.core.ServicesCore;
 import ru.parada.app.core.ServicesWithPricesCore;
 import ru.parada.app.units.ListModel;
@@ -68,8 +68,8 @@ public interface DAO
     }
     interface Notifications
     {
-        ListModel<NotificationsContract.Model> getAll();
-        void insertOne(NotificationsContract.Model item);
+        ListModel<NotificationsCore.Model> getAll();
+        void insertOne(NotificationsCore.Model item);
         void clear();
     }
 }

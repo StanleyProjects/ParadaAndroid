@@ -20,7 +20,7 @@ public class PricesFragment
         extends MVPFragment<PricesContract.Presenter, PricesContract.Behaviour>
         implements PricesContract.View, PricesContract.Mark
 {
-    static public PricesFragment newInstanse(PricesContract.Behaviour behaviour, int service_id)
+    static public MVPFragment newInstanse(PricesContract.Behaviour behaviour, int service_id)
     {
         PricesFragment fragment = new PricesFragment();
         fragment.setBehaviour(behaviour);

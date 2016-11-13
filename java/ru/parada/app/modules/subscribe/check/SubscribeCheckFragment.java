@@ -1,4 +1,4 @@
-package ru.parada.app.modules.subscribe.subscribecheck;
+package ru.parada.app.modules.subscribe.check;
 
 import android.os.Bundle;
 import android.view.View;

@@ -10,7 +10,7 @@ public class ContactsFragment
     extends MVPFragment<ContactsContract.Presenter, ContactsContract.Behaviour>
     implements ContactsContract.View
 {
-    static public ContactsFragment newInstanse(ContactsContract.Behaviour behaviour)
+    static public MVPFragment newInstanse(ContactsContract.Behaviour behaviour)
     {
         ContactsFragment fragment = new ContactsFragment();
         fragment.setBehaviour(behaviour);

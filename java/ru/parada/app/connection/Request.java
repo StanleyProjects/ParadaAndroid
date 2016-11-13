@@ -1,6 +1,7 @@
 package ru.parada.app.connection;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 public class Request
 {
@@ -21,7 +22,7 @@ public class Request
         return this;
     }
 
-    public void execute(final RequestListener listener)
+    private String generateUrl()
     {
         String url = baseUrl;
         url += method;
@@ -33,14 +34,34 @@ public class Request
                 url += fields.get(0).key + "=" + fields.get(0).value;
             }
         }
-        final String finalUrl = url;
+        return url;
+    }
+    public void execute(final RequestListener listener)
+    {
         new Thread(new Runnable()
         {
             public void run()
             {
                 try
                 {
-                    listener.answer(Connection.getDataFromUrlConnection(Connection.buildURLConnection(finalUrl)).toString());
+                    listener.answer(Connection.getDataFromUrlConnection(Connection.buildURLConnection(generateUrl())).toString());
+                }
+                catch(Exception e)
+                {
+                    listener.error(e);
+                }
+            }
+        }).start();
+    }
+    public void executePost(final Map<String, String> data, final RequestListener listener)
+    {
+        new Thread(new Runnable()
+        {
+            public void run()
+            {
+                try
+                {
+                    listener.answer(Connection.getDataFromUrlConnection(new PostURLConnection(generateUrl()).buildPostURLConnection(data)).toString());
                 }
                 catch(Exception e)
                 {

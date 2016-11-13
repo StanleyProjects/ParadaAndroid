@@ -110,7 +110,7 @@ public class ServicesWithPricesFragment
             public void getService(int id)
             {
                 pricesFragment = PricesFragment.newInstanse(pricesBehaviour, id);
-                addScreen(ServicesWithPricesCore.Screens.PRICES);
+                addSubscreen(pricesFragment);
             }
         });
         adapter = new GroupAdapter<>(getActivity(), pricesGroupData);
@@ -191,15 +191,6 @@ public class ServicesWithPricesFragment
         });
     }
 
-    private void addScreen(int screen)
-    {
-        switch(screen)
-        {
-            case ServicesWithPricesCore.Screens.PRICES:
-                addSubscreen(pricesFragment);
-                break;
-        }
-    }
     private void addSubscreen(Fragment fragment)
     {
         getChildFragmentManager().beginTransaction()

@@ -19,7 +19,7 @@ public class MenuFragment
         extends MVPFragment<MenuContract.Presenter, MenuContract.Behaviour>
         implements MenuContract.View
 {
-    static public MenuFragment newInstanse(MenuContract.Behaviour behaviour, CallbackConnector<MenuContract.Callback> cconnector)
+    static public MVPFragment newInstanse(MenuContract.Behaviour behaviour, CallbackConnector<MenuContract.Callback> cconnector)
     {
         final MenuFragment fragment = new MenuFragment();
         fragment.setBehaviour(behaviour);

@@ -4,14 +4,12 @@ import android.content.ContentValues;
 import android.provider.BaseColumns;
 
 import ru.parada.app.contracts.ImagesContract;
-import ru.parada.app.contracts.MainContract;
-import ru.parada.app.contracts.NotificationsContract;
 import ru.parada.app.contracts.PricesContract;
-import ru.parada.app.contracts.ServicesContract;
 import ru.parada.app.core.ActionsCore;
 import ru.parada.app.core.DoctorVideosCore;
 import ru.parada.app.core.DoctorsCore;
 import ru.parada.app.core.NewsCore;
+import ru.parada.app.core.NotificationsCore;
 import ru.parada.app.core.ServicesCore;
 import ru.parada.app.core.ServicesWithPricesCore;
 
@@ -91,7 +89,7 @@ public class ContentDriver
         return content;
     }
 
-    public static ContentValues getContentValues(NotificationsContract.Model item)
+    public static ContentValues getContentValues(NotificationsCore.Model item)
     {
         ContentValues content = new ContentValues();
         content.put(BaseColumns._ID, item.getId());

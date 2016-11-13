@@ -15,7 +15,7 @@ import ru.parada.app.core.SubscribeCore;
 import ru.parada.app.modules.services.detail.ServiceDetailFragment;
 import ru.parada.app.modules.services.list.adapter.ServicesAdapter;
 import ru.parada.app.modules.services.list.adapter.ServicesAdapterListener;
-import ru.parada.app.modules.subscribe.subscribecheck.SubscribeCheckFragment;
+import ru.parada.app.modules.subscribe.check.SubscribeCheckFragment;
 import ru.parada.app.modules.subscribe.subscribescreen.SubscribeFragment;
 import ru.parada.app.units.ListModel;
 import ru.parada.app.units.MultiFragment;
@@ -173,21 +173,6 @@ public class ServicesFragment
         }, 0);
     }
 
-    private void addScreen(int screen)
-    {
-        switch(screen)
-        {
-            case ServicesCore.Screens.DETAIL:
-                addSubscreen(detailFragment);
-                break;
-            case ServicesCore.Screens.SUBSCRIBE:
-                addSubscreen(subscribeFragment);
-                break;
-            case ServicesCore.Screens.SUBSCRIBE_CHECK:
-                addSubscreen(subscribeCheckFragment);
-                break;
-        }
-    }
     private void addSubscreen(Fragment fragment)
     {
         getChildFragmentManager().beginTransaction()

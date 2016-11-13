@@ -49,6 +49,10 @@ public abstract class MultiFragment<PRESENTER, BEHAVIOUR>
     {
         return 0;
     }
+    protected void resetScreenIndex()
+    {
+        screen = beginScreenIndex();
+    }
 
     protected abstract void setScreens(int screen);
 }

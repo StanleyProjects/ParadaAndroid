@@ -2,12 +2,14 @@ package ru.parada.app.modules.notifications;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 
 import java.util.ArrayList;
 
 import ru.parada.app.R;
 import ru.parada.app.contracts.NotificationsContract;
+import ru.parada.app.core.NotificationsCore;
 import ru.parada.app.modules.notifications.adapter.NotificationsAdapterListener;
 import ru.parada.app.modules.notifications.adapter.NotificationsGroupData;
 import ru.parada.app.units.ArrayListModel;
@@ -20,7 +22,7 @@ public class NotificationsFragment
     extends MVPFragment<NotificationsContract.Presenter, NotificationsContract.Behaviour>
     implements NotificationsContract.View
 {
-    static public NotificationsFragment newInstanse(NotificationsContract.Behaviour behaviour)
+    static public MVPFragment newInstanse(NotificationsContract.Behaviour behaviour)
     {
         NotificationsFragment fragment = new NotificationsFragment();
         fragment.setBehaviour(behaviour);
@@ -83,14 +85,20 @@ public class NotificationsFragment
     }
 
     @Override
-    public void update(ListModel<NotificationsContract.Model> data)
+    public void update(ListModel<NotificationsCore.Model> data)
     {
         ArrayList<GroupModel> groupData = new ArrayList<>();
+        Log.e(getClass().getName(), "data " + data.getItemsCount());
         for(int i=0; i<data.getItemsCount(); i++)
         {
+            Log.e(getClass().getName(), "message " + data.getItem(i).getMessage());
             groupData.add(new GroupModel<>(data.getItem(i), 0));
         }
         final ArrayListModel<GroupModel> notifications = new ArrayListModel<>(groupData);
+        for(int i=0; i<notifications.getItemsCount(); i++)
+        {
+            Log.e(getClass().getName(), "message " + notifications.getItem(i).getData());
+        }
         runOnUiThread(new Runnable()
         {
             @Override

@@ -1,9 +1,9 @@
 package ru.parada.app.modules.notifications.model;
 
-import ru.parada.app.contracts.NotificationsContract;
+import ru.parada.app.core.NotificationsCore;
 
 public class Notification
-        implements NotificationsContract.Model
+        implements NotificationsCore.Model
 {
     private int id;
     private String message;

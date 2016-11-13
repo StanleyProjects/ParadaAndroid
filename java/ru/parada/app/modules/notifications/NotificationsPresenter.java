@@ -8,13 +8,14 @@ import java.util.HashMap;
 import ru.parada.app.connection.ParadaService;
 import ru.parada.app.connection.Request;
 import ru.parada.app.contracts.NotificationsContract;
+import ru.parada.app.core.NotificationsCore;
 import ru.parada.app.db.SQliteApi;
 import ru.parada.app.json.JSONParser;
 import ru.parada.app.modules.notifications.model.Notification;
 import ru.parada.app.units.ListModel;
 
 public class NotificationsPresenter
-    implements NotificationsContract.Presenter
+        implements NotificationsContract.Presenter
 {
     private NotificationsContract.View view;
 
@@ -34,12 +35,12 @@ public class NotificationsPresenter
                 ArrayList notifications;
                 try
                 {
-                    notifications = (ArrayList)JSONParser.newParser().parse(answer);
+                    notifications = (ArrayList)JSONParser.newParser()
+                                                         .parse(answer);
                 }
                 catch(Exception e)
                 {
-                    Log.e(this.getClass()
-                              .getName(), "parse " + e.getMessage());
+                    Log.e(getClass().getName(), "parse " + e.getMessage());
                     return;
                 }
                 SQliteApi.getInstanse()
@@ -49,11 +50,13 @@ public class NotificationsPresenter
                          .startTransaction();
                 for(Object notification : notifications)
                 {
-                    SQliteApi.getInstanse().getNotifications().insertOne(new Notification(
-                            Integer.parseInt((String)((HashMap)notification).get("id")),
-                            getString((HashMap)notification, "message"),
-                            Long.parseLong((String)((HashMap)notification).get("date"))
-                    ));
+                    //Log.e(getClass().getName(), "message " + getString((HashMap)notification, "message"));
+                    SQliteApi.getInstanse()
+                             .getNotifications()
+                             .insertOne(new Notification(
+                                     Integer.parseInt((String)((HashMap)notification).get("id")),
+                                     getString((HashMap)notification, "message"),
+                                     Long.parseLong((String)((HashMap)notification).get("date"))));
                 }
                 SQliteApi.getInstanse()
                          .endTransaction();
@@ -62,11 +65,11 @@ public class NotificationsPresenter
             @Override
             public void error(Exception e)
             {
-                Log.e(this.getClass()
-                          .getName(), "request " + ParadaService.BASE_URL + "\n" + ParadaService.Get.NOTIFICATIONS + "\n" + e.getMessage());
+                Log.e(getClass().getName(), "request " + ParadaService.BASE_URL + "\n" + ParadaService.Get.NOTIFICATIONS + "\n" + e.getMessage());
             }
         });
     }
+
     private String getString(HashMap map, String key)
     {
         if(map.get(key) == null)
@@ -84,12 +87,14 @@ public class NotificationsPresenter
             @Override
             public void run()
             {
-                updateNotifications(SQliteApi.getInstanse().getNotifications().getAll());
+                updateNotifications(SQliteApi.getInstanse()
+                                             .getNotifications()
+                                             .getAll());
             }
         }).start();
     }
 
-    private void updateNotifications(ListModel<NotificationsContract.Model> data)
+    private void updateNotifications(ListModel<NotificationsCore.Model> data)
     {
         view.update(data);
     }

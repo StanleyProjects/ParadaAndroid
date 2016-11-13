@@ -10,7 +10,7 @@ public class SocialsFragment
     extends MVPFragment<SocialsContract.Presenter, SocialsContract.Behaviour>
     implements SocialsContract.View
 {
-    static public SocialsFragment newInstanse(SocialsContract.Behaviour behaviour)
+    static public MVPFragment newInstanse(SocialsContract.Behaviour behaviour)
     {
         SocialsFragment fragment = new SocialsFragment();
         fragment.setBehaviour(behaviour);

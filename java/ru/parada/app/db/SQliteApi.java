@@ -16,6 +16,7 @@ import ru.parada.app.core.ActionsCore;
 import ru.parada.app.core.DoctorVideosCore;
 import ru.parada.app.core.DoctorsCore;
 import ru.parada.app.core.NewsCore;
+import ru.parada.app.core.NotificationsCore;
 import ru.parada.app.core.ServicesCore;
 import ru.parada.app.core.ServicesWithPricesCore;
 import ru.parada.app.modules.actions.model.Action;
@@ -27,6 +28,7 @@ import ru.parada.app.modules.doctors.videos.model.Video;
 import ru.parada.app.modules.images.ImageModel;
 import ru.parada.app.modules.news.model.NewsCursorListModel;
 import ru.parada.app.modules.news.model.OneOfNews;
+import ru.parada.app.modules.notifications.model.Notification;
 import ru.parada.app.modules.notifications.model.NotificationsCursorListModel;
 import ru.parada.app.modules.prices.models.PricesCursorListModel;
 import ru.parada.app.modules.services.model.Service;
@@ -515,12 +517,27 @@ public class SQliteApi
     private final DAO.Notifications notifications = new Tables.Notifications()
     {
         @Override
-        public ListModel<NotificationsContract.Model> getAll()
+        public ListModel<NotificationsCore.Model> getAll()
         {
-            return new NotificationsCursorListModel(sdb.rawQuery("SELECT * " + "FROM " + TABLE_NAME, new String[]{}));
+            Cursor cursor = sdb.rawQuery("SELECT * " + "FROM " + TABLE_NAME, null);
+            ArrayList<NotificationsCore.Model> data = new ArrayList<>();
+            if(cursor.moveToFirst())
+            {
+                do
+                {
+                    data.add(new Notification(
+                            cursor.getInt(cursor.getColumnIndex(BaseColumns._ID)),
+                            cursor.getString(cursor.getColumnIndex(Columns.message)),
+                            cursor.getLong(cursor.getColumnIndex(Columns.date))
+                    ));
+                }
+                while(cursor.moveToNext());
+            }
+            cursor.close();
+            return new ArrayListModel<>(data);
         }
         @Override
-        public void insertOne(NotificationsContract.Model item)
+        public void insertOne(NotificationsCore.Model item)
         {
             sdb.insertWithOnConflict(TABLE_NAME, null, ContentDriver.getContentValues(item), SQLiteDatabase.CONFLICT_REPLACE);
         }

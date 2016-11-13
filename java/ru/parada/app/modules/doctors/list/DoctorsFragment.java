@@ -53,7 +53,7 @@ public class DoctorsFragment
         public void showVideos(int id)
         {
             videosFragment = DoctorVideosFragment.newInstanse(doctorVideosBehaviour, id);
-            addScreen(DoctorsCore.Screens.VIDEOS);
+            addSubscreen(videosFragment);
         }
     };
     private final DoctorVideosContract.Behaviour doctorVideosBehaviour = new DoctorVideosContract.Behaviour()
@@ -68,7 +68,7 @@ public class DoctorsFragment
         public void getVideo(int id)
         {
             videoDetailFragment = DoctorVideoDetailFragment.newInstanse(doctorVideoDetailBehaviour, id);
-            addScreen(DoctorsCore.Screens.VIDEO_DETAIL);
+            addSubscreen(videoDetailFragment);
         }
     };
     private final DoctorVideoDetailContract.Behaviour doctorVideoDetailBehaviour = new DoctorVideoDetailContract.Behaviour()
@@ -148,7 +148,7 @@ public class DoctorsFragment
             public void getDoctor(int id)
             {
                 detailFragment = DoctorDetailFragment.newInstanse(doctorDetailBehaviour, id);
-                addScreen(DoctorsCore.Screens.DETAIL);
+                addSubscreen(detailFragment);
             }
         });
         list.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -208,21 +208,6 @@ public class DoctorsFragment
         });
     }
 
-    private void addScreen(int screen)
-    {
-        switch(screen)
-        {
-            case DoctorsCore.Screens.DETAIL:
-                addSubscreen(detailFragment);
-                break;
-            case DoctorsCore.Screens.VIDEOS:
-                addSubscreen(videosFragment);
-                break;
-            case DoctorsCore.Screens.VIDEO_DETAIL:
-                addSubscreen(videoDetailFragment);
-                break;
-        }
-    }
     private void addSubscreen(Fragment fragment)
     {
         getChildFragmentManager().beginTransaction()

@@ -39,8 +39,7 @@ public class Connection
     static public StringBuilder getDataFromUrlConnection(URLConnection urlConn)
             throws IOException
     {
-        BufferedReader br = new BufferedReader(
-                new InputStreamReader(urlConn.getInputStream(), Charset.forName("UTF-8")));
+        BufferedReader br = new BufferedReader(new InputStreamReader(urlConn.getInputStream(), Charset.forName("UTF-8")));
         StringBuilder completeResponse = new StringBuilder();
         String response = br.readLine();
         while(response != null)
