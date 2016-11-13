@@ -7,7 +7,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import ru.parada.app.R;
-import ru.parada.app.contracts.DoctorVideoDetailContract;
+import ru.parada.app.contracts.doctors.DoctorVideoDetailContract;
 import ru.parada.app.core.DoctorVideosCore;
 import ru.parada.app.managers.FoldersManager;
 import ru.parada.app.units.MVPFragment;

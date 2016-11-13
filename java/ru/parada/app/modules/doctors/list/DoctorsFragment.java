@@ -9,10 +9,10 @@ import android.view.View;
 import android.widget.EditText;
 
 import ru.parada.app.R;
-import ru.parada.app.contracts.DoctorDetailContract;
-import ru.parada.app.contracts.DoctorVideoDetailContract;
-import ru.parada.app.contracts.DoctorVideosContract;
-import ru.parada.app.contracts.DoctorsContract;
+import ru.parada.app.contracts.doctors.DoctorDetailContract;
+import ru.parada.app.contracts.doctors.DoctorVideoDetailContract;
+import ru.parada.app.contracts.doctors.DoctorVideosContract;
+import ru.parada.app.contracts.doctors.DoctorsContract;
 import ru.parada.app.core.DoctorsCore;
 import ru.parada.app.modules.doctors.detail.DoctorDetailFragment;
 import ru.parada.app.modules.doctors.list.adapter.DoctorsAdapter;

@@ -1,6 +1,6 @@
 package ru.parada.app.modules.doctors.videos.detail;
 
-import ru.parada.app.contracts.DoctorVideoDetailContract;
+import ru.parada.app.contracts.doctors.DoctorVideoDetailContract;
 import ru.parada.app.db.SQliteApi;
 
 public class DoctorVideoDetailPresenter

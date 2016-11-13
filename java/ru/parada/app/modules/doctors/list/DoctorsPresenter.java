@@ -10,7 +10,7 @@ import java.util.UUID;
 import ru.parada.app.connection.DownloadFile;
 import ru.parada.app.connection.ParadaService;
 import ru.parada.app.connection.Request;
-import ru.parada.app.contracts.DoctorsContract;
+import ru.parada.app.contracts.doctors.DoctorsContract;
 import ru.parada.app.contracts.ImagesContract;
 import ru.parada.app.core.DoctorsCore;
 import ru.parada.app.db.SQliteApi;

@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import ru.parada.app.R;
-import ru.parada.app.contracts.DoctorDetailContract;
+import ru.parada.app.contracts.doctors.DoctorDetailContract;
 import ru.parada.app.core.DoctorsCore;
 import ru.parada.app.managers.FoldersManager;
 import ru.parada.app.modules.call.CallDialog;

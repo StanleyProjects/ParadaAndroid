@@ -1,6 +1,6 @@
-package ru.parada.app.modules.contacts;
+package ru.parada.app.modules.contacts.list;
 
-import ru.parada.app.contracts.ContactsContract;
+import ru.parada.app.contracts.contacts.ContactsContract;
 
 public class ContactsPresenter
     implements ContactsContract.Presenter

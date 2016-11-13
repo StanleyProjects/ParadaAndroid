@@ -177,7 +177,7 @@ public class DrawerContainer
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev)
     {
-        if(drawerOpened && ev.getX() > drawerPosition + drawerWidth)
+        if(isOpen() && ev.getX() > drawerPosition + drawerWidth)
         {
             if(ev.getAction() == MotionEvent.ACTION_UP && !moveProcess)
             {
@@ -206,11 +206,11 @@ public class DrawerContainer
                     double a = Math.sqrt(x*x + y*y);
 //                    Log.e(this.getClass()
 //                              .getCanonicalName(), "x " + x + " y " + y + " a " + a);
-                    if(!drawerOpened && x < 0)
+                    if(!isOpen() && x < 0)
                     {
                         return super.onInterceptTouchEvent(ev);
                     }
-                    if(drawerOpened && x > 0)
+                    if(isOpen() && x > 0)
                     {
                         return super.onInterceptTouchEvent(ev);
                     }
@@ -225,7 +225,7 @@ public class DrawerContainer
                     {
                         startedTouch = false;
                         moveProcess = false;
-                        if(!drawerOpened)
+                        if(!isOpen())
                         {
                             closeDrawer(null);
                         }
@@ -255,7 +255,7 @@ public class DrawerContainer
     public boolean onTouchEvent(MotionEvent ev)
     {
         float factor = 2;
-        if(drawerOpened && ev.getX() > drawerPosition + drawerWidth && !moveProcess)
+        if(isOpen() && ev.getX() > drawerPosition + drawerWidth && !moveProcess)
         {
             if(ev.getAction() == MotionEvent.ACTION_UP)
             {
@@ -272,7 +272,7 @@ public class DrawerContainer
             {
                 moveProcess = false;
                 float x = (ev.getX() - startedTrackingX)*factor;
-                if(drawerOpened)
+                if(isOpen())
                 {
                     x += drawerWidth;
                 }
@@ -300,7 +300,7 @@ public class DrawerContainer
         if(ev.getAction() == MotionEvent.ACTION_MOVE && startedTouch)
         {
             moveProcess = true;
-            if(drawerOpened)
+            if(isOpen())
             {
                 setDrawerPosition(drawerWidth + (ev.getX() - startedTrackingX)*factor);
             }
@@ -357,6 +357,11 @@ public class DrawerContainer
     public void setRightDrawable(Drawable s)
     {
         this.rightDrawable = s;
+    }
+
+    public boolean isOpen()
+    {
+        return drawerOpened;
     }
 
     public interface AnimationEndListener

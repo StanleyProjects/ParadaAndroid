@@ -3,7 +3,6 @@ package ru.parada.app.modules.doctors.models;
 import android.database.Cursor;
 import android.provider.BaseColumns;
 
-import ru.parada.app.contracts.DoctorDetailContract;
 import ru.parada.app.core.DoctorsCore;
 import ru.parada.app.db.Tables;
 import ru.parada.app.units.CursorListModel;

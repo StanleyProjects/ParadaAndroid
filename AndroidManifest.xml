@@ -8,6 +8,11 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyAHFtyXv_BD6BuxJ-TSct0M040umNWkumg"/>
+
         <activity android:name=".modules.general.GeneralActivity"
                   android:screenOrientation="portrait">
             <intent-filter>

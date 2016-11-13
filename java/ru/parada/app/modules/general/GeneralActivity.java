@@ -5,8 +5,8 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 
 import ru.parada.app.R;
-import ru.parada.app.contracts.ContactsContract;
-import ru.parada.app.contracts.DoctorsContract;
+import ru.parada.app.contracts.contacts.ContactsContract;
+import ru.parada.app.contracts.doctors.DoctorsContract;
 import ru.parada.app.contracts.EventsContract;
 import ru.parada.app.contracts.GeneralContract;
 import ru.parada.app.contracts.MainContract;
@@ -16,7 +16,7 @@ import ru.parada.app.contracts.ServicesContract;
 import ru.parada.app.contracts.ServicesWithPricesContract;
 import ru.parada.app.contracts.SocialsContract;
 import ru.parada.app.core.GeneralCore;
-import ru.parada.app.modules.contacts.ContactsFragment;
+import ru.parada.app.modules.contacts.list.ContactsFragment;
 import ru.parada.app.modules.doctors.list.DoctorsFragment;
 import ru.parada.app.modules.events.EventsFragment;
 import ru.parada.app.modules.main.MainFragment;
@@ -165,6 +165,11 @@ public class GeneralActivity
     @Override
     public void onBackPressed()
     {
+        if(drawerContainer.isOpen())
+        {
+            drawerContainer.closeDrawer(null);
+            return;
+        }
         if(!currentFragment.getChildFragmentManager().popBackStackImmediate())
         {
             super.onBackPressed();
