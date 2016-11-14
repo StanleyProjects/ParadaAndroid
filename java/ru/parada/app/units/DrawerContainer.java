@@ -6,6 +6,7 @@ import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.Gravity;
@@ -81,6 +82,9 @@ public class DrawerContainer
         }
         drawerLayout.setTranslationX(drawerPosition);
         invalidate();
+//        Rect rect = new Rect();
+//        rect.set(0, 0, drawerWidth, getHeight());
+//        drawerLayout.requestRectangleOnScreen(rect, false);
     }
 
     public void cancelCurrentAnimation()
@@ -313,28 +317,59 @@ public class DrawerContainer
         return false;
     }
 
+//    @Override
+//    protected boolean drawChild(Canvas canvas, View child, long drawingTime)
+//    {
+//        boolean result = super.drawChild(canvas, child, drawingTime);
+//        float dpos = drawerPosition + drawerWidth;
+//        if(child != drawerLayout)
+//        {
+//            float scrimOpacity = dpos / drawerWidth;
+//            scrimPaint.setColor((int)(((0x99000000 & 0xff000000) >>> 24) * scrimOpacity) << 24);
+//            canvas.drawRect(dpos, 0, getWidth(), getHeight(), scrimPaint);
+//            if(rightDrawable != null)
+//            {
+//                float alpha = Math.max(0, Math.min(dpos / AndroidUtil.dp(20), 1.0f));
+//                if(alpha != 0)
+//                {
+//                    rightDrawable.setBounds((int)dpos, child.getTop(), (int)dpos + rightDrawable.getIntrinsicWidth(), child.getBottom());
+//                    rightDrawable.setAlpha((int)(0xff * alpha));
+//                    rightDrawable.draw(canvas);
+//                }
+//            }
+//        }
+//        return result;
+//    }
+
     @Override
     protected boolean drawChild(Canvas canvas, View child, long drawingTime)
     {
-        boolean result = super.drawChild(canvas, child, drawingTime);
-        float dpos = drawerPosition + drawerWidth;
-        if(child != drawerLayout)
+        if(drawerLayout == null)
         {
-            float scrimOpacity = dpos / drawerWidth;
-            scrimPaint.setColor((int)(((0x99000000 & 0xff000000) >>> 24) * scrimOpacity) << 24);
-            canvas.drawRect(dpos, 0, getWidth(), getHeight(), scrimPaint);
-            if(rightDrawable != null)
-            {
-                float alpha = Math.max(0, Math.min(dpos / AndroidUtil.dp(20), 1.0f));
-                if(alpha != 0)
-                {
-                    rightDrawable.setBounds((int)dpos, child.getTop(), (int)dpos + rightDrawable.getIntrinsicWidth(), child.getBottom());
-                    rightDrawable.setAlpha((int)(0xff * alpha));
-                    rightDrawable.draw(canvas);
-                }
-            }
+            return super.drawChild(canvas, child, drawingTime);
         }
-        return result;
+        if(child == getChildAt(0))
+        {
+            drawChilds(canvas);
+        }
+        return true;
+    }
+
+    private void drawChilds(Canvas canvas)
+    {
+        for(int i=0; i<getChildCount(); i++)
+        {
+            if(getChildAt(i) == drawerLayout)
+            {
+                continue;
+            }
+            super.drawChild(canvas, getChildAt(i), 0);
+        }
+        float dpos = drawerPosition + drawerWidth;
+        float scrimOpacity = dpos / drawerWidth;
+        scrimPaint.setColor((int)(((0x99000000 & 0xff000000) >>> 24) * scrimOpacity) << 24);
+        canvas.drawRect(dpos, 0, getWidth(), getHeight(), scrimPaint);
+        super.drawChild(canvas, drawerLayout, 0);
     }
 
     private void setDrawerLayout(View d)
