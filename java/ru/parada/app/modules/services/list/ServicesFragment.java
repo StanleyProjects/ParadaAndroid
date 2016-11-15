@@ -113,7 +113,7 @@ public class ServicesFragment
     @Override
     protected int setContentView()
     {
-        return R.layout.service_fragment;
+        return R.layout.services_fragment;
     }
 
     @Override

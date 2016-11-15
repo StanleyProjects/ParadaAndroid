@@ -4,18 +4,15 @@
              android:layout_height="match_parent"
              android:focusable="true"
              android:focusableInTouchMode="true">
-
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:orientation="vertical"
         android:background="@color/white"
-        android:orientation="vertical">
-
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
         <FrameLayout
+            android:background="@color/colorPrimary"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/toolbar_height"
-            android:background="@color/colorPrimary">
-
+            android:layout_height="@dimen/toolbar_height">
             <ImageView
                 android:id="@+id/menu"
                 android:layout_width="@dimen/toolbar_icon"
@@ -23,17 +20,18 @@
                 android:layout_gravity="center_vertical"
                 android:padding="@dimen/toolbar_icon_padding"
                 android:scaleType="fitCenter"
-                android:src="@mipmap/icon_menu"/>
-
+                android:src="@mipmap/icon_menu"
+                android:tint="@color/white"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:lines="1"
+                android:ellipsize="end"
                 android:text="@string/prices"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_size_medium"/>
         </FrameLayout>
-
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/container_height"
@@ -72,7 +70,6 @@
                 android:layout_marginRight="8dp"
                 android:src="@mipmap/close"/>
         </FrameLayout>
-
         <android.support.v7.widget.RecyclerView
             android:id="@+id/list"
             android:layout_width="match_parent"

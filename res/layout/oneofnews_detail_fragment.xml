@@ -27,9 +27,9 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:lines="1"
+            android:ellipsize="end"
             android:paddingLeft="56dp"
             android:paddingRight="56dp"
-            android:singleLine="true"
             android:textColor="@color/white"
             android:textSize="@dimen/text_size_medium"/>
     </FrameLayout>

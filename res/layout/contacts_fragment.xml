@@ -13,7 +13,6 @@
             android:background="@color/colorPrimary"
             android:layout_width="match_parent"
             android:layout_height="@dimen/toolbar_height">
-
             <ImageView
                 android:id="@+id/menu"
                 android:layout_width="@dimen/toolbar_icon"
@@ -23,11 +22,12 @@
                 android:scaleType="fitCenter"
                 android:src="@mipmap/icon_menu"
                 android:tint="@color/white"/>
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:lines="1"
+                android:ellipsize="end"
                 android:text="@string/contacts"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_size_medium"/>

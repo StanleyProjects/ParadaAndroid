@@ -8,7 +8,9 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
+import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -30,6 +32,8 @@ public class DrawerContainer
     private boolean drawerOpened;
     private boolean startedTouch;
     private boolean moveProcess;
+    private boolean findScrollHorizontally;
+    private boolean multitouch;
     private float startedTrackingX;
     private float startedTrackingY;
 
@@ -70,7 +74,6 @@ public class DrawerContainer
         {
             return;
         }
-//        Log.e(this.getClass().getCanonicalName(), "value " + value);
         drawerPosition = value - drawerWidth;
         if(drawerPosition > 0)
         {
@@ -82,9 +85,6 @@ public class DrawerContainer
         }
         drawerLayout.setTranslationX(drawerPosition);
         invalidate();
-//        Rect rect = new Rect();
-//        rect.set(0, 0, drawerWidth, getHeight());
-//        drawerLayout.requestRectangleOnScreen(rect, false);
     }
 
     public void cancelCurrentAnimation()
@@ -181,6 +181,34 @@ public class DrawerContainer
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev)
     {
+        if(!findScrollHorizontally && !moveProcess && !isOpen())
+        {
+            Rect rect = new Rect();
+            getGlobalVisibleRect(rect);
+            for(int i=0; i<getChildCount(); i++)
+            {
+                if(getChildAt(i) == drawerLayout)
+                {
+                    continue;
+                }
+                if(getChildAt(i) instanceof ViewGroup)
+                {
+                    if(findScrollHorizontally((ViewGroup)getChildAt(i), ev.getX(), ev.getY() + rect.top))
+                    {
+                        findScrollHorizontally = true;
+                        break;
+                    }
+                }
+                else
+                {
+                    if(findView(getChildAt(i), ev.getX(), ev.getY() + rect.top))
+                    {
+                        findScrollHorizontally = true;
+                        break;
+                    }
+                }
+            }
+        }
         if(isOpen() && ev.getX() > drawerPosition + drawerWidth)
         {
             if(ev.getAction() == MotionEvent.ACTION_UP && !moveProcess)
@@ -207,9 +235,6 @@ public class DrawerContainer
                 {
                     float x = ev.getX() - startedTrackingX;
                     float y = ev.getY() - startedTrackingY;
-                    double a = Math.sqrt(x*x + y*y);
-//                    Log.e(this.getClass()
-//                              .getCanonicalName(), "x " + x + " y " + y + " a " + a);
                     if(!isOpen() && x < 0)
                     {
                         return super.onInterceptTouchEvent(ev);
@@ -218,10 +243,7 @@ public class DrawerContainer
                     {
                         return super.onInterceptTouchEvent(ev);
                     }
-                    if(Math.abs(x) < 2)
-                    {
-                    }
-                    else if(Math.abs(y) < Math.abs(x)-1)
+                    else if(Math.abs(y) <= Math.abs(x))
                     {
                         onTouchEvent(ev);
                     }
@@ -255,9 +277,60 @@ public class DrawerContainer
         return super.onInterceptTouchEvent(ev);
     }
 
+    private boolean findScrollHorizontally(ViewGroup viewGroup, float x, float y)
+    {
+        for(int i=0; i<viewGroup.getChildCount(); i++)
+        {
+            if(viewGroup.getChildAt(i) instanceof ViewGroup)
+            {
+                if(findScrollHorizontally((ViewGroup)viewGroup.getChildAt(i), x, y))
+                {
+                    return true;
+                }
+            }
+            else
+            {
+                if(findView(viewGroup.getChildAt(i), x, y))
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    private boolean findView(View view, float x, float y)
+    {
+//        if(!ViewCompat.canScrollHorizontally(view, ViewCompat.LAYOUT_DIRECTION_LTR))
+        if(!view.canScrollHorizontally(LAYOUT_DIRECTION_LTR))
+        {
+            return false;
+        }
+        Rect rect = new Rect();
+        view.getGlobalVisibleRect(rect);
+        boolean find = rect.left < x && rect.right > x && rect.top < y && rect.bottom > y;
+        if(find)
+        {
+            Log.e(getClass().getName(), "findScrollHorizontally " + view + " xy " +x+ " " +y+ " rect " + rect.left + " " + rect.right + " " + rect.top + " " + rect.bottom);
+        }
+        return find;
+    }
+
     @Override
     public boolean onTouchEvent(MotionEvent ev)
     {
+        if(ev.getPointerCount() > 1)
+        {
+            if(!multitouch)
+            {
+                //Log.e(getClass().getName(), "onTouchEvent multitouch " + ev);
+                multitouch = true;
+            }
+        }
+        if(ev.getAction() == MotionEvent.ACTION_UP)
+        {
+            multitouch = false;
+            findScrollHorizontally = false;
+        }
         float factor = 2;
         if(isOpen() && ev.getX() > drawerPosition + drawerWidth && !moveProcess)
         {
@@ -293,16 +366,27 @@ public class DrawerContainer
         }
         if(ev.getAction() == MotionEvent.ACTION_DOWN)
         {
+            if(multitouch || findScrollHorizontally)
+            {
+                startedTouch = false;
+                moveProcess = false;
+                closeDrawer(null);
+                return false;
+            }
             startedTouch = true;
             startedTrackingX = ev.getX();
             startedTrackingY = ev.getY();
-//            Log.e(this.getClass()
-//                      .getCanonicalName(), "startedTrackingY " + startedTrackingY);
-//            cancelCurrentAnimation();
             return true;
         }
         if(ev.getAction() == MotionEvent.ACTION_MOVE && startedTouch)
         {
+            if(multitouch || findScrollHorizontally)
+            {
+                startedTouch = false;
+                moveProcess = false;
+                closeDrawer(null);
+                return false;
+            }
             moveProcess = true;
             if(isOpen())
             {
@@ -316,30 +400,6 @@ public class DrawerContainer
         }
         return false;
     }
-
-//    @Override
-//    protected boolean drawChild(Canvas canvas, View child, long drawingTime)
-//    {
-//        boolean result = super.drawChild(canvas, child, drawingTime);
-//        float dpos = drawerPosition + drawerWidth;
-//        if(child != drawerLayout)
-//        {
-//            float scrimOpacity = dpos / drawerWidth;
-//            scrimPaint.setColor((int)(((0x99000000 & 0xff000000) >>> 24) * scrimOpacity) << 24);
-//            canvas.drawRect(dpos, 0, getWidth(), getHeight(), scrimPaint);
-//            if(rightDrawable != null)
-//            {
-//                float alpha = Math.max(0, Math.min(dpos / AndroidUtil.dp(20), 1.0f));
-//                if(alpha != 0)
-//                {
-//                    rightDrawable.setBounds((int)dpos, child.getTop(), (int)dpos + rightDrawable.getIntrinsicWidth(), child.getBottom());
-//                    rightDrawable.setAlpha((int)(0xff * alpha));
-//                    rightDrawable.draw(canvas);
-//                }
-//            }
-//        }
-//        return result;
-//    }
 
     @Override
     protected boolean drawChild(Canvas canvas, View child, long drawingTime)
