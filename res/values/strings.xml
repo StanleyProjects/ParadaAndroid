@@ -68,6 +68,8 @@
     <string name="time_reception">Время приёма</string>
     <string name="lfmname">ФИО</string>
     <string name="we_call_confirm_subscribe">Мы свяжемся с Вами в ближайшее время для подтверждения заявки на приём.</string>
+    <string name="error">Ошибка</string>
+    <string name="video_error">При воспроизведении видео произошла ошибка. Попробовать снова?</string>
 
     <string-array name="months">
         <item>января</item>

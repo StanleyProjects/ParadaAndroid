@@ -16,14 +16,12 @@ public class DoctorVideosAdapterHolder
 {
     private TextView title;
     private ImageView image;
-    private View play;
 
     public DoctorVideosAdapterHolder(Context context, ViewGroup parent)
     {
         super(context, parent, R.layout.doctor_videos_list_item);
         title = (TextView)itemView.findViewById(R.id.title);
         image = (ImageView)itemView.findViewById(R.id.image);
-        play = itemView.findViewById(R.id.play);
     }
 
     public void setTitle(String t)
@@ -36,6 +34,6 @@ public class DoctorVideosAdapterHolder
     }
     public void setPlay(View.OnClickListener clickListener)
     {
-        play.setOnClickListener(clickListener);
+        itemView.setOnClickListener(clickListener);
     }
 }

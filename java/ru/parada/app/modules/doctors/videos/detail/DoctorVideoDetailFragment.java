@@ -1,5 +1,6 @@
 package ru.parada.app.modules.doctors.videos.detail;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.View;
@@ -10,6 +11,7 @@ import ru.parada.app.R;
 import ru.parada.app.contracts.doctors.DoctorVideoDetailContract;
 import ru.parada.app.core.DoctorVideosCore;
 import ru.parada.app.managers.FoldersManager;
+import ru.parada.app.modules.player.PlayerActivity;
 import ru.parada.app.units.MVPFragment;
 import ru.parada.app.utils.ImagesUtils;
 
@@ -30,6 +32,8 @@ public class DoctorVideoDetailFragment
     private ImageView image;
     private TextView descr;
 
+    private DoctorVideosCore.Model videoData;
+
     @Override
     protected DoctorVideoDetailContract.Presenter setPresenter()
     {
@@ -47,7 +51,7 @@ public class DoctorVideoDetailFragment
     {
         image = (ImageView)v.findViewById(R.id.image);
         descr = (TextView)v.findViewById(R.id.descr);
-        setClickListener(v.findViewById(R.id.back));
+        setClickListener(v.findViewById(R.id.back), v.findViewById(R.id.play));
     }
 
     @Override
@@ -62,6 +66,9 @@ public class DoctorVideoDetailFragment
                 {
                     case R.id.back:
                         getBehaviour().back();
+                        break;
+                    case R.id.play:
+                        getActivity().startActivity(PlayerActivity.createIntent(getActivity(), videoData.getLink()));
                         break;
                 }
             }
@@ -82,6 +89,7 @@ public class DoctorVideoDetailFragment
             @Override
             public void run()
             {
+                videoData = data;
                 if(data.getImagePath() != null)
                 {
                     ImagesUtils.setImage(FoldersManager.getImagesDirectory() + "/" + data.getImagePath(), image);

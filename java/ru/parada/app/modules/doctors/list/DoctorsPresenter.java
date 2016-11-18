@@ -103,7 +103,7 @@ public class DoctorsPresenter
                 {
                     int id = Integer.parseInt((String)((HashMap)video).get("id"));
                     String link = getString((HashMap)video, "link");
-                    checkVideoImage(id, "https://img.youtube.com/vi/"+link+"/0.jpg");
+                    checkVideoImage(id, "https://img.youtube.com/vi/"+link+"/maxresdefault.jpg");
                     SQliteApi.getInstanse().getVideos().insertOne(new Video(id,
                             Integer.parseInt((String)((HashMap)video).get("doctor_id")),
                             getString((HashMap)video, "title"),
