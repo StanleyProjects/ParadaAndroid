@@ -6,6 +6,7 @@ import java.util.HashMap;
 
 import ru.parada.app.connection.ParadaService;
 import ru.parada.app.connection.Request;
+import ru.parada.app.connection.SimpleRequestListener;
 import ru.parada.app.contracts.subscribe.SubscribeCheckContract;
 import ru.parada.app.core.SubscribeCore;
 
@@ -13,6 +14,8 @@ public class SubscribeCheckPresenter
         implements SubscribeCheckContract.Presenter
 {
     private SubscribeCheckContract.View view;
+
+    private final Request subscribeRequest = new Request(ParadaService.BASE_URL, ParadaService.Post.SUBSCRIBE_DATA);
 
     public SubscribeCheckPresenter(SubscribeCheckContract.View v)
     {
@@ -31,20 +34,20 @@ public class SubscribeCheckPresenter
         map.put("email", data.getEmail());
         map.put("phone", data.getPhone());
         map.put("comment", data.getComment());
-        new Request(ParadaService.BASE_URL, ParadaService.Post.SUBSCRIBE_DATA).executePost(map, new Request.RequestListener()
+        subscribeRequest.execute(map, new SimpleRequestListener()
         {
             @Override
-            public void answer(String answer)
+            public void response(String answer)
             {
                 Log.e(getClass()
                         .getName(), "request " + ParadaService.BASE_URL + "\n" + ParadaService.Post.SUBSCRIBE_DATA + "\n" + answer);
                 view.sendSucess();
             }
             @Override
-            public void error(Exception e)
+            public void error(String url, Exception error)
             {
                 Log.e(getClass()
-                        .getName(), "request " + ParadaService.BASE_URL + "\n" + ParadaService.Post.SUBSCRIBE_DATA + "\n" + e.getMessage());
+                        .getName(), url + "\n" + error.getMessage());
                 view.sendError();
             }
         });

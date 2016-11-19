@@ -5,6 +5,7 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import ru.parada.app.connection.JsonArrayRequestListener;
 import ru.parada.app.connection.ParadaService;
 import ru.parada.app.connection.Request;
 import ru.parada.app.contracts.ServicesWithPricesContract;
@@ -19,6 +20,8 @@ public class ServicesWithPricesPresenter
 {
     private ServicesWithPricesContract.View view;
 
+    private final Request servicesWithPricesRequest = new Request(ParadaService.BASE_URL, ParadaService.Get.SERVICES_WITH_PRICES);
+
     public ServicesWithPricesPresenter(ServicesWithPricesContract.View v)
     {
         view = v;
@@ -27,29 +30,17 @@ public class ServicesWithPricesPresenter
     @Override
     public void load()
     {
-        new Request(ParadaService.BASE_URL, ParadaService.Get.SERVICES_WITH_PRICES).execute(new Request.RequestListener()
+        servicesWithPricesRequest.execute(new JsonArrayRequestListener()
         {
             @Override
-            public void answer(String answer)
+            public void response(ArrayList answer)
             {
-                ArrayList services;
-                try
-                {
-                    services = (ArrayList)JSONParser.newParser().parse(answer);
-//                    services = (ArrayList)JSONParser.newParser().parse("[{\"id\":\"1\",\"title\":\"rino1\",\"order\":\"1\",\"group_id\":\"2\",\"group\":\"Ринопластика\",\"group_order\":null},{\"id\":\"4\",\"title\":\"plast4\",\"order\":\"2\",\"group_id\":\"2\",\"group\":\"Ринопластика\",\"group_order\":null},{\"id\":\"2\",\"title\":\"plvk\",\"order\":\"2\",\"group_id\":\"3\",\"group\":\"Пластика век, отопластика\",\"group_order\":null},{\"id\":\"3\",\"title\":\"oto\",\"order\":\"3\",\"group_id\":\"3\",\"group\":\"Пластика век, отопластика\",\"group_order\":null},{\"id\":\"5\",\"title\":\"plastoto6\",\"order\":\"4\",\"group_id\":\"3\",\"group\":\"Пластика век, отопластика\",\"group_order\":null}]");
-                }
-                catch(Exception e)
-                {
-                    Log.e(this.getClass()
-                              .getName(), "parse " + e.getMessage());
-                    return;
-                }
                 SQliteApi.getInstanse()
                          .getServicesWithPrices()
                          .clear();
                 SQliteApi.getInstanse()
                          .startTransaction();
-                for(Object service : services)
+                for(Object service : answer)
                 {
                     SQliteApi.getInstanse()
                              .getServicesWithPrices()
@@ -61,18 +52,17 @@ public class ServicesWithPricesPresenter
                                      Integer.parseInt((String)((HashMap)service).get("group_id")),
                                      getString((HashMap)service, "group"),
                                      0
-//                                     Integer.parseInt((String)((HashMap)service).get("group_order"))
                              ));
                 }
                 SQliteApi.getInstanse()
-                           .endTransaction();
+                         .endTransaction();
                 update();
             }
             @Override
-            public void error(Exception e)
+            public void error(String url, Exception error)
             {
-                Log.e(this.getClass()
-                          .getName(), "request " + ParadaService.BASE_URL + "\n" + ParadaService.Get.SERVICES_WITH_PRICES + "\n" + e.getMessage());
+                Log.e(getClass()
+                        .getName(), url + "\n" + error.getMessage());
             }
         });
     }

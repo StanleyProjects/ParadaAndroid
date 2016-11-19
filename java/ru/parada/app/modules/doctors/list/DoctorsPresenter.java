@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.UUID;
 
 import ru.parada.app.connection.DownloadFile;
+import ru.parada.app.connection.JsonArrayRequestListener;
 import ru.parada.app.connection.ParadaService;
 import ru.parada.app.connection.Request;
 import ru.parada.app.contracts.doctors.DoctorsContract;
@@ -26,6 +27,9 @@ public class DoctorsPresenter
 {
     private DoctorsContract.View view;
 
+    private final Request doctorsRequest = new Request(ParadaService.BASE_URL, ParadaService.Get.DOCTORS);
+    private final Request doctorsVideosRequest = new Request(ParadaService.BASE_URL, ParadaService.Get.VIDEOS);
+
     public DoctorsPresenter(DoctorsContract.View v)
     {
         view = v;
@@ -34,24 +38,14 @@ public class DoctorsPresenter
     @Override
     public void load()
     {
-        new Request(ParadaService.BASE_URL, ParadaService.Get.DOCTORS).execute(new Request.RequestListener()
+        doctorsRequest.execute(new JsonArrayRequestListener()
         {
             @Override
-            public void answer(String answer)
+            public void response(ArrayList answer)
             {
-                ArrayList doctors;
-                try
-                {
-                    doctors = (ArrayList)JSONParser.newParser().parse(answer);
-                }
-                catch(Exception e)
-                {
-                    Log.e(getClass().getName(), "parse doctors " + e.getMessage());
-                    return;
-                }
                 SQliteApi.getInstanse().getDoctors().clear();
                 SQliteApi.getInstanse().startTransaction();
-                for(Object doctor : doctors)
+                for(Object doctor : answer)
                 {
                     if(!correcting((HashMap)doctor))
                     {
@@ -72,34 +66,23 @@ public class DoctorsPresenter
                             getString((HashMap)doctor, "phone")));
                 }
                 SQliteApi.getInstanse().endTransaction();
-                //Log.e(getClass().getName(), "load doctors");
                 update();
             }
             @Override
-            public void error(Exception e)
+            public void error(String url, Exception error)
             {
                 Log.e(getClass()
-                          .getName(), "request " + ParadaService.BASE_URL + "\n" + ParadaService.Get.DOCTORS + "\n" + e.getMessage());
+                        .getName(), url + "\n" + error.getMessage());
             }
         });
-        new Request(ParadaService.BASE_URL, ParadaService.Get.VIDEOS).execute(new Request.RequestListener()
+        doctorsVideosRequest.execute(new JsonArrayRequestListener()
         {
             @Override
-            public void answer(String answer)
+            public void response(ArrayList answer)
             {
-                ArrayList videos;
-                try
-                {
-                    videos = (ArrayList)JSONParser.newParser().parse(answer);
-                }
-                catch(Exception e)
-                {
-                    Log.e(getClass().getName(), "parse videos " + e.getMessage());
-                    return;
-                }
                 SQliteApi.getInstanse().getVideos().clear();
                 SQliteApi.getInstanse().startTransaction();
-                for(Object video : videos)
+                for(Object video : answer)
                 {
                     int id = Integer.parseInt((String)((HashMap)video).get("id"));
                     String link = getString((HashMap)video, "link");
@@ -112,13 +95,12 @@ public class DoctorsPresenter
                             null));
                 }
                 SQliteApi.getInstanse().endTransaction();
-                //Log.e(getClass().getName(), "load videos");
             }
             @Override
-            public void error(Exception e)
+            public void error(String url, Exception error)
             {
                 Log.e(getClass()
-                        .getName(), "request " + ParadaService.BASE_URL + "\n" + ParadaService.Get.VIDEOS + "\n" + e.getMessage());
+                        .getName(), url + "\n" + error.getMessage());
             }
         });
     }

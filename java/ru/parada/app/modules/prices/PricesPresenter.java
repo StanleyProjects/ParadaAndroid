@@ -5,6 +5,7 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import ru.parada.app.connection.JsonArrayRequestListener;
 import ru.parada.app.connection.ParadaService;
 import ru.parada.app.connection.Request;
 import ru.parada.app.contracts.PricesContract;
@@ -20,6 +21,8 @@ public class PricesPresenter
 {
     private PricesContract.View view;
 
+    private final Request pricesRequest = new Request(ParadaService.BASE_URL, ParadaService.Get.PRICES);
+
     public PricesPresenter(PricesContract.View v)
     {
         view = v;
@@ -28,24 +31,14 @@ public class PricesPresenter
     @Override
     public void load(final int id)
     {
-        new Request(ParadaService.BASE_URL, ParadaService.Get.PRICES).execute(new Request.RequestListener()
+        pricesRequest.execute(new JsonArrayRequestListener()
         {
             @Override
-            public void answer(String answer)
+            public void response(ArrayList answer)
             {
-                ArrayList prices;
-                try
-                {
-                    prices = (ArrayList)JSONParser.newParser().parse(answer);
-                }
-                catch(Exception e)
-                {
-                    Log.e(this.getClass().getName(), "parse " + e.getMessage());
-                    return;
-                }
                 SQliteApi.getInstanse().getPrices().clear();
                 SQliteApi.getInstanse().startTransaction();
-                for(Object price : prices)
+                for(Object price : answer)
                 {
                     SQliteApi.getInstanse().getPrices().insertOne(new Price(
                             Integer.parseInt((String)((HashMap)price).get("id")),
@@ -58,9 +51,10 @@ public class PricesPresenter
                 update(id);
             }
             @Override
-            public void error(Exception error)
+            public void error(String url, Exception error)
             {
-                Log.e(this.getClass().getName(), "load " + error.getMessage());
+                Log.e(getClass()
+                        .getName(), url + "\n" + error.getMessage());
             }
         });
     }

@@ -19,21 +19,38 @@ public class Connection
         InputStream in = new BufferedInputStream(url.openStream());
         FileOutputStream fos = new FileOutputStream(fullPath);
         byte[] buf = new byte[1024];
-        int n;
-        while(-1 != (n = in.read(buf)))
+        int read;
+        while(-1 != (read = in.read(buf)))
         {
-            fos.write(buf, 0, n);
+            fos.write(buf, 0, read);
         }
         fos.close();
         in.close();
     }
-
-    static public URLConnection buildURLConnection(String url)
+    static public void downloadFile(String fullPath, String link, ProgressListener listener)
             throws IOException
     {
-        URLConnection urlConn = new URL(url).openConnection();
-        urlConn.setUseCaches(false);
-        return urlConn;
+        URL url = new URL(link);
+        URLConnection connection = url.openConnection();
+        connection.connect();
+        int totalSize = connection.getContentLength();
+        InputStream in = new BufferedInputStream(url.openStream());
+        int total = 0;
+        FileOutputStream fos = new FileOutputStream(fullPath);
+        byte[] buf = new byte[1024];
+        int read;
+        while(-1 != (read = in.read(buf)))
+        {
+            total += read;
+            listener.progress((int) ((total / (float) totalSize) * 100));
+            fos.write(buf, 0, read);
+        }
+        fos.close();
+        in.close();
+    }
+    public interface ProgressListener
+    {
+        void progress(int total);
     }
 
     static public StringBuilder getDataFromUrlConnection(URLConnection urlConn)

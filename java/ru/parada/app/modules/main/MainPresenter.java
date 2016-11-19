@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.UUID;
 
 import ru.parada.app.connection.DownloadFile;
+import ru.parada.app.connection.JsonArrayRequestListener;
 import ru.parada.app.connection.ParadaService;
 import ru.parada.app.connection.Request;
 import ru.parada.app.contracts.ImagesContract;
@@ -24,6 +25,8 @@ public class MainPresenter
     implements MainContract.Presenter
 {
     private MainContract.View view;
+
+    private final Request newsRequest = new Request(ParadaService.BASE_URL, ParadaService.Get.NEWS);
 
     public MainPresenter(MainContract.View v)
     {
@@ -44,24 +47,14 @@ public class MainPresenter
     @Override
     public void load()
     {
-        new Request(ParadaService.BASE_URL, ParadaService.Get.NEWS).execute(new Request.RequestListener()
+        newsRequest.execute(new JsonArrayRequestListener()
         {
             @Override
-            public void answer(String answer)
+            public void response(ArrayList answer)
             {
-                ArrayList news;
-                try
-                {
-                    news = (ArrayList)JSONParser.newParser().parse(answer);
-                }
-                catch(Exception e)
-                {
-                    Log.e(this.getClass().getName(), "parse news " + e.getMessage());
-                    return;
-                }
                 SQliteApi.getInstanse().getNews().clear();
                 SQliteApi.getInstanse().startTransaction();
-                for(Object oneOfNews : news)
+                for(Object oneOfNews : answer)
                 {
                     if(!correcting((HashMap)oneOfNews))
                     {
@@ -80,9 +73,10 @@ public class MainPresenter
                 update();
             }
             @Override
-            public void error(Exception error)
+            public void error(String url, Exception error)
             {
-                Log.e(this.getClass().getName(), "load news " + error.getMessage());
+                Log.e(getClass()
+                        .getName(), url + "\n" + error.getMessage());
             }
         });
     }

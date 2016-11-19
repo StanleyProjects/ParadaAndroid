@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.UUID;
 
 import ru.parada.app.connection.DownloadFile;
+import ru.parada.app.connection.JsonArrayRequestListener;
 import ru.parada.app.connection.ParadaService;
 import ru.parada.app.connection.Request;
 import ru.parada.app.contracts.ActionsContract;
@@ -24,6 +25,8 @@ public class ActionsPresenter
     implements ActionsContract.Presenter
 {
     private ActionsContract.View view;
+
+    private final Request actionsRequest = new Request(ParadaService.BASE_URL, ParadaService.Get.ACTIONS);
 
     public ActionsPresenter(ActionsContract.View v)
     {
@@ -53,24 +56,14 @@ public class ActionsPresenter
     @Override
     public void load()
     {
-        new Request(ParadaService.BASE_URL, ParadaService.Get.ACTIONS).execute(new Request.RequestListener()
+        actionsRequest.execute(new JsonArrayRequestListener()
         {
             @Override
-            public void answer(String answer)
+            public void response(ArrayList answer)
             {
-                ArrayList actions;
-                try
-                {
-                    actions = (ArrayList)JSONParser.newParser().parse(answer);
-                }
-                catch(Exception e)
-                {
-                    Log.e(this.getClass().getName(), "parse " + e.getMessage());
-                    return;
-                }
                 SQliteApi.getInstanse().getActions().clear();
                 SQliteApi.getInstanse().startTransaction();
-                for(Object action : actions)
+                for(Object action : answer)
                 {
                     if(!correcting((HashMap)action))
                     {
@@ -91,8 +84,10 @@ public class ActionsPresenter
                 update();
             }
             @Override
-            public void error(Exception error)
+            public void error(String url, Exception error)
             {
+                Log.e(getClass()
+                        .getName(), url + "\n" + error.getMessage());
             }
         });
     }

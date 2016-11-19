@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.UUID;
 
 import ru.parada.app.connection.DownloadFile;
+import ru.parada.app.connection.JsonArrayRequestListener;
 import ru.parada.app.connection.ParadaService;
 import ru.parada.app.connection.Request;
 import ru.parada.app.contracts.ImagesContract;
@@ -25,6 +26,8 @@ public class ServicesPresenter
 {
     private ServicesContract.View view;
 
+    private final Request servicesRequest = new Request(ParadaService.BASE_URL, ParadaService.Get.SERVICES);
+
     public ServicesPresenter(ServicesContract.View v)
     {
         this.view = v;
@@ -33,24 +36,14 @@ public class ServicesPresenter
     @Override
     public void loadServices()
     {
-        new Request(ParadaService.BASE_URL, ParadaService.Get.SERVICES).execute(new Request.RequestListener()
+        servicesRequest.execute(new JsonArrayRequestListener()
         {
             @Override
-            public void answer(String answer)
+            public void response(ArrayList answer)
             {
-                ArrayList services;
-                try
-                {
-                    services = (ArrayList)JSONParser.newParser().parse(answer);
-                }
-                catch(Exception e)
-                {
-                    Log.e(getClass().getName(), "parse " + e.getMessage());
-                    return;
-                }
                 SQliteApi.getInstanse().getServices().clear();
                 SQliteApi.getInstanse().startTransaction();
-                for(Object service : services)
+                for(Object service : answer)
                 {
                     if(!correcting((HashMap)service))
                     {
@@ -69,8 +62,10 @@ public class ServicesPresenter
                 updateServices();
             }
             @Override
-            public void error(Exception error)
+            public void error(String url, Exception error)
             {
+                Log.e(getClass()
+                        .getName(), url + "\n" + error.getMessage());
             }
         });
     }

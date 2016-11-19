@@ -5,6 +5,7 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import ru.parada.app.connection.JsonArrayRequestListener;
 import ru.parada.app.connection.ParadaService;
 import ru.parada.app.connection.Request;
 import ru.parada.app.contracts.NotificationsContract;
@@ -19,6 +20,8 @@ public class NotificationsPresenter
 {
     private NotificationsContract.View view;
 
+    private final Request notificationsRequest = new Request(ParadaService.BASE_URL, ParadaService.Get.NOTIFICATIONS);
+
     public NotificationsPresenter(NotificationsContract.View v)
     {
         view = v;
@@ -27,30 +30,18 @@ public class NotificationsPresenter
     @Override
     public void load()
     {
-        new Request(ParadaService.BASE_URL, ParadaService.Get.NOTIFICATIONS).execute(new Request.RequestListener()
+        notificationsRequest.execute(new JsonArrayRequestListener()
         {
             @Override
-            public void answer(String answer)
+            public void response(ArrayList answer)
             {
-                ArrayList notifications;
-                try
-                {
-                    notifications = (ArrayList)JSONParser.newParser()
-                                                         .parse(answer);
-                }
-                catch(Exception e)
-                {
-                    Log.e(getClass().getName(), "parse " + e.getMessage());
-                    return;
-                }
                 SQliteApi.getInstanse()
                          .getNotifications()
                          .clear();
                 SQliteApi.getInstanse()
                          .startTransaction();
-                for(Object notification : notifications)
+                for(Object notification : answer)
                 {
-                    //Log.e(getClass().getName(), "message " + getString((HashMap)notification, "message"));
                     SQliteApi.getInstanse()
                              .getNotifications()
                              .insertOne(new Notification(
@@ -63,9 +54,10 @@ public class NotificationsPresenter
                 update();
             }
             @Override
-            public void error(Exception e)
+            public void error(String url, Exception error)
             {
-                Log.e(getClass().getName(), "request " + ParadaService.BASE_URL + "\n" + ParadaService.Get.NOTIFICATIONS + "\n" + e.getMessage());
+                Log.e(getClass()
+                        .getName(), url + "\n" + error.getMessage());
             }
         });
     }

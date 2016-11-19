@@ -35,7 +35,7 @@ public class PostURLConnection
         output.writeBytes(LINE_FEED);
     }
 
-    public URLConnection buildPostURLConnection(Map<String, String> data)
+    public URLConnection buildURLConnection(Map<String, String> data)
             throws IOException
     {
         if(data != null && data.size() > 0)

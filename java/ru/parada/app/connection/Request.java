@@ -1,5 +1,6 @@
 package ru.parada.app.connection;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -36,37 +37,55 @@ public class Request
         }
         return url;
     }
-    public void execute(final RequestListener listener)
+    public <RESPONSE> void execute(final RequestListener<RESPONSE> listener)
     {
+        final String url = generateUrl();
         new Thread(new Runnable()
         {
             public void run()
             {
+                RESPONSE response;
                 try
                 {
-                    listener.answer(Connection.getDataFromUrlConnection(Connection.buildURLConnection(generateUrl())).toString());
+                    response = listener.answer(Connection.getDataFromUrlConnection(new URL(url).openConnection()).toString());
                 }
                 catch(Exception e)
                 {
-                    listener.error(e);
+                    listener.error(url, e);
+                    return;
                 }
+                if(response == null)
+                {
+                    listener.error(url, new Exception("response null"));
+                    return;
+                }
+                listener.response(response);
             }
         }).start();
     }
-    public void executePost(final Map<String, String> data, final RequestListener listener)
+    public <RESPONSE> void execute(final Map<String, String> data, final RequestListener<RESPONSE> listener)
     {
+        final String url = generateUrl();
         new Thread(new Runnable()
         {
             public void run()
             {
+                RESPONSE response;
                 try
                 {
-                    listener.answer(Connection.getDataFromUrlConnection(new PostURLConnection(generateUrl()).buildPostURLConnection(data)).toString());
+                    response = listener.answer(Connection.getDataFromUrlConnection(new PostURLConnection(url).buildURLConnection(data)).toString());
                 }
                 catch(Exception e)
                 {
-                    listener.error(e);
+                    listener.error(url, e);
+                    return;
                 }
+                if(response == null)
+                {
+                    listener.error(url, new Exception("response null"));
+                    return;
+                }
+                listener.response(response);
             }
         }).start();
     }
@@ -81,11 +100,5 @@ public class Request
             this.key = k;
             this.value = v;
         }
-    }
-
-    public interface RequestListener
-    {
-        void answer(String answer);
-        void error(Exception error);
     }
 }
