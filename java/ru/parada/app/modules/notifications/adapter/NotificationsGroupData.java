@@ -5,7 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
 import ru.parada.app.core.NotificationsCore;
-import ru.parada.app.units.GroupData;
+import ru.parada.app.units.adapters.GroupData;
 
 public class NotificationsGroupData
         extends GroupData<NotificationsAdapterListener>

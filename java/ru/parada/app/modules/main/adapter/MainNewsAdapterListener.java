@@ -1,4 +1,4 @@
-package ru.parada.app.modules.main;
+package ru.parada.app.modules.main.adapter;
 
 import ru.parada.app.contracts.MainContract;
 

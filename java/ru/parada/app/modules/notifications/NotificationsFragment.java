@@ -13,8 +13,8 @@ import ru.parada.app.core.NotificationsCore;
 import ru.parada.app.modules.notifications.adapter.NotificationsAdapterListener;
 import ru.parada.app.modules.notifications.adapter.NotificationsGroupData;
 import ru.parada.app.units.ArrayListModel;
-import ru.parada.app.units.GroupAdapter;
-import ru.parada.app.units.GroupModel;
+import ru.parada.app.units.adapters.GroupAdapter;
+import ru.parada.app.units.adapters.GroupModel;
 import ru.parada.app.units.ListModel;
 import ru.parada.app.units.MVPFragment;
 

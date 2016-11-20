@@ -1,4 +1,4 @@
-package ru.parada.app.units;
+package ru.parada.app.units.adapters;
 
 public class GroupModel<MODEL>
 {

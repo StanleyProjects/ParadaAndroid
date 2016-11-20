@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 
 import ru.parada.app.contracts.ServicesWithPricesContract;
 import ru.parada.app.core.ServicesWithPricesCore;
-import ru.parada.app.units.GroupData;
+import ru.parada.app.units.adapters.GroupData;
 
 public class PricesGroupData
     extends GroupData<ServicesPricesAdapterListener>

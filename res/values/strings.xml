@@ -78,6 +78,7 @@
     <string name="baltmed_work_time">(с 08 до 22, без выходных)</string>
     <string name="baltmed_address">Санкт-Петербург. ВО, Нахимова, 11</string>
     <string name="baltmed_mail">3372303@mail.ru</string>
+    <string name="prices_footer_text">*Указанная стоимость не является публичной офертой и может отличаться от утвержденного прейскуранта. Пожалуйста, уточняйте стоимость у администратора клиники.</string>
 
     <string-array name="months">
         <item>января</item>

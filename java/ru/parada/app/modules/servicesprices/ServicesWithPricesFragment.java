@@ -18,8 +18,8 @@ import ru.parada.app.modules.prices.PricesFragment;
 import ru.parada.app.modules.servicesprices.adapter.PricesGroupData;
 import ru.parada.app.modules.servicesprices.adapter.ServicesPricesAdapterListener;
 import ru.parada.app.units.ArrayListModel;
-import ru.parada.app.units.GroupAdapter;
-import ru.parada.app.units.GroupModel;
+import ru.parada.app.units.adapters.GroupAdapter;
+import ru.parada.app.units.adapters.GroupModel;
 import ru.parada.app.units.ListModel;
 import ru.parada.app.units.MultiFragment;
 

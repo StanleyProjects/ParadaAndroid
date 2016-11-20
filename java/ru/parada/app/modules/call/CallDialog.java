@@ -39,6 +39,14 @@ public class CallDialog
                     dismiss();
                     listener.sms();
                     break;
+                case R.id.whatsapp:
+                    dismiss();
+                    listener.whatsapp();
+                    break;
+                case R.id.viber:
+                    dismiss();
+                    listener.viber();
+                    break;
             }
         }
     };
@@ -70,14 +78,22 @@ public class CallDialog
 
     private void initViews(View v)
     {
-        v.findViewById(R.id.phone)
-         .setOnClickListener(clickListener);
-        v.findViewById(R.id.sms)
-         .setOnClickListener(clickListener);
+        setClickListener(v.findViewById(R.id.phone), v.findViewById(R.id.sms), v.findViewById(R.id.whatsapp), v.findViewById(R.id.viber));
     }
 
     private void init()
     {
 
+    }
+
+    protected void setClickListener(View... views)
+    {
+        for(View v : views)
+        {
+            if(v != null)
+            {
+                v.setOnClickListener(clickListener);
+            }
+        }
     }
 }

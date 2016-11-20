@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import ru.parada.app.contracts.MenuContract;
 import ru.parada.app.modules.menu.models.MenuListModel;
 import ru.parada.app.modules.menu.models.MenuModel;
-import ru.parada.app.units.ModelAdapter;
+import ru.parada.app.units.adapters.ModelAdapter;
 import ru.parada.app.utils.ImagesUtils;
 
 public class MenuAdapter

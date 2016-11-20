@@ -1,4 +1,4 @@
-package ru.parada.app.modules.main;
+package ru.parada.app.modules.main.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import ru.parada.app.contracts.MainContract;
 import ru.parada.app.core.NewsCore;
 import ru.parada.app.modules.news.adapter.OneOfNewsHolder;
-import ru.parada.app.units.HeadFootAdapter;
+import ru.parada.app.units.adapters.HeadFootAdapter;
 import ru.parada.app.units.ListModel;
 
 public class MainNewsAdapter

@@ -34,6 +34,7 @@ public class DoctorDetailFragment
     private TextView doctor_fullname;
     private DoctorHolder holder;
     private TextView descr;
+    private View phone_button;
 
     private int id;
     private String phone;
@@ -62,7 +63,8 @@ public class DoctorDetailFragment
                 (TextView)v.findViewById(R.id.third_position),
                 getActivity().getResources().getDrawable(R.drawable.photo_placeholder));
         descr = (TextView)v.findViewById(R.id.descr);
-        setClickListener(v.findViewById(R.id.back), v.findViewById(R.id.phone), v.findViewById(R.id.watch_video));
+        phone_button = v.findViewById(R.id.phone_button);
+        setClickListener(v.findViewById(R.id.back), v.findViewById(R.id.phone_button), v.findViewById(R.id.watch_video));
     }
 
     @Override
@@ -78,7 +80,7 @@ public class DoctorDetailFragment
                     case R.id.back:
                         getBehaviour().back();
                         break;
-                    case R.id.phone:
+                    case R.id.phone_button:
                         callDialogOpen();
                         break;
                     case R.id.watch_video:
@@ -97,14 +99,14 @@ public class DoctorDetailFragment
             public void phone()
             {
                 Intent intent = new Intent(Intent.ACTION_DIAL);
-                intent.setData(Uri.parse("tel:" + getActivity().getResources().getString(R.string.phone_number)));
+                intent.setData(Uri.parse("tel:" + phone));
                 startActivity(intent);
             }
             @Override
             public void sms()
             {
                 Intent intent = new Intent(Intent.ACTION_VIEW);
-                intent.setData(Uri.parse("sms:" + getActivity().getResources().getString(R.string.message_number)));
+                intent.setData(Uri.parse("sms:" + phone));
                 startActivity(intent);
             }
             @Override
@@ -139,6 +141,15 @@ public class DoctorDetailFragment
             @Override
             public void run()
             {
+                phone = item.getPhone();
+                if(phone == null || phone.length() == 0)
+                {
+                    phone_button.setVisibility(View.GONE);
+                }
+                else
+                {
+                    phone_button.setVisibility(View.VISIBLE);
+                }
                 doctor_fullname.setText(item.getLastName() + " " + item.getFirstName() + " " + item.getMiddleName());
                 if(item.getPhotoPath() != null)
                 {

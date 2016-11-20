@@ -9,10 +9,9 @@ import android.widget.TextView;
 
 import ru.parada.app.R;
 import ru.parada.app.contracts.PricesContract;
-import ru.parada.app.contracts.ServicesWithPricesContract;
 import ru.parada.app.core.ServicesWithPricesCore;
-import ru.parada.app.modules.prices.adapter.PricesAdapter;
 import ru.parada.app.modules.prices.adapter.PricesAdapterListener;
+import ru.parada.app.modules.prices.adapter.PricesFooterAdapter;
 import ru.parada.app.units.ListModel;
 import ru.parada.app.units.MVPFragment;
 
@@ -33,7 +32,7 @@ public class PricesFragment
     private RecyclerView list;
     private TextView service_name;
 
-    private PricesAdapter adapter;
+    private PricesFooterAdapter adapter;
 
     @Override
     protected PricesContract.Presenter setPresenter()
@@ -76,7 +75,7 @@ public class PricesFragment
     @Override
     protected void init()
     {
-        adapter = new PricesAdapter(getActivity(), new PricesAdapterListener()
+        adapter = new PricesFooterAdapter(getActivity(), new PricesAdapterListener()
         {
         });
         list.setLayoutManager(new LinearLayoutManager(getActivity()));

@@ -5,7 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import ru.parada.app.core.NewsCore;
-import ru.parada.app.units.ModelDataAdapter;
+import ru.parada.app.units.adapters.ModelDataAdapter;
 
 public class NewsAdapter
     extends ModelDataAdapter<OneOfNewsHolder, NewsCore.Model, NewsAdapterListener>

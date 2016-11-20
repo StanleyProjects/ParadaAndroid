@@ -1,8 +1,10 @@
-package ru.parada.app.units;
+package ru.parada.app.units.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
+
+import ru.parada.app.units.ListModel;
 
 public abstract class GroupData<LISTENER>
 {

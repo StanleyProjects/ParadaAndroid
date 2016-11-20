@@ -1,7 +1,9 @@
-package ru.parada.app.units;
+package ru.parada.app.units.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+
+import ru.parada.app.units.ListModel;
 
 public abstract class ModelDataAdapter<MODELHOLDER extends RecyclerView.ViewHolder, MODEL, LISTENER>
         extends ModelAdapter<MODELHOLDER, MODEL, LISTENER>

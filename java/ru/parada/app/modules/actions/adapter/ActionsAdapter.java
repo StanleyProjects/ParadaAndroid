@@ -6,7 +6,7 @@ import android.view.ViewGroup;
 
 import ru.parada.app.core.ActionsCore;
 import ru.parada.app.managers.FoldersManager;
-import ru.parada.app.units.ModelDataAdapter;
+import ru.parada.app.units.adapters.ModelDataAdapter;
 
 public class ActionsAdapter
         extends ModelDataAdapter<ActionHolder, ActionsCore.Model, ActionsAdapterListener>

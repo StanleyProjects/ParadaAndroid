@@ -1,4 +1,4 @@
-package ru.parada.app.modules.main;
+package ru.parada.app.modules.main.adapter;
 
 import android.content.Context;
 import android.view.View;

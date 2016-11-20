@@ -1,6 +1,8 @@
 package ru.parada.app.modules.main;
 
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,6 +15,8 @@ import ru.parada.app.contracts.MainContract;
 import ru.parada.app.core.NewsCore;
 import ru.parada.app.modules.call.CallDialog;
 import ru.parada.app.modules.call.CallDialogListener;
+import ru.parada.app.modules.main.adapter.MainNewsAdapter;
+import ru.parada.app.modules.main.adapter.MainNewsAdapterListener;
 import ru.parada.app.units.ListModel;
 import ru.parada.app.units.MVPFragment;
 
@@ -20,7 +24,7 @@ public class MainFragment
         extends MVPFragment<MainContract.Presenter, MainContract.MainBehaviour>
         implements MainContract.View
 {
-    static public MainFragment newInstanse(MainContract.MainBehaviour behaviour)
+    static public MVPFragment newInstanse(MainContract.MainBehaviour behaviour)
     {
         MainFragment fragment = new MainFragment();
         fragment.setBehaviour(behaviour);
@@ -84,21 +88,25 @@ public class MainFragment
             {
                 getBehaviour().oneOfNews(id);
             }
+
             @Override
             public void openServices()
             {
                 getBehaviour().openServices();
             }
+
             @Override
             public void openSubscribe()
             {
                 getBehaviour().openSubscribe();
             }
+
             @Override
             public void openPrices()
             {
                 getBehaviour().openPrices();
             }
+
             @Override
             public void openAllNews()
             {
@@ -120,32 +128,51 @@ public class MainFragment
             public void phone()
             {
                 Intent intent = new Intent(Intent.ACTION_DIAL);
-                intent.setData(Uri.parse("tel:" + getActivity().getResources().getString(R.string.phone_number)));
+                intent.setData(Uri.parse("tel:" + getActivity().getResources()
+                                                               .getString(R.string.phone_number)));
                 startActivity(intent);
             }
+
             @Override
             public void sms()
             {
                 Intent intent = new Intent(Intent.ACTION_VIEW);
-                intent.setData(Uri.parse("sms:" + getActivity().getResources().getString(R.string.message_number)));
+                intent.setData(Uri.parse("sms:" + getActivity().getResources()
+                                                               .getString(R.string.message_number)));
                 startActivity(intent);
             }
+
             @Override
             public void whatsapp()
             {
+                try
+                {
+                    Uri uri = Uri.parse("smsto:" + getActivity().getResources()
+                                                                .getString(R.string.message_number));
+                    Intent i = new Intent(Intent.ACTION_SENDTO, uri);
+                    i.setPackage("com.whatsapp");
+                    startActivity(Intent.createChooser(i, ""));
 
+                }
+                catch(Exception e)
+                {
+                    Log.e(getClass().getName(), "whatsapp " + e.getMessage());
+                }
             }
+
             @Override
             public void viber()
             {
 
             }
+
             @Override
             public void close()
             {
                 getPresenter().callDialogClose();
             }
-        }).show(getActivity().getSupportFragmentManager(), CallDialog.class.getCanonicalName());
+        })
+                  .show(getActivity().getSupportFragmentManager(), CallDialog.class.getCanonicalName());
     }
 
     @Override
@@ -161,7 +188,8 @@ public class MainFragment
             @Override
             public void run()
             {
-                Log.e(this.getClass().getName(), "updateNews " + data.getItemsCount() + " " + Thread.currentThread());
+                Log.e(this.getClass()
+                          .getName(), "updateNews " + data.getItemsCount() + " " + Thread.currentThread());
                 adapter.swapData(data);
                 adapter.notifyDataSetChanged();
             }

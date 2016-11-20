@@ -6,7 +6,7 @@ import android.view.ViewGroup;
 
 import ru.parada.app.core.ServicesCore;
 import ru.parada.app.managers.FoldersManager;
-import ru.parada.app.units.ModelDataAdapter;
+import ru.parada.app.units.adapters.ModelDataAdapter;
 
 public class ServicesAdapter
     extends ModelDataAdapter<ServiceHolder, ServicesCore.Model, ServicesAdapterListener>
