@@ -34,9 +34,6 @@
     <string name="youtube">YouTube</string>
     <string name="instagram">Intagram</string>
 
-    <string name="plastic_surgery_center">Центр пластической хирургии</string>
-    <string name="baltmed">Амбулаторный комплекс BaltMed</string>
-
     <string name="order_call">Заказать звонок</string>
     <string name="subscribe_reception">Записаться на приём</string>
 
@@ -70,6 +67,17 @@
     <string name="we_call_confirm_subscribe">Мы свяжемся с Вами в ближайшее время для подтверждения заявки на приём.</string>
     <string name="error">Ошибка</string>
     <string name="video_error">При воспроизведении видео произошла ошибка. Попробовать снова?</string>
+    <string name="address_baltmed">Санкт-Петербург. ВО, Нахимова, 11</string>
+    <string name="surgery_phone">+7 (812) 337-23-04\n+7 (931) 541-05-91</string>
+    <string name="surgery_name">Центр пластической хирургии</string>
+    <string name="baltmed_name">Амбулаторный комплекс BaltMed</string>
+    <string name="surgery_work_time">(круглосуточно)</string>
+    <string name="surgery_mail">paradaplastika@gmail.com</string>
+    <string name="surgery_address">Санкт-Петербург. ВО, Галерный проезд, 5</string>
+    <string name="baltmed_phone">+7 (812) 337-23-03\n+7 (812) 331-5-331</string>
+    <string name="baltmed_work_time">(с 08 до 22, без выходных)</string>
+    <string name="baltmed_address">Санкт-Петербург. ВО, Нахимова, 11</string>
+    <string name="baltmed_mail">3372303@mail.ru</string>
 
     <string-array name="months">
         <item>января</item>

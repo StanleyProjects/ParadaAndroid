@@ -1,6 +1,7 @@
 package ru.parada.app.modules.contacts.detail;
 
 import android.os.Bundle;
+import android.util.Log;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -13,25 +14,23 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import ru.parada.app.R;
 import ru.parada.app.core.ContactsCore;
-import ru.parada.app.modules.contacts.model.Contact;
 
 public class MapFragment
     extends SupportMapFragment
     implements ContactsCore.Mark
 {
-    static public SupportMapFragment newInstanse(ContactsCore.Model data)
+    static public SupportMapFragment newInstanse(double latitude, double longitude)
     {
         MapFragment fragment = new MapFragment();
         Bundle bundle = new Bundle();
-        bundle.putString(NAME, data.getName());
-        bundle.putInt(IMAGE, data.getImage());
-        bundle.putDouble(LATITUDE, data.getLatitude());
-        bundle.putDouble(LONGITUDE, data.getLongitude());
+        bundle.putDouble(LATITUDE, latitude);
+        bundle.putDouble(LONGITUDE, longitude);
         fragment.setArguments(bundle);
         return fragment;
     }
 
-    private ContactsCore.Model data;
+    private double latitude;
+    private double longitude;
 
     private final OnMapReadyCallback onMapReadyCallback = new OnMapReadyCallback()
     {
@@ -46,16 +45,15 @@ public class MapFragment
     public void onCreate(Bundle bundle)
     {
         super.onCreate(bundle);
-        data = new Contact(getArguments().getString(NAME),
-                getArguments().getInt(IMAGE),
-                getArguments().getDouble(LATITUDE),
-                getArguments().getDouble(LONGITUDE));
+        latitude = getArguments().getDouble(LATITUDE);
+        longitude = getArguments().getDouble(LONGITUDE);
+        Log.e(getClass().getName(), "la " + latitude + " lo " + longitude);
         getMapAsync(onMapReadyCallback);
     }
 
     private void setPin(GoogleMap googleMap)
     {
-        LatLng pos = new LatLng(data.getLatitude(), data.getLongitude());
+        LatLng pos = new LatLng(latitude, longitude);
         CameraPosition cameraPosition = new CameraPosition.Builder().target(pos).zoom(16).build();
         googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition), 1, null);
         googleMap.clear();

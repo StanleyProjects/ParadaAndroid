@@ -39,7 +39,7 @@
             <TextView
                 android:layout_marginLeft="@dimen/container_height_small"
                 android:layout_gravity="center_vertical"
-                android:text="@string/plastic_surgery_center"
+                android:text="@string/surgery_name"
                 android:textColor="@color/graydark"
                 android:textSize="@dimen/text_size_medium"
                 android:layout_width="wrap_content"
@@ -63,7 +63,7 @@
             <TextView
                 android:layout_marginLeft="@dimen/container_height_small"
                 android:layout_gravity="center_vertical"
-                android:text="@string/baltmed"
+                android:text="@string/baltmed_name"
                 android:textColor="@color/graydark"
                 android:textSize="@dimen/text_size_medium"
                 android:layout_width="wrap_content"

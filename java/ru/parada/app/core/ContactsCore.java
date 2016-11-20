@@ -4,8 +4,7 @@ public interface ContactsCore
 {
     interface Mark
     {
-        String NAME = Mark.class.getCanonicalName().toLowerCase().replace(".", "_") + "_" + "name";
-        String IMAGE = Mark.class.getCanonicalName().toLowerCase().replace(".", "_") + "_" + "image";
+        String CONTACT = Mark.class.getCanonicalName().toLowerCase().replace(".", "_") + "_" + "contact";
         String LATITUDE = Mark.class.getCanonicalName().toLowerCase().replace(".", "_") + "_" + "latitude";
         String LONGITUDE = Mark.class.getCanonicalName().toLowerCase().replace(".", "_") + "_" + "longitude";
     }
@@ -16,11 +15,9 @@ public interface ContactsCore
         int MAP = 1;
     }
 
-    interface Model
+    interface Contacts
     {
-        String getName();
-        int getImage();
-        double getLatitude();
-        double getLongitude();
+        int BALTMED = 1;
+        int SURGERY = 2;
     }
 }

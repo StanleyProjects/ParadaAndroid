@@ -9,21 +9,17 @@ import android.widget.TextView;
 import ru.parada.app.R;
 import ru.parada.app.contracts.contacts.ContactDetailContract;
 import ru.parada.app.core.ContactsCore;
-import ru.parada.app.modules.contacts.model.Contact;
 import ru.parada.app.units.MultiFragment;
 
 public class ContactDetailFragment
         extends MultiFragment<ContactDetailContract.Presenter, ContactDetailContract.Behaviour>
         implements ContactDetailContract.View, ContactsCore.Mark
 {
-    static public Fragment newInstanse(ContactDetailContract.Behaviour behaviour, ContactsCore.Model data)
+    static public Fragment newInstanse(ContactDetailContract.Behaviour behaviour, int contact)
     {
         ContactDetailFragment fragment = new ContactDetailFragment();
         Bundle bundle = new Bundle();
-        bundle.putString(NAME, data.getName());
-        bundle.putInt(IMAGE, data.getImage());
-        bundle.putDouble(LATITUDE, data.getLatitude());
-        bundle.putDouble(LONGITUDE, data.getLongitude());
+        bundle.putInt(CONTACT, contact);
         fragment.setArguments(bundle);
         fragment.setBehaviour(behaviour);
         return fragment;
@@ -33,6 +29,10 @@ public class ContactDetailFragment
 
     private TextView name;
     private ImageView image;
+    private TextView phone_label;
+    private TextView work_time_label;
+    private TextView mail_label;
+    private TextView address_label;
 
     @Override
     protected ContactDetailContract.Presenter setPresenter()
@@ -51,6 +51,10 @@ public class ContactDetailFragment
     {
         name = (TextView)v.findViewById(R.id.name);
         image = (ImageView)v.findViewById(R.id.image);
+        phone_label = (TextView)v.findViewById(R.id.phone_label);
+        work_time_label = (TextView)v.findViewById(R.id.work_time_label);
+        mail_label = (TextView)v.findViewById(R.id.mail_label);
+        address_label = (TextView)v.findViewById(R.id.address_label);
         setClickListener(v.findViewById(R.id.back));
     }
 
@@ -75,13 +79,55 @@ public class ContactDetailFragment
     @Override
     protected void init()
     {
-        ContactsCore.Model data = new Contact(getArguments().getString(NAME),
-                getArguments().getInt(IMAGE),
-                getArguments().getDouble(LATITUDE),
-                getArguments().getDouble(LONGITUDE));
-        name.setText(data.getName());
-        image.setImageDrawable(getActivity().getResources().getDrawable(data.getImage()));
-        mapFragment = MapFragment.newInstanse(data);
+        double latitude = 0;
+        double longitude = 0;
+        String nm;
+        String pl;
+        String wl;
+        String ml;
+        String al;
+        int img;
+        if(getArguments().getInt(CONTACT) == ContactsCore.Contacts.SURGERY)
+        {
+            nm = getActivity().getResources().getString(R.string.surgery_name);
+            img = R.drawable.menu_logo;
+            pl = getActivity().getResources().getString(R.string.surgery_phone);
+            wl = getActivity().getResources().getString(R.string.surgery_work_time);
+            ml = getActivity().getResources().getString(R.string.surgery_mail);
+            al = getActivity().getResources().getString(R.string.surgery_address);
+            latitude = 59.938884;
+            longitude = 30.223898;
+        }
+        else if(getArguments().getInt(CONTACT) == ContactsCore.Contacts.BALTMED)
+        {
+            nm = getActivity().getResources().getString(R.string.baltmed_name);
+            img = R.drawable.bm_logo;
+            pl = getActivity().getResources().getString(R.string.baltmed_phone);
+            wl = getActivity().getResources().getString(R.string.baltmed_work_time);
+            ml = getActivity().getResources().getString(R.string.baltmed_mail);
+            al = getActivity().getResources().getString(R.string.baltmed_address);
+            latitude = 59.941371;
+            longitude = 30.223222;
+        }
+        else
+        {
+            runAfterResume(new Runnable()
+            {
+                @Override
+                public void run()
+                {
+                    getBehaviour().back();
+                }
+            });
+            return;
+        }
+        name.setText(nm);
+        image.setImageDrawable(getActivity().getResources().getDrawable(img));
+        phone_label.setText(pl);
+        work_time_label.setText(wl);
+        mail_label.setText(ml);
+        address_label.setText(al);
+        mapFragment = MapFragment.newInstanse(latitude, longitude);
         replaceMap();
     }
 
@@ -93,6 +139,7 @@ public class ContactDetailFragment
             replaceMap();
         }
     }
+
     @Override
     protected int beginScreenIndex()
     {

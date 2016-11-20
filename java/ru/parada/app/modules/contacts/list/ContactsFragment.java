@@ -8,7 +8,6 @@ import ru.parada.app.contracts.contacts.ContactDetailContract;
 import ru.parada.app.contracts.contacts.ContactsContract;
 import ru.parada.app.core.ContactsCore;
 import ru.parada.app.modules.contacts.detail.ContactDetailFragment;
-import ru.parada.app.modules.contacts.model.Contact;
 import ru.parada.app.units.MultiFragment;
 
 public class ContactsFragment
@@ -24,8 +23,6 @@ public class ContactsFragment
 
     private Fragment detailFragment;
 
-    private ContactsCore.Model plastic;
-    private ContactsCore.Model baltmed;
     private final ContactDetailContract.Behaviour contactDetailBehaviour = new ContactDetailContract.Behaviour()
     {
         @Override
@@ -70,11 +67,11 @@ public class ContactsFragment
                         getBehaviour().openMenu();
                         break;
                     case R.id.plastic_surgery_center:
-                        detailFragment = ContactDetailFragment.newInstanse(contactDetailBehaviour, plastic);
+                        detailFragment = ContactDetailFragment.newInstanse(contactDetailBehaviour, ContactsCore.Contacts.SURGERY);
                         addSubscreen(detailFragment);
                         break;
                     case R.id.baltmed:
-                        detailFragment = ContactDetailFragment.newInstanse(contactDetailBehaviour, baltmed);
+                        detailFragment = ContactDetailFragment.newInstanse(contactDetailBehaviour, ContactsCore.Contacts.BALTMED);
                         addSubscreen(detailFragment);
                         break;
                 }
@@ -85,10 +82,6 @@ public class ContactsFragment
     @Override
     protected void init()
     {
-        plastic = new Contact(getActivity().getResources().getString(R.string.plastic_surgery_center),
-                R.drawable.menu_logo, 60.050626, 30.331024);
-        baltmed = new Contact(getActivity().getResources().getString(R.string.baltmed),
-                R.drawable.bm_logo, 59.938665, 30.314804);
     }
 
     @Override
