@@ -30,7 +30,14 @@ public class DoctorVideosAdapterHolder
     }
     public void setImage(String imp)
     {
-        ImagesUtils.setThumbImage(imp, image, AndroidUtil.dp(128), AndroidUtil.dp(128));
+        if(imp == null || imp.length() == 0)
+        {
+            image.setImageResource(0);
+        }
+        else
+        {
+            ImagesUtils.setThumbImage(imp, image, AndroidUtil.dp(128), AndroidUtil.dp(128));
+        }
     }
     public void setPlay(View.OnClickListener clickListener)
     {

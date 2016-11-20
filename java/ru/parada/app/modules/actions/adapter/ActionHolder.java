@@ -26,11 +26,15 @@ public class ActionHolder
         date = (TextView) itemView.findViewById(R.id.date);
         title = (TextView) itemView.findViewById(R.id.title);
     }
-    public void setPhoto(String photoPath)
+    public void setPhoto(String imp)
     {
-        if(photoPath != null)
+        if(imp == null || imp.length() == 0)
         {
-            ImagesUtils.setThumbImage(photoPath, image, AndroidUtil.dp(92), AndroidUtil.dp(92));
+            image.setImageResource(0);
+        }
+        else
+        {
+            ImagesUtils.setThumbImage(imp, image, AndroidUtil.dp(92), AndroidUtil.dp(92));
         }
     }
     public void setDate(long from_date, long to_date)

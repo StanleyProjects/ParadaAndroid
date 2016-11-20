@@ -19,10 +19,7 @@ public class ServicesAdapter
     @Override
     protected void setData(ServiceHolder holder, ServicesCore.Model item)
     {
-        if(item.getImagePath() != null)
-        {
-            holder.setPhoto(FoldersManager.getImagesDirectory() + "/" + item.getImagePath());
-        }
+        holder.setPhoto(FoldersManager.getImagesDirectory() + "/" + item.getImagePath());
         holder.setTitle(item.getTitle());
         final int id = item.getId();
         holder.itemView.setOnClickListener(new View.OnClickListener()

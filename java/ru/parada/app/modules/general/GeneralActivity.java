@@ -2,7 +2,7 @@ package ru.parada.app.modules.general;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.FragmentActivity;
 
 import ru.parada.app.R;
 import ru.parada.app.contracts.contacts.ContactsContract;
@@ -29,7 +29,7 @@ import ru.parada.app.units.CallbackConnector;
 import ru.parada.app.units.DrawerContainer;
 
 public class GeneralActivity
-        extends AppCompatActivity
+        extends FragmentActivity
         implements GeneralContract.View
 {
     private Fragment currentFragment;

@@ -16,7 +16,7 @@
             android:layout_height="match_parent">
             <ImageView
                 android:id="@+id/image"
-                android:src="@drawable/youtubetest"
+                android:background="@color/colorPrimaryDark"
                 android:scaleType="centerCrop"
                 android:layout_marginRight="8dp"
                 android:layout_width="match_parent"

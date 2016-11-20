@@ -16,9 +16,6 @@ public class CallDialog
     static public CallDialog newInstance(CallDialogListener l)
     {
         CallDialog fragment = new CallDialog();
-        Bundle bundle = new Bundle();
-//        bundle.putInt(TX_KEY, tx);
-        fragment.setArguments(bundle);
         fragment.listener = l;
         return fragment;
     }
@@ -50,9 +47,6 @@ public class CallDialog
             }
         }
     };
-    ;
-
-    //____________________VIEWS
 
     @Override
     public void onDismiss(final DialogInterface dialog)
@@ -71,19 +65,8 @@ public class CallDialog
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         View v = inflater.inflate(R.layout.call_dialog, null);
-        initViews(v);
-        init();
-        return v;
-    }
-
-    private void initViews(View v)
-    {
         setClickListener(v.findViewById(R.id.phone), v.findViewById(R.id.sms), v.findViewById(R.id.whatsapp), v.findViewById(R.id.viber));
-    }
-
-    private void init()
-    {
-
+        return v;
     }
 
     protected void setClickListener(View... views)

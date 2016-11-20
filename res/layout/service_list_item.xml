@@ -34,7 +34,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
-                android:background="@color/colorPrimaryDark"/>
+                android:background="@color/colorPrimary"/>
             <ImageView
                 android:src="@drawable/service_mask"
                 android:layout_width="match_parent"

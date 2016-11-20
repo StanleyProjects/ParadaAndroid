@@ -25,7 +25,11 @@ public class ServiceHolder
 
     public void setPhoto(String photoPath)
     {
-        if(photoPath != null)
+        if(photoPath == null || photoPath.length() == 0)
+        {
+            image.setImageResource(0);
+        }
+        else
         {
             ImagesUtils.setThumbImage(photoPath, image, AndroidUtil.dp(112), AndroidUtil.dp(112));
         }

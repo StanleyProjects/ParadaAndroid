@@ -1,4 +1,4 @@
-![compileSdkVersion 24](https://img.shields.io/badge/compileSdkVersion-24-yellow.svg?style=true) ![buildToolsVersion 24.0.1](https://img.shields.io/badge/buildToolsVersion-24.0.1-blue.svg?style=true) ![minSdkVersion 15](https://img.shields.io/badge/minSdkVersion-15-red.svg?style=true) ![targetSdkVersion 24](https://img.shields.io/badge/targetSdkVersion-24-green.svg?style=true)
+![compileSdkVersion 25](https://img.shields.io/badge/compileSdkVersion-25-yellow.svg?style=true) ![buildToolsVersion 25.0.0](https://img.shields.io/badge/buildToolsVersion-25.0.0-blue.svg?style=true) ![minSdkVersion 15](https://img.shields.io/badge/minSdkVersion-15-red.svg?style=true) ![targetSdkVersion 25](https://img.shields.io/badge/targetSdkVersion-25-green.svg?style=true)
 
 # ParadaDroid
 App for [paradaplastika.ru](http://paradaplastika.ru/)
@@ -7,12 +7,14 @@ App for [paradaplastika.ru](http://paradaplastika.ru/)
 ## defaultConfig
 	applicationId "ru.parada.app"
 	versionBase 1611070143
-	versionCode 1611200526
-	versionName "0.943"
+	versionCode 1611202311
+	versionName "0.944"
 ## dependencies
-	com.android.support:appcompat-v7:24.2.1
-	com.android.support:recyclerview-v7:24.2.1
+	com.android.support:support-fragment:25.0.1
+	com.android.support:recyclerview-v7:25.0.1
 	com.google.firebase:firebase-messaging:9.8.0
 	com.google.android.gms:play-services-maps:9.8.0
 ## gradle
     2.2.0
+## google-services
+    3.0.0

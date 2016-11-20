@@ -1,12 +1,12 @@
 package ru.parada.app.modules.player;
 
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -25,7 +25,7 @@ import ru.parada.app.R;
 import ru.parada.app.core.DoctorVideosCore;
 
 public class PlayerActivity
-        extends AppCompatActivity
+        extends Activity
         implements DoctorVideosCore.Mark
 {
     static public Intent createIntent(Context context, String id)
