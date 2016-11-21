@@ -1,9 +1,16 @@
 package ru.parada.app.modules.doctors.detail;
 
+import android.app.AlertDialog;
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.Html;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -36,6 +43,8 @@ public class DoctorDetailFragment
     private TextView descr;
     private View phone_button;
 
+    private PackageManager packageManager;
+    private ClipboardManager clipboard;
     private int id;
     private String phone;
 
@@ -112,12 +121,74 @@ public class DoctorDetailFragment
             @Override
             public void whatsapp()
             {
+                try
+                {
+                    packageManager.getPackageInfo(getActivity().getResources()
+                                                               .getString(R.string.whatsapp_pack), PackageManager.GET_META_DATA);
+                }
+                catch(Exception e)
+                {
+                    Log.e(getClass().getName(), "whatsapp " + e.getMessage());
+                    showDialog(getActivity().getResources()
+                                            .getString(R.string.whatsapp), getActivity().getResources()
+                                                                                        .getString(R.string.whatsapp_open_error), new DialogInterface.OnClickListener()
+                    {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i)
+                        {
 
+                        }
+                    });
+                    return;
+                }
+                copyClipBoard(phone);
+                showDialog(getActivity().getResources()
+                                        .getString(R.string.whatsapp), getActivity().getResources()
+                                                                                    .getString(R.string.phone_copy_clipboard), new DialogInterface.OnClickListener()
+                {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i)
+                    {
+                        startActivity(packageManager.getLaunchIntentForPackage(getActivity().getResources()
+                                                                                            .getString(R.string.whatsapp_pack)));
+                    }
+                });
             }
             @Override
             public void viber()
             {
+                try
+                {
+                    packageManager.getPackageInfo(getActivity().getResources()
+                                                               .getString(R.string.viber_pack), PackageManager.GET_META_DATA);
+                }
+                catch(Exception e)
+                {
+                    Log.e(getClass().getName(), "viber " + e.getMessage());
+                    showDialog(getActivity().getResources()
+                                            .getString(R.string.viber), getActivity().getResources()
+                                                                                     .getString(R.string.viber_open_error), new DialogInterface.OnClickListener()
+                    {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i)
+                        {
 
+                        }
+                    });
+                    return;
+                }
+                copyClipBoard(phone);
+                showDialog(getActivity().getResources()
+                                        .getString(R.string.viber), getActivity().getResources()
+                                                                                 .getString(R.string.phone_copy_clipboard), new DialogInterface.OnClickListener()
+                {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i)
+                    {
+                        startActivity(packageManager.getLaunchIntentForPackage(getActivity().getResources()
+                                                                                            .getString(R.string.viber_pack)));
+                    }
+                });
             }
             @Override
             public void close()
@@ -129,6 +200,8 @@ public class DoctorDetailFragment
     @Override
     protected void init()
     {
+        packageManager = getActivity().getPackageManager();
+        clipboard = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
         id = getArguments().getInt(DOCTOR_ID);
         getPresenter().update(id);
     }
@@ -165,8 +238,23 @@ public class DoctorDetailFragment
                 holder.setSecondPosition(item.getSecondPosition());
                 holder.setThirdPosition(item.getThirdPosition());
                 descr.setText(Html.fromHtml(item.getDescription()));
-//                phone = item.getPhotoPath()
             }
         });
+    }
+
+    private void copyClipBoard(String text)
+    {
+        ClipData clip = ClipData.newPlainText(getClass().getName(), text);
+        clipboard.setPrimaryClip(clip);
+    }
+
+    private void showDialog(String title, String message, DialogInterface.OnClickListener listener)
+    {
+        AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
+        alertDialog.setTitle(title);
+        alertDialog.setMessage(message);
+        alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "ОК", listener);
+        alertDialog.setCancelable(false);
+        alertDialog.show();
     }
 }

@@ -79,6 +79,11 @@
     <string name="baltmed_address">Санкт-Петербург. ВО, Нахимова, 11</string>
     <string name="baltmed_mail">3372303@mail.ru</string>
     <string name="prices_footer_text">*Указанная стоимость не является публичной офертой и может отличаться от утвержденного прейскуранта. Пожалуйста, уточняйте стоимость у администратора клиники.</string>
+    <string name="whatsapp_open_error">Приложение WhatsApp не установлено</string>
+    <string name="phone_copy_clipboard">Номер скопирован в буфер обмена</string>
+    <string name="viber_open_error">Приложение Viber не установлено</string>
+    <string name="viber_pack">com.viber.voip</string>
+    <string name="whatsapp_pack">com.whatsapp</string>
 
     <string-array name="months">
         <item>января</item>

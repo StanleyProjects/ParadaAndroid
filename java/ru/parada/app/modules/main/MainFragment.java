@@ -1,7 +1,11 @@
 package ru.parada.app.modules.main;
 
+import android.app.AlertDialog;
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.support.v7.widget.LinearLayoutManager;
@@ -35,6 +39,8 @@ public class MainFragment
     private RecyclerView list;
 
     private MainNewsAdapter adapter;
+    private PackageManager packageManager;
+    private ClipboardManager clipboard;
 
     @Override
     protected MainContract.Presenter setPresenter()
@@ -80,6 +86,8 @@ public class MainFragment
     @Override
     protected void init()
     {
+        packageManager = getActivity().getPackageManager();
+        clipboard = (ClipboardManager)getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
         setClickListener(phone);
         adapter = new MainNewsAdapter(getActivity(), new MainNewsAdapterListener()
         {
@@ -147,23 +155,75 @@ public class MainFragment
             {
                 try
                 {
-                    Uri uri = Uri.parse("smsto:" + getActivity().getResources()
-                                                                .getString(R.string.message_number));
-                    Intent i = new Intent(Intent.ACTION_SENDTO, uri);
-                    i.setPackage("com.whatsapp");
-                    startActivity(Intent.createChooser(i, ""));
-
+                    packageManager.getPackageInfo(getActivity().getResources()
+                                                               .getString(R.string.whatsapp_pack), PackageManager.GET_META_DATA);
                 }
                 catch(Exception e)
                 {
                     Log.e(getClass().getName(), "whatsapp " + e.getMessage());
+                    showDialog(getActivity().getResources()
+                                            .getString(R.string.whatsapp), getActivity().getResources()
+                                                                                        .getString(R.string.whatsapp_open_error), new DialogInterface.OnClickListener()
+                    {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i)
+                        {
+
+                        }
+                    });
+                    return;
                 }
+                copyClipBoard(getActivity().getResources()
+                                           .getString(R.string.message_number));
+                showDialog(getActivity().getResources()
+                                        .getString(R.string.whatsapp), getActivity().getResources()
+                                                                                    .getString(R.string.phone_copy_clipboard), new DialogInterface.OnClickListener()
+                {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i)
+                    {
+                        startActivity(packageManager.getLaunchIntentForPackage(getActivity().getResources()
+                                                                                            .getString(R.string.whatsapp_pack)));
+                    }
+                });
             }
 
             @Override
             public void viber()
             {
+                try
+                {
+                    packageManager.getPackageInfo(getActivity().getResources()
+                                                               .getString(R.string.viber_pack), PackageManager.GET_META_DATA);
+                }
+                catch(Exception e)
+                {
+                    Log.e(getClass().getName(), "viber " + e.getMessage());
+                    showDialog(getActivity().getResources()
+                                            .getString(R.string.viber), getActivity().getResources()
+                                                                                     .getString(R.string.viber_open_error), new DialogInterface.OnClickListener()
+                    {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i)
+                        {
 
+                        }
+                    });
+                    return;
+                }
+                copyClipBoard(getActivity().getResources()
+                                           .getString(R.string.message_number));
+                showDialog(getActivity().getResources()
+                                        .getString(R.string.viber), getActivity().getResources()
+                                                                                 .getString(R.string.phone_copy_clipboard), new DialogInterface.OnClickListener()
+                {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i)
+                    {
+                        startActivity(packageManager.getLaunchIntentForPackage(getActivity().getResources()
+                                                                                            .getString(R.string.viber_pack)));
+                    }
+                });
             }
 
             @Override
@@ -194,5 +254,21 @@ public class MainFragment
                 adapter.notifyDataSetChanged();
             }
         }, 0);
+    }
+
+    private void copyClipBoard(String text)
+    {
+        ClipData clip = ClipData.newPlainText(getClass().getName(), text);
+        clipboard.setPrimaryClip(clip);
+    }
+
+    private void showDialog(String title, String message, DialogInterface.OnClickListener listener)
+    {
+        AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
+        alertDialog.setTitle(title);
+        alertDialog.setMessage(message);
+        alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "ОК", listener);
+        alertDialog.setCancelable(false);
+        alertDialog.show();
     }
 }

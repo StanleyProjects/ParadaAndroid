@@ -94,7 +94,7 @@ public interface Tables
                 Columns.second_position + " text" + "," +
                 Columns.third_position + " text" + "," +
                 Columns.order + " integer" + "," +
-                Columns.phone + " integer" + //"," +
+                Columns.phone + " text" + //"," +
                 ");";
 
         interface Columns

@@ -41,7 +41,7 @@ import ru.parada.app.units.ListModel;
 public class SQliteApi
 {
     static private final String DB_NAME = "parada";
-    static private final int DB_VERSION = 1611070143;
+    static private final int DB_VERSION = 1611211448;
     static private volatile SQliteApi instanse;
 
     static public SQliteApi getInstanse()
