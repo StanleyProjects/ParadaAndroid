@@ -84,17 +84,7 @@ public class SubscribeFragment
     private void sendData()
     {
         String wish_date = this.wish_date.getText().toString();
-        if(wish_date.length() == 0)
-        {
-            showToast(R.string.wish_date_empty);
-            return;
-        }
         String wish_time = this.wish_time.getText().toString();
-        if(wish_time.length() == 0)
-        {
-            showToast(R.string.wish_time_empty);
-            return;
-        }
         String last_name = this.last_name.getText().toString();
         if(last_name.length() == 0)
         {
@@ -108,17 +98,7 @@ public class SubscribeFragment
             return;
         }
         String middle_name = this.middle_name.getText().toString();
-        if(middle_name.length() == 0)
-        {
-            showToast(R.string.middle_name_empty);
-            return;
-        }
         String email = this.email.getText().toString();
-        if(email.length() == 0)
-        {
-            showToast(R.string.email_empty);
-            return;
-        }
         String phone = this.phone.getText().toString();
         if(phone.length() == 0)
         {

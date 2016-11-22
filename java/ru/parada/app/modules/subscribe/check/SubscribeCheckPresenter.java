@@ -4,9 +4,9 @@ import android.util.Log;
 
 import java.util.HashMap;
 
+import ru.parada.app.connection.JsonObjectRequestListener;
 import ru.parada.app.connection.ParadaService;
 import ru.parada.app.connection.Request;
-import ru.parada.app.connection.SimpleRequestListener;
 import ru.parada.app.contracts.subscribe.SubscribeCheckContract;
 import ru.parada.app.core.SubscribeCore;
 
@@ -16,6 +16,37 @@ public class SubscribeCheckPresenter
     private SubscribeCheckContract.View view;
 
     private final Request subscribeRequest = new Request(ParadaService.BASE_URL, ParadaService.Post.SUBSCRIBE_DATA);
+    private final JsonObjectRequestListener response = new JsonObjectRequestListener()
+    {
+        @Override
+        public void response(HashMap answer)
+        {
+            try
+            {
+                String result = (String)answer.get("result");
+                if(result.equals("success"))
+                {
+                    view.sendSucess();
+                    return;
+                }
+                Log.e(getClass()
+                        .getName(), "result = " + result);
+            }
+            catch(Exception error)
+            {
+                Log.e(getClass()
+                        .getName(), answer + "\n" + error.getMessage());
+            }
+            view.sendError();
+        }
+        @Override
+        public void error(String url, Exception error)
+        {
+            Log.e(getClass()
+                    .getName(), url + "\n" + error.getMessage());
+            view.sendError();
+        }
+    };
 
     public SubscribeCheckPresenter(SubscribeCheckContract.View v)
     {
@@ -34,22 +65,6 @@ public class SubscribeCheckPresenter
         map.put("email", data.getEmail());
         map.put("phone", data.getPhone());
         map.put("comment", data.getComment());
-        subscribeRequest.execute(map, new SimpleRequestListener()
-        {
-            @Override
-            public void response(String answer)
-            {
-                Log.e(getClass()
-                        .getName(), "request " + ParadaService.BASE_URL + "\n" + ParadaService.Post.SUBSCRIBE_DATA + "\n" + answer);
-                view.sendSucess();
-            }
-            @Override
-            public void error(String url, Exception error)
-            {
-                Log.e(getClass()
-                        .getName(), url + "\n" + error.getMessage());
-                view.sendError();
-            }
-        });
+        subscribeRequest.execute(map, response);
     }
 }

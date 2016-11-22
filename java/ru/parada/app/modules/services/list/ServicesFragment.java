@@ -83,7 +83,10 @@ public class ServicesFragment
         @Override
         public void sendSucess()
         {
-
+            getChildFragmentManager().popBackStack();
+            subscribeCheckFragment = null;
+            getChildFragmentManager().popBackStack();
+            subscribeFragment = null;
         }
     };
 

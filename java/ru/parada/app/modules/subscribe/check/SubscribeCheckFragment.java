@@ -1,6 +1,7 @@
 package ru.parada.app.modules.subscribe.check;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -40,6 +41,7 @@ public class SubscribeCheckFragment
     private TextView comment;
 
     private SubscribeCore.Model data;
+    private boolean sendProcess;
 
     @Override
     protected SubscribeCheckContract.Presenter setPresenter()
@@ -80,6 +82,7 @@ public class SubscribeCheckFragment
                         getBehaviour().back();
                         break;
                     case R.id.send:
+                        sendProcess = true;
                         getPresenter().send(data);
                         break;
                 }
@@ -90,6 +93,7 @@ public class SubscribeCheckFragment
     @Override
     protected void init()
     {
+        sendProcess = false;
         data = new UserData(getArguments().getString(DATE),
                 getArguments().getString(TIME),
                 getArguments().getString(LASTNAME),
@@ -115,14 +119,38 @@ public class SubscribeCheckFragment
     }
 
     @Override
+    protected boolean onBackPressed()
+    {
+        return sendProcess;
+    }
+
+    @Override
     public void sendSucess()
     {
-        getBehaviour().sendSucess();
+        Log.e(getClass().getName(), "Thread " + Thread.currentThread() + " sendProcess " + sendProcess);
+        sendProcess = false;
+        runOnUiThread(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                //getBehaviour().sendSucess();
+            }
+        });
     }
 
     @Override
     public void sendError()
     {
-        showToast(R.string.send_subscribe_data_error);
+        Log.e(getClass().getName(), "Thread " + Thread.currentThread() + " sendProcess " + sendProcess);
+        sendProcess = false;
+        runOnUiThread(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                showToast(R.string.send_subscribe_data_error);
+            }
+        });
     }
 }

@@ -15,6 +15,7 @@ import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.FrameLayout;
 
 import ru.parada.app.utils.AndroidUtil;
@@ -22,6 +23,8 @@ import ru.parada.app.utils.AndroidUtil;
 public class DrawerContainer
         extends FrameLayout
 {
+    private InputMethodManager inputMethodManager;
+
     private View drawerLayout;
 
     private AnimatorSet currentAnimation;
@@ -44,6 +47,7 @@ public class DrawerContainer
     public DrawerContainer(Context context, AttributeSet attrs)
     {
         super(context, attrs);
+        this.inputMethodManager = (InputMethodManager)context.getSystemService(Context.INPUT_METHOD_SERVICE);
         post(new Runnable()
         {
             @Override
@@ -70,6 +74,11 @@ public class DrawerContainer
 
     public void setDrawerPosition(float value)
     {
+        if(!moveProcess)
+        {
+            requestFocus();
+            inputMethodManager.hideSoftInputFromWindow(getWindowToken(), 0);
+        }
         if(drawerLayout == null)
         {
             return;
@@ -387,7 +396,6 @@ public class DrawerContainer
                 closeDrawer(null);
                 return false;
             }
-            moveProcess = true;
             if(isOpen())
             {
                 setDrawerPosition(drawerWidth + (ev.getX() - startedTrackingX)*factor);
@@ -396,6 +404,7 @@ public class DrawerContainer
             {
                 setDrawerPosition((ev.getX() - startedTrackingX)*factor);
             }
+            moveProcess = true;
             return true;
         }
         return false;

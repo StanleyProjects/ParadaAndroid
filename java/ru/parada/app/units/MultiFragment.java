@@ -2,7 +2,6 @@ package ru.parada.app.units;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.util.Log;
 
 public abstract class MultiFragment<PRESENTER, BEHAVIOUR>
         extends MVPFragment<PRESENTER, BEHAVIOUR>
@@ -22,8 +21,6 @@ public abstract class MultiFragment<PRESENTER, BEHAVIOUR>
                 }
             }
             screen = size;
-            Log.e(getClass().getName(), "onBackStackChanged " + size);
-            Log.e(getClass().getName(), "Fragments " + getChildFragmentManager().getFragments());
         }
     };
 
