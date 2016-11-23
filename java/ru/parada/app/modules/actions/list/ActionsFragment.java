@@ -1,4 +1,4 @@
-package ru.parada.app.modules.actions;
+package ru.parada.app.modules.actions.list;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -8,8 +8,8 @@ import android.view.View;
 import ru.parada.app.R;
 import ru.parada.app.contracts.ActionsContract;
 import ru.parada.app.core.ActionsCore;
-import ru.parada.app.modules.actions.adapter.ActionsAdapter;
-import ru.parada.app.modules.actions.adapter.ActionsAdapterListener;
+import ru.parada.app.modules.actions.list.adapter.ActionsAdapter;
+import ru.parada.app.modules.actions.list.adapter.ActionsAdapterListener;
 import ru.parada.app.units.ListModel;
 import ru.parada.app.units.MVPFragment;
 

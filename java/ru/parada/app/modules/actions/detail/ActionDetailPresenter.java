@@ -1,4 +1,4 @@
-package ru.parada.app.modules.actiondetail;
+package ru.parada.app.modules.actions.detail;
 
 import ru.parada.app.contracts.ActionDetailContract;
 import ru.parada.app.db.SQliteApi;

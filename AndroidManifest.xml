@@ -22,6 +22,8 @@
         </activity>
         <activity android:name=".modules.player.PlayerActivity"
                   android:screenOrientation="landscape"/>
+        <activity android:name=".modules.map.MapActivity"
+                  android:screenOrientation="portrait"/>
 
         <service
             android:name=".firebase.MessagingService">

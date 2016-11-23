@@ -88,6 +88,13 @@
     <string name="vkontakte_url">http://vk.com/club30319557</string>
     <string name="youtube_url">http://www.youtube.com/channel/UCkG-5C9YExPR1p3VI3USaDA</string>
     <string name="instagram_url">http://instagram.com/paradanewsblock</string>
+    <string name="map">Карта</string>
+    <string name="surgery_web">paradaplastika.ru</string>
+    <string name="baltmed_web">baltclinicvo.ru</string>
+    <string name="surgery_phone_to_call">+78123372304</string>
+    <string name="baltmed_phone_to_call">+78123372303</string>
+    <string name="surgery_link">http://paradaplastika.ru</string>
+    <string name="baltmed_link">http://www.baltclinicvo.ru</string>
 
     <string-array name="months">
         <item>января</item>

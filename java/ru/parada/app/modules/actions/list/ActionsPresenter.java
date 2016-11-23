@@ -1,4 +1,4 @@
-package ru.parada.app.modules.actions;
+package ru.parada.app.modules.actions.list;
 
 import android.util.Log;
 

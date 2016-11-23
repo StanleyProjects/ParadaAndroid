@@ -6,9 +6,12 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import ru.parada.app.App;
 import ru.parada.app.R;
 import ru.parada.app.contracts.contacts.ContactDetailContract;
 import ru.parada.app.core.ContactsCore;
+import ru.parada.app.modules.map.MapActivity;
+import ru.parada.app.modules.map.MapFragment;
 import ru.parada.app.units.MultiFragment;
 
 public class ContactDetailFragment
@@ -25,14 +28,19 @@ public class ContactDetailFragment
         return fragment;
     }
 
-    private Fragment mapFragment;
-
     private TextView name;
     private ImageView image;
     private TextView phone_label;
     private TextView work_time_label;
     private TextView mail_label;
+    private TextView web_label;
     private TextView address_label;
+
+    private double latitude = 0;
+    private double longitude = 0;
+    private String phoneToCall;
+    private String link;
+    private String ml;
 
     @Override
     protected ContactDetailContract.Presenter setPresenter()
@@ -54,8 +62,13 @@ public class ContactDetailFragment
         phone_label = (TextView)v.findViewById(R.id.phone_label);
         work_time_label = (TextView)v.findViewById(R.id.work_time_label);
         mail_label = (TextView)v.findViewById(R.id.mail_label);
+        web_label = (TextView)v.findViewById(R.id.web_label);
         address_label = (TextView)v.findViewById(R.id.address_label);
-        setClickListener(v.findViewById(R.id.back));
+        setClickListener(v.findViewById(R.id.back), v.findViewById(R.id.mapforeground),
+                v.findViewById(R.id.phone),
+                v.findViewById(R.id.mail),
+                v.findViewById(R.id.web),
+                v.findViewById(R.id.address));
     }
 
     @Override
@@ -71,6 +84,18 @@ public class ContactDetailFragment
                     case R.id.back:
                         getBehaviour().back();
                         break;
+                    case R.id.mapforeground:
+                        getActivity().startActivity(MapActivity.createIntent(getActivity(), latitude, longitude));
+                        break;
+                    case R.id.phone:
+                        App.getComponent().getAndroidUtil().openPhone(phoneToCall);
+                        break;
+                    case R.id.mail:
+                        App.getComponent().getAndroidUtil().openMail(ml);
+                        break;
+                    case R.id.web:
+                        App.getComponent().getAndroidUtil().openBrowser(link);
+                        break;
                 }
             }
         };
@@ -79,12 +104,10 @@ public class ContactDetailFragment
     @Override
     protected void init()
     {
-        double latitude = 0;
-        double longitude = 0;
         String nm;
         String pl;
         String wl;
-        String ml;
+        String web;
         String al;
         int img;
         if(getArguments().getInt(CONTACT) == ContactsCore.Contacts.SURGERY)
@@ -94,9 +117,12 @@ public class ContactDetailFragment
             pl = getActivity().getResources().getString(R.string.surgery_phone);
             wl = getActivity().getResources().getString(R.string.surgery_work_time);
             ml = getActivity().getResources().getString(R.string.surgery_mail);
+            web = getActivity().getResources().getString(R.string.surgery_web);
             al = getActivity().getResources().getString(R.string.surgery_address);
             latitude = 59.938884;
             longitude = 30.223898;
+            phoneToCall = getActivity().getResources().getString(R.string.surgery_phone_to_call);
+            link = getActivity().getResources().getString(R.string.surgery_link);
         }
         else if(getArguments().getInt(CONTACT) == ContactsCore.Contacts.BALTMED)
         {
@@ -105,9 +131,12 @@ public class ContactDetailFragment
             pl = getActivity().getResources().getString(R.string.baltmed_phone);
             wl = getActivity().getResources().getString(R.string.baltmed_work_time);
             ml = getActivity().getResources().getString(R.string.baltmed_mail);
+            web = getActivity().getResources().getString(R.string.baltmed_web);
             al = getActivity().getResources().getString(R.string.baltmed_address);
             latitude = 59.941371;
             longitude = 30.223222;
+            phoneToCall = getActivity().getResources().getString(R.string.baltmed_phone_to_call);
+            link = getActivity().getResources().getString(R.string.baltmed_link);
         }
         else
         {
@@ -126,9 +155,8 @@ public class ContactDetailFragment
         phone_label.setText(pl);
         work_time_label.setText(wl);
         mail_label.setText(ml);
+        web_label.setText(web);
         address_label.setText(al);
-        mapFragment = MapFragment.newInstanse(latitude, longitude);
-        replaceMap();
     }
 
     @Override
@@ -149,7 +177,7 @@ public class ContactDetailFragment
     private void replaceMap()
     {
         getChildFragmentManager().beginTransaction()
-                                 .replace(R.id.subscreen, mapFragment)
+                                 .replace(R.id.subscreen, MapFragment.newInstanse(latitude, longitude))
                                  .commit();
     }
 }

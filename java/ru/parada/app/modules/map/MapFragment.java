@@ -1,7 +1,6 @@
-package ru.parada.app.modules.contacts.detail;
+package ru.parada.app.modules.map;
 
 import android.os.Bundle;
-import android.util.Log;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -47,7 +46,6 @@ public class MapFragment
         super.onCreate(bundle);
         latitude = getArguments().getDouble(LATITUDE);
         longitude = getArguments().getDouble(LONGITUDE);
-        Log.e(getClass().getName(), "la " + latitude + " lo " + longitude);
         getMapAsync(onMapReadyCallback);
     }
 

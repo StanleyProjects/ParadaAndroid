@@ -1,4 +1,4 @@
-package ru.parada.app.modules.actions.adapter;
+package ru.parada.app.modules.actions.list.adapter;
 
 import ru.parada.app.contracts.ActionsContract;
 

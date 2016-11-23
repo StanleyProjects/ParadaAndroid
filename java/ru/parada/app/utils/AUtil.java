@@ -26,13 +26,13 @@ public class AUtil
     }
 
     @Override
-    public int dp(float value)
+    public int dp(float px)
     {
-        if(value == 0)
+        if(px == 0)
         {
             return 0;
         }
-        return (int)Math.ceil(density * value);
+        return (int)Math.ceil(density * px);
     }
 
     @Override
@@ -70,6 +70,15 @@ public class AUtil
     {
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(Uri.parse(link));
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
+    }
+
+    @Override
+    public void openMail(String address)
+    {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse("mailto:" + address));
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }

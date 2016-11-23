@@ -55,6 +55,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="72dp"/>
             <LinearLayout
+                android:id="@+id/phone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <FrameLayout
@@ -68,7 +69,6 @@
                         android:layout_width="@dimen/icon"
                         android:layout_height="@dimen/icon"/>
                 </FrameLayout>
-
                 <TextView
                     android:id="@+id/phone_label"
                     android:text="awdawdaw\nsdfsdfsdf\nsdfsdf"
@@ -98,6 +98,7 @@
                     android:layout_height="match_parent"/>
             </LinearLayout>
             <LinearLayout
+                android:id="@+id/mail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <FrameLayout
@@ -122,6 +123,32 @@
                     android:layout_height="match_parent"/>
             </LinearLayout>
             <LinearLayout
+                android:id="@+id/web"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <FrameLayout
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent">
+                    <ImageView
+                        android:src="@mipmap/web_icon"
+                        android:scaleType="fitCenter"
+                        android:layout_gravity="right|center_vertical"
+                        android:layout_width="@dimen/icon"
+                        android:layout_height="@dimen/icon"/>
+                </FrameLayout>
+                <TextView
+                    android:id="@+id/web_label"
+                    android:text="awdawdaw\nsdfsdfsdf\nsdfsdf"
+                    android:textColor="@color/graydark"
+                    android:gravity="center_vertical"
+                    android:layout_margin="8dp"
+                    android:layout_weight="2"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"/>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <FrameLayout
@@ -155,6 +182,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"/>
                 <View
+                    android:id="@+id/mapforeground"
                     android:background="@android:color/transparent"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"/>

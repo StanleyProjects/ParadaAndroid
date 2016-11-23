@@ -1,4 +1,4 @@
-package ru.parada.app.modules.actiondetail;
+package ru.parada.app.modules.actions.detail;
 
 import android.os.Bundle;
 import android.text.Html;

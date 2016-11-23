@@ -22,7 +22,6 @@
             android:tint="@color/white"/>
 
         <TextView
-            android:id="@+id/title"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
@@ -30,6 +29,7 @@
             android:ellipsize="end"
             android:paddingLeft="56dp"
             android:paddingRight="56dp"
+            android:text="@string/actions"
             android:textColor="@color/white"
             android:textSize="@dimen/text_size_medium"/>
     </FrameLayout>
@@ -57,8 +57,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
                 <TextView
-                    android:id="@+id/subtitle"
-                    android:text="14-30 июля 2016"
+                    android:id="@+id/title"
                     android:textSize="@dimen/text_size_medium"
                     android:textColor="@color/white"
                     android:layout_marginBottom="16dp"
@@ -74,13 +73,27 @@
                     android:layout_width="match_parent"
                     android:layout_height="128dp"/>
             </LinearLayout>
-            <TextView
-                android:id="@+id/descr"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <LinearLayout
+                android:orientation="vertical"
                 android:layout_margin="16dp"
-                android:textColor="@color/black"
-                android:textSize="@dimen/text_size_medium"/>
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/subtitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:textColor="@color/black"
+                    android:visibility="gone"
+                    android:textAllCaps="true"
+                    android:textSize="@dimen/text_size_medium"/>
+                <TextView
+                    android:id="@+id/descr"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_medium"/>
+            </LinearLayout>
             <TextView
                 android:id="@+id/subscribe_reception"
                 android:layout_width="228dp"
