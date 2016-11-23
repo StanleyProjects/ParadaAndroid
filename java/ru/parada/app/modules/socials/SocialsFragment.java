@@ -2,6 +2,7 @@ package ru.parada.app.modules.socials;
 
 import android.view.View;
 
+import ru.parada.app.App;
 import ru.parada.app.R;
 import ru.parada.app.contracts.SocialsContract;
 import ru.parada.app.units.MVPFragment;
@@ -53,12 +54,16 @@ public class SocialsFragment
                         getBehaviour().openMenu();
                         break;
                     case R.id.facebook:
+                        App.getComponent().getAndroidUtil().openBrowser(getResources().getString(R.string.facebook_url));
                         break;
                     case R.id.vkontakte:
+                        App.getComponent().getAndroidUtil().openBrowser(getResources().getString(R.string.vkontakte_url));
                         break;
                     case R.id.youtube:
+                        App.getComponent().getAndroidUtil().openBrowser(getResources().getString(R.string.youtube_url));
                         break;
                     case R.id.instagram:
+                        App.getComponent().getAndroidUtil().openBrowser(getResources().getString(R.string.instagram_url));
                         break;
                 }
             }

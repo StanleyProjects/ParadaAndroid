@@ -4,8 +4,8 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 
+import ru.parada.app.App;
 import ru.parada.app.core.DoctorVideosCore;
-import ru.parada.app.managers.FoldersManager;
 import ru.parada.app.units.adapters.ModelDataAdapter;
 
 public class DoctorVideosAdapter
@@ -20,7 +20,7 @@ public class DoctorVideosAdapter
     protected void setData(DoctorVideosAdapterHolder holder, DoctorVideosCore.Model item)
     {
         holder.setTitle(item.getTitle());
-        holder.setImage(FoldersManager.getImagesDirectory() + "/" + item.getImagePath());
+        holder.setImage(App.getComponent().getFoldersManager().getImagesDirectory() + "/" + item.getImagePath());
         final int id = item.getId();
         holder.setPlay(new View.OnClickListener()
         {

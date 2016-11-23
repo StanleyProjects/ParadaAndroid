@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
 
+import ru.parada.app.App;
 import ru.parada.app.connection.DownloadFile;
 import ru.parada.app.connection.JsonArrayRequestListener;
 import ru.parada.app.connection.ParadaService;
@@ -15,8 +16,6 @@ import ru.parada.app.contracts.doctors.DoctorsContract;
 import ru.parada.app.contracts.ImagesContract;
 import ru.parada.app.core.DoctorsCore;
 import ru.parada.app.db.SQliteApi;
-import ru.parada.app.json.JSONParser;
-import ru.parada.app.managers.FoldersManager;
 import ru.parada.app.modules.doctors.models.Doctor;
 import ru.parada.app.modules.doctors.videos.model.Video;
 import ru.parada.app.modules.images.ImageModel;
@@ -110,7 +109,7 @@ public class DoctorsPresenter
         if(oldModel == null || oldModel.getImageUrl() == null || !oldModel.getImageUrl().equals(photo_url))
         {
             final String relativePath = "doctor-" + UUID.randomUUID().toString() + ".jpg";
-            String fullPath = FoldersManager.getImagesDirectory() + "/" + relativePath;
+            String fullPath = App.getComponent().getFoldersManager().getImagesDirectory() + "/" + relativePath;
             new DownloadFile(fullPath, photo_url).download(new DownloadFile.DownloadFileListener()
             {
                 @Override
@@ -137,7 +136,7 @@ public class DoctorsPresenter
         if(oldModel == null || oldModel.getImageUrl() == null || !oldModel.getImageUrl().equals(photo_url))
         {
             final String relativePath = "doctor-video-" + UUID.randomUUID().toString() + ".jpg";
-            String fullPath = FoldersManager.getImagesDirectory() + "/" + relativePath;
+            String fullPath = App.getComponent().getFoldersManager().getImagesDirectory() + "/" + relativePath;
             new DownloadFile(fullPath, photo_url).download(new DownloadFile.DownloadFileListener()
             {
                 @Override
@@ -152,7 +151,7 @@ public class DoctorsPresenter
                 @Override
                 public void error(Exception error)
                 {
-                    Log.e(this.getClass().getName(), "download photo " + error.getMessage());
+                    Log.e(getClass().getName(), "download photo " + error.getMessage());
                 }
             });
         }

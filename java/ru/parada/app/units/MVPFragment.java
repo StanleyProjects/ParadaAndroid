@@ -1,15 +1,14 @@
 package ru.parada.app.units;
 
-import android.content.Context;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
+
+import ru.parada.app.App;
 
 public abstract class MVPFragment<PRESENTER, BEHAVIOUR>
         extends Fragment
@@ -18,8 +17,6 @@ public abstract class MVPFragment<PRESENTER, BEHAVIOUR>
     private BEHAVIOUR behaviour;
     private View.OnClickListener clickListener;
     private View mainView;
-    private Handler uiHandler;
-    private InputMethodManager inputMethodManager;
 
     @Override
     public void onPause()
@@ -54,8 +51,6 @@ public abstract class MVPFragment<PRESENTER, BEHAVIOUR>
                     return false;
                 }
             });
-            this.inputMethodManager = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-            this.uiHandler = new Handler();
             this.presenter = setPresenter();
             this.clickListener = setClickListener();
             initViews(mainView);
@@ -75,21 +70,9 @@ public abstract class MVPFragment<PRESENTER, BEHAVIOUR>
         }
     }
 
-    protected void runOnUiThread(Runnable r, long d)
-    {
-        if(d > 0)
-        {
-            uiHandler.postDelayed(r, d);
-        }
-        else
-        {
-            uiHandler.post(r);
-        }
-    }
-
     protected void runOnUiThread(Runnable r)
     {
-        uiHandler.post(r);
+        App.getComponent().getAndroidUtil().runOnUiThread(r);
     }
 
     protected void runAfterResume(final Runnable r)
@@ -103,7 +86,7 @@ public abstract class MVPFragment<PRESENTER, BEHAVIOUR>
                 {
 
                 }
-                uiHandler.post(r);
+                runOnUiThread(r);
             }
         }).start();
     }
@@ -121,7 +104,7 @@ public abstract class MVPFragment<PRESENTER, BEHAVIOUR>
 
     protected void hideKeyBoard()
     {
-        inputMethodManager.hideSoftInputFromWindow(mainView.getWindowToken(), 0);
+        App.getComponent().getAndroidUtil().hideKeyBoard(mainView.getWindowToken());
     }
 
     protected void setBehaviour(BEHAVIOUR b)

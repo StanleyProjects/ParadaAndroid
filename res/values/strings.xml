@@ -84,6 +84,10 @@
     <string name="viber_open_error">Приложение Viber не установлено</string>
     <string name="viber_pack">com.viber.voip</string>
     <string name="whatsapp_pack">com.whatsapp</string>
+    <string name="facebook_url">https://www.facebook.com/paradaplastika</string>
+    <string name="vkontakte_url">http://vk.com/club30319557</string>
+    <string name="youtube_url">http://www.youtube.com/channel/UCkG-5C9YExPR1p3VI3USaDA</string>
+    <string name="instagram_url">http://instagram.com/paradanewsblock</string>
 
     <string-array name="months">
         <item>января</item>

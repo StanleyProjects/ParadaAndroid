@@ -6,9 +6,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import ru.parada.app.App;
 import ru.parada.app.R;
 import ru.parada.app.units.AdapterHolder;
-import ru.parada.app.utils.AndroidUtil;
 import ru.parada.app.utils.ImagesUtils;
 
 public class DoctorVideosAdapterHolder
@@ -36,7 +36,7 @@ public class DoctorVideosAdapterHolder
         }
         else
         {
-            ImagesUtils.setThumbImage(imp, image, AndroidUtil.dp(128), AndroidUtil.dp(128));
+            ImagesUtils.setThumbImage(imp, image, App.getComponent().getAndroidUtil().dp(128), App.getComponent().getAndroidUtil().dp(128));
         }
     }
     public void setPlay(View.OnClickListener clickListener)

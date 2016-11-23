@@ -173,7 +173,7 @@ public class ServicesFragment
                 adapter.swapData(data);
                 adapter.notifyDataSetChanged();
             }
-        }, 0);
+        });
     }
 
     private void addSubscreen(Fragment fragment)

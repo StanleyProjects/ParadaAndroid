@@ -5,9 +5,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import ru.parada.app.App;
 import ru.parada.app.R;
 import ru.parada.app.units.AdapterHolder;
-import ru.parada.app.utils.AndroidUtil;
 import ru.parada.app.utils.ImagesUtils;
 
 public class ServiceHolder
@@ -31,7 +31,7 @@ public class ServiceHolder
         }
         else
         {
-            ImagesUtils.setThumbImage(photoPath, image, AndroidUtil.dp(112), AndroidUtil.dp(112));
+            ImagesUtils.setThumbImage(photoPath, image, App.getComponent().getAndroidUtil().dp(112), App.getComponent().getAndroidUtil().dp(112));
         }
     }
     public void setTitle(String t)

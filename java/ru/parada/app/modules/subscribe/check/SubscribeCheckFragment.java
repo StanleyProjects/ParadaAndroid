@@ -79,7 +79,10 @@ public class SubscribeCheckFragment
                 switch(v.getId())
                 {
                     case R.id.back:
-                        getBehaviour().back();
+                        if(!sendProcess)
+                        {
+                            getBehaviour().back();
+                        }
                         break;
                     case R.id.send:
                         sendProcess = true;
@@ -134,7 +137,7 @@ public class SubscribeCheckFragment
             @Override
             public void run()
             {
-                //getBehaviour().sendSucess();
+                getBehaviour().sendSucess();
             }
         });
     }

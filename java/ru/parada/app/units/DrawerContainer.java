@@ -8,23 +8,19 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
-import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.FrameLayout;
 
-import ru.parada.app.utils.AndroidUtil;
+import ru.parada.app.App;
 
 public class DrawerContainer
         extends FrameLayout
 {
-    private InputMethodManager inputMethodManager;
-
     private View drawerLayout;
 
     private AnimatorSet currentAnimation;
@@ -47,7 +43,6 @@ public class DrawerContainer
     public DrawerContainer(Context context, AttributeSet attrs)
     {
         super(context, attrs);
-        this.inputMethodManager = (InputMethodManager)context.getSystemService(Context.INPUT_METHOD_SERVICE);
         post(new Runnable()
         {
             @Override
@@ -74,11 +69,6 @@ public class DrawerContainer
 
     public void setDrawerPosition(float value)
     {
-        if(!moveProcess)
-        {
-            requestFocus();
-            inputMethodManager.hideSoftInputFromWindow(getWindowToken(), 0);
-        }
         if(drawerLayout == null)
         {
             return;
@@ -111,6 +101,8 @@ public class DrawerContainer
         {
             return;
         }
+        requestFocus();
+        App.getComponent().getAndroidUtil().hideKeyBoard(getWindowToken());
         cancelCurrentAnimation();
         currentAnimation = new AnimatorSet();
         currentAnimation.play(ObjectAnimator.ofFloat(this, "drawerPosition", drawerPosition + drawerWidth, drawerWidth));
@@ -405,6 +397,8 @@ public class DrawerContainer
                 setDrawerPosition((ev.getX() - startedTrackingX)*factor);
             }
             moveProcess = true;
+            requestFocus();
+            App.getComponent().getAndroidUtil().hideKeyBoard(getWindowToken());
             return true;
         }
         return false;
@@ -450,7 +444,7 @@ public class DrawerContainer
             public void run()
             {
                 ViewGroup.LayoutParams lp = drawerLayout.getLayoutParams();
-                drawerWidth = getMeasuredWidth() - AndroidUtil.dp(56);
+                drawerWidth = getMeasuredWidth() - App.getComponent().getAndroidUtil().dp(56);
                 lp.width = drawerWidth;
                 drawerLayout.setLayoutParams(lp);
                 setDrawerPosition(0);

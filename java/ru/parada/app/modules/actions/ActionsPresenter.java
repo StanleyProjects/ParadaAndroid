@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
 
+import ru.parada.app.App;
 import ru.parada.app.connection.DownloadFile;
 import ru.parada.app.connection.JsonArrayRequestListener;
 import ru.parada.app.connection.ParadaService;
@@ -15,8 +16,6 @@ import ru.parada.app.contracts.ActionsContract;
 import ru.parada.app.contracts.ImagesContract;
 import ru.parada.app.core.ActionsCore;
 import ru.parada.app.db.SQliteApi;
-import ru.parada.app.json.JSONParser;
-import ru.parada.app.managers.FoldersManager;
 import ru.parada.app.modules.actions.model.Action;
 import ru.parada.app.modules.images.ImageModel;
 import ru.parada.app.units.ListModel;
@@ -146,7 +145,7 @@ public class ActionsPresenter
         if(oldModel == null || oldModel.getImageUrl() == null || !oldModel.getImageUrl().equals(photo_url))
         {
             final String relativePath = "action-" + UUID.randomUUID().toString() + ".jpg";
-            String fullPath = FoldersManager.getImagesDirectory() + "/" + relativePath;
+            String fullPath = App.getComponent().getFoldersManager().getImagesDirectory() + "/" + relativePath;
             new DownloadFile(fullPath, photo_url).download(new DownloadFile.DownloadFileListener()
             {
                 @Override
@@ -173,7 +172,7 @@ public class ActionsPresenter
         if(oldModel == null || oldModel.getImageUrl() == null || !oldModel.getImageUrl().equals(photo_url))
         {
             final String relativePath = "action-detail-" + UUID.randomUUID().toString() + ".jpg";
-            String fullPath = FoldersManager.getImagesDirectory() + "/" + relativePath;
+            String fullPath = App.getComponent().getFoldersManager().getImagesDirectory() + "/" + relativePath;
             new DownloadFile(fullPath, photo_url).download(new DownloadFile.DownloadFileListener()
             {
                 @Override

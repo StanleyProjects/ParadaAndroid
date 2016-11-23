@@ -8,12 +8,11 @@ import android.widget.TextView;
 
 import java.util.Date;
 
+import ru.parada.app.App;
 import ru.parada.app.R;
 import ru.parada.app.contracts.ActionDetailContract;
 import ru.parada.app.core.ActionsCore;
-import ru.parada.app.managers.FoldersManager;
 import ru.parada.app.units.MVPFragment;
-import ru.parada.app.utils.AndroidUtil;
 import ru.parada.app.utils.ImagesUtils;
 
 public class ActionDetailFragment
@@ -104,7 +103,7 @@ public class ActionDetailFragment
                 }
                 if(data.getImagePath() != null && data.getImagePath().length() > 0)
                 {
-                    ImagesUtils.setThumbImage(FoldersManager.getImagesDirectory() + "/" + data.getImagePath(), image, AndroidUtil.dp(128), AndroidUtil.dp(128));
+                    ImagesUtils.setThumbImage(App.getComponent().getFoldersManager().getImagesDirectory() + "/" + data.getImagePath(), image, App.getComponent().getAndroidUtil().dp(128), App.getComponent().getAndroidUtil().dp(128));
                 }
                 descr.setText(Html.fromHtml(data.getDescription()));
             }

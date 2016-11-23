@@ -8,12 +8,11 @@ import android.widget.TextView;
 
 import java.util.Date;
 
+import ru.parada.app.App;
 import ru.parada.app.R;
 import ru.parada.app.contracts.OneOfNewsDetailContract;
 import ru.parada.app.core.NewsCore;
-import ru.parada.app.managers.FoldersManager;
 import ru.parada.app.units.MVPFragment;
-import ru.parada.app.utils.AndroidUtil;
 import ru.parada.app.utils.ImagesUtils;
 
 public class OneOfNewsDetailFragment
@@ -101,7 +100,7 @@ public class OneOfNewsDetailFragment
                 date.setText(currentDate.getDate() + " " + months[currentDate.getMonth()] + " " + (currentDate.getYear()+1900));
                 if(data.getImagePath() != null && data.getImagePath().length() > 0)
                 {
-                    ImagesUtils.setThumbImage(FoldersManager.getImagesDirectory() + "/" + data.getImagePath(), image, AndroidUtil.dp(222), AndroidUtil.dp(222));
+                    ImagesUtils.setThumbImage(App.getComponent().getFoldersManager().getImagesDirectory() + "/" + data.getImagePath(), image, App.getComponent().getAndroidUtil().dp(222), App.getComponent().getAndroidUtil().dp(222));
                 }
             }
         });

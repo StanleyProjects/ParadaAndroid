@@ -15,10 +15,10 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import ru.parada.app.App;
 import ru.parada.app.R;
 import ru.parada.app.contracts.doctors.DoctorDetailContract;
 import ru.parada.app.core.DoctorsCore;
-import ru.parada.app.managers.FoldersManager;
 import ru.parada.app.modules.call.CallDialog;
 import ru.parada.app.modules.call.CallDialogListener;
 import ru.parada.app.modules.doctors.DoctorHolder;
@@ -107,16 +107,12 @@ public class DoctorDetailFragment
             @Override
             public void phone()
             {
-                Intent intent = new Intent(Intent.ACTION_DIAL);
-                intent.setData(Uri.parse("tel:" + phone));
-                startActivity(intent);
+                App.getComponent().getAndroidUtil().openPhone(phone);
             }
             @Override
             public void sms()
             {
-                Intent intent = new Intent(Intent.ACTION_VIEW);
-                intent.setData(Uri.parse("sms:" + phone));
-                startActivity(intent);
+                App.getComponent().getAndroidUtil().openMessages(phone);
             }
             @Override
             public void whatsapp()
@@ -226,7 +222,7 @@ public class DoctorDetailFragment
                 doctor_fullname.setText(item.getLastName() + " " + item.getFirstName() + " " + item.getMiddleName());
                 if(item.getPhotoPath() != null)
                 {
-                    holder.setPhoto(FoldersManager.getImagesDirectory() + "/" + item.getPhotoPath());
+                    holder.setPhoto(App.getComponent().getFoldersManager().getImagesDirectory() + "/" + item.getPhotoPath());
                 }
                 else
                 {

@@ -1,16 +1,15 @@
 package ru.parada.app.modules.doctors.videos.detail;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import ru.parada.app.App;
 import ru.parada.app.R;
 import ru.parada.app.contracts.doctors.DoctorVideoDetailContract;
 import ru.parada.app.core.DoctorVideosCore;
-import ru.parada.app.managers.FoldersManager;
 import ru.parada.app.modules.player.PlayerActivity;
 import ru.parada.app.units.MVPFragment;
 import ru.parada.app.utils.ImagesUtils;
@@ -92,7 +91,7 @@ public class DoctorVideoDetailFragment
                 videoData = data;
                 if(data.getImagePath() != null)
                 {
-                    ImagesUtils.setImage(FoldersManager.getImagesDirectory() + "/" + data.getImagePath(), image);
+                    ImagesUtils.setImage(App.getComponent().getFoldersManager().getImagesDirectory() + "/" + data.getImagePath(), image);
                 }
                 descr.setText(Html.fromHtml(data.getDescription()));
             }

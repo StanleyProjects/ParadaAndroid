@@ -4,8 +4,8 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 
+import ru.parada.app.App;
 import ru.parada.app.core.DoctorsCore;
-import ru.parada.app.managers.FoldersManager;
 import ru.parada.app.units.adapters.ModelDataAdapter;
 
 public class DoctorsAdapter
@@ -21,7 +21,7 @@ public class DoctorsAdapter
     {
         if(item.getPhotoPath() != null)
         {
-            holder.getHolder().setPhoto(FoldersManager.getImagesDirectory() + "/" + item.getPhotoPath());
+            holder.getHolder().setPhoto(App.getComponent().getFoldersManager().getImagesDirectory() + "/" + item.getPhotoPath());
         }
         else
         {

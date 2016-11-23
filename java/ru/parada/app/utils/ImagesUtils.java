@@ -16,8 +16,16 @@ public class ImagesUtils
     {
         if(imagesCache.size() > 50)
         {
-            Map.Entry<String, Drawable> entry = imagesCache.entrySet().iterator().next();
-            imagesCache.remove(entry.getKey());
+            int i = 5;
+            for(String key : imagesCache.keySet())
+            {
+                imagesCache.remove(key);
+                if(i > 0)
+                {
+                    break;
+                }
+                i--;
+            }
         }
         imagesCache.put(path, d);
     }

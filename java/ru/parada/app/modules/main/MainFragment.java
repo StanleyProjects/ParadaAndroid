@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
+import ru.parada.app.App;
 import ru.parada.app.R;
 import ru.parada.app.contracts.MainContract;
 import ru.parada.app.core.NewsCore;
@@ -135,19 +136,15 @@ public class MainFragment
             @Override
             public void phone()
             {
-                Intent intent = new Intent(Intent.ACTION_DIAL);
-                intent.setData(Uri.parse("tel:" + getActivity().getResources()
-                                                               .getString(R.string.phone_number)));
-                startActivity(intent);
+                App.getComponent().getAndroidUtil().openPhone(getActivity().getResources()
+                                                                           .getString(R.string.phone_number));
             }
 
             @Override
             public void sms()
             {
-                Intent intent = new Intent(Intent.ACTION_VIEW);
-                intent.setData(Uri.parse("sms:" + getActivity().getResources()
-                                                               .getString(R.string.message_number)));
-                startActivity(intent);
+                App.getComponent().getAndroidUtil().openMessages(getActivity().getResources()
+                                                                           .getString(R.string.message_number));
             }
 
             @Override
@@ -253,7 +250,7 @@ public class MainFragment
                 adapter.swapData(data);
                 adapter.notifyDataSetChanged();
             }
-        }, 0);
+        });
     }
 
     private void copyClipBoard(String text)

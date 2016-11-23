@@ -4,8 +4,8 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 
+import ru.parada.app.App;
 import ru.parada.app.core.ServicesCore;
-import ru.parada.app.managers.FoldersManager;
 import ru.parada.app.units.adapters.ModelDataAdapter;
 
 public class ServicesAdapter
@@ -19,7 +19,7 @@ public class ServicesAdapter
     @Override
     protected void setData(ServiceHolder holder, ServicesCore.Model item)
     {
-        holder.setPhoto(FoldersManager.getImagesDirectory() + "/" + item.getImagePath());
+        holder.setPhoto(App.getComponent().getFoldersManager().getImagesDirectory() + "/" + item.getImagePath());
         holder.setTitle(item.getTitle());
         final int id = item.getId();
         holder.itemView.setOnClickListener(new View.OnClickListener()

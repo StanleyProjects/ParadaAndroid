@@ -7,9 +7,9 @@ import android.widget.TextView;
 
 import java.util.Date;
 
+import ru.parada.app.App;
 import ru.parada.app.R;
 import ru.parada.app.units.AdapterHolder;
-import ru.parada.app.utils.AndroidUtil;
 import ru.parada.app.utils.ImagesUtils;
 
 public class ActionHolder
@@ -34,7 +34,7 @@ public class ActionHolder
         }
         else
         {
-            ImagesUtils.setThumbImage(imp, image, AndroidUtil.dp(92), AndroidUtil.dp(92));
+            ImagesUtils.setThumbImage(imp, image, App.getComponent().getAndroidUtil().dp(92), App.getComponent().getAndroidUtil().dp(92));
         }
     }
     public void setDate(long from_date, long to_date)

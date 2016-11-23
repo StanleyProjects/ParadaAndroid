@@ -4,8 +4,8 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 
+import ru.parada.app.App;
 import ru.parada.app.core.ActionsCore;
-import ru.parada.app.managers.FoldersManager;
 import ru.parada.app.units.adapters.ModelDataAdapter;
 
 public class ActionsAdapter
@@ -21,7 +21,7 @@ public class ActionsAdapter
     {
         if(item.getImagePath() != null)
         {
-            holder.setPhoto(FoldersManager.getImagesDirectory() + "/" + item.getImagePath());
+            holder.setPhoto(App.getComponent().getFoldersManager().getImagesDirectory() + "/" + item.getImagePath());
         }
         holder.setDate(item.getFromDate()*1000, item.getToDate()*1000);
         holder.setTitle(item.getTitle());
