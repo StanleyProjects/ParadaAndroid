@@ -11,7 +11,6 @@ import ru.parada.app.R;
 import ru.parada.app.contracts.ServiceDetailContract;
 import ru.parada.app.core.ServicesCore;
 import ru.parada.app.units.MVPFragment;
-import ru.parada.app.utils.ImagesUtils;
 
 public class ServiceDetailFragment
         extends MVPFragment<ServiceDetailContract.Presenter, ServiceDetailContract.Behaviour>
@@ -94,7 +93,9 @@ public class ServiceDetailFragment
                 descr.setText(Html.fromHtml(data.getDescription()));
                 if(data.getImagePath() != null && data.getImagePath().length() > 0)
                 {
-                    ImagesUtils.setThumbImage(App.getComponent().getFoldersManager().getImagesDirectory() + "/" + data.getImagePath(), image, App.getComponent().getAndroidUtil().dp(222), App.getComponent().getAndroidUtil().dp(222));
+                    image.setImageDrawable(App.getComponent().getImagesUtil().getThumbFromCache(
+                            App.getComponent().getFoldersManager().getImagesDirectory() + "/" + data.getImagePath(),
+                            App.getComponent().getAndroidUtil().dp(222), App.getComponent().getAndroidUtil().dp(222)));
                 }
             }
         });

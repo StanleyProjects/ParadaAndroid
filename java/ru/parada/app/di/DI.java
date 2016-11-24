@@ -4,4 +4,5 @@ public interface DI
 {
     AndroidUtil getAndroidUtil();
     FoldersManager getFoldersManager();
+    ImagesUtil getImagesUtil();
 }

@@ -12,7 +12,6 @@ import ru.parada.app.contracts.doctors.DoctorVideoDetailContract;
 import ru.parada.app.core.DoctorVideosCore;
 import ru.parada.app.modules.player.PlayerActivity;
 import ru.parada.app.units.MVPFragment;
-import ru.parada.app.utils.ImagesUtils;
 
 public class DoctorVideoDetailFragment
         extends MVPFragment<DoctorVideoDetailContract.Presenter, DoctorVideoDetailContract.Behaviour>
@@ -91,7 +90,8 @@ public class DoctorVideoDetailFragment
                 videoData = data;
                 if(data.getImagePath() != null)
                 {
-                    ImagesUtils.setImage(App.getComponent().getFoldersManager().getImagesDirectory() + "/" + data.getImagePath(), image);
+                    image.setImageDrawable(App.getComponent().getImagesUtil().getFromCache(
+                            App.getComponent().getFoldersManager().getImagesDirectory() + "/" + data.getImagePath()));
                 }
                 descr.setText(Html.fromHtml(data.getDescription()));
             }

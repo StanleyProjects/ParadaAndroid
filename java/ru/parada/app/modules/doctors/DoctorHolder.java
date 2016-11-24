@@ -8,7 +8,6 @@ import android.widget.TextView;
 
 import ru.parada.app.App;
 import ru.parada.app.R;
-import ru.parada.app.utils.ImagesUtils;
 
 public class DoctorHolder
 {
@@ -47,7 +46,9 @@ public class DoctorHolder
         }
         else
         {
-            ImagesUtils.setThumbImage(photoPath, photo, App.getComponent().getAndroidUtil().dp(112), App.getComponent().getAndroidUtil().dp(112));
+            photo.setImageDrawable(App.getComponent().getImagesUtil().getThumbFromCache(
+                    photoPath,
+                    App.getComponent().getAndroidUtil().dp(112), App.getComponent().getAndroidUtil().dp(112)));
         }
     }
     public void setLastName(String lastName)

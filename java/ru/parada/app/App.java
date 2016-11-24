@@ -6,8 +6,10 @@ import ru.parada.app.db.SQliteApi;
 import ru.parada.app.di.AndroidUtil;
 import ru.parada.app.di.DI;
 import ru.parada.app.di.FoldersManager;
+import ru.parada.app.di.ImagesUtil;
 import ru.parada.app.managers.FManager;
 import ru.parada.app.utils.AUtil;
+import ru.parada.app.utils.IUtil;
 
 public class App
         extends Application
@@ -24,20 +26,23 @@ public class App
     {
         super.onCreate();
         SQliteApi.getInstanse().createDB(getApplicationContext());
-        component = new DIApp(new AUtil(getApplicationContext()),
-                new FManager(getApplicationContext().getFilesDir().getAbsolutePath()));
+        component = new AppComponent(new AUtil(getApplicationContext()),
+                new FManager(getApplicationContext().getFilesDir().getAbsolutePath()),
+                new IUtil(getApplicationContext().getResources()));
     }
 
-    private class DIApp
+    private class AppComponent
         implements DI
     {
         private AndroidUtil androidUtil;
         private FoldersManager foldersManager;
+        private ImagesUtil imagesUtil;
 
-        public DIApp(AndroidUtil au, FoldersManager fm)
+        public AppComponent(AndroidUtil au, FoldersManager fm,ImagesUtil iu)
         {
             androidUtil = au;
             foldersManager = fm;
+            imagesUtil = iu;
         }
 
         @Override
@@ -50,6 +55,12 @@ public class App
         public FoldersManager getFoldersManager()
         {
             return foldersManager;
+        }
+
+        @Override
+        public ImagesUtil getImagesUtil()
+        {
+            return imagesUtil;
         }
     }
 }

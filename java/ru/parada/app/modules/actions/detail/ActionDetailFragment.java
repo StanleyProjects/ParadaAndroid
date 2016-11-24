@@ -13,7 +13,6 @@ import ru.parada.app.R;
 import ru.parada.app.contracts.ActionDetailContract;
 import ru.parada.app.core.ActionsCore;
 import ru.parada.app.units.MVPFragment;
-import ru.parada.app.utils.ImagesUtils;
 
 public class ActionDetailFragment
         extends MVPFragment<ActionDetailContract.Presenter, ActionDetailContract.Behaviour>
@@ -103,7 +102,9 @@ public class ActionDetailFragment
                 }
                 if(data.getImagePath() != null && data.getImagePath().length() > 0)
                 {
-                    ImagesUtils.setThumbImage(App.getComponent().getFoldersManager().getImagesDirectory() + "/" + data.getImagePath(), image, App.getComponent().getAndroidUtil().dp(128), App.getComponent().getAndroidUtil().dp(128));
+                    image.setImageDrawable(App.getComponent().getImagesUtil().getThumbFromCache(
+                            App.getComponent().getFoldersManager().getImagesDirectory() + "/" + data.getImagePath(),
+                            App.getComponent().getAndroidUtil().dp(128), App.getComponent().getAndroidUtil().dp(128)));
                 }
                 descr.setText(Html.fromHtml(data.getDescription()));
             }

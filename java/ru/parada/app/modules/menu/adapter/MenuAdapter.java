@@ -8,7 +8,6 @@ import ru.parada.app.contracts.MenuContract;
 import ru.parada.app.modules.menu.models.MenuListModel;
 import ru.parada.app.modules.menu.models.MenuModel;
 import ru.parada.app.units.adapters.ModelAdapter;
-import ru.parada.app.utils.ImagesUtils;
 
 public class MenuAdapter
     extends ModelAdapter<MenuAdapterHolder, MenuModel, MenuContract.Behaviour>
@@ -30,7 +29,7 @@ public class MenuAdapter
     @Override
     protected void setData(MenuAdapterHolder holder, final MenuModel item)
     {
-        ImagesUtils.setImageFromResources(item.icon, holder.getHolder().getIcon());
+        holder.getHolder().getIcon().setImageResource(item.icon);
         holder.getHolder().setName(item.name);
         if(data.isHighlight(item))
         {
