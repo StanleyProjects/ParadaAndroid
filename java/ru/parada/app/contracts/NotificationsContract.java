@@ -8,6 +8,7 @@ public interface NotificationsContract
     interface View
     {
         void update(ListModel<NotificationsCore.Model> data);
+        void loadFail();
     }
 
     interface Presenter

@@ -28,7 +28,7 @@ public class AUtil
     @Override
     public int dp(float px)
     {
-        if(px == 0)
+        if(px < 0)
         {
             return 0;
         }
@@ -39,6 +39,12 @@ public class AUtil
     public void runOnUiThread(Runnable r)
     {
         uiHandler.post(r);
+    }
+
+    @Override
+    public void runOnUiThread(Runnable r, long ms)
+    {
+        uiHandler.postDelayed(r, ms);
     }
 
     @Override

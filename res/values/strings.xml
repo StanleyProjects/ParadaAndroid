@@ -110,4 +110,13 @@
         <item>ноября</item>
         <item>декабря</item>
     </string-array>
+    <string-array name="weekdays">
+        <item>понедельник</item>
+        <item>вторник</item>
+        <item>среда</item>
+        <item>четверг</item>
+        <item>пятница</item>
+        <item>суббота</item>
+        <item>воскресенье</item>
+    </string-array>
 </resources>

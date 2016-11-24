@@ -539,7 +539,7 @@ public class SQliteApi
         @Override
         public void insertOne(NotificationsCore.Model item)
         {
-            sdb.insertWithOnConflict(TABLE_NAME, null, ContentDriver.getContentValues(item), SQLiteDatabase.CONFLICT_REPLACE);
+            sdb.insertWithOnConflict(TABLE_NAME, null, ContentDriver.getContentValues(item), SQLiteDatabase.CONFLICT_IGNORE);
         }
         @Override
         public void clear()

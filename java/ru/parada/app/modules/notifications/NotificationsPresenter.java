@@ -11,7 +11,6 @@ import ru.parada.app.connection.Request;
 import ru.parada.app.contracts.NotificationsContract;
 import ru.parada.app.core.NotificationsCore;
 import ru.parada.app.db.SQliteApi;
-import ru.parada.app.json.JSONParser;
 import ru.parada.app.modules.notifications.model.Notification;
 import ru.parada.app.units.ListModel;
 
@@ -56,6 +55,7 @@ public class NotificationsPresenter
             @Override
             public void error(String url, Exception error)
             {
+                view.loadFail();
                 Log.e(getClass()
                         .getName(), url + "\n" + error.getMessage());
             }

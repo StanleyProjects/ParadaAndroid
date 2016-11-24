@@ -74,6 +74,10 @@ public abstract class MVPFragment<PRESENTER, BEHAVIOUR>
     {
         App.getComponent().getAndroidUtil().runOnUiThread(r);
     }
+    protected void runOnUiThread(Runnable r, long ms)
+    {
+        App.getComponent().getAndroidUtil().runOnUiThread(r, ms);
+    }
 
     protected void runAfterResume(final Runnable r)
     {

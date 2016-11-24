@@ -1,13 +1,13 @@
 package ru.parada.app.units;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class ArrayListModel<MODEL>
         implements ListModel<MODEL>
 {
-    private ArrayList<MODEL> data;
+    private List<MODEL> data;
 
-    public ArrayListModel(ArrayList<MODEL> d)
+    public ArrayListModel(List<MODEL> d)
     {
         data = d;
     }

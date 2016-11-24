@@ -2,7 +2,6 @@ package ru.parada.app.modules.actions.list;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 
 import ru.parada.app.R;
@@ -36,7 +35,6 @@ public class ActionsFragment
             @Override
             public void run()
             {
-                Log.e(this.getClass().getName(), "update " + data.getItemsCount() + " " + Thread.currentThread());
                 adapter.swapData(data);
                 adapter.notifyDataSetChanged();
             }

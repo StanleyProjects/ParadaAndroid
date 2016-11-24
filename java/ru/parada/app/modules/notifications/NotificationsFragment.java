@@ -1,11 +1,13 @@
 package ru.parada.app.modules.notifications;
 
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import ru.parada.app.R;
 import ru.parada.app.contracts.NotificationsContract;
@@ -29,6 +31,7 @@ public class NotificationsFragment
         return fragment;
     }
 
+    private SwipeRefreshLayout swiperefresh;
     private RecyclerView list;
 
     private GroupAdapter adapter;
@@ -50,6 +53,7 @@ public class NotificationsFragment
     protected void initViews(View v)
     {
         setClickListener(v.findViewById(R.id.menu));
+        swiperefresh = (SwipeRefreshLayout)v.findViewById(R.id.swiperefresh);
         list = (RecyclerView)v.findViewById(R.id.list);
     }
 
@@ -74,6 +78,15 @@ public class NotificationsFragment
     @Override
     protected void init()
     {
+        swiperefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener()
+        {
+            @Override
+            public void onRefresh()
+            {
+                getPresenter().load();
+            }
+        });
+        swiperefresh.setColorSchemeResources(R.color.colorPrimary);
         notificationsGroupData = new NotificationsGroupData(new NotificationsAdapterListener()
         {
         });
@@ -88,17 +101,24 @@ public class NotificationsFragment
     public void update(ListModel<NotificationsCore.Model> data)
     {
         ArrayList<GroupModel> groupData = new ArrayList<>();
-        Log.e(getClass().getName(), "data " + data.getItemsCount());
+        Date date = new Date(0);
         for(int i=0; i<data.getItemsCount(); i++)
         {
-            Log.e(getClass().getName(), "message " + data.getItem(i).getMessage());
-            groupData.add(new GroupModel<>(data.getItem(i), 0));
+            final Date cDate = new Date(data.getItem(i).getDate());
+            if(date.getYear() != cDate.getYear() || date.getMonth() != cDate.getMonth() || date.getDate() != cDate.getDate())
+            {
+                date = cDate;
+                groupData.add(new GroupModel<>(new NotificationsCore.GroupModel(){
+                    @Override
+                    public long getDate()
+                    {
+                        return cDate.getTime();
+                    }
+                }, NotificationsGroupData.ViewTypes.GROUP));
+            }
+            groupData.add(new GroupModel<>(data.getItem(i), NotificationsGroupData.ViewTypes.NORMAL));
         }
         final ArrayListModel<GroupModel> notifications = new ArrayListModel<>(groupData);
-        for(int i=0; i<notifications.getItemsCount(); i++)
-        {
-            Log.e(getClass().getName(), "message " + notifications.getItem(i).getData());
-        }
         runOnUiThread(new Runnable()
         {
             @Override
@@ -106,6 +126,20 @@ public class NotificationsFragment
             {
                 notificationsGroupData.swapData(notifications);
                 adapter.notifyDataSetChanged();
+                swiperefresh.setRefreshing(false);
+            }
+        });
+    }
+
+    @Override
+    public void loadFail()
+    {
+        runOnUiThread(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                swiperefresh.setRefreshing(false);
             }
         });
     }

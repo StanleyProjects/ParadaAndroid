@@ -18,16 +18,42 @@ public class NotificationsGroupData
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position)
     {
-        setNormal((NotificationHolder)holder, (NotificationsCore.Model)getItem(position).getData());
+        switch(getItemViewType(position))
+        {
+            case ViewTypes.GROUP:
+                setGroup((NotificationGroupHolder)holder, (NotificationsCore.GroupModel)getItem(position).getData());
+                break;
+            case ViewTypes.NORMAL:
+                setNormal((NotificationHolder)holder, (NotificationsCore.Model)getItem(position).getData());
+                break;
+        }
     }
+
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(Context context, ViewGroup parent, int viewType)
     {
-        return new NotificationHolder(context, parent);
+        switch(viewType)
+        {
+            case ViewTypes.GROUP:
+                return new NotificationGroupHolder(context, parent);
+            case ViewTypes.NORMAL:
+                return new NotificationHolder(context, parent);
+        }
+        return null;
     }
 
     private void setNormal(NotificationHolder holder, NotificationsCore.Model data)
     {
         holder.setMessage(data.getMessage());
+    }
+    private void setGroup(NotificationGroupHolder holder, NotificationsCore.GroupModel data)
+    {
+        holder.setDay(data.getDate());
+    }
+
+    public interface ViewTypes
+    {
+        int GROUP = 1;
+        int NORMAL = 2;
     }
 }

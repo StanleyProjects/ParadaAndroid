@@ -39,6 +39,7 @@ public class SubscribeCheckFragment
     private TextView lfmname;
     private View comment_container;
     private TextView comment;
+    private View waiter;
 
     private SubscribeCore.Model data;
     private boolean sendProcess;
@@ -65,6 +66,7 @@ public class SubscribeCheckFragment
         lfmname = (TextView)v.findViewById(R.id.lfmname);
         comment_container = v.findViewById(R.id.comment_container);
         comment = (TextView)v.findViewById(R.id.comment);
+        waiter = v.findViewById(R.id.waiter);
         setClickListener(v.findViewById(R.id.back), v.findViewById(R.id.send));
     }
 
@@ -85,7 +87,22 @@ public class SubscribeCheckFragment
                         }
                         break;
                     case R.id.send:
+                        if(sendProcess)
+                        {
+                            return;
+                        }
                         sendProcess = true;
+                        runOnUiThread(new Runnable()
+                        {
+                            @Override
+                            public void run()
+                            {
+                                if(sendProcess)
+                                {
+                                    waiter.setVisibility(View.VISIBLE);
+                                }
+                            }
+                        }, 500);
                         getPresenter().send(data);
                         break;
                 }
@@ -130,7 +147,6 @@ public class SubscribeCheckFragment
     @Override
     public void sendSucess()
     {
-        Log.e(getClass().getName(), "Thread " + Thread.currentThread() + " sendProcess " + sendProcess);
         sendProcess = false;
         runOnUiThread(new Runnable()
         {
@@ -138,6 +154,7 @@ public class SubscribeCheckFragment
             public void run()
             {
                 getBehaviour().sendSucess();
+                waiter.setVisibility(View.GONE);
             }
         });
     }
@@ -145,7 +162,6 @@ public class SubscribeCheckFragment
     @Override
     public void sendError()
     {
-        Log.e(getClass().getName(), "Thread " + Thread.currentThread() + " sendProcess " + sendProcess);
         sendProcess = false;
         runOnUiThread(new Runnable()
         {
@@ -153,6 +169,7 @@ public class SubscribeCheckFragment
             public void run()
             {
                 showToast(R.string.send_subscribe_data_error);
+                waiter.setVisibility(View.GONE);
             }
         });
     }
