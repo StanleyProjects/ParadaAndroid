@@ -27,6 +27,12 @@ public class NotificationsCursorListModel
         {
             return getLong(Tables.Notifications.Columns.date);
         }
+
+        @Override
+        public boolean read()
+        {
+            return getInt(Tables.Notifications.Columns.read) == 1;
+        }
     };
 
     public NotificationsCursorListModel(Cursor d)

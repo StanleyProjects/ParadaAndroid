@@ -21,6 +21,7 @@ public class MenuAdapterHolder
                 itemView.findViewById(R.id.background),
                 (ImageView)itemView.findViewById(R.id.icon),
                 (TextView)itemView.findViewById(R.id.name),
+                itemView.findViewById(R.id.badge),
                 context.getResources().getColor(R.color.graylight),
                 context.getResources().getColor(R.color.colorAccent),
                 context.getResources().getColor(R.color.white),

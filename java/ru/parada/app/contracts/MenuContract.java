@@ -7,11 +7,13 @@ public interface MenuContract
     interface View
     {
         void set(GeneralCore.ScreenType screenType);
+        void update();
     }
 
     interface Presenter
     {
         void open(GeneralCore.ScreenType screenType);
+        void checkNotifications();
     }
 
     interface Behaviour

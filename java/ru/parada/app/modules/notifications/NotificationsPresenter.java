@@ -35,9 +35,6 @@ public class NotificationsPresenter
             public void response(ArrayList answer)
             {
                 SQliteApi.getInstanse()
-                         .getNotifications()
-                         .clear();
-                SQliteApi.getInstanse()
                          .startTransaction();
                 for(Object notification : answer)
                 {
@@ -46,7 +43,7 @@ public class NotificationsPresenter
                              .insertOne(new Notification(
                                      Integer.parseInt((String)((HashMap)notification).get("id")),
                                      getString((HashMap)notification, "message"),
-                                     Long.parseLong((String)((HashMap)notification).get("date"))));
+                                     Long.parseLong((String)((HashMap)notification).get("date")), false));
                 }
                 SQliteApi.getInstanse()
                          .endTransaction();

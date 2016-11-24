@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 
+import ru.parada.app.App;
 import ru.parada.app.contracts.MenuContract;
 import ru.parada.app.modules.menu.models.MenuListModel;
 import ru.parada.app.modules.menu.models.MenuModel;
@@ -39,6 +40,7 @@ public class MenuAdapter
         {
             holder.getHolder().setNormal();
         }
+        holder.getHolder().showBadge(item.isNotification && App.getComponent().getPreferenceManager().needNotificationBadge());
         holder.itemView.setOnClickListener(new View.OnClickListener()
         {
             @Override

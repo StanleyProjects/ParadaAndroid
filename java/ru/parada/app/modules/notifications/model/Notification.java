@@ -8,12 +8,14 @@ public class Notification
     private int id;
     private String message;
     private long date;
+    private boolean read;
 
-    public Notification(int i, String m, long d)
+    public Notification(int i, String m, long d, boolean r)
     {
         id = i;
         message = m;
         date = d;
+        read = r;
     }
 
     @Override
@@ -32,5 +34,11 @@ public class Notification
     public long getDate()
     {
         return date;
+    }
+
+    @Override
+    public boolean read()
+    {
+        return read;
     }
 }

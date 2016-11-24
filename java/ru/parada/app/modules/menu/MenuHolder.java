@@ -9,6 +9,7 @@ public class MenuHolder
     private View background;
     private ImageView icon;
     private TextView name;
+    private View badge;
 
     private int highlightBackColor;
     private int highlightColor;
@@ -16,11 +17,12 @@ public class MenuHolder
     private int normalIconColor;
     private int normalTextColor;
 
-    public MenuHolder(View b, ImageView i, TextView n, int hbc, int hc, int nbc, int nic, int ntc)
+    public MenuHolder(View b, ImageView i, TextView n, View bdg, int hbc, int hc, int nbc, int nic, int ntc)
     {
         background = b;
         icon = i;
         name = n;
+        badge = bdg;
         highlightBackColor = hbc;
         highlightColor = hc;
         normalBackColor = nbc;
@@ -39,6 +41,18 @@ public class MenuHolder
         background.setBackgroundColor(highlightBackColor);
         icon.setColorFilter(highlightColor);
         name.setTextColor(highlightColor);
+    }
+
+    public void showBadge(boolean show)
+    {
+        if(show)
+        {
+            badge.setVisibility(View.VISIBLE);
+        }
+        else
+        {
+            badge.setVisibility(View.GONE);
+        }
     }
 
     public ImageView getIcon()

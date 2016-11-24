@@ -3,7 +3,6 @@ package ru.parada.app.modules.notifications;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 
 import java.util.ArrayList;
@@ -93,7 +92,6 @@ public class NotificationsFragment
         adapter = new GroupAdapter<>(getActivity(), notificationsGroupData);
         list.setLayoutManager(new LinearLayoutManager(getActivity()));
         list.setAdapter(adapter);
-        getPresenter().update();
         getPresenter().load();
     }
 
@@ -104,7 +102,7 @@ public class NotificationsFragment
         Date date = new Date(0);
         for(int i=0; i<data.getItemsCount(); i++)
         {
-            final Date cDate = new Date(data.getItem(i).getDate());
+            final Date cDate = new Date(data.getItem(i).getDate() * 1000);
             if(date.getYear() != cDate.getYear() || date.getMonth() != cDate.getMonth() || date.getDate() != cDate.getDate())
             {
                 date = cDate;

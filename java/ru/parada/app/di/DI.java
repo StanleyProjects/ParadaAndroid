@@ -3,6 +3,7 @@ package ru.parada.app.di;
 public interface DI
 {
     AndroidUtil getAndroidUtil();
-    FoldersManager getFoldersManager();
     ImagesUtil getImagesUtil();
+    FoldersManager getFoldersManager();
+    PreferenceManager getPreferenceManager();
 }

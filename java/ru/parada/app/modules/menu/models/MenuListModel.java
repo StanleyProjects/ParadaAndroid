@@ -1,6 +1,6 @@
 package ru.parada.app.modules.menu.models;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import ru.parada.app.units.ArrayListModel;
 
@@ -9,7 +9,7 @@ public class MenuListModel
 {
     private int h;
 
-    public MenuListModel(ArrayList<MenuModel> d)
+    public MenuListModel(List<MenuModel> d)
     {
         super(d);
     }

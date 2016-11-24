@@ -222,6 +222,7 @@ public interface Tables
                                                .replace('.', '_') + "_table";
         String CREATE_TABLE = "create table if not exists " + TABLE_NAME + " (" +
                 BaseColumns._ID + " integer primary key autoincrement, " +
+                Columns.read + " integer" + "," +
                 Columns.date + " integer" + "," +
                 Columns.message + " text" + //"," +
                 ");";
@@ -230,6 +231,7 @@ public interface Tables
         {
             String message = TABLE_NAME + "_" + "message";
             String date = TABLE_NAME + "_" + "date";
+            String read = TABLE_NAME + "_" + "read";
         }
     }
 }

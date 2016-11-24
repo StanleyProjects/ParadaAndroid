@@ -70,6 +70,7 @@ public interface DAO
     {
         ListModel<NotificationsCore.Model> getAll();
         void insertOne(NotificationsCore.Model item);
+        boolean exist(NotificationsCore.Model item);
         void clear();
     }
 }

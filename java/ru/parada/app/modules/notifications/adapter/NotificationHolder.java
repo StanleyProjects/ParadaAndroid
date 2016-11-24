@@ -2,6 +2,7 @@ package ru.parada.app.modules.notifications.adapter;
 
 import android.content.Context;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.Date;
@@ -14,17 +15,30 @@ public class NotificationHolder
 {
     private TextView message;
     private TextView date;
+    private ImageView read;
 
     public NotificationHolder(Context context, ViewGroup parent)
     {
         super(context, parent, R.layout.notification_list_item);
         message = (TextView)itemView.findViewById(R.id.message);
         date = (TextView)itemView.findViewById(R.id.date);
+        read = (ImageView)itemView.findViewById(R.id.read);
     }
 
     public void setMessage(String m)
     {
         message.setText(m);
+    }
+    public void setRead(boolean r)
+    {
+        if(r)
+        {
+            read.setImageResource(R.drawable.gray_circle);
+        }
+        else
+        {
+            read.setImageResource(R.drawable.green_circle);
+        }
     }
     public void setDate(long d)
     {

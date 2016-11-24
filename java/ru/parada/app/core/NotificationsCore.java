@@ -12,5 +12,6 @@ public interface NotificationsCore
         int getId();
         String getMessage();
         long getDate();
+        boolean read();
     }
 }

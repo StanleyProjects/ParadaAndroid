@@ -41,7 +41,7 @@ import ru.parada.app.units.ListModel;
 public class SQliteApi
 {
     static private final String DB_NAME = "parada";
-    static private final int DB_VERSION = 1611211448;
+    static private final int DB_VERSION = 1611242038;
     static private volatile SQliteApi instanse;
 
     static public SQliteApi getInstanse()
@@ -528,7 +528,8 @@ public class SQliteApi
                     data.add(new Notification(
                             cursor.getInt(cursor.getColumnIndex(BaseColumns._ID)),
                             cursor.getString(cursor.getColumnIndex(Columns.message)),
-                            cursor.getLong(cursor.getColumnIndex(Columns.date))
+                            cursor.getLong(cursor.getColumnIndex(Columns.date)),
+                            cursor.getInt(cursor.getColumnIndex(Columns.read)) == 1
                     ));
                 }
                 while(cursor.moveToNext());
@@ -539,7 +540,23 @@ public class SQliteApi
         @Override
         public void insertOne(NotificationsCore.Model item)
         {
-            sdb.insertWithOnConflict(TABLE_NAME, null, ContentDriver.getContentValues(item), SQLiteDatabase.CONFLICT_IGNORE);
+            sdb.insertWithOnConflict(TABLE_NAME, null, ContentDriver.getContentValues(item, exist(item)), SQLiteDatabase.CONFLICT_REPLACE);
+        }
+        @Override
+        public boolean exist(NotificationsCore.Model item)
+        {
+            Cursor cursor = sdb.rawQuery(
+                    "SELECT * "
+                            + "FROM " + TABLE_NAME + " "
+                            + "WHERE " + TABLE_NAME + "." + BaseColumns._ID + "=" + item.getId() + " "
+                    , null);
+            if(!cursor.moveToFirst())
+            {
+                cursor.close();
+                return false;
+            }
+            cursor.close();
+            return true;
         }
         @Override
         public void clear()

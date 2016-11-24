@@ -6,6 +6,7 @@ import android.view.View;
 
 import java.util.ArrayList;
 
+import ru.parada.app.App;
 import ru.parada.app.R;
 import ru.parada.app.contracts.MenuContract;
 import ru.parada.app.core.GeneralCore;
@@ -87,6 +88,7 @@ public class MenuFragment
         });
         list.setLayoutManager(new LinearLayoutManager(getActivity()));
         list.setAdapter(adapter);
+        getPresenter().checkNotifications();
     }
 
     private void initMenuListModel()
@@ -132,7 +134,15 @@ public class MenuFragment
                     ico = R.mipmap.menu_push;
                     name = getActivity().getResources()
                                         .getString(R.string.notifications);
-                    break;
+                    menuModels.add(new MenuModel(ico, name, true)
+                    {
+                        @Override
+                        public void click(MenuContract.Behaviour behaviour)
+                        {
+                            behaviour.open(screenType);
+                        }
+                    });
+                    continue;
                 case CONTACTS_SCREEN:
                     ico = R.mipmap.menu_contacts;
                     name = getActivity().getResources()
@@ -156,8 +166,22 @@ public class MenuFragment
     @Override
     public void set(GeneralCore.ScreenType screenType)
     {
+        App.getComponent().getPreferenceManager().setNotificationBadge(false);
         getBehaviour().open(screenType);
         menuListModel.setHighlight(screenType.ordinal());
         adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void update()
+    {
+        runOnUiThread(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                adapter.notifyDataSetChanged();
+            }
+        });
     }
 }

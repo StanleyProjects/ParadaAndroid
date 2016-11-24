@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"/>
     <ImageView
         android:id="@+id/read"
-        android:src="@drawable/green_circle"
+        android:src="@drawable/gray_circle"
         android:layout_marginLeft="8dp"
         android:padding="2dp"
         android:layout_width="@dimen/icon_small"

@@ -89,12 +89,13 @@ public class ContentDriver
         return content;
     }
 
-    public static ContentValues getContentValues(NotificationsCore.Model item)
+    public static ContentValues getContentValues(NotificationsCore.Model item, boolean read)
     {
         ContentValues content = new ContentValues();
         content.put(BaseColumns._ID, item.getId());
         content.put(Tables.Notifications.Columns.message, item.getMessage());
         content.put(Tables.Notifications.Columns.date, item.getDate());
+        content.put(Tables.Notifications.Columns.read, read ? 1 : 0);
         return content;
     }
 

@@ -7,7 +7,9 @@ import ru.parada.app.di.AndroidUtil;
 import ru.parada.app.di.DI;
 import ru.parada.app.di.FoldersManager;
 import ru.parada.app.di.ImagesUtil;
+import ru.parada.app.di.PreferenceManager;
 import ru.parada.app.managers.FManager;
+import ru.parada.app.managers.PManager;
 import ru.parada.app.utils.AUtil;
 import ru.parada.app.utils.IUtil;
 
@@ -26,8 +28,9 @@ public class App
     {
         super.onCreate();
         SQliteApi.getInstanse().createDB(getApplicationContext());
-        component = new AppComponent(new AUtil(getApplicationContext()),
-                new FManager(getApplicationContext().getFilesDir().getAbsolutePath()),
+        component = new AppComponent(new FManager(getApplicationContext().getFilesDir().getAbsolutePath()),
+                new PManager(getApplicationContext()),
+                new AUtil(getApplicationContext()),
                 new IUtil(getApplicationContext().getResources()));
     }
 
@@ -37,11 +40,13 @@ public class App
         private AndroidUtil androidUtil;
         private FoldersManager foldersManager;
         private ImagesUtil imagesUtil;
+        private PreferenceManager preferenceManager;
 
-        public AppComponent(AndroidUtil au, FoldersManager fm,ImagesUtil iu)
+        public AppComponent(FoldersManager fm, PreferenceManager pm, AndroidUtil au, ImagesUtil iu)
         {
-            androidUtil = au;
             foldersManager = fm;
+            preferenceManager = pm;
+            androidUtil = au;
             imagesUtil = iu;
         }
 
@@ -55,6 +60,12 @@ public class App
         public FoldersManager getFoldersManager()
         {
             return foldersManager;
+        }
+
+        @Override
+        public PreferenceManager getPreferenceManager()
+        {
+            return preferenceManager;
         }
 
         @Override

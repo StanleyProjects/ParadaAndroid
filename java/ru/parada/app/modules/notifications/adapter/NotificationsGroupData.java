@@ -45,6 +45,8 @@ public class NotificationsGroupData
     private void setNormal(NotificationHolder holder, NotificationsCore.Model data)
     {
         holder.setMessage(data.getMessage());
+        holder.setDate(data.getDate() * 1000);
+        holder.setRead(data.read());
     }
     private void setGroup(NotificationGroupHolder holder, NotificationsCore.GroupModel data)
     {
