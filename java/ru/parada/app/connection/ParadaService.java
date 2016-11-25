@@ -13,6 +13,7 @@ public interface ParadaService
         String PRICES = "get_prices.php";
         String NOTIFICATIONS = "get_push.php";
         String VIDEOS = "get_videos.php";
+        String PUSH_TOKEN = "save_push_token.php";
     }
     interface Post
     {

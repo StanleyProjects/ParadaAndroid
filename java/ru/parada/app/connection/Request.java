@@ -17,7 +17,7 @@ public class Request
         this.fields = new ArrayList<>();
     }
 
-    public Request addField(String key, Object value)
+    public Request addField(String key, String value)
     {
         fields.add(new Field(key, value));
         return this;
@@ -93,9 +93,9 @@ public class Request
     private class Field
     {
         private String key;
-        private Object value;
+        private String value;
 
-        private Field(String k, Object v)
+        private Field(String k, String v)
         {
             this.key = k;
             this.value = v;
