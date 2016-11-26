@@ -12,13 +12,15 @@ import ru.parada.app.contracts.GeneralContract;
 import ru.parada.app.contracts.MainContract;
 import ru.parada.app.contracts.MenuContract;
 import ru.parada.app.contracts.NotificationsContract;
-import ru.parada.app.contracts.ServicesContract;
+import ru.parada.app.contracts.info.InfoContract;
+import ru.parada.app.contracts.services.ServicesContract;
 import ru.parada.app.contracts.ServicesWithPricesContract;
 import ru.parada.app.contracts.SocialsContract;
 import ru.parada.app.core.GeneralCore;
 import ru.parada.app.modules.contacts.list.ContactsFragment;
 import ru.parada.app.modules.doctors.list.DoctorsFragment;
 import ru.parada.app.modules.events.EventsFragment;
+import ru.parada.app.modules.info.list.InfoListFragment;
 import ru.parada.app.modules.main.MainFragment;
 import ru.parada.app.modules.menu.MenuFragment;
 import ru.parada.app.modules.notifications.NotificationsFragment;
@@ -139,6 +141,14 @@ public class GeneralActivity
             GeneralActivity.this.openMenu();
         }
     });
+    private final Fragment infoFragment = InfoListFragment.newInstanse(new InfoContract.Behaviour()
+    {
+        @Override
+        public void openMenu()
+        {
+            GeneralActivity.this.openMenu();
+        }
+    });
     private final Fragment notificationsFragment = NotificationsFragment.newInstanse(new NotificationsContract.Behaviour()
     {
         @Override
@@ -226,6 +236,9 @@ public class GeneralActivity
                         break;
                     case SOCIALS_SCREEN:
                         currentFragment = socialsFragment;
+                        break;
+                    case INFO_SCREEN:
+                        currentFragment = infoFragment;
                         break;
                     case NOTIFICATIONS_SCREEN:
                         currentFragment = notificationsFragment;

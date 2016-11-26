@@ -1,6 +1,6 @@
 package ru.parada.app.modules.actions.detail;
 
-import ru.parada.app.contracts.ActionDetailContract;
+import ru.parada.app.contracts.actions.ActionDetailContract;
 import ru.parada.app.db.SQliteApi;
 
 public class ActionDetailPresenter

@@ -105,6 +105,10 @@ public class DoctorsPresenter
     }
     private void checkImage(final int id, final String photo_url)
     {
+        if(photo_url == null || photo_url.length() == 0)
+        {
+            return;
+        }
         final ImagesContract.Model oldModel = SQliteApi.getInstanse().getImages().getOneFromTypeAndEntityId(ImagesContract.Types.DOCTORS_TYPE, id);
         if(oldModel == null || oldModel.getImageUrl() == null || !oldModel.getImageUrl().equals(photo_url))
         {
@@ -125,13 +129,17 @@ public class DoctorsPresenter
                 @Override
                 public void error(Exception error)
                 {
-                    Log.e(this.getClass().getName(), "download photo " + error.getMessage());
+                    Log.e(getClass().getName(), "download photo " + error.getMessage());
                 }
             });
         }
     }
     private void checkVideoImage(final int id, final String photo_url)
     {
+        if(photo_url == null || photo_url.length() == 0)
+        {
+            return;
+        }
         final ImagesContract.Model oldModel = SQliteApi.getInstanse().getImages().getOneFromTypeAndEntityId(ImagesContract.Types.DOCTOR_VIDEOS_TYPE, id);
         if(oldModel == null || oldModel.getImageUrl() == null || !oldModel.getImageUrl().equals(photo_url))
         {

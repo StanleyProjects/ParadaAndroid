@@ -10,13 +10,13 @@ import java.util.Date;
 
 import ru.parada.app.App;
 import ru.parada.app.R;
-import ru.parada.app.contracts.ActionDetailContract;
+import ru.parada.app.contracts.actions.ActionDetailContract;
 import ru.parada.app.core.ActionsCore;
 import ru.parada.app.units.MVPFragment;
 
 public class ActionDetailFragment
         extends MVPFragment<ActionDetailContract.Presenter, ActionDetailContract.Behaviour>
-        implements ActionDetailContract.View, ActionDetailContract.Mark
+        implements ActionDetailContract.View, ActionsCore.Mark
 {
     static public MVPFragment newInstanse(ActionDetailContract.Behaviour behaviour, int action_id)
     {

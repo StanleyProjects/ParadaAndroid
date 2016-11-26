@@ -10,6 +10,7 @@ public interface GeneralCore
         PRICES_SCREEN,
         EVENTS_SCREEN,
         SOCIALS_SCREEN,
+        INFO_SCREEN,
         NOTIFICATIONS_SCREEN,
         CONTACTS_SCREEN
     }

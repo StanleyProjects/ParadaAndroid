@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 import ru.parada.app.App;
 import ru.parada.app.R;
-import ru.parada.app.contracts.ServiceDetailContract;
+import ru.parada.app.contracts.services.ServiceDetailContract;
 import ru.parada.app.core.ServicesCore;
 import ru.parada.app.units.MVPFragment;
 

@@ -12,7 +12,7 @@ import ru.parada.app.connection.DownloadFile;
 import ru.parada.app.connection.JsonArrayRequestListener;
 import ru.parada.app.connection.ParadaService;
 import ru.parada.app.connection.Request;
-import ru.parada.app.contracts.ActionsContract;
+import ru.parada.app.contracts.actions.ActionsContract;
 import ru.parada.app.contracts.ImagesContract;
 import ru.parada.app.core.ActionsCore;
 import ru.parada.app.db.SQliteApi;

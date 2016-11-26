@@ -3,8 +3,6 @@ package ru.parada.app.db;
 import android.provider.BaseColumns;
 
 import ru.parada.app.contracts.ImagesContract;
-import ru.parada.app.contracts.ServicesContract;
-import ru.parada.app.units.ListModel;
 
 public interface Tables
 {
@@ -232,6 +230,25 @@ public interface Tables
             String message = TABLE_NAME + "_" + "message";
             String date = TABLE_NAME + "_" + "date";
             String read = TABLE_NAME + "_" + "read";
+        }
+    }
+    interface Info
+            extends DAO.Info
+    {
+        String TABLE_NAME = Info.class.getCanonicalName()
+                                               .toLowerCase()
+                                               .replace('.', '_') + "_table";
+        String CREATE_TABLE = "create table if not exists " + TABLE_NAME + " (" +
+                Columns.id + " integer primary key autoincrement, " +
+                Columns.title + " text" + "," +
+                Columns.descr + " text" + //"," +
+                ");";
+
+        interface Columns
+        {
+            String id = TABLE_NAME + "_" + "id";
+            String title = TABLE_NAME + "_" + "title";
+            String descr = TABLE_NAME + "_" + "descr";
         }
     }
 }

@@ -8,6 +8,7 @@ import ru.parada.app.contracts.PricesContract;
 import ru.parada.app.core.ActionsCore;
 import ru.parada.app.core.DoctorVideosCore;
 import ru.parada.app.core.DoctorsCore;
+import ru.parada.app.core.InfoCore;
 import ru.parada.app.core.NewsCore;
 import ru.parada.app.core.NotificationsCore;
 import ru.parada.app.core.ServicesCore;
@@ -117,6 +118,15 @@ public class ContentDriver
         content.put(Tables.Videos.Columns.descr, item.getDescription());
         content.put(Tables.Videos.Columns.title, item.getTitle());
         content.put(Tables.Videos.Columns.link, item.getLink());
+        return content;
+    }
+
+    public static ContentValues getContentValues(InfoCore.Model item)
+    {
+        ContentValues content = new ContentValues();
+        content.put(Tables.Info.Columns.id, item.getId());
+        content.put(Tables.Info.Columns.descr, item.getDescription());
+        content.put(Tables.Info.Columns.title, item.getTitle());
         return content;
     }
 }

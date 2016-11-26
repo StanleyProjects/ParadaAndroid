@@ -55,7 +55,6 @@ public class MenuFragment
     @Override
     protected void initViews(View v)
     {
-        //setClickListener(v.findViewById(R.id.main), v.findViewById(R.id.service), v.findViewById(R.id.doctors), v.findViewById(R.id.prices));
         list = (RecyclerView)v.findViewById(R.id.list);
     }
 
@@ -129,6 +128,11 @@ public class MenuFragment
                     ico = R.mipmap.menu_socials;
                     name = getActivity().getResources()
                                         .getString(R.string.socials);
+                    break;
+                case INFO_SCREEN:
+                    ico = R.mipmap.info_icon;
+                    name = getActivity().getResources()
+                                        .getString(R.string.info_menu);
                     break;
                 case NOTIFICATIONS_SCREEN:
                     ico = R.mipmap.menu_push;

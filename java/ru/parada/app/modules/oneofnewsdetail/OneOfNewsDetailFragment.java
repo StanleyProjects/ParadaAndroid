@@ -10,7 +10,7 @@ import java.util.Date;
 
 import ru.parada.app.App;
 import ru.parada.app.R;
-import ru.parada.app.contracts.OneOfNewsDetailContract;
+import ru.parada.app.contracts.news.OneOfNewsDetailContract;
 import ru.parada.app.core.NewsCore;
 import ru.parada.app.units.MVPFragment;
 

@@ -1,6 +1,6 @@
 package ru.parada.app.modules.services.detail;
 
-import ru.parada.app.contracts.ServiceDetailContract;
+import ru.parada.app.contracts.services.ServiceDetailContract;
 import ru.parada.app.db.SQliteApi;
 
 public class ServiceDetailPresenter

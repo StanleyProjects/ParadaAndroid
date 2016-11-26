@@ -1,14 +1,9 @@
-package ru.parada.app.contracts;
+package ru.parada.app.contracts.actions;
 
 import ru.parada.app.core.ActionsCore;
 
 public interface ActionDetailContract
 {
-    interface Mark
-    {
-        String ACTION_ID = Mark.class.getCanonicalName().toLowerCase().replace(".", "_") + "_" + "action_id";
-    }
-
     interface View
     {
         void update(ActionsCore.Model data);

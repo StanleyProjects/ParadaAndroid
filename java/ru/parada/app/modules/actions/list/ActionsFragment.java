@@ -5,7 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import ru.parada.app.R;
-import ru.parada.app.contracts.ActionsContract;
+import ru.parada.app.contracts.actions.ActionsContract;
 import ru.parada.app.core.ActionsCore;
 import ru.parada.app.modules.actions.list.adapter.ActionsAdapter;
 import ru.parada.app.modules.actions.list.adapter.ActionsAdapterListener;
@@ -16,7 +16,7 @@ public class ActionsFragment
         extends MVPFragment<ActionsContract.Presenter, ActionsContract.Behaviour>
         implements ActionsContract.View
 {
-    static public ActionsFragment newInstanse(ActionsContract.Behaviour behaviour)
+    static public MVPFragment newInstanse(ActionsContract.Behaviour behaviour)
     {
         ActionsFragment fragment = new ActionsFragment();
         fragment.setBehaviour(behaviour);

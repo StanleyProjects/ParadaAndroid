@@ -1,4 +1,4 @@
-package ru.parada.app.contracts;
+package ru.parada.app.contracts.news;
 
 import ru.parada.app.core.NewsCore;
 import ru.parada.app.units.ListModel;

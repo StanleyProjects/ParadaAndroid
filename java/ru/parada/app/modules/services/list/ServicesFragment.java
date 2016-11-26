@@ -6,8 +6,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import ru.parada.app.R;
-import ru.parada.app.contracts.ServiceDetailContract;
-import ru.parada.app.contracts.ServicesContract;
+import ru.parada.app.contracts.services.ServiceDetailContract;
+import ru.parada.app.contracts.services.ServicesContract;
 import ru.parada.app.contracts.requestcall.RequestCallCheckContract;
 import ru.parada.app.contracts.requestcall.RequestCallContract;
 import ru.parada.app.contracts.subscribe.SubscribeCheckContract;

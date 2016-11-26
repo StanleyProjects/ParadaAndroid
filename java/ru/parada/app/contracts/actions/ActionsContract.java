@@ -1,4 +1,4 @@
-package ru.parada.app.contracts;
+package ru.parada.app.contracts.actions;
 
 import ru.parada.app.core.ActionsCore;
 import ru.parada.app.units.ListModel;

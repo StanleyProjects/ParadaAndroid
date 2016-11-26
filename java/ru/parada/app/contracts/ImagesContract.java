@@ -11,6 +11,7 @@ public interface ImagesContract
         int ACTION_DETAIL_TYPE = 5;
         int ONEOFNEWS_TYPE = 6;
         int DOCTOR_VIDEOS_TYPE = 7;
+        int INFO_TYPE = 8;
     }
 
     interface Model

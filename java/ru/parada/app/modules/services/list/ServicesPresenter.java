@@ -13,7 +13,7 @@ import ru.parada.app.connection.JsonArrayRequestListener;
 import ru.parada.app.connection.ParadaService;
 import ru.parada.app.connection.Request;
 import ru.parada.app.contracts.ImagesContract;
-import ru.parada.app.contracts.ServicesContract;
+import ru.parada.app.contracts.services.ServicesContract;
 import ru.parada.app.core.ServicesCore;
 import ru.parada.app.db.SQliteApi;
 import ru.parada.app.modules.images.ImageModel;

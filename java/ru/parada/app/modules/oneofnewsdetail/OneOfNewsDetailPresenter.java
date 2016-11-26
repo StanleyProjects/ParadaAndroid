@@ -1,6 +1,6 @@
 package ru.parada.app.modules.oneofnewsdetail;
 
-import ru.parada.app.contracts.OneOfNewsDetailContract;
+import ru.parada.app.contracts.news.OneOfNewsDetailContract;
 import ru.parada.app.db.SQliteApi;
 
 public class OneOfNewsDetailPresenter

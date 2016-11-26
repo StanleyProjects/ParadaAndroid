@@ -22,7 +22,7 @@
     <string name="sms">Сообщения</string>
     <string name="whatsapp">WhatsApp</string>
     <string name="viber">Viber</string>
-    <string name="phone_number">+7812337230403</string>
+    <string name="phone_number">+78123372304</string>
     <string name="message_number">+79315410591</string>
     <string name="watch_video">Смотреть видео</string>
     <string name="service">Услуга</string>
@@ -101,6 +101,8 @@
     <string name="contactface_empty">Заполните контактные данные</string>
     <string name="requestcall_lable">Заказ звонка</string>
     <string name="we_call_confirm_requestcall">Мы свяжемся с Вами в ближайшее время. Спасибо.</string>
+    <string name="info">Информация для пациентов</string>
+    <string name="info_menu">Для пациентов</string>
 
     <string-array name="months">
         <item>января</item>

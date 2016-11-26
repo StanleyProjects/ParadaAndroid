@@ -5,6 +5,7 @@ import ru.parada.app.contracts.ServicesWithPricesContract;
 import ru.parada.app.core.ActionsCore;
 import ru.parada.app.core.DoctorVideosCore;
 import ru.parada.app.core.DoctorsCore;
+import ru.parada.app.core.InfoCore;
 import ru.parada.app.core.NewsCore;
 import ru.parada.app.core.NotificationsCore;
 import ru.parada.app.core.ServicesCore;
@@ -71,6 +72,13 @@ public interface DAO
         ListModel<NotificationsCore.Model> getAll();
         void insertOne(NotificationsCore.Model item);
         boolean exist(NotificationsCore.Model item);
+        void clear();
+    }
+    interface Info
+    {
+        ListModel<InfoCore.Model> getAll();
+        void insertOne(InfoCore.Model item);
+        InfoCore.Model getOneFromId(int id);
         void clear();
     }
 }

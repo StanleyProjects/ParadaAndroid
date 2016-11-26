@@ -4,11 +4,11 @@ import android.support.v4.app.Fragment;
 import android.view.View;
 
 import ru.parada.app.R;
-import ru.parada.app.contracts.ActionDetailContract;
-import ru.parada.app.contracts.ActionsContract;
+import ru.parada.app.contracts.actions.ActionDetailContract;
+import ru.parada.app.contracts.actions.ActionsContract;
 import ru.parada.app.contracts.EventsContract;
-import ru.parada.app.contracts.NewsContract;
-import ru.parada.app.contracts.OneOfNewsDetailContract;
+import ru.parada.app.contracts.news.NewsContract;
+import ru.parada.app.contracts.news.OneOfNewsDetailContract;
 import ru.parada.app.core.EventsCore;
 import ru.parada.app.modules.actions.detail.ActionDetailFragment;
 import ru.parada.app.modules.actions.list.ActionsFragment;

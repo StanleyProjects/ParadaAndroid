@@ -6,7 +6,7 @@ import android.util.Log;
 import android.view.View;
 
 import ru.parada.app.R;
-import ru.parada.app.contracts.NewsContract;
+import ru.parada.app.contracts.news.NewsContract;
 import ru.parada.app.core.NewsCore;
 import ru.parada.app.modules.news.adapter.NewsAdapter;
 import ru.parada.app.modules.news.adapter.NewsAdapterListener;
