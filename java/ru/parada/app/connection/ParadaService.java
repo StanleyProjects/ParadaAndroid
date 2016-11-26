@@ -18,5 +18,6 @@ public interface ParadaService
     interface Post
     {
         String SUBSCRIBE_DATA = "goto_action.php";
+        String REQUESTCALL_DATA = "call_action.php";
     }
 }

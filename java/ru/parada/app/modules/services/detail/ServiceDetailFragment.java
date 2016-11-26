@@ -68,7 +68,7 @@ public class ServiceDetailFragment
                         getBehaviour().subscribe();
                         break;
                     case R.id.order_call:
-                        getBehaviour().call();
+                        getBehaviour().requestcall();
                         break;
                 }
             }

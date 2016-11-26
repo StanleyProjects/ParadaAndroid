@@ -11,17 +11,17 @@ public class PostURLConnection
     static private final String LINE_FEED = "\r\n";
 
     private final String boundary;
-    private final URLConnection httpConn;
+    private final URLConnection urlConnection;
     private final DataOutputStream output;
 
-    public PostURLConnection(String url)
+    public PostURLConnection(URLConnection u)
             throws IOException
     {
         boundary = "---" + System.currentTimeMillis();
-        httpConn = new URL(url).openConnection();
-        httpConn.setDoOutput(true);
-        httpConn.setRequestProperty("Content-Type", "multipart/form-data; boundary=" + boundary);
-        output = new DataOutputStream(httpConn.getOutputStream());
+        urlConnection = u;
+        urlConnection.setDoOutput(true);
+        urlConnection.setRequestProperty("Content-Type", "multipart/form-data; boundary=" + boundary);
+        output = new DataOutputStream(urlConnection.getOutputStream());
     }
     private void addData(String key, String value)
             throws IOException
@@ -49,6 +49,6 @@ public class PostURLConnection
         output.writeBytes(LINE_FEED);
         output.writeBytes("--");
         output.close();
-        return httpConn;
+        return urlConnection;
     }
 }

@@ -83,29 +83,37 @@ public class SubscribeFragment
 
     private void sendData()
     {
-        String wish_date = this.wish_date.getText().toString();
-        String wish_time = this.wish_time.getText().toString();
-        String last_name = this.last_name.getText().toString();
+        final String wish_date = this.wish_date.getText().toString();
+        final String wish_time = this.wish_time.getText().toString();
+        final String last_name = this.last_name.getText().toString();
         if(last_name.length() == 0)
         {
             showToast(R.string.last_name_empty);
             return;
         }
-        String first_name = this.first_name.getText().toString();
+        final String first_name = this.first_name.getText().toString();
         if(first_name.length() == 0)
         {
             showToast(R.string.first_name_empty);
             return;
         }
-        String middle_name = this.middle_name.getText().toString();
-        String email = this.email.getText().toString();
-        String phone = this.phone.getText().toString();
+        final String middle_name = this.middle_name.getText().toString();
+        final String email = this.email.getText().toString();
+        final String phone = this.phone.getText().toString();
         if(phone.length() == 0)
         {
             showToast(R.string.phone_empty);
             return;
         }
-        String comment = this.comment.getText().toString();
-        getBehaviour().send(new UserData(wish_date, wish_time, last_name, first_name, middle_name, email, phone, comment));
+        final String comment = this.comment.getText().toString();
+        hideKeyBoard();
+        runOnUiThread(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                getBehaviour().send(new UserData(wish_date, wish_time, last_name, first_name, middle_name, email, phone, comment));
+            }
+        }, 100);
     }
 }

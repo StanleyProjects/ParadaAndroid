@@ -30,12 +30,12 @@ public class EventsFragment
             @Override
             public void setNews()
             {
-                fragment.resetScreenIndex();
                 fragment.runAfterResume(new Runnable()
                 {
                     @Override
                     public void run()
                     {
+                        fragment.resetScreenIndex();
                         fragment.getPresenter().setNews();
                     }
                 });
@@ -43,12 +43,12 @@ public class EventsFragment
             @Override
             public void setOneOfNews(final int id)
             {
-                fragment.resetScreenIndex();
                 fragment.runAfterResume(new Runnable()
                 {
                     @Override
                     public void run()
                     {
+                        fragment.resetScreenIndex();
                         fragment.getPresenter().setNews();
                         fragment.showOneOfNews(id);
                     }

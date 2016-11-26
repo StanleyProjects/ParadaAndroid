@@ -95,6 +95,12 @@
     <string name="baltmed_phone_to_call">+78123372303</string>
     <string name="surgery_link">http://paradaplastika.ru</string>
     <string name="baltmed_link">http://www.baltclinicvo.ru</string>
+    <string name="requestcall">Заказать звонок</string>
+    <string name="contactface">Контактное лицо</string>
+    <string name="contactface_hint">ФИО</string>
+    <string name="contactface_empty">Заполните контактные данные</string>
+    <string name="requestcall_lable">Заказ звонка</string>
+    <string name="we_call_confirm_requestcall">Мы свяжемся с Вами в ближайшее время. Спасибо.</string>
 
     <string-array name="months">
         <item>января</item>

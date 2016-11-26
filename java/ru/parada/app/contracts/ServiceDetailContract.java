@@ -23,6 +23,6 @@ public interface ServiceDetailContract
     {
         void back();
         void subscribe();
-        void call();
+        void requestcall();
     }
 }

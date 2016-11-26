@@ -2,6 +2,7 @@ package ru.parada.app.units;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.util.Log;
 
 public abstract class MultiFragment<PRESENTER, BEHAVIOUR>
         extends MVPFragment<PRESENTER, BEHAVIOUR>
@@ -12,17 +13,22 @@ public abstract class MultiFragment<PRESENTER, BEHAVIOUR>
         @Override
         public void onBackStackChanged()
         {
-            int size = 0;
-            for(Fragment fragment : getChildFragmentManager().getFragments())
-            {
-                if(fragment != null)
-                {
-                    size++;
-                }
-            }
-            screen = size;
+            Log.e(getClass().getName(), getChildFragmentManager().getFragments().toString());
+            screen = getScreenSize();
         }
     };
+    private int getScreenSize()
+    {
+        int size = 0;
+        for(Fragment fragment : getChildFragmentManager().getFragments())
+        {
+            if(fragment != null)
+            {
+                size++;
+            }
+        }
+        return size;
+    }
 
     @Override
     public void onResume()
@@ -49,6 +55,7 @@ public abstract class MultiFragment<PRESENTER, BEHAVIOUR>
     protected void resetScreenIndex()
     {
         screen = beginScreenIndex();
+        getChildFragmentManager().popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
     }
 
     protected abstract void setScreens(int screen);

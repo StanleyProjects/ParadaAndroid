@@ -5,10 +5,8 @@ public interface ServicesCore
     interface Screens
     {
         int DETAIL = 1;
-        int SUBSCRIBE = 2;
-        int SUBSCRIBE_CHECK = 3;
-        int CALL = 2;
-        int CALL_CHECK = 3;
+        int GET_USER_DATA = 2;
+        int SEND_USER_DATA = 3;
     }
 
     interface Model
