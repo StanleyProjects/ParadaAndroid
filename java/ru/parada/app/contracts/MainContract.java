@@ -5,12 +5,12 @@ import ru.parada.app.units.ListModel;
 
 public interface MainContract
 {
-
     interface View
     {
         void callDialogOpen();
         void callDialogClose();
         void update(ListModel<NewsCore.Model> data);
+        void load();
     }
 
     interface Presenter

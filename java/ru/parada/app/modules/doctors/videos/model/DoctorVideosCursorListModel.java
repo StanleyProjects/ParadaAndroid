@@ -1,6 +1,7 @@
 package ru.parada.app.modules.doctors.videos.model;
 
 import android.database.Cursor;
+import android.util.Log;
 
 import ru.parada.app.core.DoctorVideosCore;
 import ru.parada.app.db.Tables;
@@ -12,6 +13,7 @@ public class DoctorVideosCursorListModel
     public DoctorVideosCursorListModel(Cursor d)
     {
         super(d);
+        Log.e(getClass().getName(), "size " + d.getCount());
     }
 
     @Override

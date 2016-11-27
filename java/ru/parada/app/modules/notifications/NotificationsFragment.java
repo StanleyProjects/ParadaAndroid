@@ -57,21 +57,14 @@ public class NotificationsFragment
     }
 
     @Override
-    protected View.OnClickListener setClickListener()
+    protected void onClickView(int id)
     {
-        return new View.OnClickListener()
+        switch(id)
         {
-            @Override
-            public void onClick(View v)
-            {
-                switch(v.getId())
-                {
-                    case R.id.menu:
-                        getBehaviour().openMenu();
-                        break;
-                }
-            }
-        };
+            case R.id.menu:
+                getBehaviour().openMenu();
+                break;
+        }
     }
 
     @Override

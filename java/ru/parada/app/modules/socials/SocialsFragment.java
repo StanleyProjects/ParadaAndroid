@@ -41,33 +41,26 @@ public class SocialsFragment
     }
 
     @Override
-    protected View.OnClickListener setClickListener()
+    protected void onClickView(int id)
     {
-        return new View.OnClickListener()
+        switch(id)
         {
-            @Override
-            public void onClick(View v)
-            {
-                switch(v.getId())
-                {
-                    case R.id.menu:
-                        getBehaviour().openMenu();
-                        break;
-                    case R.id.facebook:
-                        App.getComponent().getAndroidUtil().openBrowser(getResources().getString(R.string.facebook_url));
-                        break;
-                    case R.id.vkontakte:
-                        App.getComponent().getAndroidUtil().openBrowser(getResources().getString(R.string.vkontakte_url));
-                        break;
-                    case R.id.youtube:
-                        App.getComponent().getAndroidUtil().openBrowser(getResources().getString(R.string.youtube_url));
-                        break;
-                    case R.id.instagram:
-                        App.getComponent().getAndroidUtil().openBrowser(getResources().getString(R.string.instagram_url));
-                        break;
-                }
-            }
-        };
+            case R.id.menu:
+                getBehaviour().openMenu();
+                break;
+            case R.id.facebook:
+                App.getComponent().getAndroidUtil().openBrowser(getResources().getString(R.string.facebook_url));
+                break;
+            case R.id.vkontakte:
+                App.getComponent().getAndroidUtil().openBrowser(getResources().getString(R.string.vkontakte_url));
+                break;
+            case R.id.youtube:
+                App.getComponent().getAndroidUtil().openBrowser(getResources().getString(R.string.youtube_url));
+                break;
+            case R.id.instagram:
+                App.getComponent().getAndroidUtil().openBrowser(getResources().getString(R.string.instagram_url));
+                break;
+        }
     }
 
     @Override

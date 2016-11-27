@@ -39,6 +39,7 @@ public class ServicesWithPricesFragment
     private RecyclerView list;
     private EditText search;
 
+    private boolean load;
     private GroupAdapter adapter;
     private PricesGroupData pricesGroupData;
     private final PricesContract.Behaviour pricesBehaviour = new PricesContract.Behaviour()
@@ -81,24 +82,17 @@ public class ServicesWithPricesFragment
     }
 
     @Override
-    protected View.OnClickListener setClickListener()
+    protected void onClickView(int id)
     {
-        return new View.OnClickListener()
+        switch(id)
         {
-            @Override
-            public void onClick(View v)
-            {
-                switch(v.getId())
-                {
-                    case R.id.menu:
-                        getBehaviour().openMenu();
-                        break;
-                    case R.id.search_clear:
-                        searchClear();
-                        break;
-                }
-            }
-        };
+            case R.id.menu:
+                getBehaviour().openMenu();
+                break;
+            case R.id.search_clear:
+                searchClear();
+                break;
+        }
     }
 
     @Override
@@ -107,10 +101,23 @@ public class ServicesWithPricesFragment
         pricesGroupData = new PricesGroupData(new ServicesPricesAdapterListener()
         {
             @Override
-            public void getService(int id)
+            public void getService(final int id)
             {
-                pricesFragment = PricesFragment.newInstanse(pricesBehaviour, id);
-                addSubscreen(pricesFragment);
+                if(load)
+                {
+                    return;
+                }
+                runAfterResume(new Runnable()
+                {
+                    @Override
+                    public void run()
+                    {
+                        resetScreenIndex();
+                        pricesFragment = PricesFragment.newInstanse(pricesBehaviour, id);
+                        addSubscreen(pricesFragment);
+                    }
+                });
+                disableViewOn(500);
             }
         });
         adapter = new GroupAdapter<>(getActivity(), pricesGroupData);
@@ -143,6 +150,7 @@ public class ServicesWithPricesFragment
             }
         });
         getPresenter().update();
+        load = true;
         getPresenter().load();
     }
     private void searchClear()
@@ -154,6 +162,12 @@ public class ServicesWithPricesFragment
             search.setText("");
             getPresenter().update();
         }
+    }
+
+    @Override
+    public void load()
+    {
+        load = false;
     }
 
     @Override

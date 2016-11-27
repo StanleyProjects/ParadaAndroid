@@ -7,6 +7,7 @@ public interface InfoContract
 {
     interface View
     {
+        void load();
         void update(ListModel<InfoCore.Model> data);
     }
 

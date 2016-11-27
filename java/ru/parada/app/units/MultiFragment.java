@@ -54,8 +54,8 @@ public abstract class MultiFragment<PRESENTER, BEHAVIOUR>
     }
     protected void resetScreenIndex()
     {
-        screen = beginScreenIndex();
         getChildFragmentManager().popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        screen = beginScreenIndex();
     }
 
     protected abstract void setScreens(int screen);

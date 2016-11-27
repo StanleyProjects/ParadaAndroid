@@ -7,6 +7,7 @@ public interface DoctorsContract
 {
     interface View
     {
+        void load();
         void update(ListModel<DoctorsCore.Model> data);
     }
 

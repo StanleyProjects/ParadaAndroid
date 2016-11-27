@@ -25,7 +25,14 @@ public class ActionsFragment
 
     private RecyclerView list;
 
+    private boolean load;
     private ActionsAdapter adapter;
+
+    @Override
+    public void load()
+    {
+        load = false;
+    }
 
     @Override
     public void update(final ListModel<ActionsCore.Model> data)
@@ -60,19 +67,6 @@ public class ActionsFragment
     }
 
     @Override
-    protected View.OnClickListener setClickListener()
-    {
-        return new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-
-            }
-        };
-    }
-
-    @Override
     protected void init()
     {
         adapter = new ActionsAdapter(getActivity(), new ActionsAdapterListener()
@@ -80,12 +74,17 @@ public class ActionsFragment
             @Override
             public void getAction(int id)
             {
+                if(load)
+                {
+                    return;
+                }
                 getBehaviour().getAction(id);
             }
         });
         list.setLayoutManager(new LinearLayoutManager(getActivity()));
         list.setAdapter(adapter);
         getPresenter().update();
+        load = true;
         getPresenter().load();
     }
 }

@@ -12,6 +12,7 @@ import ru.parada.app.contracts.news.OneOfNewsDetailContract;
 import ru.parada.app.core.EventsCore;
 import ru.parada.app.modules.actions.detail.ActionDetailFragment;
 import ru.parada.app.modules.actions.list.ActionsFragment;
+import ru.parada.app.modules.actions.list.adapter.ActionsAdapterListener;
 import ru.parada.app.modules.news.list.NewsFragment;
 import ru.parada.app.modules.news.detail.OneOfNewsDetailFragment;
 import ru.parada.app.units.CallbackConnector;
@@ -70,21 +71,41 @@ public class EventsFragment
     private final Fragment actionsFragment = ActionsFragment.newInstanse(new ActionsContract.Behaviour()
     {
         @Override
-        public void getAction(int id)
+        public void getAction(final int id)
         {
-            detailFragment = ActionDetailFragment.newInstanse(new ActionDetailContract.Behaviour()
+            runAfterResume(new Runnable()
             {
                 @Override
-                public void back()
+                public void run()
                 {
-                    getChildFragmentManager().popBackStack();
-                    detailFragment = null;
+                    resetScreenIndex();
+                    detailFragment = ActionDetailFragment.newInstanse(actionDetailContractBehaviour, id);
+                    addSubscreen(detailFragment);
                 }
-            }, id);
-            addSubscreen(detailFragment);
+            });
+            disableViewOn(500);
         }
     });
     private Fragment detailFragment;
+
+    private final OneOfNewsDetailContract.Behaviour oneOfNewsDetailBehaviour = new OneOfNewsDetailContract.Behaviour()
+    {
+        @Override
+        public void back()
+        {
+            getChildFragmentManager().popBackStack();
+            detailFragment = null;
+        }
+    };
+    private final ActionDetailContract.Behaviour actionDetailContractBehaviour = new ActionDetailContract.Behaviour()
+    {
+        @Override
+        public void back()
+        {
+            getChildFragmentManager().popBackStack();
+            detailFragment = null;
+        }
+    };
 
     private View news_active;
     private View actions_active;
@@ -133,27 +154,20 @@ public class EventsFragment
     }
 
     @Override
-    protected View.OnClickListener setClickListener()
+    protected void onClickView(int id)
     {
-        return new View.OnClickListener()
+        switch(id)
         {
-            @Override
-            public void onClick(View v)
-            {
-                switch(v.getId())
-                {
-                    case R.id.menu:
-                        getBehaviour().openMenu();
-                        break;
-                    case R.id.set_news:
-                        getPresenter().setNews();
-                        break;
-                    case R.id.set_actions:
-                        getPresenter().setActions();
-                        break;
-                }
-            }
-        };
+            case R.id.menu:
+                getBehaviour().openMenu();
+                break;
+            case R.id.set_news:
+                getPresenter().setNews();
+                break;
+            case R.id.set_actions:
+                getPresenter().setActions();
+                break;
+        }
     }
 
     @Override
@@ -189,18 +203,19 @@ public class EventsFragment
                                  .commit();
     }
 
-    public void showOneOfNews(int id)
+    public void showOneOfNews(final int id)
     {
-        detailFragment = OneOfNewsDetailFragment.newInstanse(new OneOfNewsDetailContract.Behaviour()
+        runAfterResume(new Runnable()
         {
             @Override
-            public void back()
+            public void run()
             {
-                getChildFragmentManager().popBackStack();
-                detailFragment = null;
+                resetScreenIndex();
+                detailFragment = OneOfNewsDetailFragment.newInstanse(oneOfNewsDetailBehaviour, id);
+                addSubscreen(detailFragment);
             }
-        }, id);
-        addSubscreen(detailFragment);
+        });
+        disableViewOn(500);
     }
 
     private void addSubscreen(Fragment fragment)

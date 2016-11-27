@@ -14,6 +14,7 @@ public interface ServicesWithPricesContract
 
     interface View
     {
+        void load();
         void update(ListModel<ServicesWithPricesCore.Model> allData, ListModel<GroupModel> groups);
     }
 

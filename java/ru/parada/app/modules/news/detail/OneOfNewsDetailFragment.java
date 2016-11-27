@@ -3,6 +3,8 @@ package ru.parada.app.modules.news.detail;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -28,12 +30,14 @@ public class OneOfNewsDetailFragment
         return fragment;
     }
 
+    private View content;
     private TextView toolbar_title;
     private TextView title;
     private TextView date;
     private TextView full_descr;
     private ImageView image;
 
+    private Animation enter;
     private String[] months;
 
     @Override
@@ -51,6 +55,7 @@ public class OneOfNewsDetailFragment
     @Override
     protected void initViews(View v)
     {
+        content = v.findViewById(R.id.content);
         toolbar_title = (TextView)v.findViewById(R.id.toolbar_title);
         title = (TextView)v.findViewById(R.id.title);
         date = (TextView)v.findViewById(R.id.date);
@@ -60,26 +65,21 @@ public class OneOfNewsDetailFragment
     }
 
     @Override
-    protected View.OnClickListener setClickListener()
+    protected void onClickView(int id)
     {
-        return new View.OnClickListener()
+        switch(id)
         {
-            @Override
-            public void onClick(View v)
-            {
-                switch(v.getId())
-                {
-                    case R.id.back:
-                        getBehaviour().back();
-                        break;
-                }
-            }
-        };
+            case R.id.back:
+                getBehaviour().back();
+                break;
+        }
     }
 
     @Override
     protected void init()
     {
+        enter = AnimationUtils.loadAnimation(getActivity(), R.anim.enter);
+        content.setVisibility(View.GONE);
         months = getActivity().getResources().getStringArray(R.array.months);
         getPresenter().update(getArguments().getInt(ONEOFNEWS_ID));
     }
@@ -103,6 +103,8 @@ public class OneOfNewsDetailFragment
                             App.getComponent().getFoldersManager().getImagesDirectory() + "/" + data.getImagePath(),
                             App.getComponent().getAndroidUtil().dp(222), App.getComponent().getAndroidUtil().dp(222)));
                 }
+                content.setVisibility(View.VISIBLE);
+                content.startAnimation(enter);
             }
         });
     }

@@ -12,6 +12,8 @@ import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -38,14 +40,16 @@ public class DoctorDetailFragment
         return fragment;
     }
 
+    private View content;
     private TextView doctor_fullname;
     private DoctorHolder holder;
     private TextView descr;
     private View phone_button;
 
+    private Animation enter;
     private PackageManager packageManager;
     private ClipboardManager clipboard;
-    private int id;
+    private int doctor_id;
     private String phone;
 
     @Override
@@ -63,6 +67,7 @@ public class DoctorDetailFragment
     @Override
     protected void initViews(View v)
     {
+        content = v.findViewById(R.id.content);
         doctor_fullname = (TextView)v.findViewById(R.id.doctor_fullname);
         holder = new DoctorHolder(getActivity(), (ImageView)v.findViewById(R.id.photo),
                 (TextView)v.findViewById(R.id.last_name),
@@ -77,27 +82,20 @@ public class DoctorDetailFragment
     }
 
     @Override
-    protected View.OnClickListener setClickListener()
+    protected void onClickView(int id)
     {
-        return new View.OnClickListener()
+        switch(id)
         {
-            @Override
-            public void onClick(View v)
-            {
-                switch(v.getId())
-                {
-                    case R.id.back:
-                        getBehaviour().back();
-                        break;
-                    case R.id.phone_button:
-                        callDialogOpen();
-                        break;
-                    case R.id.watch_video:
-                        getBehaviour().showVideos(id);
-                        break;
-                }
-            }
-        };
+            case R.id.back:
+                getBehaviour().back();
+                break;
+            case R.id.phone_button:
+                callDialogOpen();
+                break;
+            case R.id.watch_video:
+                getBehaviour().showVideos(doctor_id);
+                break;
+        }
     }
 
     private void callDialogOpen()
@@ -196,10 +194,12 @@ public class DoctorDetailFragment
     @Override
     protected void init()
     {
+        enter = AnimationUtils.loadAnimation(getActivity(), R.anim.enter);
+        content.setVisibility(View.GONE);
         packageManager = getActivity().getPackageManager();
         clipboard = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
-        id = getArguments().getInt(DOCTOR_ID);
-        getPresenter().update(id);
+        doctor_id = getArguments().getInt(DOCTOR_ID);
+        getPresenter().update(doctor_id);
     }
 
     @Override
@@ -234,6 +234,8 @@ public class DoctorDetailFragment
                 holder.setSecondPosition(item.getSecondPosition());
                 holder.setThirdPosition(item.getThirdPosition());
                 descr.setText(Html.fromHtml(item.getDescription()));
+                content.setVisibility(View.VISIBLE);
+                content.startAnimation(enter);
             }
         });
     }

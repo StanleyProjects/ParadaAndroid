@@ -3,6 +3,8 @@ package ru.parada.app.modules.services.detail;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -26,9 +28,12 @@ public class ServiceDetailFragment
         return fragment;
     }
 
+    private View content;
     private TextView title;
     private TextView descr;
     private ImageView image;
+
+    private Animation enter;
 
     @Override
     protected ServiceDetailContract.Presenter setPresenter()
@@ -45,6 +50,7 @@ public class ServiceDetailFragment
     @Override
     protected void initViews(View v)
     {
+        content = v.findViewById(R.id.content);
         title = (TextView)v.findViewById(R.id.title);
         descr = (TextView)v.findViewById(R.id.descr);
         image = (ImageView)v.findViewById(R.id.image);
@@ -52,32 +58,27 @@ public class ServiceDetailFragment
     }
 
     @Override
-    protected View.OnClickListener setClickListener()
+    protected void onClickView(int id)
     {
-        return new View.OnClickListener()
+        switch(id)
         {
-            @Override
-            public void onClick(View v)
-            {
-                switch(v.getId())
-                {
-                    case R.id.back:
-                        getBehaviour().back();
-                        break;
-                    case R.id.subscribe_reception:
-                        getBehaviour().subscribe();
-                        break;
-                    case R.id.order_call:
-                        getBehaviour().requestcall();
-                        break;
-                }
-            }
-        };
+            case R.id.back:
+                getBehaviour().back();
+                break;
+            case R.id.subscribe_reception:
+                getBehaviour().subscribe();
+                break;
+            case R.id.order_call:
+                getBehaviour().requestcall();
+                break;
+        }
     }
 
     @Override
     protected void init()
     {
+        enter = AnimationUtils.loadAnimation(getActivity(), R.anim.enter);
+        content.setVisibility(View.GONE);
         getPresenter().update(getArguments().getInt(SERVICE_ID));
     }
 
@@ -97,6 +98,8 @@ public class ServiceDetailFragment
                             App.getComponent().getFoldersManager().getImagesDirectory() + "/" + data.getImagePath(),
                             App.getComponent().getAndroidUtil().dp(222), App.getComponent().getAndroidUtil().dp(222)));
                 }
+                content.setVisibility(View.VISIBLE);
+                content.startAnimation(enter);
             }
         });
     }

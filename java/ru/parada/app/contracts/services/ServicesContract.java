@@ -7,13 +7,14 @@ public interface ServicesContract
 {
     interface View
     {
-        void updateServices(ListModel<ServicesCore.Model> data);
+        void load();
+        void update(ListModel<ServicesCore.Model> data);
     }
 
     interface Presenter
     {
-        void loadServices();
-        void updateServices();
+        void load();
+        void update();
     }
 
     interface Behaviour

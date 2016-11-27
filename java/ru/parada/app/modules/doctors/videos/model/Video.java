@@ -1,5 +1,7 @@
 package ru.parada.app.modules.doctors.videos.model;
 
+import android.util.Log;
+
 import ru.parada.app.core.DoctorVideosCore;
 
 public class Video
@@ -14,6 +16,7 @@ public class Video
 
     public Video(int i, int d, String t, String de, String l, String imp)
     {
+        //Log.e(getClass().getName(), i + " " + d + " " + t);
         id = i;
         doctor_id = d;
         title = t;

@@ -54,29 +54,38 @@ public class ContactsFragment
     }
 
     @Override
-    protected View.OnClickListener setClickListener()
+    protected void onClickView(int id)
     {
-        return new View.OnClickListener()
+        switch(id)
         {
-            @Override
-            public void onClick(View v)
-            {
-                switch(v.getId())
+            case R.id.menu:
+                getBehaviour().openMenu();
+                break;
+            case R.id.plastic_surgery_center:
+                runAfterResume(new Runnable()
                 {
-                    case R.id.menu:
-                        getBehaviour().openMenu();
-                        break;
-                    case R.id.plastic_surgery_center:
+                    @Override
+                    public void run()
+                    {
+                        resetScreenIndex();
                         detailFragment = ContactDetailFragment.newInstanse(contactDetailBehaviour, ContactsCore.Contacts.SURGERY);
                         addSubscreen(detailFragment);
-                        break;
-                    case R.id.baltmed:
+                    }
+                });
+                break;
+            case R.id.baltmed:
+                runAfterResume(new Runnable()
+                {
+                    @Override
+                    public void run()
+                    {
+                        resetScreenIndex();
                         detailFragment = ContactDetailFragment.newInstanse(contactDetailBehaviour, ContactsCore.Contacts.BALTMED);
                         addSubscreen(detailFragment);
-                        break;
-                }
-            }
-        };
+                    }
+                });
+                break;
+        }
     }
 
     @Override

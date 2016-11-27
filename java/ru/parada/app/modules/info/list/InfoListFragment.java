@@ -30,6 +30,7 @@ public class InfoListFragment
 
     private RecyclerView list;
 
+    private boolean load;
     private InfoAdapter adapter;
     private InfoDetailContract.Behaviour infoDetailBehaviour = new InfoDetailContract.Behaviour()
     {
@@ -61,21 +62,14 @@ public class InfoListFragment
     }
 
     @Override
-    protected View.OnClickListener setClickListener()
+    protected void onClickView(int id)
     {
-        return new View.OnClickListener()
+        switch(id)
         {
-            @Override
-            public void onClick(View v)
-            {
-                switch(v.getId())
-                {
-                    case R.id.menu:
-                        getBehaviour().openMenu();
-                        break;
-                }
-            }
-        };
+            case R.id.menu:
+                getBehaviour().openMenu();
+                break;
+        }
     }
 
     @Override
@@ -84,15 +78,29 @@ public class InfoListFragment
         adapter = new InfoAdapter(getActivity(), new InfoAdapterListener()
         {
             @Override
-            public void getInfo(int id)
+            public void getInfo(final int id)
             {
-                detailFragment = InfoDetailFragment.newInstanse(infoDetailBehaviour, id);
-                addSubscreen(detailFragment);
+                if(load)
+                {
+                    return;
+                }
+                runAfterResume(new Runnable()
+                {
+                    @Override
+                    public void run()
+                    {
+                        resetScreenIndex();
+                        detailFragment = InfoDetailFragment.newInstanse(infoDetailBehaviour, id);
+                        addSubscreen(detailFragment);
+                    }
+                });
+                disableViewOn(500);
             }
         });
         list.setLayoutManager(new LinearLayoutManager(getActivity()));
         list.setAdapter(adapter);
         getPresenter().update();
+        load = true;
         getPresenter().load();
     }
 
@@ -103,6 +111,12 @@ public class InfoListFragment
         {
             addSubscreen(detailFragment);
         }
+    }
+
+    @Override
+    public void load()
+    {
+        load = false;
     }
 
     @Override

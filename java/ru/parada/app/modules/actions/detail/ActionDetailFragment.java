@@ -3,6 +3,8 @@ package ru.parada.app.modules.actions.detail;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -28,11 +30,14 @@ public class ActionDetailFragment
         return fragment;
     }
 
+    private View content;
     private TextView title;
     private TextView date;
     private TextView subtitle;
     private ImageView image;
     private TextView descr;
+
+    private Animation enter;
 
     @Override
     protected ActionDetailContract.Presenter setPresenter()
@@ -49,6 +54,7 @@ public class ActionDetailFragment
     @Override
     protected void initViews(View v)
     {
+        content = v.findViewById(R.id.content);
         title = (TextView)v.findViewById(R.id.title);
         date = (TextView)v.findViewById(R.id.date);
         subtitle = (TextView)v.findViewById(R.id.subtitle);
@@ -58,26 +64,21 @@ public class ActionDetailFragment
     }
 
     @Override
-    protected View.OnClickListener setClickListener()
+    protected void onClickView(int id)
     {
-        return new View.OnClickListener()
+        switch(id)
         {
-            @Override
-            public void onClick(View v)
-            {
-                switch(v.getId())
-                {
-                    case R.id.back:
-                        getBehaviour().back();
-                        break;
-                }
-            }
-        };
+            case R.id.back:
+                getBehaviour().back();
+                break;
+        }
     }
 
     @Override
     protected void init()
     {
+        enter = AnimationUtils.loadAnimation(getActivity(), R.anim.enter);
+        content.setVisibility(View.GONE);
         getPresenter().update(getArguments().getInt(ACTION_ID));
     }
 
@@ -107,6 +108,8 @@ public class ActionDetailFragment
                             App.getComponent().getAndroidUtil().dp(128), App.getComponent().getAndroidUtil().dp(128)));
                 }
                 descr.setText(Html.fromHtml(data.getDescription()));
+                content.setVisibility(View.VISIBLE);
+                content.startAnimation(enter);
             }
         });
     }

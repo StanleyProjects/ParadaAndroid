@@ -5,9 +5,7 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -43,6 +41,8 @@ public class MainFragment
     private PackageManager packageManager;
     private ClipboardManager clipboard;
 
+    private boolean load;
+
     @Override
     protected MainContract.Presenter setPresenter()
     {
@@ -64,24 +64,17 @@ public class MainFragment
     }
 
     @Override
-    protected View.OnClickListener setClickListener()
+    protected void onClickView(int id)
     {
-        return new View.OnClickListener()
+        switch(id)
         {
-            @Override
-            public void onClick(View v)
-            {
-                switch(v.getId())
-                {
-                    case R.id.menu:
-                        getBehaviour().openMenu();
-                        break;
-                    case R.id.phone:
-                        getPresenter().callDialogOpen();
-                        break;
-                }
-            }
-        };
+            case R.id.menu:
+                getBehaviour().openMenu();
+                break;
+            case R.id.phone:
+                getPresenter().callDialogOpen();
+                break;
+        }
     }
 
     @Override
@@ -95,36 +88,39 @@ public class MainFragment
             @Override
             public void oneOfNews(int id)
             {
+                if(load)
+                {
+                    return;
+                }
                 getBehaviour().oneOfNews(id);
+                disableViewOn(500);
             }
-
             @Override
             public void openServices()
             {
                 getBehaviour().openServices();
             }
-
             @Override
             public void openSubscribe()
             {
                 getBehaviour().openSubscribe();
             }
-
             @Override
             public void openPrices()
             {
                 getBehaviour().openPrices();
             }
-
             @Override
             public void openAllNews()
             {
                 getBehaviour().openAllNews();
+                disableViewOn(500);
             }
         });
         list.setLayoutManager(new LinearLayoutManager(getActivity()));
         list.setAdapter(adapter);
         getPresenter().update();
+        load = true;
         getPresenter().load();
     }
 
@@ -251,6 +247,12 @@ public class MainFragment
                 adapter.notifyDataSetChanged();
             }
         });
+    }
+
+    @Override
+    public void load()
+    {
+        load = false;
     }
 
     private void copyClipBoard(String text)

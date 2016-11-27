@@ -7,6 +7,7 @@ public interface ActionsContract
 {
     interface View
     {
+        void load();
         void update(ListModel<ActionsCore.Model> data);
     }
 

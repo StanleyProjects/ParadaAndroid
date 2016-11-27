@@ -25,7 +25,7 @@ public class ActionsPresenter
 {
     private ActionsContract.View view;
 
-    private final Request actionsRequest = new Request(ParadaService.BASE_URL, ParadaService.Get.ACTIONS);
+    private final Request request = new Request(ParadaService.BASE_URL, ParadaService.Get.ACTIONS);
 
     public ActionsPresenter(ActionsContract.View v)
     {
@@ -55,7 +55,7 @@ public class ActionsPresenter
     @Override
     public void load()
     {
-        actionsRequest.execute(new JsonArrayRequestListener()
+        request.execute(new JsonArrayRequestListener()
         {
             @Override
             public void response(ArrayList answer)
@@ -81,12 +81,14 @@ public class ActionsPresenter
                 }
                 SQliteApi.getInstanse().endTransaction();
                 update();
+                view.load();
             }
             @Override
             public void error(String url, Exception error)
             {
                 Log.e(getClass()
                         .getName(), url + "\n" + error.getMessage());
+                view.load();
             }
         });
     }

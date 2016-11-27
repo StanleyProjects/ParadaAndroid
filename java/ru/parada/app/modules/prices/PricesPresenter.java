@@ -75,14 +75,13 @@ public class PricesPresenter
             @Override
             public void run()
             {
-                Log.e(this.getClass().getName(), "update t " + Thread.currentThread());
                 update(SQliteApi.getInstanse().getPrices().getAllFromServiceId(id), SQliteApi.getInstanse().getServicesWithPrices().getOneFromId(id));
             }
         }).start();
     }
     private void update(ListModel<PricesContract.Model> data, ServicesWithPricesCore.Model service)
     {
-        Log.e(this.getClass().getName(), "update " + data.getItemsCount() + " service " + service.getTitle());
+//        Log.e(getClass().getName(), "update " + data.getItemsCount() + " service " + service.getTitle());
         view.update(data, service);
     }
 }

@@ -53,24 +53,17 @@ public class DoctorVideoDetailFragment
     }
 
     @Override
-    protected View.OnClickListener setClickListener()
+    protected void onClickView(int id)
     {
-        return new View.OnClickListener()
+        switch(id)
         {
-            @Override
-            public void onClick(View v)
-            {
-                switch(v.getId())
-                {
-                    case R.id.back:
-                        getBehaviour().back();
-                        break;
-                    case R.id.play:
-                        getActivity().startActivity(PlayerActivity.createIntent(getActivity(), videoData.getLink()));
-                        break;
-                }
-            }
-        };
+            case R.id.back:
+                getBehaviour().back();
+                break;
+            case R.id.play:
+                getActivity().startActivity(PlayerActivity.createIntent(getActivity(), videoData.getLink()));
+                break;
+        }
     }
 
     @Override

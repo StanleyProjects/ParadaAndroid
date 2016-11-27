@@ -58,30 +58,15 @@ public class MenuFragment
     }
 
     @Override
-    protected View.OnClickListener setClickListener()
-    {
-        return new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                switch(v.getId())
-                {
-                }
-            }
-        };
-    }
-
-    @Override
     protected void init()
     {
-        initMenuListModel();
         adapter = new MenuAdapter(getActivity(), new MenuContract.Behaviour()
         {
             @Override
             public void open(GeneralCore.ScreenType screenType)
             {
                 getPresenter().open(screenType);
+                disableViewOn(500);
             }
         });
         adapter.swapData(initMenuListModel());
@@ -170,7 +155,10 @@ public class MenuFragment
     @Override
     public void set(GeneralCore.ScreenType screenType)
     {
-        App.getComponent().getPreferenceManager().setNotificationBadge(false);
+        if(screenType == GeneralCore.ScreenType.NOTIFICATIONS_SCREEN)
+        {
+            App.getComponent().getPreferenceManager().setNotificationBadge(false);
+        }
         getBehaviour().open(screenType);
         adapter.setHighlight(screenType.ordinal());
         adapter.notifyDataSetChanged();

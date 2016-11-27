@@ -42,6 +42,7 @@ public class ServicesFragment
 
     private RecyclerView list;
 
+    private boolean load;
     private ServicesAdapter adapter;
     private final ServiceDetailContract.Behaviour serviceDetailBehaviour = new ServiceDetailContract.Behaviour()
     {
@@ -194,21 +195,14 @@ public class ServicesFragment
     }
 
     @Override
-    protected View.OnClickListener setClickListener()
+    protected void onClickView(int id)
     {
-        return new View.OnClickListener()
+        switch(id)
         {
-            @Override
-            public void onClick(View v)
-            {
-                switch(v.getId())
-                {
-                    case R.id.menu:
-                        getBehaviour().openMenu();
-                        break;
-                }
-            }
-        };
+            case R.id.menu:
+                getBehaviour().openMenu();
+                break;
+        }
     }
 
     @Override
@@ -217,20 +211,34 @@ public class ServicesFragment
         adapter = new ServicesAdapter(getActivity(), new ServicesAdapterListener()
         {
             @Override
-            public void getService(int id)
+            public void getService(final int id)
             {
-                detailFragment = ServiceDetailFragment.newInstanse(serviceDetailBehaviour, id);
-                addSubscreen(detailFragment);
+                if(load)
+                {
+                    return;
+                }
+                runAfterResume(new Runnable()
+                {
+                    @Override
+                    public void run()
+                    {
+                        resetScreenIndex();
+                        detailFragment = ServiceDetailFragment.newInstanse(serviceDetailBehaviour, id);
+                        addSubscreen(detailFragment);
+                    }
+                });
+                disableViewOn(500);
             }
         });
         list.setLayoutManager(new LinearLayoutManager(getActivity()));
         list.setAdapter(adapter);
-        getPresenter().updateServices();
-        getPresenter().loadServices();
+        getPresenter().update();
+        load = true;
+        getPresenter().load();
     }
 
     @Override
-    public void updateServices(final ListModel<ServicesCore.Model> data)
+    public void update(final ListModel<ServicesCore.Model> data)
     {
         runOnUiThread(new Runnable()
         {
@@ -249,5 +257,11 @@ public class ServicesFragment
                                  .add(R.id.subscreen, fragment)
                                  .addToBackStack(fragment.getClass().getName())
                                  .commit();
+    }
+
+    @Override
+    public void load()
+    {
+        load = false;
     }
 }

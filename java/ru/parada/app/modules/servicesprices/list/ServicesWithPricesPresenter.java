@@ -20,7 +20,7 @@ public class ServicesWithPricesPresenter
 {
     private ServicesWithPricesContract.View view;
 
-    private final Request servicesWithPricesRequest = new Request(ParadaService.BASE_URL, ParadaService.Get.SERVICES_WITH_PRICES);
+    private final Request request = new Request(ParadaService.BASE_URL, ParadaService.Get.SERVICES_WITH_PRICES);
 
     public ServicesWithPricesPresenter(ServicesWithPricesContract.View v)
     {
@@ -30,7 +30,7 @@ public class ServicesWithPricesPresenter
     @Override
     public void load()
     {
-        servicesWithPricesRequest.execute(new JsonArrayRequestListener()
+        request.execute(new JsonArrayRequestListener()
         {
             @Override
             public void response(ArrayList answer)
@@ -57,12 +57,14 @@ public class ServicesWithPricesPresenter
                 SQliteApi.getInstanse()
                          .endTransaction();
                 update();
+                view.load();
             }
             @Override
             public void error(String url, Exception error)
             {
                 Log.e(getClass()
                         .getName(), url + "\n" + error.getMessage());
+                view.load();
             }
         });
     }

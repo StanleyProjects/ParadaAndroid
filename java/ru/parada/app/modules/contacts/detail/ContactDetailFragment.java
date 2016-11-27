@@ -3,6 +3,8 @@ package ru.parada.app.modules.contacts.detail;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -28,6 +30,7 @@ public class ContactDetailFragment
         return fragment;
     }
 
+    private View content;
     private TextView name;
     private ImageView image;
     private TextView phone_label;
@@ -41,6 +44,7 @@ public class ContactDetailFragment
     private String phoneToCall;
     private String link;
     private String ml;
+    private Animation enter;
 
     @Override
     protected ContactDetailContract.Presenter setPresenter()
@@ -57,6 +61,7 @@ public class ContactDetailFragment
     @Override
     protected void initViews(View v)
     {
+        content = v.findViewById(R.id.content);
         name = (TextView)v.findViewById(R.id.name);
         image = (ImageView)v.findViewById(R.id.image);
         phone_label = (TextView)v.findViewById(R.id.phone_label);
@@ -72,38 +77,33 @@ public class ContactDetailFragment
     }
 
     @Override
-    protected View.OnClickListener setClickListener()
+    protected void onClickView(int id)
     {
-        return new View.OnClickListener()
+        switch(id)
         {
-            @Override
-            public void onClick(View v)
-            {
-                switch(v.getId())
-                {
-                    case R.id.back:
-                        getBehaviour().back();
-                        break;
-                    case R.id.mapforeground:
-                        getActivity().startActivity(MapActivity.createIntent(getActivity(), latitude, longitude));
-                        break;
-                    case R.id.phone:
-                        App.getComponent().getAndroidUtil().openPhone(phoneToCall);
-                        break;
-                    case R.id.mail:
-                        App.getComponent().getAndroidUtil().openMail(ml);
-                        break;
-                    case R.id.web:
-                        App.getComponent().getAndroidUtil().openBrowser(link);
-                        break;
-                }
-            }
-        };
+            case R.id.back:
+                getBehaviour().back();
+                break;
+            case R.id.mapforeground:
+                getActivity().startActivity(MapActivity.createIntent(getActivity(), latitude, longitude));
+                break;
+            case R.id.phone:
+                App.getComponent().getAndroidUtil().openPhone(phoneToCall);
+                break;
+            case R.id.mail:
+                App.getComponent().getAndroidUtil().openMail(ml);
+                break;
+            case R.id.web:
+                App.getComponent().getAndroidUtil().openBrowser(link);
+                break;
+        }
     }
 
     @Override
     protected void init()
     {
+        enter = AnimationUtils.loadAnimation(getActivity(), R.anim.enter);
+        content.setVisibility(View.GONE);
         String nm;
         String pl;
         String wl;
@@ -157,6 +157,8 @@ public class ContactDetailFragment
         mail_label.setText(ml);
         web_label.setText(web);
         address_label.setText(al);
+        content.setVisibility(View.VISIBLE);
+        content.startAnimation(enter);
     }
 
     @Override

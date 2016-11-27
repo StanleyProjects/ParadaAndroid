@@ -40,6 +40,7 @@ public class DoctorsFragment
     private RecyclerView list;
     private EditText search;
 
+    private boolean load;
     private DoctorsAdapter adapter;
     private final DoctorDetailContract.Behaviour doctorDetailBehaviour = new DoctorDetailContract.Behaviour()
     {
@@ -119,24 +120,17 @@ public class DoctorsFragment
     }
 
     @Override
-    protected View.OnClickListener setClickListener()
+    protected void onClickView(int id)
     {
-        return new View.OnClickListener()
+        switch(id)
         {
-            @Override
-            public void onClick(View v)
-            {
-                switch(v.getId())
-                {
-                    case R.id.menu:
-                        getBehaviour().openMenu();
-                        break;
-                    case R.id.search_clear:
-                        searchClear();
-                        break;
-                }
-            }
-        };
+            case R.id.menu:
+                getBehaviour().openMenu();
+                break;
+            case R.id.search_clear:
+                searchClear();
+                break;
+        }
     }
 
     @Override
@@ -145,10 +139,23 @@ public class DoctorsFragment
         adapter = new DoctorsAdapter(getActivity(), new DoctorsAdapterListener()
         {
             @Override
-            public void getDoctor(int id)
+            public void getDoctor(final int id)
             {
-                detailFragment = DoctorDetailFragment.newInstanse(doctorDetailBehaviour, id);
-                addSubscreen(detailFragment);
+                if(load)
+                {
+                    return;
+                }
+                runAfterResume(new Runnable()
+                {
+                    @Override
+                    public void run()
+                    {
+                        resetScreenIndex();
+                        detailFragment = DoctorDetailFragment.newInstanse(doctorDetailBehaviour, id);
+                        addSubscreen(detailFragment);
+                    }
+                });
+                disableViewOn(500);
             }
         });
         list.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -180,6 +187,7 @@ public class DoctorsFragment
             }
         });
         getPresenter().update();
+        load = true;
         getPresenter().load();
     }
 
@@ -192,6 +200,12 @@ public class DoctorsFragment
             search.setText("");
             getPresenter().update();
         }
+    }
+
+    @Override
+    public void load()
+    {
+        load = false;
     }
 
     @Override

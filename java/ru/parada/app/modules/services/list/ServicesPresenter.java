@@ -25,7 +25,7 @@ public class ServicesPresenter
 {
     private ServicesContract.View view;
 
-    private final Request servicesRequest = new Request(ParadaService.BASE_URL, ParadaService.Get.SERVICES);
+    private final Request request = new Request(ParadaService.BASE_URL, ParadaService.Get.SERVICES);
 
     public ServicesPresenter(ServicesContract.View v)
     {
@@ -33,9 +33,9 @@ public class ServicesPresenter
     }
 
     @Override
-    public void loadServices()
+    public void load()
     {
-        servicesRequest.execute(new JsonArrayRequestListener()
+        request.execute(new JsonArrayRequestListener()
         {
             @Override
             public void response(ArrayList answer)
@@ -58,13 +58,15 @@ public class ServicesPresenter
                             null));
                 }
                 SQliteApi.getInstanse().endTransaction();
-                updateServices();
+                update();
+                view.load();
             }
             @Override
             public void error(String url, Exception error)
             {
                 Log.e(getClass()
                         .getName(), url + "\n" + error.getMessage());
+                view.load();
             }
         });
     }
@@ -122,7 +124,7 @@ public class ServicesPresenter
                     {
                         new File(oldModel.getImagePath()).delete();
                     }
-                    updateServices();
+                    update();
                 }
                 @Override
                 public void error(Exception error)
@@ -160,7 +162,7 @@ public class ServicesPresenter
     }
 
     @Override
-    public void updateServices()
+    public void update()
     {
         new Thread(new Runnable()
         {
@@ -174,7 +176,6 @@ public class ServicesPresenter
 
     private void updateServices(ListModel<ServicesCore.Model> data)
     {
-        //Log.e(this.getClass().getName(), "updateServices " + data.getItemsCount());
-        view.updateServices(data);
+        view.update(data);
     }
 }

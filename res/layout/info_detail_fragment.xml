@@ -3,7 +3,7 @@
               android:clickable="true"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:background="@color/white"
+              android:background="@color/colorPrimaryDark"
               android:orientation="vertical">
     <FrameLayout
         android:layout_width="match_parent"
@@ -33,7 +33,9 @@
             android:textSize="@dimen/text_size_medium"/>
     </FrameLayout>
     <ScrollView
+        android:id="@+id/content"
         android:scrollbars="none"
+        android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <LinearLayout

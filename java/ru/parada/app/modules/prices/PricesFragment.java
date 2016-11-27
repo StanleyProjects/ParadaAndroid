@@ -55,26 +55,20 @@ public class PricesFragment
     }
 
     @Override
-    protected View.OnClickListener setClickListener()
+    protected void onClickView(int id)
     {
-        return new View.OnClickListener()
+        switch(id)
         {
-            @Override
-            public void onClick(View v)
-            {
-                switch(v.getId())
-                {
-                    case R.id.back:
-                        getBehaviour().back();
-                        break;
-                }
-            }
-        };
+            case R.id.back:
+                getBehaviour().back();
+                break;
+        }
     }
 
     @Override
     protected void init()
     {
+        list.setVisibility(View.GONE);
         adapter = new PricesFooterAdapter(getActivity(), new PricesAdapterListener()
         {
         });
@@ -97,6 +91,7 @@ public class PricesFragment
                 Log.e(this.getClass()
                           .getName(), "update " + data.getItemsCount());
                 service_name.setText(service.getTitle());
+                list.setVisibility(View.VISIBLE);
             }
         });
     }

@@ -84,43 +84,36 @@ public class RequestCallCheckFragment
     }
 
     @Override
-    protected View.OnClickListener setClickListener()
+    protected void onClickView(int id)
     {
-        return new View.OnClickListener()
+        switch(id)
         {
-            @Override
-            public void onClick(View v)
-            {
-                switch(v.getId())
+            case R.id.back:
+                if(!sendProcess)
                 {
-                    case R.id.back:
-                        if(!sendProcess)
-                        {
-                            getBehaviour().back();
-                        }
-                        break;
-                    case R.id.send:
+                    getBehaviour().back();
+                }
+                break;
+            case R.id.send:
+                if(sendProcess)
+                {
+                    return;
+                }
+                sendProcess = true;
+                runOnUiThread(new Runnable()
+                {
+                    @Override
+                    public void run()
+                    {
                         if(sendProcess)
                         {
-                            return;
+                            waiter.setVisibility(View.VISIBLE);
                         }
-                        sendProcess = true;
-                        runOnUiThread(new Runnable()
-                        {
-                            @Override
-                            public void run()
-                            {
-                                if(sendProcess)
-                                {
-                                    waiter.setVisibility(View.VISIBLE);
-                                }
-                            }
-                        }, 500);
-                        getPresenter().send(data);
-                        break;
-                }
-            }
-        };
+                    }
+                }, 500);
+                getPresenter().send(data);
+                break;
+        }
     }
 
     @Override

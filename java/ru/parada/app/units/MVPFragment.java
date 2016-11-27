@@ -17,6 +17,7 @@ public abstract class MVPFragment<PRESENTER, BEHAVIOUR>
     private BEHAVIOUR behaviour;
     private View.OnClickListener clickListener;
     private View mainView;
+    private volatile boolean click;
 
     @Override
     public void onPause()
@@ -34,6 +35,7 @@ public abstract class MVPFragment<PRESENTER, BEHAVIOUR>
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
+        click = true;
         if(mainView == null)
         {
             mainView = inflater.inflate(setContentView(), container, false);
@@ -52,7 +54,29 @@ public abstract class MVPFragment<PRESENTER, BEHAVIOUR>
                 }
             });
             this.presenter = setPresenter();
-            this.clickListener = setClickListener();
+//            this.clickListener = setClickListener();
+            this.clickListener = new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View view)
+                {
+                    if(!click)
+                    {
+                        return;
+                    }
+                    click = false;
+                    disableViewOn(500);
+                    onClickView(view.getId());
+                    runOnUiThread(new Runnable()
+                    {
+                        @Override
+                        public void run()
+                        {
+                            click = true;
+                        }
+                    }, 500);
+                }
+            };
             initViews(mainView);
             init();
         }
@@ -70,6 +94,18 @@ public abstract class MVPFragment<PRESENTER, BEHAVIOUR>
         }
     }
 
+    protected void disableViewOn(long ms)
+    {
+        mainView.setEnabled(false);
+        runOnUiThread(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                mainView.setEnabled(true);
+            }
+        }, ms);
+    }
     protected void runOnUiThread(Runnable r)
     {
         App.getComponent().getAndroidUtil().runOnUiThread(r);
@@ -111,6 +147,11 @@ public abstract class MVPFragment<PRESENTER, BEHAVIOUR>
         App.getComponent().getAndroidUtil().hideKeyBoard(mainView.getWindowToken());
     }
 
+    protected void onClickView(int id)
+    {
+
+    }
+
     protected void setBehaviour(BEHAVIOUR b)
     {
         this.behaviour = b;
@@ -131,8 +172,6 @@ public abstract class MVPFragment<PRESENTER, BEHAVIOUR>
     abstract protected int setContentView();
 
     abstract protected void initViews(View v);
-
-    abstract protected View.OnClickListener setClickListener();
 
     abstract protected void init();
 }

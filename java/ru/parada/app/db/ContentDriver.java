@@ -2,6 +2,7 @@ package ru.parada.app.db;
 
 import android.content.ContentValues;
 import android.provider.BaseColumns;
+import android.util.Log;
 
 import ru.parada.app.contracts.ImagesContract;
 import ru.parada.app.contracts.PricesContract;
@@ -18,6 +19,7 @@ public class ContentDriver
 {
     static public ContentValues getContentValues(DoctorsCore.Model item)
     {
+        //Log.e("DoctorsCore.Model", item.getId() + " " + item.getLastName());
         ContentValues content = new ContentValues();
         content.put(BaseColumns._ID, item.getId());
         content.put(Tables.Doctors.Columns.last_name, item.getLastName());
@@ -113,6 +115,7 @@ public class ContentDriver
     public static ContentValues getContentValues(DoctorVideosCore.Model item)
     {
         ContentValues content = new ContentValues();
+//        Log.e("DoctorVideosCore.Model", item.getId() + " " + item.getTitle() + " " + item.getDoctorId());
         content.put(Tables.Videos.Columns.id, item.getId());
         content.put(Tables.Videos.Columns.doctor_id, item.getDoctorId());
         content.put(Tables.Videos.Columns.descr, item.getDescription());

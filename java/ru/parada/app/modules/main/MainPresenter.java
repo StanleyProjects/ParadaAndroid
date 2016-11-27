@@ -70,12 +70,14 @@ public class MainPresenter
                 }
                 SQliteApi.getInstanse().endTransaction();
                 update();
+                view.load();
             }
             @Override
             public void error(String url, Exception error)
             {
                 Log.e(getClass()
                         .getName(), url + "\n" + error.getMessage());
+                view.load();
             }
         });
     }
@@ -139,7 +141,6 @@ public class MainPresenter
             @Override
             public void run()
             {
-                Log.e(this.getClass().getName(), "updateNews " + Thread.currentThread());
                 updateNews(SQliteApi.getInstanse().getNews().getAllWithLimit(2));
             }
         }).start();
@@ -147,7 +148,7 @@ public class MainPresenter
 
     private void updateNews(ListModel<NewsCore.Model> data)
     {
-        Log.e(getClass().getName(), "updateNews " + data.getItemsCount() + " view " + view);
+//        Log.e(getClass().getName(), "updateNews " + data.getItemsCount() + " view " + view);
         view.update(data);
     }
 }

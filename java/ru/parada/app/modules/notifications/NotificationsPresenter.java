@@ -55,6 +55,7 @@ public class NotificationsPresenter
                 view.loadFail();
                 Log.e(getClass()
                         .getName(), url + "\n" + error.getMessage());
+                update();
             }
         });
     }

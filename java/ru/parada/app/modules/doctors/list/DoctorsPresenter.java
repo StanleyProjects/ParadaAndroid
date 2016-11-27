@@ -26,6 +26,8 @@ public class DoctorsPresenter
 {
     private DoctorsContract.View view;
 
+    private boolean doctorsLoad;
+    private boolean videosLoad;
     private final Request doctorsRequest = new Request(ParadaService.BASE_URL, ParadaService.Get.DOCTORS);
     private final Request doctorsVideosRequest = new Request(ParadaService.BASE_URL, ParadaService.Get.VIDEOS);
 
@@ -37,6 +39,8 @@ public class DoctorsPresenter
     @Override
     public void load()
     {
+        doctorsLoad = false;
+        videosLoad = false;
         doctorsRequest.execute(new JsonArrayRequestListener()
         {
             @Override
@@ -66,12 +70,22 @@ public class DoctorsPresenter
                 }
                 SQliteApi.getInstanse().endTransaction();
                 update();
+                doctorsLoad = true;
+                if(videosLoad)
+                {
+                    view.load();
+                }
             }
             @Override
             public void error(String url, Exception error)
             {
                 Log.e(getClass()
                         .getName(), url + "\n" + error.getMessage());
+                doctorsLoad = true;
+                if(videosLoad)
+                {
+                    view.load();
+                }
             }
         });
         doctorsVideosRequest.execute(new JsonArrayRequestListener()
@@ -81,6 +95,7 @@ public class DoctorsPresenter
             {
                 SQliteApi.getInstanse().getVideos().clear();
                 SQliteApi.getInstanse().startTransaction();
+                Log.e(getClass().getName(), "load videos " + answer.size());
                 for(Object video : answer)
                 {
                     int id = Integer.parseInt((String)((HashMap)video).get("id"));
@@ -94,12 +109,22 @@ public class DoctorsPresenter
                             null));
                 }
                 SQliteApi.getInstanse().endTransaction();
+                videosLoad = true;
+                if(doctorsLoad)
+                {
+                    view.load();
+                }
             }
             @Override
             public void error(String url, Exception error)
             {
                 Log.e(getClass()
                         .getName(), url + "\n" + error.getMessage());
+                videosLoad = true;
+                if(doctorsLoad)
+                {
+                    view.load();
+                }
             }
         });
     }

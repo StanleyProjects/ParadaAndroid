@@ -47,19 +47,6 @@ public class NewsFragment
     }
 
     @Override
-    protected View.OnClickListener setClickListener()
-    {
-        return new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-
-            }
-        };
-    }
-
-    @Override
     protected void init()
     {
         adapter = new NewsAdapter(getActivity(), new NewsAdapterListener()

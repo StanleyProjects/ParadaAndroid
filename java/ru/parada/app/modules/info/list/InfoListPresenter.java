@@ -74,12 +74,14 @@ public class InfoListPresenter
                 }
                 SQliteApi.getInstanse().endTransaction();
                 update();
+                view.load();
             }
             @Override
             public void error(String url, Exception error)
             {
                 Log.e(getClass()
                         .getName(), url + "\n" + error.getMessage());
+                view.load();
             }
         });
     }
