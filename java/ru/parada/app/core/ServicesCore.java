@@ -4,7 +4,6 @@ public interface ServicesCore
 {
     interface Screens
     {
-        int LIST = 0;
         int DETAIL = 1;
         int GET_USER_DATA = 2;
         int SEND_USER_DATA = 3;

@@ -51,7 +51,7 @@ public class ServicesWithPricesPresenter
                                      Integer.parseInt((String)((HashMap)service).get("order")),
                                      Integer.parseInt((String)((HashMap)service).get("group_id")),
                                      getString((HashMap)service, "group"),
-                                     0
+                                     getInt((HashMap)service, "group_order")
                              ));
                 }
                 SQliteApi.getInstanse()
@@ -67,6 +67,21 @@ public class ServicesWithPricesPresenter
                 view.load();
             }
         });
+    }
+    private int getInt(HashMap map, String key)
+    {
+        if(map.get(key) == null)
+        {
+            return 0;
+        }
+        try
+        {
+            return Integer.parseInt((String)map.get(key));
+        }
+        catch(Exception e)
+        {
+        }
+        return 0;
     }
     private String getString(HashMap map, String key)
     {

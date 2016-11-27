@@ -5,12 +5,10 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.BaseColumns;
-import android.util.Log;
 
 import java.util.ArrayList;
 
 import ru.parada.app.contracts.ImagesContract;
-import ru.parada.app.contracts.NotificationsContract;
 import ru.parada.app.contracts.PricesContract;
 import ru.parada.app.contracts.ServicesWithPricesContract;
 import ru.parada.app.core.ActionsCore;
@@ -33,7 +31,6 @@ import ru.parada.app.modules.info.model.InfoCursorListModel;
 import ru.parada.app.modules.news.model.NewsCursorListModel;
 import ru.parada.app.modules.news.model.OneOfNews;
 import ru.parada.app.modules.notifications.model.Notification;
-import ru.parada.app.modules.notifications.model.NotificationsCursorListModel;
 import ru.parada.app.modules.prices.models.PricesCursorListModel;
 import ru.parada.app.modules.services.model.Service;
 import ru.parada.app.modules.services.model.ServicesCursorListModel;
@@ -167,7 +164,9 @@ public class SQliteApi
                     "FROM " + TABLE_NAME + " " +
                     "LEFT JOIN " + Tables.Images.TABLE_NAME + " " +
                     "ON " + Tables.Images.Columns.type + " = " + ImagesContract.Types.SERVICES_TYPE + " " +
-                    "AND " + TABLE_NAME + "." + BaseColumns._ID + " = " + Tables.Images.Columns.entity_id, new String[]{}));
+                    "AND " + TABLE_NAME + "." + BaseColumns._ID + " = " + Tables.Images.Columns.entity_id + " "
+                            + "ORDER BY " + Columns.order + " ASC "
+                    , null));
         }
 
         @Override
@@ -220,7 +219,7 @@ public class SQliteApi
                     + "ON " + Tables.Images.Columns.type + " = " + ImagesContract.Types.DOCTORS_TYPE + " "
                     + "AND " + TABLE_NAME + "." + BaseColumns._ID + " = " + Tables.Images.Columns.entity_id + " "
                             + "ORDER BY " + Columns.order + " ASC "
-                    , new String[]{}));
+                    , null));
         }
         @Override
         public ListModel<DoctorsCore.Model> getFromKeys(String keys)
@@ -370,7 +369,7 @@ public class SQliteApi
         {
             Cursor cursor = sdb.rawQuery("SELECT * "
                     + "FROM " + TABLE_NAME + " "
-                    + "ORDER BY " + Columns.group_id + " ASC ", new String[]{});
+                    + "ORDER BY " + Columns.group_order + " ASC, " + Columns.group_id + " ASC, " + Columns.order + " ASC ", null);
             ArrayList<ServicesWithPricesCore.Model> data = new ArrayList<>();
             if(cursor.moveToFirst())
             {
@@ -520,7 +519,10 @@ public class SQliteApi
         @Override
         public ListModel<NotificationsCore.Model> getAll()
         {
-            Cursor cursor = sdb.rawQuery("SELECT * " + "FROM " + TABLE_NAME, null);
+            Cursor cursor = sdb.rawQuery(
+                    "SELECT * "
+                    + "FROM " + TABLE_NAME + " "
+                    + "ORDER BY " + Columns.date + " DESC ", null);
             ArrayList<NotificationsCore.Model> data = new ArrayList<>();
             if(cursor.moveToFirst())
             {
