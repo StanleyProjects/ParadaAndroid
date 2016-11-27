@@ -3,6 +3,7 @@ package ru.parada.app.modules.actions.list;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.TextView;
 
 import ru.parada.app.R;
 import ru.parada.app.contracts.actions.ActionsContract;
@@ -24,6 +25,7 @@ public class ActionsFragment
     }
 
     private RecyclerView list;
+    private TextView list_empty;
 
     private boolean load;
     private ActionsAdapter adapter;
@@ -32,20 +34,6 @@ public class ActionsFragment
     public void load()
     {
         load = false;
-    }
-
-    @Override
-    public void update(final ListModel<ActionsCore.Model> data)
-    {
-        runOnUiThread(new Runnable()
-        {
-            @Override
-            public void run()
-            {
-                adapter.swapData(data);
-                adapter.notifyDataSetChanged();
-            }
-        });
     }
 
     @Override
@@ -64,11 +52,14 @@ public class ActionsFragment
     protected void initViews(View v)
     {
         list = (RecyclerView)v.findViewById(R.id.list);
+        list_empty = (TextView)v.findViewById(R.id.list_empty);
     }
 
     @Override
     protected void init()
     {
+        list.setVisibility(View.GONE);
+        list_empty.setVisibility(View.VISIBLE);
         adapter = new ActionsAdapter(getActivity(), new ActionsAdapterListener()
         {
             @Override
@@ -86,5 +77,30 @@ public class ActionsFragment
         getPresenter().update();
         load = true;
         getPresenter().load();
+    }
+
+    @Override
+    public void update(final ListModel<ActionsCore.Model> data)
+    {
+        runOnUiThread(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                if(data.getItemsCount() > 0)
+                {
+                    list.setVisibility(View.VISIBLE);
+                    list_empty.setVisibility(View.GONE);
+                    adapter.swapData(data);
+                }
+                else
+                {
+                    list.setVisibility(View.GONE);
+                    list_empty.setVisibility(View.VISIBLE);
+                    adapter.swapData(null);
+                }
+                adapter.notifyDataSetChanged();
+            }
+        });
     }
 }

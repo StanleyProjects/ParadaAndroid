@@ -4,6 +4,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 import ru.parada.app.R;
 import ru.parada.app.contracts.news.NewsContract;
@@ -31,6 +32,7 @@ public class NewsFragment
     }
 
     private RecyclerView list;
+    private TextView list_empty;
 
     private NewsAdapter adapter;
 
@@ -44,11 +46,14 @@ public class NewsFragment
     protected void initViews(View v)
     {
         list = (RecyclerView)v.findViewById(R.id.list);
+        list_empty = (TextView)v.findViewById(R.id.list_empty);
     }
 
     @Override
     protected void init()
     {
+        list.setVisibility(View.GONE);
+        list_empty.setVisibility(View.VISIBLE);
         adapter = new NewsAdapter(getActivity(), new NewsAdapterListener()
         {
             @Override
@@ -70,8 +75,18 @@ public class NewsFragment
             @Override
             public void run()
             {
-                Log.e(this.getClass().getName(), "update " + data.getItemsCount() + " " + Thread.currentThread());
-                adapter.swapData(data);
+                if(data.getItemsCount() > 0)
+                {
+                    list.setVisibility(View.VISIBLE);
+                    list_empty.setVisibility(View.GONE);
+                    adapter.swapData(data);
+                }
+                else
+                {
+                    list.setVisibility(View.GONE);
+                    list_empty.setVisibility(View.VISIBLE);
+                    adapter.swapData(null);
+                }
                 adapter.notifyDataSetChanged();
             }
         });

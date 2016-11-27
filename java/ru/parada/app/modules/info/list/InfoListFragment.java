@@ -4,6 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.TextView;
 
 import ru.parada.app.App;
 import ru.parada.app.R;
@@ -30,6 +31,7 @@ public class InfoListFragment
     private Fragment detailFragment;
 
     private RecyclerView list;
+    private TextView list_empty;
 
     private boolean load;
     private InfoAdapter adapter;
@@ -60,6 +62,7 @@ public class InfoListFragment
     {
         setClickListener(v.findViewById(R.id.menu));
         list = (RecyclerView)v.findViewById(R.id.list);
+        list_empty = (TextView)v.findViewById(R.id.list_empty);
     }
 
     @Override
@@ -76,6 +79,8 @@ public class InfoListFragment
     @Override
     protected void init()
     {
+        list.setVisibility(View.GONE);
+        list_empty.setVisibility(View.VISIBLE);
         adapter = new InfoAdapter(getActivity(), new InfoAdapterListener()
         {
             @Override
@@ -127,7 +132,18 @@ public class InfoListFragment
             @Override
             public void run()
             {
-                adapter.swapData(data);
+                if(data.getItemsCount() > 0)
+                {
+                    list.setVisibility(View.VISIBLE);
+                    list_empty.setVisibility(View.GONE);
+                    adapter.swapData(data);
+                }
+                else
+                {
+                    list.setVisibility(View.GONE);
+                    list_empty.setVisibility(View.VISIBLE);
+                    adapter.swapData(null);
+                }
                 adapter.notifyDataSetChanged();
             }
         });

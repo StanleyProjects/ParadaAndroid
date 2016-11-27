@@ -4,6 +4,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -32,6 +33,7 @@ public class NotificationsFragment
 
     private SwipeRefreshLayout swiperefresh;
     private RecyclerView list;
+    private TextView list_empty;
 
     private GroupAdapter adapter;
     private NotificationsGroupData notificationsGroupData;
@@ -54,6 +56,7 @@ public class NotificationsFragment
         setClickListener(v.findViewById(R.id.menu));
         swiperefresh = (SwipeRefreshLayout)v.findViewById(R.id.swiperefresh);
         list = (RecyclerView)v.findViewById(R.id.list);
+        list_empty = (TextView)v.findViewById(R.id.list_empty);
     }
 
     @Override
@@ -70,6 +73,8 @@ public class NotificationsFragment
     @Override
     protected void init()
     {
+        list.setVisibility(View.GONE);
+        list_empty.setVisibility(View.VISIBLE);
         swiperefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener()
         {
             @Override
@@ -115,7 +120,18 @@ public class NotificationsFragment
             @Override
             public void run()
             {
-                notificationsGroupData.swapData(notifications);
+                if(notifications.getItemsCount() > 0)
+                {
+                    list.setVisibility(View.VISIBLE);
+                    list_empty.setVisibility(View.GONE);
+                    notificationsGroupData.swapData(notifications);
+                }
+                else
+                {
+                    list.setVisibility(View.GONE);
+                    list_empty.setVisibility(View.VISIBLE);
+                    notificationsGroupData.swapData(null);
+                }
                 adapter.notifyDataSetChanged();
                 swiperefresh.setRefreshing(false);
             }

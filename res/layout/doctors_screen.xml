@@ -39,47 +39,64 @@
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/container_height"
-            android:background="@color/graylight"
-            android:paddingBottom="10dp"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            android:paddingTop="10dp">
-
-            <ru.parada.app.units.LostFocusEdit
-                android:id="@+id/search"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:id="@+id/content"
+                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/white_corners"
-                android:hint="@string/search"
-                android:lines="1"
-                android:maxLength="20"
-                android:paddingLeft="32dp"
-                android:paddingRight="32dp"
-                android:singleLine="true"
+                android:layout_height="match_parent">
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/container_height"
+                    android:background="@color/graylight"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:paddingTop="10dp">
+
+                    <ru.parada.app.units.LostFocusEdit
+                        android:id="@+id/search"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/white_corners"
+                        android:hint="@string/search"
+                        android:lines="1"
+                        android:maxLength="20"
+                        android:paddingLeft="32dp"
+                        android:paddingRight="32dp"
+                        android:singleLine="true"
+                        android:textSize="@dimen/text_size_medium"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/gray"/>
+
+                    <ImageView
+                        android:layout_width="@dimen/icon_small"
+                        android:layout_height="@dimen/icon_small"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="8dp"
+                        android:src="@mipmap/search_scope"/>
+                    <ImageView
+                        android:id="@+id/search_clear"
+                        android:layout_width="@dimen/icon_small"
+                        android:layout_height="@dimen/icon_small"
+                        android:layout_gravity="center_vertical|right"
+                        android:layout_marginRight="8dp"
+                        android:src="@mipmap/close"/>
+                </FrameLayout>
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/list"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+            </LinearLayout>
+            <TextView
+                android:id="@+id/list_empty"
+                android:layout_gravity="center"
+                android:text="@string/doctors_list_empty"
                 android:textSize="@dimen/text_size_medium"
-                android:textColor="@color/black"
-                android:textColorHint="@color/gray"/>
-
-            <ImageView
-                android:layout_width="@dimen/icon_small"
-                android:layout_height="@dimen/icon_small"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="8dp"
-                android:src="@mipmap/search_scope"/>
-            <ImageView
-                android:id="@+id/search_clear"
-                android:layout_width="@dimen/icon_small"
-                android:layout_height="@dimen/icon_small"
-                android:layout_gravity="center_vertical|right"
-                android:layout_marginRight="8dp"
-                android:src="@mipmap/close"/>
+                android:textColor="@color/gray"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
         </FrameLayout>
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/list"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
     </LinearLayout>
 
     <FrameLayout

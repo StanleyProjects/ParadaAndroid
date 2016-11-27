@@ -32,8 +32,20 @@
             android:textColor="@color/white"
             android:textSize="@dimen/text_size_medium"/>
     </FrameLayout>
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/list"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent">
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+        <TextView
+            android:id="@+id/list_empty"
+            android:layout_gravity="center"
+            android:text="@string/videos_list_empty"
+            android:textSize="@dimen/text_size_medium"
+            android:textColor="@color/gray"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </FrameLayout>
 </LinearLayout>

@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.TextView;
 
 import ru.parada.app.App;
 import ru.parada.app.R;
@@ -32,6 +33,7 @@ public class DoctorVideosFragment
     }
 
     private RecyclerView list;
+    private TextView list_empty;
 
     private DoctorVideosAdapter adapter;
 
@@ -52,6 +54,7 @@ public class DoctorVideosFragment
     {
         setClickListener(v.findViewById(R.id.back));
         list = (RecyclerView)v.findViewById(R.id.list);
+        list_empty = (TextView)v.findViewById(R.id.list_empty);
     }
 
     @Override
@@ -68,6 +71,8 @@ public class DoctorVideosFragment
     @Override
     protected void init()
     {
+        list.setVisibility(View.GONE);
+        list_empty.setVisibility(View.VISIBLE);
         adapter = new DoctorVideosAdapter(getActivity(), new DoctorVideosAdapterListener()
         {
             @Override
@@ -98,7 +103,18 @@ public class DoctorVideosFragment
             @Override
             public void run()
             {
-                adapter.swapData(data);
+                if(data.getItemsCount() > 0)
+                {
+                    list.setVisibility(View.VISIBLE);
+                    list_empty.setVisibility(View.GONE);
+                    adapter.swapData(data);
+                }
+                else
+                {
+                    list.setVisibility(View.GONE);
+                    list_empty.setVisibility(View.VISIBLE);
+                    adapter.swapData(null);
+                }
                 adapter.notifyDataSetChanged();
             }
         });

@@ -103,6 +103,13 @@
     <string name="we_call_confirm_requestcall">Мы свяжемся с Вами в ближайшее время. Спасибо.</string>
     <string name="info">Информация для пациентов</string>
     <string name="info_menu">Для пациентов</string>
+    <string name="services_list_empty">Список услуг пуст</string>
+    <string name="doctors_list_empty">Список специалистов пуст</string>
+    <string name="videos_list_empty">Список видео пуст</string>
+    <string name="prices_list_empty">Список цен пуст</string>
+    <string name="news_list_empty">Список новостей пуст</string>
+    <string name="actions_list_empty">Список акций пуст</string>
+    <string name="info_list_empty">Список пуст</string>
 
     <string-array name="months">
         <item>января</item>
