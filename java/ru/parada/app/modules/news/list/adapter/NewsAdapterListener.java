@@ -1,4 +1,4 @@
-package ru.parada.app.modules.news.adapter;
+package ru.parada.app.modules.news.list.adapter;
 
 import ru.parada.app.contracts.news.NewsContract;
 

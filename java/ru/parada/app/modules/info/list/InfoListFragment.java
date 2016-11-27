@@ -7,7 +7,9 @@ import android.view.View;
 
 import ru.parada.app.R;
 import ru.parada.app.contracts.info.InfoContract;
+import ru.parada.app.contracts.info.InfoDetailContract;
 import ru.parada.app.core.InfoCore;
+import ru.parada.app.modules.info.detail.InfoDetailFragment;
 import ru.parada.app.modules.info.list.adapter.InfoAdapter;
 import ru.parada.app.modules.info.list.adapter.InfoAdapterListener;
 import ru.parada.app.units.ListModel;
@@ -29,6 +31,15 @@ public class InfoListFragment
     private RecyclerView list;
 
     private InfoAdapter adapter;
+    private InfoDetailContract.Behaviour infoDetailBehaviour = new InfoDetailContract.Behaviour()
+    {
+        @Override
+        public void back()
+        {
+            getChildFragmentManager().popBackStack();
+            detailFragment = null;
+        }
+    };
 
     @Override
     protected InfoContract.Presenter setPresenter()
@@ -75,8 +86,8 @@ public class InfoListFragment
             @Override
             public void getInfo(int id)
             {
-//                detailFragment = DoctorDetailFragment.newInstanse(doctorDetailBehaviour, id);
-//                addSubscreen(detailFragment);
+                detailFragment = InfoDetailFragment.newInstanse(infoDetailBehaviour, id);
+                addSubscreen(detailFragment);
             }
         });
         list.setLayoutManager(new LinearLayoutManager(getActivity()));

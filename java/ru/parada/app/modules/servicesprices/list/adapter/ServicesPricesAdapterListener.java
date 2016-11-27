@@ -1,4 +1,4 @@
-package ru.parada.app.modules.servicesprices.adapter;
+package ru.parada.app.modules.servicesprices.list.adapter;
 
 public interface ServicesPricesAdapterListener
 {

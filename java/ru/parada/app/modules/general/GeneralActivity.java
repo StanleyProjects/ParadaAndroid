@@ -25,7 +25,7 @@ import ru.parada.app.modules.main.MainFragment;
 import ru.parada.app.modules.menu.MenuFragment;
 import ru.parada.app.modules.notifications.NotificationsFragment;
 import ru.parada.app.modules.services.list.ServicesFragment;
-import ru.parada.app.modules.servicesprices.ServicesWithPricesFragment;
+import ru.parada.app.modules.servicesprices.list.ServicesWithPricesFragment;
 import ru.parada.app.modules.socials.SocialsFragment;
 import ru.parada.app.units.CallbackConnector;
 import ru.parada.app.units.DrawerContainer;

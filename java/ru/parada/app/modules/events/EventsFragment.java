@@ -12,8 +12,8 @@ import ru.parada.app.contracts.news.OneOfNewsDetailContract;
 import ru.parada.app.core.EventsCore;
 import ru.parada.app.modules.actions.detail.ActionDetailFragment;
 import ru.parada.app.modules.actions.list.ActionsFragment;
-import ru.parada.app.modules.news.NewsFragment;
-import ru.parada.app.modules.oneofnewsdetail.OneOfNewsDetailFragment;
+import ru.parada.app.modules.news.list.NewsFragment;
+import ru.parada.app.modules.news.detail.OneOfNewsDetailFragment;
 import ru.parada.app.units.CallbackConnector;
 import ru.parada.app.units.MultiFragment;
 

@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 
 import ru.parada.app.contracts.MainContract;
 import ru.parada.app.core.NewsCore;
-import ru.parada.app.modules.news.adapter.OneOfNewsHolder;
+import ru.parada.app.modules.news.list.adapter.OneOfNewsHolder;
 import ru.parada.app.units.adapters.HeadFootAdapter;
 import ru.parada.app.units.ListModel;
 

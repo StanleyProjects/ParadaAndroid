@@ -1,4 +1,4 @@
-package ru.parada.app.modules.servicesprices;
+package ru.parada.app.modules.servicesprices.list;
 
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,8 +15,8 @@ import ru.parada.app.contracts.PricesContract;
 import ru.parada.app.contracts.ServicesWithPricesContract;
 import ru.parada.app.core.ServicesWithPricesCore;
 import ru.parada.app.modules.prices.PricesFragment;
-import ru.parada.app.modules.servicesprices.adapter.PricesGroupData;
-import ru.parada.app.modules.servicesprices.adapter.ServicesPricesAdapterListener;
+import ru.parada.app.modules.servicesprices.list.adapter.PricesGroupData;
+import ru.parada.app.modules.servicesprices.list.adapter.ServicesPricesAdapterListener;
 import ru.parada.app.units.ArrayListModel;
 import ru.parada.app.units.adapters.GroupAdapter;
 import ru.parada.app.units.adapters.GroupModel;

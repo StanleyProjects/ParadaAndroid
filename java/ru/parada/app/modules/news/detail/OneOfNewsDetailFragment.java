@@ -1,4 +1,4 @@
-package ru.parada.app.modules.oneofnewsdetail;
+package ru.parada.app.modules.news.detail;
 
 import android.os.Bundle;
 import android.text.Html;

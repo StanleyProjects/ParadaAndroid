@@ -1,4 +1,4 @@
-package ru.parada.app.modules.news.adapter;
+package ru.parada.app.modules.news.list.adapter;
 
 import android.content.Context;
 import android.view.View;

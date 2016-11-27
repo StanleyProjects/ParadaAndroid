@@ -11,8 +11,8 @@ import ru.parada.app.R;
 import ru.parada.app.contracts.MenuContract;
 import ru.parada.app.core.GeneralCore;
 import ru.parada.app.modules.menu.adapter.MenuAdapter;
-import ru.parada.app.modules.menu.models.MenuListModel;
 import ru.parada.app.modules.menu.models.MenuModel;
+import ru.parada.app.units.ArrayListModel;
 import ru.parada.app.units.CallbackConnector;
 import ru.parada.app.units.MVPFragment;
 
@@ -38,7 +38,6 @@ public class MenuFragment
     private RecyclerView list;
 
     private MenuAdapter adapter;
-    private MenuListModel menuListModel;
 
     @Override
     protected MenuContract.Presenter setPresenter()
@@ -77,7 +76,7 @@ public class MenuFragment
     protected void init()
     {
         initMenuListModel();
-        adapter = new MenuAdapter(getActivity(), menuListModel, new MenuContract.Behaviour()
+        adapter = new MenuAdapter(getActivity(), new MenuContract.Behaviour()
         {
             @Override
             public void open(GeneralCore.ScreenType screenType)
@@ -85,12 +84,13 @@ public class MenuFragment
                 getPresenter().open(screenType);
             }
         });
+        adapter.swapData(initMenuListModel());
         list.setLayoutManager(new LinearLayoutManager(getActivity()));
         list.setAdapter(adapter);
         getPresenter().checkNotifications();
     }
 
-    private void initMenuListModel()
+    private ArrayListModel<MenuModel> initMenuListModel()
     {
         ArrayList<MenuModel> menuModels = new ArrayList<>();
         for(final GeneralCore.ScreenType screenType : GeneralCore.ScreenType.values())
@@ -138,7 +138,7 @@ public class MenuFragment
                     ico = R.mipmap.menu_push;
                     name = getActivity().getResources()
                                         .getString(R.string.notifications);
-                    menuModels.add(new MenuModel(ico, name, true)
+                    menuModels.add(new MenuModel(screenType.ordinal(), ico, name, true)
                     {
                         @Override
                         public void click(MenuContract.Behaviour behaviour)
@@ -155,7 +155,7 @@ public class MenuFragment
                 default:
                     continue;
             }
-            menuModels.add(new MenuModel(ico, name)
+            menuModels.add(new MenuModel(screenType.ordinal(), ico, name, false)
             {
                 @Override
                 public void click(MenuContract.Behaviour behaviour)
@@ -164,7 +164,7 @@ public class MenuFragment
                 }
             });
         }
-        menuListModel = new MenuListModel(menuModels);
+        return new ArrayListModel<>(menuModels);
     }
 
     @Override
@@ -172,7 +172,7 @@ public class MenuFragment
     {
         App.getComponent().getPreferenceManager().setNotificationBadge(false);
         getBehaviour().open(screenType);
-        menuListModel.setHighlight(screenType.ordinal());
+        adapter.setHighlight(screenType.ordinal());
         adapter.notifyDataSetChanged();
     }
 

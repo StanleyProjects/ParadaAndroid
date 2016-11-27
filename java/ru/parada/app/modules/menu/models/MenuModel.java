@@ -4,19 +4,16 @@ import ru.parada.app.contracts.MenuContract;
 
 public abstract class MenuModel
 {
+    public int id;
     public int icon;
     public String name;
     public boolean isNotification;
 
-    public MenuModel(int i, String n)
+    public MenuModel(int i, int ic, String n, boolean in)
     {
-        icon = i;
+        id = i;
+        icon = ic;
         name = n;
-        isNotification = false;
-    }
-    public MenuModel(int i, String n, boolean in)
-    {
-        this(i, n);
         isNotification = in;
     }
 

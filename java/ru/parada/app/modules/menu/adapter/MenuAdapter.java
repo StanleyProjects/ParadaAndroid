@@ -6,25 +6,17 @@ import android.view.ViewGroup;
 
 import ru.parada.app.App;
 import ru.parada.app.contracts.MenuContract;
-import ru.parada.app.modules.menu.models.MenuListModel;
 import ru.parada.app.modules.menu.models.MenuModel;
-import ru.parada.app.units.adapters.ModelAdapter;
+import ru.parada.app.units.adapters.ModelDataAdapter;
 
 public class MenuAdapter
-    extends ModelAdapter<MenuAdapterHolder, MenuModel, MenuContract.Behaviour>
+    extends ModelDataAdapter<MenuAdapterHolder, MenuModel, MenuContract.Behaviour>
 {
-    private MenuListModel data;
+    private int highlight;
 
-    public MenuAdapter(Context c, MenuListModel d, MenuContract.Behaviour l)
+    public MenuAdapter(Context c, MenuContract.Behaviour l)
     {
         super(c, l);
-        data = d;
-    }
-
-    @Override
-    protected MenuModel getItem(int position)
-    {
-        return data.getItem(position);
     }
 
     @Override
@@ -32,7 +24,7 @@ public class MenuAdapter
     {
         holder.getHolder().getIcon().setImageResource(item.icon);
         holder.getHolder().setName(item.name);
-        if(data.isHighlight(item))
+        if(highlight == item.id)
         {
             holder.getHolder().highlight();
         }
@@ -57,13 +49,8 @@ public class MenuAdapter
         return new MenuAdapterHolder(getContext(), parent);
     }
 
-    @Override
-    public int getItemCount()
+    public void setHighlight(int h)
     {
-        if(data == null)
-        {
-            return 0;
-        }
-        return data.getItemsCount();
+        highlight = h;
     }
 }

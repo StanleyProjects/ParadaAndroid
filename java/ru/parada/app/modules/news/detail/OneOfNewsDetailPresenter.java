@@ -1,4 +1,4 @@
-package ru.parada.app.modules.oneofnewsdetail;
+package ru.parada.app.modules.news.detail;
 
 import ru.parada.app.contracts.news.OneOfNewsDetailContract;
 import ru.parada.app.db.SQliteApi;

@@ -1,4 +1,4 @@
-package ru.parada.app.modules.news;
+package ru.parada.app.modules.news.list;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -8,8 +8,8 @@ import android.view.View;
 import ru.parada.app.R;
 import ru.parada.app.contracts.news.NewsContract;
 import ru.parada.app.core.NewsCore;
-import ru.parada.app.modules.news.adapter.NewsAdapter;
-import ru.parada.app.modules.news.adapter.NewsAdapterListener;
+import ru.parada.app.modules.news.list.adapter.NewsAdapter;
+import ru.parada.app.modules.news.list.adapter.NewsAdapterListener;
 import ru.parada.app.units.ListModel;
 import ru.parada.app.units.MVPFragment;
 

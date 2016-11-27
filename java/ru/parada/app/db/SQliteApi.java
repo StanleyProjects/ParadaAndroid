@@ -27,6 +27,7 @@ import ru.parada.app.modules.doctors.models.DoctorsCursorListModel;
 import ru.parada.app.modules.doctors.videos.model.DoctorVideosCursorListModel;
 import ru.parada.app.modules.doctors.videos.model.Video;
 import ru.parada.app.modules.images.ImageModel;
+import ru.parada.app.modules.info.model.Info;
 import ru.parada.app.modules.info.model.InfoCursorListModel;
 import ru.parada.app.modules.news.model.NewsCursorListModel;
 import ru.parada.app.modules.news.model.OneOfNews;
@@ -220,7 +221,6 @@ public class SQliteApi
                             + "ORDER BY " + Columns.order + " ASC "
                     , new String[]{}));
         }
-
         @Override
         public ListModel<DoctorsCore.Model> getFromKeys(String keys)
         {
@@ -231,7 +231,6 @@ public class SQliteApi
                     + "AND " + TABLE_NAME + "." + BaseColumns._ID + " = " + Tables.Images.Columns.entity_id + " "
                     + "WHERE " + Columns.first_last_middle + " LIKE \"%" + keys.toLowerCase() + "%\"" + " " , new String[]{}));
         }
-
         @Override
         public DoctorsCore.Model getOneFromId(int id)
         {
@@ -262,13 +261,11 @@ public class SQliteApi
             cursor.close();
             return doctor;
         }
-
         @Override
         public void insertOne(DoctorsCore.Model item)
         {
             sdb.insertWithOnConflict(TABLE_NAME, null, ContentDriver.getContentValues(item), SQLiteDatabase.CONFLICT_REPLACE);
         }
-
         @Override
         public void clear()
         {
@@ -582,7 +579,25 @@ public class SQliteApi
         @Override
         public InfoCore.Model getOneFromId(int id)
         {
-            return null;
+            Cursor cursor = sdb.rawQuery(
+                    "SELECT * "
+                            + "FROM " + TABLE_NAME + " "
+                            + "LEFT JOIN " + Tables.Images.TABLE_NAME + " "
+                            + "ON " + Tables.Images.Columns.type + " = " + ImagesContract.Types.INFO_TYPE + " "
+                            + "AND " + TABLE_NAME + "." + Columns.id + " = " + Tables.Images.Columns.entity_id + " "
+                            + "WHERE " + TABLE_NAME + "." + Columns.id + "=" + id + " "
+                    , new String[]{});
+            if(!cursor.moveToFirst())
+            {
+                cursor.close();
+                return null;
+            }
+            InfoCore.Model model = new Info(id,
+                    cursor.getString(cursor.getColumnIndex(Columns.title)),
+                    cursor.getString(cursor.getColumnIndex(Columns.descr)),
+                    cursor.getString(cursor.getColumnIndex(Tables.Images.Columns.image_path)));
+            cursor.close();
+            return model;
         }
         @Override
         public void clear()

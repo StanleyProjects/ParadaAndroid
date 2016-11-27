@@ -1,4 +1,4 @@
-package ru.parada.app.modules.servicesprices;
+package ru.parada.app.modules.servicesprices.list;
 
 import android.util.Log;
 
