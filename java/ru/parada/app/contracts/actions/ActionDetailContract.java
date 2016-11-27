@@ -17,5 +17,7 @@ public interface ActionDetailContract
     interface Behaviour
     {
         void back();
+        void subscribe();
+        void requestcall();
     }
 }

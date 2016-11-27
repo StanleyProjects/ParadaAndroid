@@ -10,12 +10,22 @@ import ru.parada.app.contracts.actions.ActionsContract;
 import ru.parada.app.contracts.EventsContract;
 import ru.parada.app.contracts.news.NewsContract;
 import ru.parada.app.contracts.news.OneOfNewsDetailContract;
+import ru.parada.app.contracts.requestcall.RequestCallCheckContract;
+import ru.parada.app.contracts.requestcall.RequestCallContract;
+import ru.parada.app.contracts.subscribe.SubscribeCheckContract;
+import ru.parada.app.contracts.subscribe.SubscribeContract;
 import ru.parada.app.core.EventsCore;
+import ru.parada.app.core.RequestCallCore;
+import ru.parada.app.core.SubscribeCore;
 import ru.parada.app.modules.actions.detail.ActionDetailFragment;
 import ru.parada.app.modules.actions.list.ActionsFragment;
 import ru.parada.app.modules.actions.list.adapter.ActionsAdapterListener;
 import ru.parada.app.modules.news.list.NewsFragment;
 import ru.parada.app.modules.news.detail.OneOfNewsDetailFragment;
+import ru.parada.app.modules.requestcall.check.RequestCallCheckFragment;
+import ru.parada.app.modules.requestcall.screen.RequestCallFragment;
+import ru.parada.app.modules.subscribe.check.SubscribeCheckFragment;
+import ru.parada.app.modules.subscribe.subscribescreen.SubscribeFragment;
 import ru.parada.app.units.CallbackConnector;
 import ru.parada.app.units.MultiFragment;
 
@@ -95,6 +105,8 @@ public class EventsFragment
         }
     });
     private Fragment detailFragment;
+    private Fragment getUserDataFragment;
+    private Fragment sendUserDataFragment;
 
     private final OneOfNewsDetailContract.Behaviour oneOfNewsDetailBehaviour = new OneOfNewsDetailContract.Behaviour()
     {
@@ -112,6 +124,110 @@ public class EventsFragment
         {
             getChildFragmentManager().popBackStack();
             detailFragment = null;
+        }
+        @Override
+        public void subscribe()
+        {
+            getUserDataFragment = SubscribeFragment.newInstanse(subscribeBehaviour);
+            addSubscreen(getUserDataFragment);
+        }
+        @Override
+        public void requestcall()
+        {
+            getUserDataFragment = RequestCallFragment.newInstanse(requestCallBehaviour);
+            addSubscreen(getUserDataFragment);
+        }
+    };
+    private final SubscribeContract.Behaviour subscribeBehaviour = new SubscribeContract.Behaviour()
+    {
+        @Override
+        public void back()
+        {
+            getChildFragmentManager().popBackStack();
+            getUserDataFragment = null;
+        }
+        @Override
+        public void send(SubscribeCore.Model data)
+        {
+            sendUserDataFragment = SubscribeCheckFragment.newInstanse(subscribeCheckBehaviour, data);
+            addSubscreen(sendUserDataFragment);
+        }
+    };
+    private final SubscribeCheckContract.Behaviour subscribeCheckBehaviour = new SubscribeCheckContract.Behaviour()
+    {
+        @Override
+        public void back()
+        {
+            getChildFragmentManager().popBackStack();
+            sendUserDataFragment = null;
+        }
+        @Override
+        public void sendSucess()
+        {
+            runAfterResume(new Runnable()
+            {
+                @Override
+                public void run()
+                {
+                    resetScreenIndex();
+                    getUserDataFragment = null;
+                    sendUserDataFragment = null;
+                    runOnUiThread(new Runnable()
+                    {
+                        @Override
+                        public void run()
+                        {
+                            addSubscreen(detailFragment);
+                        }
+                    }, 200);
+                }
+            });
+        }
+    };
+    private final RequestCallContract.Behaviour requestCallBehaviour = new RequestCallContract.Behaviour()
+    {
+        @Override
+        public void back()
+        {
+            getChildFragmentManager().popBackStack();
+            getUserDataFragment = null;
+        }
+        @Override
+        public void send(RequestCallCore.Model data)
+        {
+            sendUserDataFragment = RequestCallCheckFragment.newInstanse(requestCallCheckBehaviour, data);
+            addSubscreen(sendUserDataFragment);
+        }
+    };
+    private final RequestCallCheckContract.Behaviour requestCallCheckBehaviour = new RequestCallCheckContract.Behaviour()
+    {
+        @Override
+        public void back()
+        {
+            getChildFragmentManager().popBackStack();
+            sendUserDataFragment = null;
+        }
+        @Override
+        public void sendSucess()
+        {
+            runAfterResume(new Runnable()
+            {
+                @Override
+                public void run()
+                {
+                    resetScreenIndex();
+                    getUserDataFragment = null;
+                    sendUserDataFragment = null;
+                    runOnUiThread(new Runnable()
+                    {
+                        @Override
+                        public void run()
+                        {
+                            addSubscreen(detailFragment);
+                        }
+                    }, 200);
+                }
+            });
         }
     };
 
@@ -131,6 +247,14 @@ public class EventsFragment
         if(screen >= EventsCore.Screens.ONEOFNEWS_or_ACTION)
         {
             addSubscreen(detailFragment);
+        }
+        if(screen >= EventsCore.Screens.GET_USER_DATA)
+        {
+            addSubscreen(getUserDataFragment);
+        }
+        if(screen >= EventsCore.Screens.SEND_USER_DATA)
+        {
+            addSubscreen(sendUserDataFragment);
         }
     }
     @Override

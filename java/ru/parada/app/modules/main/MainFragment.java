@@ -6,6 +6,7 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -15,24 +16,33 @@ import android.widget.ImageView;
 import ru.parada.app.App;
 import ru.parada.app.R;
 import ru.parada.app.contracts.MainContract;
+import ru.parada.app.contracts.subscribe.SubscribeCheckContract;
+import ru.parada.app.contracts.subscribe.SubscribeContract;
+import ru.parada.app.core.MainCore;
 import ru.parada.app.core.NewsCore;
+import ru.parada.app.core.SubscribeCore;
 import ru.parada.app.modules.call.CallDialog;
 import ru.parada.app.modules.call.CallDialogListener;
 import ru.parada.app.modules.main.adapter.MainNewsAdapter;
 import ru.parada.app.modules.main.adapter.MainNewsAdapterListener;
+import ru.parada.app.modules.subscribe.check.SubscribeCheckFragment;
+import ru.parada.app.modules.subscribe.subscribescreen.SubscribeFragment;
 import ru.parada.app.units.ListModel;
-import ru.parada.app.units.MVPFragment;
+import ru.parada.app.units.MultiFragment;
 
 public class MainFragment
-        extends MVPFragment<MainContract.Presenter, MainContract.MainBehaviour>
+        extends MultiFragment<MainContract.Presenter, MainContract.MainBehaviour>
         implements MainContract.View
 {
-    static public MVPFragment newInstanse(MainContract.MainBehaviour behaviour)
+    static public Fragment newInstanse(MainContract.MainBehaviour behaviour)
     {
         MainFragment fragment = new MainFragment();
         fragment.setBehaviour(behaviour);
         return fragment;
     }
+
+    private Fragment getUserDataFragment;
+    private Fragment sendUserDataFragment;
 
     private ImageView phone;
     private RecyclerView list;
@@ -42,6 +52,44 @@ public class MainFragment
     private ClipboardManager clipboard;
 
     private boolean load;
+    private final SubscribeContract.Behaviour subscribeBehaviour = new SubscribeContract.Behaviour()
+    {
+        @Override
+        public void back()
+        {
+            getChildFragmentManager().popBackStack();
+            getUserDataFragment = null;
+        }
+        @Override
+        public void send(SubscribeCore.Model data)
+        {
+            sendUserDataFragment = SubscribeCheckFragment.newInstanse(subscribeCheckBehaviour, data);
+            addSubscreen(sendUserDataFragment);
+        }
+    };
+    private final SubscribeCheckContract.Behaviour subscribeCheckBehaviour = new SubscribeCheckContract.Behaviour()
+    {
+        @Override
+        public void back()
+        {
+            getChildFragmentManager().popBackStack();
+            sendUserDataFragment = null;
+        }
+        @Override
+        public void sendSucess()
+        {
+            runAfterResume(new Runnable()
+            {
+                @Override
+                public void run()
+                {
+                    resetScreenIndex();
+                    getUserDataFragment = null;
+                    sendUserDataFragment = null;
+                }
+            });
+        }
+    };
 
     @Override
     protected MainContract.Presenter setPresenter()
@@ -102,7 +150,8 @@ public class MainFragment
             @Override
             public void openSubscribe()
             {
-                getBehaviour().openSubscribe();
+                getUserDataFragment = SubscribeFragment.newInstanse(subscribeBehaviour);
+                addSubscreen(getUserDataFragment);
             }
             @Override
             public void openPrices()
@@ -270,5 +319,26 @@ public class MainFragment
         alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "ОК", listener);
         alertDialog.setCancelable(false);
         alertDialog.show();
+    }
+
+    @Override
+    protected void setScreens(int screen)
+    {
+        if(screen >= MainCore.Screens.GET_USER_DATA)
+        {
+            addSubscreen(getUserDataFragment);
+        }
+        if(screen >= MainCore.Screens.SEND_USER_DATA)
+        {
+            addSubscreen(sendUserDataFragment);
+        }
+    }
+
+    private void addSubscreen(Fragment fragment)
+    {
+        getChildFragmentManager().beginTransaction()
+                                 .add(R.id.subscreen, fragment)
+                                 .addToBackStack(fragment.getClass().getName())
+                                 .commit();
     }
 }
