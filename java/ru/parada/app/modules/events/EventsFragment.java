@@ -3,6 +3,7 @@ package ru.parada.app.modules.events;
 import android.support.v4.app.Fragment;
 import android.view.View;
 
+import ru.parada.app.App;
 import ru.parada.app.R;
 import ru.parada.app.contracts.actions.ActionDetailContract;
 import ru.parada.app.contracts.actions.ActionsContract;
@@ -65,6 +66,10 @@ public class EventsFragment
         @Override
         public void getOneOfNews(int id)
         {
+            if(App.getComponent().getAndroidUtil().blockClick())
+            {
+                return;
+            }
             showOneOfNews(id);
         }
     });
@@ -73,6 +78,10 @@ public class EventsFragment
         @Override
         public void getAction(final int id)
         {
+            if(App.getComponent().getAndroidUtil().blockClick())
+            {
+                return;
+            }
             runAfterResume(new Runnable()
             {
                 @Override
@@ -83,7 +92,6 @@ public class EventsFragment
                     addSubscreen(detailFragment);
                 }
             });
-            disableViewOn(500);
         }
     });
     private Fragment detailFragment;
@@ -215,7 +223,6 @@ public class EventsFragment
                 addSubscreen(detailFragment);
             }
         });
-        disableViewOn(500);
     }
 
     private void addSubscreen(Fragment fragment)

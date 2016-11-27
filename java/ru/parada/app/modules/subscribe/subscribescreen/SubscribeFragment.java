@@ -1,6 +1,8 @@
 package ru.parada.app.modules.subscribe.subscribescreen;
 
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 
 import ru.parada.app.R;
@@ -72,6 +74,12 @@ public class SubscribeFragment
     protected void init()
     {
 
+    }
+
+    @Override
+    protected Animation getEnterAnimation()
+    {
+        return AnimationUtils.loadAnimation(getActivity(), R.anim.rtl);
     }
 
     private void sendData()

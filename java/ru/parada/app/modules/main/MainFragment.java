@@ -88,12 +88,11 @@ public class MainFragment
             @Override
             public void oneOfNews(int id)
             {
-                if(load)
+                if(load || App.getComponent().getAndroidUtil().blockClick())
                 {
                     return;
                 }
                 getBehaviour().oneOfNews(id);
-                disableViewOn(500);
             }
             @Override
             public void openServices()
@@ -113,8 +112,10 @@ public class MainFragment
             @Override
             public void openAllNews()
             {
-                getBehaviour().openAllNews();
-                disableViewOn(500);
+                if(!App.getComponent().getAndroidUtil().blockClick())
+                {
+                    getBehaviour().openAllNews();
+                }
             }
         });
         list.setLayoutManager(new LinearLayoutManager(getActivity()));

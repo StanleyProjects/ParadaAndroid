@@ -6,9 +6,12 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Toast;
 
 import ru.parada.app.App;
+import ru.parada.app.R;
 
 public abstract class MVPFragment<PRESENTER, BEHAVIOUR>
         extends Fragment
@@ -17,7 +20,7 @@ public abstract class MVPFragment<PRESENTER, BEHAVIOUR>
     private BEHAVIOUR behaviour;
     private View.OnClickListener clickListener;
     private View mainView;
-    private volatile boolean click;
+    private Animation enterAnimation;
 
     @Override
     public void onPause()
@@ -35,7 +38,6 @@ public abstract class MVPFragment<PRESENTER, BEHAVIOUR>
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        click = true;
         if(mainView == null)
         {
             mainView = inflater.inflate(setContentView(), container, false);
@@ -53,34 +55,41 @@ public abstract class MVPFragment<PRESENTER, BEHAVIOUR>
                     return false;
                 }
             });
-            this.presenter = setPresenter();
-//            this.clickListener = setClickListener();
-            this.clickListener = new View.OnClickListener()
+            presenter = setPresenter();
+            clickListener = new View.OnClickListener()
             {
                 @Override
                 public void onClick(View view)
                 {
-                    if(!click)
+                    if(!App.getComponent().getAndroidUtil().blockClick())
                     {
-                        return;
+                        onClickView(view.getId());
                     }
-                    click = false;
-                    disableViewOn(500);
-                    onClickView(view.getId());
-                    runOnUiThread(new Runnable()
-                    {
-                        @Override
-                        public void run()
-                        {
-                            click = true;
-                        }
-                    }, 500);
                 }
             };
+            enterAnimation = getEnterAnimation();
+            if(enterAnimation != null)
+            {
+                mainView.setVisibility(View.GONE);
+                runAfterResume(new Runnable()
+                {
+                    @Override
+                    public void run()
+                    {
+                        mainView.setVisibility(View.VISIBLE);
+                        mainView.startAnimation(enterAnimation);
+                    }
+                });
+            }
             initViews(mainView);
             init();
         }
         return mainView;
+    }
+
+    protected Animation getEnterAnimation()
+    {
+        return null;
     }
 
     protected void setClickListener(View... views)
@@ -94,18 +103,6 @@ public abstract class MVPFragment<PRESENTER, BEHAVIOUR>
         }
     }
 
-    protected void disableViewOn(long ms)
-    {
-        mainView.setEnabled(false);
-        runOnUiThread(new Runnable()
-        {
-            @Override
-            public void run()
-            {
-                mainView.setEnabled(true);
-            }
-        }, ms);
-    }
     protected void runOnUiThread(Runnable r)
     {
         App.getComponent().getAndroidUtil().runOnUiThread(r);

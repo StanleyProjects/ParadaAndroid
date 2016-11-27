@@ -2,6 +2,8 @@ package ru.parada.app.modules.requestcall.check;
 
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
 import ru.parada.app.R;
@@ -124,6 +126,12 @@ public class RequestCallCheckFragment
                 getArguments().getString(PHONE));
         name.setText(data.getName());
         phone.setText(data.getPhone());
+    }
+
+    @Override
+    protected Animation getEnterAnimation()
+    {
+        return AnimationUtils.loadAnimation(getActivity(), R.anim.rtl);
     }
 
     @Override

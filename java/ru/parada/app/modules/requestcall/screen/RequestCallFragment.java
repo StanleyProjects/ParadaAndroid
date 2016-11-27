@@ -1,6 +1,8 @@
 package ru.parada.app.modules.requestcall.screen;
 
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 
 import ru.parada.app.R;
@@ -60,6 +62,12 @@ public class RequestCallFragment
     protected void init()
     {
 
+    }
+
+    @Override
+    protected Animation getEnterAnimation()
+    {
+        return AnimationUtils.loadAnimation(getActivity(), R.anim.rtl);
     }
 
     private void sendData()

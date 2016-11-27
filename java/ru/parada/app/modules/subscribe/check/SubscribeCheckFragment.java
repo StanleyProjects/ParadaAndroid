@@ -3,6 +3,8 @@ package ru.parada.app.modules.subscribe.check;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
 import ru.parada.app.R;
@@ -129,6 +131,12 @@ public class SubscribeCheckFragment
         {
             comment_container.setVisibility(View.GONE);
         }
+    }
+
+    @Override
+    protected Animation getEnterAnimation()
+    {
+        return AnimationUtils.loadAnimation(getActivity(), R.anim.rtl);
     }
 
     @Override

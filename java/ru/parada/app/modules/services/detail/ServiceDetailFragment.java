@@ -28,12 +28,9 @@ public class ServiceDetailFragment
         return fragment;
     }
 
-    private View content;
     private TextView title;
     private TextView descr;
     private ImageView image;
-
-    private Animation enter;
 
     @Override
     protected ServiceDetailContract.Presenter setPresenter()
@@ -50,7 +47,6 @@ public class ServiceDetailFragment
     @Override
     protected void initViews(View v)
     {
-        content = v.findViewById(R.id.content);
         title = (TextView)v.findViewById(R.id.title);
         descr = (TextView)v.findViewById(R.id.descr);
         image = (ImageView)v.findViewById(R.id.image);
@@ -77,9 +73,12 @@ public class ServiceDetailFragment
     @Override
     protected void init()
     {
-        enter = AnimationUtils.loadAnimation(getActivity(), R.anim.enter);
-        content.setVisibility(View.GONE);
         getPresenter().update(getArguments().getInt(SERVICE_ID));
+    }
+    @Override
+    protected Animation getEnterAnimation()
+    {
+        return AnimationUtils.loadAnimation(getActivity(), R.anim.rtl);
     }
 
     @Override
@@ -98,8 +97,6 @@ public class ServiceDetailFragment
                             App.getComponent().getFoldersManager().getImagesDirectory() + "/" + data.getImagePath(),
                             App.getComponent().getAndroidUtil().dp(222), App.getComponent().getAndroidUtil().dp(222)));
                 }
-                content.setVisibility(View.VISIBLE);
-                content.startAnimation(enter);
             }
         });
     }

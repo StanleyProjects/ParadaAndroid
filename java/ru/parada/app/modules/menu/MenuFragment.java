@@ -65,8 +65,10 @@ public class MenuFragment
             @Override
             public void open(GeneralCore.ScreenType screenType)
             {
-                getPresenter().open(screenType);
-                disableViewOn(500);
+                if(!App.getComponent().getAndroidUtil().blockClick())
+                {
+                    getPresenter().open(screenType);
+                }
             }
         });
         adapter.swapData(initMenuListModel());

@@ -12,18 +12,16 @@ import ru.parada.app.units.AdapterHolder;
 public class MainHeaderHolder
         extends AdapterHolder
 {
-    private volatile boolean click;
     private MainContract.HeaderBehaviour behaviour;
-    private View.OnClickListener clickListener = new View.OnClickListener()
+    private final View.OnClickListener clickListener = new View.OnClickListener()
     {
         @Override
         public void onClick(View v)
         {
-            if(!click)
+            if(App.getComponent().getAndroidUtil().blockClick())
             {
                 return;
             }
-            click = false;
             switch(v.getId())
             {
                 case R.id.services:
@@ -36,14 +34,6 @@ public class MainHeaderHolder
                     behaviour.openPrices();
                     break;
             }
-            App.getComponent().getAndroidUtil().runOnUiThread(new Runnable()
-            {
-                @Override
-                public void run()
-                {
-                    click = true;
-                }
-            }, 500);
         }
     };
 
@@ -51,7 +41,6 @@ public class MainHeaderHolder
     {
         super(context, parent, R.layout.main_header);
         this.behaviour = b;
-        click = true;
         itemView.findViewById(R.id.services).setOnClickListener(clickListener);
         itemView.findViewById(R.id.subscribe).setOnClickListener(clickListener);
         itemView.findViewById(R.id.prices).setOnClickListener(clickListener);

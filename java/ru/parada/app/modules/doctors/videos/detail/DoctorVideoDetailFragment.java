@@ -3,6 +3,8 @@ package ru.parada.app.modules.doctors.videos.detail;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -70,6 +72,12 @@ public class DoctorVideoDetailFragment
     protected void init()
     {
         getPresenter().update(getArguments().getInt(VIDEO_ID));
+    }
+
+    @Override
+    protected Animation getEnterAnimation()
+    {
+        return AnimationUtils.loadAnimation(getActivity(), R.anim.rtl);
     }
 
     @Override

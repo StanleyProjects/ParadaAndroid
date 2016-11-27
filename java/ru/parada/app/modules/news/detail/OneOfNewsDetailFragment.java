@@ -30,14 +30,12 @@ public class OneOfNewsDetailFragment
         return fragment;
     }
 
-    private View content;
     private TextView toolbar_title;
     private TextView title;
     private TextView date;
     private TextView full_descr;
     private ImageView image;
 
-    private Animation enter;
     private String[] months;
 
     @Override
@@ -55,7 +53,6 @@ public class OneOfNewsDetailFragment
     @Override
     protected void initViews(View v)
     {
-        content = v.findViewById(R.id.content);
         toolbar_title = (TextView)v.findViewById(R.id.toolbar_title);
         title = (TextView)v.findViewById(R.id.title);
         date = (TextView)v.findViewById(R.id.date);
@@ -78,10 +75,14 @@ public class OneOfNewsDetailFragment
     @Override
     protected void init()
     {
-        enter = AnimationUtils.loadAnimation(getActivity(), R.anim.enter);
-        content.setVisibility(View.GONE);
         months = getActivity().getResources().getStringArray(R.array.months);
         getPresenter().update(getArguments().getInt(ONEOFNEWS_ID));
+    }
+
+    @Override
+    protected Animation getEnterAnimation()
+    {
+        return AnimationUtils.loadAnimation(getActivity(), R.anim.rtl);
     }
 
     @Override
@@ -103,8 +104,6 @@ public class OneOfNewsDetailFragment
                             App.getComponent().getFoldersManager().getImagesDirectory() + "/" + data.getImagePath(),
                             App.getComponent().getAndroidUtil().dp(222), App.getComponent().getAndroidUtil().dp(222)));
                 }
-                content.setVisibility(View.VISIBLE);
-                content.startAnimation(enter);
             }
         });
     }

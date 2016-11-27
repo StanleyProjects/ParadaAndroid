@@ -12,4 +12,5 @@ public interface AndroidUtil
     void openMessages(String phone);
     void openBrowser(String link);
     void openMail(String address);
+    boolean blockClick();
 }

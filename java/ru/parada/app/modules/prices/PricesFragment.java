@@ -5,6 +5,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
 import ru.parada.app.R;
@@ -76,6 +78,12 @@ public class PricesFragment
         list.setAdapter(adapter);
         getPresenter().update(getArguments().getInt(SERVICE_ID));
         getPresenter().load(getArguments().getInt(SERVICE_ID));
+    }
+
+    @Override
+    protected Animation getEnterAnimation()
+    {
+        return AnimationUtils.loadAnimation(getActivity(), R.anim.rtl);
     }
 
     @Override

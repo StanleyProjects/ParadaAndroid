@@ -5,6 +5,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import ru.parada.app.App;
 import ru.parada.app.R;
 import ru.parada.app.contracts.info.InfoContract;
 import ru.parada.app.contracts.info.InfoDetailContract;
@@ -80,7 +81,7 @@ public class InfoListFragment
             @Override
             public void getInfo(final int id)
             {
-                if(load)
+                if(load || App.getComponent().getAndroidUtil().blockClick())
                 {
                     return;
                 }
@@ -94,7 +95,6 @@ public class InfoListFragment
                         addSubscreen(detailFragment);
                     }
                 });
-                disableViewOn(500);
             }
         });
         list.setLayoutManager(new LinearLayoutManager(getActivity()));

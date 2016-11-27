@@ -3,7 +3,7 @@
               android:clickable="true"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:background="@color/colorPrimaryDark"
+              android:background="@color/white"
               android:orientation="vertical">
 
     <FrameLayout
@@ -35,9 +35,7 @@
     </FrameLayout>
 
     <ScrollView
-        android:id="@+id/content"
         android:scrollbars="none"
-        android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1">

@@ -8,6 +8,7 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 
+import ru.parada.app.App;
 import ru.parada.app.R;
 import ru.parada.app.contracts.doctors.DoctorDetailContract;
 import ru.parada.app.contracts.doctors.DoctorVideoDetailContract;
@@ -141,7 +142,7 @@ public class DoctorsFragment
             @Override
             public void getDoctor(final int id)
             {
-                if(load)
+                if(load || App.getComponent().getAndroidUtil().blockClick())
                 {
                     return;
                 }
@@ -155,7 +156,6 @@ public class DoctorsFragment
                         addSubscreen(detailFragment);
                     }
                 });
-                disableViewOn(500);
             }
         });
         list.setLayoutManager(new LinearLayoutManager(getActivity()));

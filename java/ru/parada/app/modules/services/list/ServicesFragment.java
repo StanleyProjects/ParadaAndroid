@@ -5,6 +5,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import ru.parada.app.App;
 import ru.parada.app.R;
 import ru.parada.app.contracts.services.ServiceDetailContract;
 import ru.parada.app.contracts.services.ServicesContract;
@@ -213,7 +214,7 @@ public class ServicesFragment
             @Override
             public void getService(final int id)
             {
-                if(load)
+                if(load || App.getComponent().getAndroidUtil().blockClick())
                 {
                     return;
                 }
@@ -227,7 +228,6 @@ public class ServicesFragment
                         addSubscreen(detailFragment);
                     }
                 });
-                disableViewOn(500);
             }
         });
         list.setLayoutManager(new LinearLayoutManager(getActivity()));

@@ -4,7 +4,10 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 
+import ru.parada.app.App;
 import ru.parada.app.R;
 import ru.parada.app.contracts.doctors.DoctorVideosContract;
 import ru.parada.app.core.DoctorVideosCore;
@@ -70,13 +73,21 @@ public class DoctorVideosFragment
             @Override
             public void getVideo(int id)
             {
-                disableViewOn(500);
-                getBehaviour().getVideo(id);
+                if(!App.getComponent().getAndroidUtil().blockClick())
+                {
+                    getBehaviour().getVideo(id);
+                }
             }
         });
         list.setLayoutManager(new LinearLayoutManager(getActivity()));
         list.setAdapter(adapter);
         getPresenter().update(getArguments().getInt(DOCTOR_ID));
+    }
+
+    @Override
+    protected Animation getEnterAnimation()
+    {
+        return AnimationUtils.loadAnimation(getActivity(), R.anim.rtl);
     }
 
     @Override

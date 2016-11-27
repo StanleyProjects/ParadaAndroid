@@ -10,6 +10,7 @@ import android.widget.EditText;
 
 import java.util.ArrayList;
 
+import ru.parada.app.App;
 import ru.parada.app.R;
 import ru.parada.app.contracts.PricesContract;
 import ru.parada.app.contracts.ServicesWithPricesContract;
@@ -103,7 +104,7 @@ public class ServicesWithPricesFragment
             @Override
             public void getService(final int id)
             {
-                if(load)
+                if(load || App.getComponent().getAndroidUtil().blockClick())
                 {
                     return;
                 }
@@ -117,7 +118,6 @@ public class ServicesWithPricesFragment
                         addSubscreen(pricesFragment);
                     }
                 });
-                disableViewOn(500);
             }
         });
         adapter = new GroupAdapter<>(getActivity(), pricesGroupData);

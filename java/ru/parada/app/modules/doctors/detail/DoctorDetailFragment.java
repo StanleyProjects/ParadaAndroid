@@ -5,9 +5,7 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
@@ -40,13 +38,11 @@ public class DoctorDetailFragment
         return fragment;
     }
 
-    private View content;
     private TextView doctor_fullname;
     private DoctorHolder holder;
     private TextView descr;
     private View phone_button;
 
-    private Animation enter;
     private PackageManager packageManager;
     private ClipboardManager clipboard;
     private int doctor_id;
@@ -67,7 +63,6 @@ public class DoctorDetailFragment
     @Override
     protected void initViews(View v)
     {
-        content = v.findViewById(R.id.content);
         doctor_fullname = (TextView)v.findViewById(R.id.doctor_fullname);
         holder = new DoctorHolder(getActivity(), (ImageView)v.findViewById(R.id.photo),
                 (TextView)v.findViewById(R.id.last_name),
@@ -194,12 +189,16 @@ public class DoctorDetailFragment
     @Override
     protected void init()
     {
-        enter = AnimationUtils.loadAnimation(getActivity(), R.anim.enter);
-        content.setVisibility(View.GONE);
         packageManager = getActivity().getPackageManager();
         clipboard = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
         doctor_id = getArguments().getInt(DOCTOR_ID);
         getPresenter().update(doctor_id);
+    }
+
+    @Override
+    protected Animation getEnterAnimation()
+    {
+        return AnimationUtils.loadAnimation(getActivity(), R.anim.rtl);
     }
 
     @Override
@@ -234,8 +233,6 @@ public class DoctorDetailFragment
                 holder.setSecondPosition(item.getSecondPosition());
                 holder.setThirdPosition(item.getThirdPosition());
                 descr.setText(Html.fromHtml(item.getDescription()));
-                content.setVisibility(View.VISIBLE);
-                content.startAnimation(enter);
             }
         });
     }

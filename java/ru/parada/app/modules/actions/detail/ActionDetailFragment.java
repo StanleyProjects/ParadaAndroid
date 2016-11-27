@@ -30,14 +30,11 @@ public class ActionDetailFragment
         return fragment;
     }
 
-    private View content;
     private TextView title;
     private TextView date;
     private TextView subtitle;
     private ImageView image;
     private TextView descr;
-
-    private Animation enter;
 
     @Override
     protected ActionDetailContract.Presenter setPresenter()
@@ -54,7 +51,6 @@ public class ActionDetailFragment
     @Override
     protected void initViews(View v)
     {
-        content = v.findViewById(R.id.content);
         title = (TextView)v.findViewById(R.id.title);
         date = (TextView)v.findViewById(R.id.date);
         subtitle = (TextView)v.findViewById(R.id.subtitle);
@@ -77,9 +73,13 @@ public class ActionDetailFragment
     @Override
     protected void init()
     {
-        enter = AnimationUtils.loadAnimation(getActivity(), R.anim.enter);
-        content.setVisibility(View.GONE);
         getPresenter().update(getArguments().getInt(ACTION_ID));
+    }
+
+    @Override
+    protected Animation getEnterAnimation()
+    {
+        return AnimationUtils.loadAnimation(getActivity(), R.anim.rtl);
     }
 
     @Override
@@ -108,8 +108,6 @@ public class ActionDetailFragment
                             App.getComponent().getAndroidUtil().dp(128), App.getComponent().getAndroidUtil().dp(128)));
                 }
                 descr.setText(Html.fromHtml(data.getDescription()));
-                content.setVisibility(View.VISIBLE);
-                content.startAnimation(enter);
             }
         });
     }

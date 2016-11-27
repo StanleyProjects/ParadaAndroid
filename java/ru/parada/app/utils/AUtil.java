@@ -17,6 +17,7 @@ public class AUtil
     private Context context;
     private Handler uiHandler;
     private InputMethodManager inputMethodManager;
+    private volatile boolean click;
 
     public AUtil(Context c)
     {
@@ -24,6 +25,7 @@ public class AUtil
         density = context.getResources().getDisplayMetrics().density;
         uiHandler = new Handler();
         inputMethodManager = (InputMethodManager)context.getSystemService(Context.INPUT_METHOD_SERVICE);
+        click = true;
     }
 
     @Override
@@ -88,5 +90,29 @@ public class AUtil
         intent.setData(Uri.parse("mailto:" + address));
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
+    }
+
+    @Override
+    public boolean blockClick()
+    {
+        if(!click)
+        {
+            return true;
+        }
+        click = false;
+        new Thread(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                long b = System.currentTimeMillis();
+                while(System.currentTimeMillis() < b + 400)
+                {
+
+                }
+                click = true;
+            }
+        }).start();
+        return false;
     }
 }
