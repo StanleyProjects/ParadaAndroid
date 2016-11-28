@@ -100,9 +100,14 @@ public class OneOfNewsDetailFragment
                 date.setText(currentDate.getDate() + " " + months[currentDate.getMonth()] + " " + (currentDate.getYear()+1900));
                 if(data.getImagePath() != null && data.getImagePath().length() > 0)
                 {
+                    image.setVisibility(View.VISIBLE);
                     image.setImageDrawable(App.getComponent().getImagesUtil().getThumbFromCache(
                             App.getComponent().getFoldersManager().getImagesDirectory() + "/" + data.getImagePath(),
                             App.getComponent().getAndroidUtil().dp(222), App.getComponent().getAndroidUtil().dp(222)));
+                }
+                else
+                {
+                    image.setVisibility(View.GONE);
                 }
             }
         });

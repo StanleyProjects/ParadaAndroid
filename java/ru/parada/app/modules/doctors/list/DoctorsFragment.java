@@ -41,7 +41,6 @@ public class DoctorsFragment
 
     private RecyclerView list;
     private EditText search;
-    private View content;
     private TextView list_empty;
 
     private boolean load;
@@ -121,7 +120,6 @@ public class DoctorsFragment
         setClickListener(v.findViewById(R.id.menu), v.findViewById(R.id.search_clear));
         list = (RecyclerView)v.findViewById(R.id.list);
         search = (EditText)v.findViewById(R.id.search);
-        content = v.findViewById(R.id.content);
         list_empty = (TextView)v.findViewById(R.id.list_empty);
     }
 
@@ -142,7 +140,7 @@ public class DoctorsFragment
     @Override
     protected void init()
     {
-        content.setVisibility(View.GONE);
+        list.setVisibility(View.GONE);
         list_empty.setVisibility(View.VISIBLE);
         adapter = new DoctorsAdapter(getActivity(), new DoctorsAdapterListener()
         {
@@ -225,13 +223,13 @@ public class DoctorsFragment
             {
                 if(data.getItemsCount() > 0)
                 {
-                    content.setVisibility(View.VISIBLE);
+                    list.setVisibility(View.VISIBLE);
                     list_empty.setVisibility(View.GONE);
                     adapter.swapData(data);
                 }
                 else
                 {
-                    content.setVisibility(View.GONE);
+                    list.setVisibility(View.GONE);
                     list_empty.setVisibility(View.VISIBLE);
                     adapter.swapData(null);
                 }

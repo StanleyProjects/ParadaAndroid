@@ -7,8 +7,8 @@ App for [paradaplastika.ru](http://paradaplastika.ru/)
 ## defaultConfig
 	applicationId "ru.parada.app"
 	versionBase 1611270230
-	versionCode 1611280125
-	versionName "0.962"
+	versionCode 1611281255
+	versionName "0.963"
 ## dependencies
 	com.android.support:support-fragment:25.0.1
 	com.android.support:recyclerview-v7:25.0.1

@@ -40,7 +40,6 @@ public class ServicesWithPricesFragment
 
     private RecyclerView list;
     private EditText search;
-    private View content;
     private TextView list_empty;
 
     private boolean load;
@@ -83,7 +82,6 @@ public class ServicesWithPricesFragment
         setClickListener(v.findViewById(R.id.menu), v.findViewById(R.id.search_clear));
         list = (RecyclerView)v.findViewById(R.id.list);
         search = (EditText)v.findViewById(R.id.search);
-        content = v.findViewById(R.id.content);
         list_empty = (TextView)v.findViewById(R.id.list_empty);
     }
 
@@ -104,7 +102,7 @@ public class ServicesWithPricesFragment
     @Override
     protected void init()
     {
-        content.setVisibility(View.GONE);
+        list.setVisibility(View.GONE);
         list_empty.setVisibility(View.VISIBLE);
         pricesGroupData = new PricesGroupData(new ServicesPricesAdapterListener()
         {
@@ -208,13 +206,13 @@ public class ServicesWithPricesFragment
             {
                 if(servicesWithPrices.getItemsCount() > 0)
                 {
-                    content.setVisibility(View.VISIBLE);
+                    list.setVisibility(View.VISIBLE);
                     list_empty.setVisibility(View.GONE);
                     pricesGroupData.swapData(servicesWithPrices);
                 }
                 else
                 {
-                    content.setVisibility(View.GONE);
+                    list.setVisibility(View.GONE);
                     list_empty.setVisibility(View.VISIBLE);
                     pricesGroupData.swapData(null);
                 }
