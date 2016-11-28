@@ -1,9 +1,11 @@
 package ru.parada.app.modules.general;
 
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 
+import ru.parada.app.App;
 import ru.parada.app.R;
 import ru.parada.app.contracts.contacts.ContactsContract;
 import ru.parada.app.contracts.doctors.DoctorsContract;
@@ -175,7 +177,7 @@ public class GeneralActivity
     @Override
     public void onBackPressed()
     {
-        if(drawerContainer.isOpen())
+        if(!App.getComponent().getAndroidUtil().isTablet() && drawerContainer.isOpen())
         {
             drawerContainer.closeDrawer(null);
             return;
@@ -189,74 +191,115 @@ public class GeneralActivity
     public void onCreate(Bundle bundle)
     {
         super.onCreate(bundle);
-        setContentView(R.layout.general_drawer_activity);
+        if(App.getComponent().getAndroidUtil().isTablet())
+        {
+            setContentView(R.layout.general_activity);
+        }
+        else
+        {
+            setContentView(R.layout.general_drawer_activity);
+        }
         initViews();
         init();
     }
 
     private void initViews()
     {
-        drawerContainer = (DrawerContainer)findViewById(R.id.main_drawer);
+        if(!App.getComponent().getAndroidUtil().isTablet())
+        {
+            drawerContainer = (DrawerContainer)findViewById(R.id.main_drawer);
+        }
     }
 
     private void init()
     {
         presenter = new GeneralPresenter(this);
+        currentFragment = mainFragment;
+        if(App.getComponent().getAndroidUtil().isTablet())
+        {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+            App.getComponent().getAndroidUtil().runOnUiThread(new Runnable()
+            {
+                @Override
+                public void run()
+                {
+                    initFragments();
+                }
+            }, 500);
+        }
+        else
+        {
+            initFragments();
+        }
+    }
+    private void initFragments()
+    {
         getSupportFragmentManager().beginTransaction()
                                    .add(R.id.menu_frame, menuFragment)
                                    .commit();
-        currentFragment = mainFragment;
         replaceFragment();
     }
 
     @Override
     public void showScreen(final GeneralCore.ScreenType screenType)
     {
+        if(App.getComponent().getAndroidUtil().isTablet())
+        {
+            replaceScreen(screenType);
+            return;
+        }
         closeMenu(new DrawerContainer.AnimationEndListener()
         {
             @Override
             public void onAnimationEnd()
             {
-                switch(screenType)
-                {
-                    case MAIN_SCREEN:
-                        currentFragment = mainFragment;
-                        break;
-                    case SERVICES_SCREEN:
-                        currentFragment = servicesFragment;
-                        break;
-                    case DOCTORS_SCREEN:
-                        currentFragment = doctorsFragment;
-                        break;
-                    case PRICES_SCREEN:
-                        currentFragment = pricesFragment;
-                        break;
-                    case EVENTS_SCREEN:
-                        currentFragment = eventsFragment;
-                        break;
-                    case SOCIALS_SCREEN:
-                        currentFragment = socialsFragment;
-                        break;
-                    case INFO_SCREEN:
-                        currentFragment = infoFragment;
-                        break;
-                    case NOTIFICATIONS_SCREEN:
-                        currentFragment = notificationsFragment;
-                        break;
-                    case CONTACTS_SCREEN:
-                        currentFragment = contactsFragment;
-                        break;
-                    default:
-                        return;
-                }
-                replaceFragment();
+                replaceScreen(screenType);
             }
         });
+    }
+    public void replaceScreen(final GeneralCore.ScreenType screenType)
+    {
+        switch(screenType)
+        {
+            case MAIN_SCREEN:
+                currentFragment = mainFragment;
+                break;
+            case SERVICES_SCREEN:
+                currentFragment = servicesFragment;
+                break;
+            case DOCTORS_SCREEN:
+                currentFragment = doctorsFragment;
+                break;
+            case PRICES_SCREEN:
+                currentFragment = pricesFragment;
+                break;
+            case EVENTS_SCREEN:
+                currentFragment = eventsFragment;
+                break;
+            case SOCIALS_SCREEN:
+                currentFragment = socialsFragment;
+                break;
+            case INFO_SCREEN:
+                currentFragment = infoFragment;
+                break;
+            case NOTIFICATIONS_SCREEN:
+                currentFragment = notificationsFragment;
+                break;
+            case CONTACTS_SCREEN:
+                currentFragment = contactsFragment;
+                break;
+            default:
+                return;
+        }
+        replaceFragment();
     }
 
     private void openMenu()
     {
-        drawerContainer.openDrawer();
+        if(!App.getComponent().getAndroidUtil().isTablet())
+        {
+            drawerContainer.openDrawer();
+        }
     }
 
     private void closeMenu(DrawerContainer.AnimationEndListener listener)

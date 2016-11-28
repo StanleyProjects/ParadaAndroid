@@ -8,6 +8,7 @@ import android.os.IBinder;
 import android.util.Log;
 import android.view.inputmethod.InputMethodManager;
 
+import ru.parada.app.R;
 import ru.parada.app.di.AndroidUtil;
 
 public class AUtil
@@ -114,5 +115,11 @@ public class AUtil
             }
         }).start();
         return false;
+    }
+
+    @Override
+    public boolean isTablet()
+    {
+        return context.getResources().getBoolean(R.bool.is_tablet);
     }
 }

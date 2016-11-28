@@ -2,10 +2,12 @@ package ru.parada.app.modules.map;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
 
+import ru.parada.app.App;
 import ru.parada.app.R;
 import ru.parada.app.core.ContactsCore;
 
@@ -24,11 +26,6 @@ public class MapActivity
     {
         super.onCreate(bundle);
         setContentView(R.layout.map_activity);
-        getSupportFragmentManager().beginTransaction()
-                                   .add(R.id.mapframe, MapFragment.newInstanse(getIntent().getExtras()
-                                                                                          .getDouble(LATITUDE), getIntent().getExtras()
-                                                                                                                           .getDouble(LONGITUDE)))
-                                   .commit();
         findViewById(R.id.back).setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -37,5 +34,29 @@ public class MapActivity
                 finish();
             }
         });
+        if(App.getComponent().getAndroidUtil().isTablet())
+        {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+            App.getComponent().getAndroidUtil().runOnUiThread(new Runnable()
+            {
+                @Override
+                public void run()
+                {
+                    initFragments();
+                }
+            }, 500);
+        }
+        else
+        {
+            initFragments();
+        }
+    }
+    private void initFragments()
+    {
+        getSupportFragmentManager().beginTransaction()
+                                   .add(R.id.mapframe, MapFragment.newInstanse(getIntent().getExtras()
+                                                                                          .getDouble(LATITUDE), getIntent().getExtras()
+                                                                                                                           .getDouble(LONGITUDE)))
+                                   .commit();
     }
 }

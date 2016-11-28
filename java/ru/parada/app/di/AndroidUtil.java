@@ -13,4 +13,5 @@ public interface AndroidUtil
     void openBrowser(String link);
     void openMail(String address);
     boolean blockClick();
+    boolean isTablet();
 }

@@ -5,7 +5,7 @@
     <string name="services">Услуги</string>
     <string name="doctors">Специалисты</string>
     <string name="prices">Цены</string>
-    <string name="events">События</string>
+    <string name="events">Акции и новости</string>
     <string name="socials">Социальные сети</string>
     <string name="notifications">Уведомления</string>
     <string name="contacts">Контакты</string>
@@ -110,6 +110,7 @@
     <string name="news_list_empty">Список новостей пуст</string>
     <string name="actions_list_empty">Список акций пуст</string>
     <string name="info_list_empty">Список пуст</string>
+    <string name="price_postfix">р.</string>
 
     <string-array name="months">
         <item>января</item>

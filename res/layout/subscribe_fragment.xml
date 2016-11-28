@@ -194,7 +194,7 @@
                     android:layout_height="wrap_content"/>
                 <ru.parada.app.units.LostFocusEdit
                     android:id="@+id/phone"
-                    android:inputType="textFilter"
+                    android:inputType="number"
                     android:textColor="@color/graydark"
                     android:textSize="@dimen/text_size_medium"
                     android:hint="@string/phone_hint"

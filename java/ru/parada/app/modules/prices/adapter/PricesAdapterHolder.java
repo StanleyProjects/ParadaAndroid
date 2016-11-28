@@ -18,6 +18,8 @@ public class PricesAdapterHolder
     private int val;
     private int valOdd;
 
+    private String pricePostfix;
+
     public PricesAdapterHolder(Context context, ViewGroup parent)
     {
         super(context, parent, R.layout.price_list_item);
@@ -27,6 +29,7 @@ public class PricesAdapterHolder
         ttlOdd = context.getResources().getColor(R.color.graysuperlight);
         val = context.getResources().getColor(R.color.purplesuperalpha);
         valOdd = context.getResources().getColor(R.color.purplealpha);
+        pricePostfix = context.getResources().getString(R.string.price_postfix);
     }
 
     public void setTitle(String t)
@@ -35,7 +38,7 @@ public class PricesAdapterHolder
     }
     public void setValue(String v)
     {
-        value.setText(v);
+        value.setText(v + " " + pricePostfix);
     }
     public void drawOdd(boolean odd)
     {
