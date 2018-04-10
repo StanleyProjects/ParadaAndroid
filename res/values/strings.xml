@@ -22,7 +22,7 @@
     <string name="sms">Сообщения</string>
     <string name="whatsapp">WhatsApp</string>
     <string name="viber">Viber</string>
-    <string name="phone_number">+78123372304</string>
+    <string name="phone_number">+78123372303</string>
     <string name="message_number">+79315410591</string>
     <string name="watch_video">Смотреть видео</string>
     <string name="service">Услуга</string>
@@ -68,7 +68,7 @@
     <string name="error">Ошибка</string>
     <string name="video_error">При воспроизведении видео произошла ошибка. Попробовать снова?</string>
     <string name="address_baltmed">Санкт-Петербург. ВО, Нахимова, 11</string>
-    <string name="surgery_phone">+7 (812) 337-23-04\n+7 (931) 541-05-91</string>
+    <string name="surgery_phone">+7 (812) 337-23-03\n+7 (931) 541-05-91</string>
     <string name="surgery_name">Центр пластической хирургии</string>
     <string name="baltmed_name">Амбулаторный комплекс BaltMed</string>
     <string name="surgery_work_time">(круглосуточно)</string>
